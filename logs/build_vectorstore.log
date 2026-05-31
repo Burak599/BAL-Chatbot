@@ -1,0 +1,215 @@
+2026-05-06 10:35:18,002 [INFO] ============================================================
+2026-05-06 10:35:18,002 [INFO] BAL Chatbot — Vektör Veritabanı Oluşturma Başladı
+2026-05-06 10:35:18,002 [INFO] ============================================================
+2026-05-06 10:36:02,396 [INFO] ============================================================
+2026-05-06 10:36:02,396 [INFO] BAL Chatbot — Vektör Veritabanı Oluşturma Başladı
+2026-05-06 10:36:02,396 [INFO] ============================================================
+2026-05-06 10:38:18,219 [INFO] ============================================================
+2026-05-06 10:38:18,219 [INFO] BAL Chatbot — Vektör Veritabanı Oluşturma Başladı
+2026-05-06 10:38:18,219 [INFO] ============================================================
+2026-05-06 10:38:18,237 [INFO] Dosya okundu: /home/burak/Masaüstü/ChatbotBAL/Dataset/RAG_Dataset_BAL.md (26,978 karakter)
+2026-05-06 10:38:18,237 [INFO] Doküman bölümlere ayrılıyor...
+2026-05-06 10:38:18,237 [INFO]   44 bölüm çıkarıldı
+2026-05-06 10:38:18,237 [INFO] Chunk'lar oluşturuluyor...
+2026-05-06 10:38:18,239 [INFO]   Toplam 43 chunk oluşturuldu
+2026-05-06 10:38:18,240 [INFO]   Chunk istatistikleri — min: 7, max: 259, ort: 74 kelime
+2026-05-06 10:38:18,240 [INFO] Embedding modeli yükleniyor: intfloat/multilingual-e5-large
+2026-05-06 10:38:18,241 [INFO] Use pytorch device_name: cuda:0
+2026-05-06 10:38:18,241 [INFO] Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2026-05-06 10:42:50,123 [INFO] 43 chunk için embedding üretiliyor...
+2026-05-06 10:42:53,557 [INFO]   [32/43] chunk işlendi
+2026-05-06 10:42:54,021 [INFO]   [43/43] chunk işlendi
+2026-05-06 10:42:54,022 [INFO]   Embedding boyutu: (43, 1024)
+2026-05-06 10:42:54,022 [INFO] FAISS index oluşturuluyor...
+2026-05-06 10:42:54,022 [INFO]   FAISS index oluşturuldu: 43 vektör, dim=1024
+2026-05-06 10:42:54,022 [INFO] Artifact'lar kaydediliyor...
+2026-05-06 10:42:54,022 [INFO]   FAISS index kaydedildi: data/bal_faiss.index
+2026-05-06 10:42:54,023 [INFO]   Chunk metadata kaydedildi: data/bal_chunks.json
+2026-05-06 10:42:54,023 [INFO]   Config snapshot kaydedildi: data/vectorstore_config.json
+2026-05-06 10:42:54,023 [INFO] 
+✅ Tamamlandı! Süre: 275.8 saniye
+2026-05-06 10:42:54,023 [INFO]    Toplam chunk: 43
+2026-05-06 10:42:54,023 [INFO]    FAISS index: data/bal_faiss.index
+2026-05-06 10:42:54,023 [INFO]    Chunk metadata: data/bal_chunks.json
+2026-05-06 10:42:54,023 [INFO] 
+Sonraki adım: python scripts/02_chatbot.py
+2026-05-06 11:54:43,381 [INFO] ============================================================
+2026-05-06 11:54:43,408 [INFO] BAL Chatbot — Vektör Veritabanı Oluşturma Başladı
+2026-05-06 11:54:43,408 [INFO] ============================================================
+2026-05-06 11:54:43,408 [INFO] Dosya okundu: /home/burak/Masaüstü/ChatbotBAL/Dataset/RAG_Dataset_BAL.md (45,045 karakter)
+2026-05-06 11:54:43,409 [INFO] Doküman bölümlere ayrılıyor...
+2026-05-06 11:54:43,409 [INFO]   69 bölüm çıkarıldı
+2026-05-06 11:54:43,410 [INFO] Chunk'lar oluşturuluyor...
+2026-05-06 11:54:43,415 [INFO]   Toplam 69 chunk oluşturuldu
+2026-05-06 11:54:43,416 [INFO]   Chunk istatistikleri — min: 7, max: 384, ort: 75 kelime
+2026-05-06 11:54:43,416 [INFO] Embedding modeli yükleniyor: intfloat/multilingual-e5-large
+2026-05-06 11:54:43,417 [INFO] Use pytorch device_name: cuda:0
+2026-05-06 11:54:43,417 [INFO] Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2026-05-06 11:54:48,259 [INFO] 69 chunk için embedding üretiliyor...
+2026-05-06 11:54:50,321 [INFO]   [32/69] chunk işlendi
+2026-05-06 11:54:51,819 [INFO]   [64/69] chunk işlendi
+2026-05-06 11:54:52,084 [INFO]   [69/69] chunk işlendi
+2026-05-06 11:54:52,085 [INFO]   Embedding boyutu: (69, 1024)
+2026-05-06 11:54:52,085 [INFO] FAISS index oluşturuluyor...
+2026-05-06 11:54:52,085 [INFO]   FAISS index oluşturuldu: 69 vektör, dim=1024
+2026-05-06 11:54:52,085 [INFO] Artifact'lar kaydediliyor...
+2026-05-06 11:54:52,104 [INFO]   FAISS index kaydedildi: data/bal_faiss.index
+2026-05-06 11:54:52,106 [INFO]   Chunk metadata kaydedildi: data/bal_chunks.json
+2026-05-06 11:54:52,106 [INFO]   Config snapshot kaydedildi: data/vectorstore_config.json
+2026-05-06 11:54:52,106 [INFO] 
+✅ Tamamlandı! Süre: 8.7 saniye
+2026-05-06 11:54:52,106 [INFO]    Toplam chunk: 69
+2026-05-06 11:54:52,106 [INFO]    FAISS index: data/bal_faiss.index
+2026-05-06 11:54:52,106 [INFO]    Chunk metadata: data/bal_chunks.json
+2026-05-06 11:54:52,106 [INFO] 
+Sonraki adım: python scripts/02_chatbot.py
+2026-05-06 12:40:53,025 [INFO] ============================================================
+2026-05-06 12:40:53,047 [INFO] BAL Chatbot — Vektör Veritabanı Oluşturma Başladı
+2026-05-06 12:40:53,047 [INFO] ============================================================
+2026-05-06 12:40:53,047 [INFO] Dosya okundu: /home/burak/Masaüstü/ChatbotBAL/Dataset/RAG_Dataset_BAL.md (47,780 karakter)
+2026-05-06 12:40:53,047 [INFO] Doküman bölümlere ayrılıyor...
+2026-05-06 12:40:53,048 [INFO]   89 bölüm çıkarıldı
+2026-05-06 12:40:53,049 [INFO] Chunk'lar oluşturuluyor...
+2026-05-06 12:40:53,056 [INFO]   Toplam 83 chunk oluşturuldu
+2026-05-06 12:40:53,056 [INFO]   Chunk istatistikleri — min: 7, max: 384, ort: 67 kelime
+2026-05-06 12:40:53,056 [INFO] Embedding modeli yükleniyor: intfloat/multilingual-e5-large
+2026-05-06 12:40:53,059 [INFO] Use pytorch device_name: cuda:0
+2026-05-06 12:40:53,059 [INFO] Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2026-05-06 12:40:59,746 [INFO] 83 chunk için embedding üretiliyor...
+2026-05-06 12:41:01,574 [INFO]   [32/83] chunk işlendi
+2026-05-06 12:41:02,967 [INFO]   [64/83] chunk işlendi
+2026-05-06 12:41:03,965 [INFO]   [83/83] chunk işlendi
+2026-05-06 12:41:03,965 [INFO]   Embedding boyutu: (83, 1024)
+2026-05-06 12:41:03,965 [INFO] FAISS index oluşturuluyor...
+2026-05-06 12:41:03,966 [INFO]   FAISS index oluşturuldu: 83 vektör, dim=1024
+2026-05-06 12:41:03,966 [INFO] Artifact'lar kaydediliyor...
+2026-05-06 12:41:03,966 [INFO]   FAISS index kaydedildi: data/bal_faiss.index
+2026-05-06 12:41:03,967 [INFO]   Chunk metadata kaydedildi: data/bal_chunks.json
+2026-05-06 12:41:03,967 [INFO]   Config snapshot kaydedildi: data/vectorstore_config.json
+2026-05-06 12:41:03,967 [INFO] 
+✅ Tamamlandı! Süre: 10.9 saniye
+2026-05-06 12:41:03,967 [INFO]    Toplam chunk: 83
+2026-05-06 12:41:03,967 [INFO]    FAISS index: data/bal_faiss.index
+2026-05-06 12:41:03,967 [INFO]    Chunk metadata: data/bal_chunks.json
+2026-05-06 12:41:03,967 [INFO] 
+Sonraki adım: python scripts/02_chatbot.py
+2026-05-06 12:50:25,436 [INFO] ============================================================
+2026-05-06 12:50:25,436 [INFO] BAL Chatbot — Vektör Veritabanı Oluşturma Başladı
+2026-05-06 12:50:25,436 [INFO] ============================================================
+2026-05-06 12:50:25,436 [INFO] Dosya okundu: /home/burak/Masaüstü/ChatbotBAL/Dataset/RAG_Dataset_BAL.md (48,685 karakter)
+2026-05-06 12:50:25,436 [INFO] Doküman bölümlere ayrılıyor...
+2026-05-06 12:50:25,437 [INFO]   70 bölüm çıkarıldı
+2026-05-06 12:50:25,437 [INFO] Chunk'lar oluşturuluyor...
+2026-05-06 12:50:25,441 [INFO]   Toplam 71 chunk oluşturuldu
+2026-05-06 12:50:25,441 [INFO]   Chunk istatistikleri — min: 7, max: 384, ort: 81 kelime
+2026-05-06 12:50:25,441 [INFO] Embedding modeli yükleniyor: intfloat/multilingual-e5-large
+2026-05-06 12:50:25,442 [INFO] Use pytorch device_name: cuda:0
+2026-05-06 12:50:25,442 [INFO] Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2026-05-06 12:50:32,201 [INFO] 71 chunk için embedding üretiliyor...
+2026-05-06 12:50:34,505 [INFO]   [32/71] chunk işlendi
+2026-05-06 12:50:36,011 [INFO]   [64/71] chunk işlendi
+2026-05-06 12:50:36,375 [INFO]   [71/71] chunk işlendi
+2026-05-06 12:50:36,376 [INFO]   Embedding boyutu: (71, 1024)
+2026-05-06 12:50:36,376 [INFO] FAISS index oluşturuluyor...
+2026-05-06 12:50:36,420 [INFO]   FAISS index oluşturuldu: 71 vektör, dim=1024
+2026-05-06 12:50:36,420 [INFO] Artifact'lar kaydediliyor...
+2026-05-06 12:50:36,456 [INFO]   FAISS index kaydedildi: data/bal_faiss.index
+2026-05-06 12:50:36,478 [INFO]   Chunk metadata kaydedildi: data/bal_chunks.json
+2026-05-06 12:50:36,479 [INFO]   Config snapshot kaydedildi: data/vectorstore_config.json
+2026-05-06 12:50:36,479 [INFO] 
+✅ Tamamlandı! Süre: 11.0 saniye
+2026-05-06 12:50:36,479 [INFO]    Toplam chunk: 71
+2026-05-06 12:50:36,479 [INFO]    FAISS index: data/bal_faiss.index
+2026-05-06 12:50:36,479 [INFO]    Chunk metadata: data/bal_chunks.json
+2026-05-06 12:50:36,479 [INFO] 
+Sonraki adım: python scripts/02_chatbot.py
+2026-05-06 13:29:16,016 [INFO] ============================================================
+2026-05-06 13:29:16,047 [INFO] BAL Chatbot — Vektör Veritabanı Oluşturma Başladı
+2026-05-06 13:29:16,047 [INFO] ============================================================
+2026-05-06 13:29:16,048 [INFO] Dosya okundu: /home/burak/Masaüstü/ChatbotBAL/Dataset/RAG_Dataset_BAL.md (54,556 karakter)
+2026-05-06 13:29:16,048 [INFO] Doküman bölümlere ayrılıyor...
+2026-05-06 13:29:16,051 [INFO]   77 bölüm çıkarıldı
+2026-05-06 13:29:16,051 [INFO] Chunk'lar oluşturuluyor...
+2026-05-06 13:29:16,064 [INFO]   Toplam 78 chunk oluşturuldu
+2026-05-06 13:29:16,064 [INFO]   Chunk istatistikleri — min: 7, max: 384, ort: 83 kelime
+2026-05-06 13:29:16,064 [INFO] Embedding modeli yükleniyor: intfloat/multilingual-e5-large
+2026-05-06 13:29:16,066 [INFO] Use pytorch device_name: cuda:0
+2026-05-06 13:29:16,066 [INFO] Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2026-05-06 13:29:22,731 [INFO] 78 chunk için embedding üretiliyor...
+2026-05-06 13:29:32,535 [INFO]   [32/78] chunk işlendi
+2026-05-06 13:29:33,967 [INFO]   [64/78] chunk işlendi
+2026-05-06 13:29:34,712 [INFO]   [78/78] chunk işlendi
+2026-05-06 13:29:34,713 [INFO]   Embedding boyutu: (78, 1024)
+2026-05-06 13:29:34,713 [INFO] FAISS index oluşturuluyor...
+2026-05-06 13:29:34,713 [INFO]   FAISS index oluşturuldu: 78 vektör, dim=1024
+2026-05-06 13:29:34,713 [INFO] Artifact'lar kaydediliyor...
+2026-05-06 13:29:34,714 [INFO]   FAISS index kaydedildi: data/bal_faiss.index
+2026-05-06 13:29:34,715 [INFO]   Chunk metadata kaydedildi: data/bal_chunks.json
+2026-05-06 13:29:34,715 [INFO]   Config snapshot kaydedildi: data/vectorstore_config.json
+2026-05-06 13:29:34,715 [INFO] 
+✅ Tamamlandı! Süre: 18.7 saniye
+2026-05-06 13:29:34,715 [INFO]    Toplam chunk: 78
+2026-05-06 13:29:34,715 [INFO]    FAISS index: data/bal_faiss.index
+2026-05-06 13:29:34,715 [INFO]    Chunk metadata: data/bal_chunks.json
+2026-05-06 13:29:34,715 [INFO] 
+Sonraki adım: python scripts/02_chatbot.py
+2026-05-06 14:36:56,346 [INFO] ============================================================
+2026-05-06 14:36:56,358 [INFO] BAL Chatbot — Vektör Veritabanı Oluşturma Başladı
+2026-05-06 14:36:56,358 [INFO] ============================================================
+2026-05-06 14:36:56,359 [INFO] Dosya okundu: /home/burak/Masaüstü/ChatbotBAL/Dataset/RAG_Dataset_BAL.md (56,834 karakter)
+2026-05-06 14:36:56,359 [INFO] Doküman bölümlere ayrılıyor...
+2026-05-06 14:36:56,362 [INFO]   84 bölüm çıkarıldı
+2026-05-06 14:36:56,362 [INFO] Chunk'lar oluşturuluyor...
+2026-05-06 14:36:56,377 [INFO]   Toplam 85 chunk oluşturuldu
+2026-05-06 14:36:56,377 [INFO]   Chunk istatistikleri — min: 7, max: 384, ort: 79 kelime
+2026-05-06 14:36:56,377 [INFO] Embedding modeli yükleniyor: intfloat/multilingual-e5-large
+2026-05-06 14:36:56,378 [INFO] Use pytorch device_name: cuda:0
+2026-05-06 14:36:56,378 [INFO] Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2026-05-06 14:37:01,461 [INFO] 85 chunk için embedding üretiliyor...
+2026-05-06 14:37:03,592 [INFO]   [32/85] chunk işlendi
+2026-05-06 14:37:05,319 [INFO]   [64/85] chunk işlendi
+2026-05-06 14:37:06,430 [INFO]   [85/85] chunk işlendi
+2026-05-06 14:37:06,431 [INFO]   Embedding boyutu: (85, 1024)
+2026-05-06 14:37:06,431 [INFO] FAISS index oluşturuluyor...
+2026-05-06 14:37:06,481 [INFO]   FAISS index oluşturuldu: 85 vektör, dim=1024
+2026-05-06 14:37:06,481 [INFO] Artifact'lar kaydediliyor...
+2026-05-06 14:37:06,514 [INFO]   FAISS index kaydedildi: data/bal_faiss.index
+2026-05-06 14:37:06,516 [INFO]   Chunk metadata kaydedildi: data/bal_chunks.json
+2026-05-06 14:37:06,536 [INFO]   Config snapshot kaydedildi: data/vectorstore_config.json
+2026-05-06 14:37:06,537 [INFO] 
+✅ Tamamlandı! Süre: 10.2 saniye
+2026-05-06 14:37:06,537 [INFO]    Toplam chunk: 85
+2026-05-06 14:37:06,537 [INFO]    FAISS index: data/bal_faiss.index
+2026-05-06 14:37:06,537 [INFO]    Chunk metadata: data/bal_chunks.json
+2026-05-06 14:37:06,537 [INFO] 
+Sonraki adım: python scripts/02_chatbot.py
+2026-05-06 14:47:26,493 [INFO] ============================================================
+2026-05-06 14:47:26,493 [INFO] BAL Chatbot — Vektör Veritabanı Oluşturma Başladı
+2026-05-06 14:47:26,493 [INFO] ============================================================
+2026-05-06 14:47:26,493 [INFO] Dosya okundu: /home/burak/Masaüstü/ChatbotBAL/Dataset/RAG_Dataset_BAL.md (59,993 karakter)
+2026-05-06 14:47:26,493 [INFO] Doküman bölümlere ayrılıyor...
+2026-05-06 14:47:26,494 [INFO]   90 bölüm çıkarıldı
+2026-05-06 14:47:26,494 [INFO] Chunk'lar oluşturuluyor...
+2026-05-06 14:47:26,499 [INFO]   Toplam 91 chunk oluşturuldu
+2026-05-06 14:47:26,499 [INFO]   Chunk istatistikleri — min: 7, max: 384, ort: 78 kelime
+2026-05-06 14:47:26,499 [INFO] Embedding modeli yükleniyor: intfloat/multilingual-e5-large
+2026-05-06 14:47:26,500 [INFO] Use pytorch device_name: cuda:0
+2026-05-06 14:47:26,500 [INFO] Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2026-05-06 14:47:33,208 [INFO] 91 chunk için embedding üretiliyor...
+2026-05-06 14:47:35,104 [INFO]   [32/91] chunk işlendi
+2026-05-06 14:47:36,602 [INFO]   [64/91] chunk işlendi
+2026-05-06 14:47:38,034 [INFO]   [91/91] chunk işlendi
+2026-05-06 14:47:38,035 [INFO]   Embedding boyutu: (91, 1024)
+2026-05-06 14:47:38,035 [INFO] FAISS index oluşturuluyor...
+2026-05-06 14:47:38,035 [INFO]   FAISS index oluşturuldu: 91 vektör, dim=1024
+2026-05-06 14:47:38,035 [INFO] Artifact'lar kaydediliyor...
+2026-05-06 14:47:38,036 [INFO]   FAISS index kaydedildi: data/bal_faiss.index
+2026-05-06 14:47:38,037 [INFO]   Chunk metadata kaydedildi: data/bal_chunks.json
+2026-05-06 14:47:38,037 [INFO]   Config snapshot kaydedildi: data/vectorstore_config.json
+2026-05-06 14:47:38,037 [INFO] 
+✅ Tamamlandı! Süre: 11.5 saniye
+2026-05-06 14:47:38,038 [INFO]    Toplam chunk: 91
+2026-05-06 14:47:38,038 [INFO]    FAISS index: data/bal_faiss.index
+2026-05-06 14:47:38,038 [INFO]    Chunk metadata: data/bal_chunks.json
+2026-05-06 14:47:38,038 [INFO] 
+Sonraki adım: python scripts/02_chatbot.py

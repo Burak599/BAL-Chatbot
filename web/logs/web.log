@@ -1,0 +1,852 @@
+2026-05-11 18:14:48,908 [INFO] BAL Chatbot Web API başlatılıyor...
+2026-05-11 18:14:48,908 [ERROR] FAISS index bulunamadı: data/bal_faiss.index
+Önce 'python scripts/01_build_vectorstore.py' çalıştırın.
+2026-05-11 18:16:51,320 [INFO] BAL Chatbot Web API başlatılıyor...
+2026-05-11 18:16:51,320 [INFO] FAISS index yükleniyor...
+2026-05-11 18:16:51,395 [INFO] Chunk metadata yükleniyor...
+2026-05-11 18:16:51,416 [INFO] Embedding modeli yükleniyor: ../intfloat/multilingual-e5-large
+2026-05-11 18:16:51,421 [INFO] Use pytorch device_name: cuda:0
+2026-05-11 18:16:51,421 [INFO] Load pretrained SentenceTransformer: ../intfloat/multilingual-e5-large
+2026-05-11 18:16:51,421 [ERROR] Path ../intfloat/multilingual-e5-large not found
+2026-05-11 18:17:08,185 [INFO] BAL Chatbot Web API başlatılıyor...
+2026-05-11 18:17:08,185 [INFO] FAISS index yükleniyor...
+2026-05-11 18:17:08,185 [INFO] Chunk metadata yükleniyor...
+2026-05-11 18:17:08,186 [INFO] Embedding modeli yükleniyor: intfloat/multilingual-e5-large
+2026-05-11 18:17:08,187 [INFO] Use pytorch device_name: cuda:0
+2026-05-11 18:17:08,187 [INFO] Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2026-05-11 18:17:18,107 [INFO] ✅ Vektör veritabanı hazır: 91 chunk
+2026-05-11 18:17:18,107 [INFO] 🌐 Sunucu başlatılıyor: http://localhost:5000
+2026-05-11 18:17:18,107 [INFO]    Arayüz: web/index.html dosyasını tarayıcıda açın
+2026-05-11 18:17:18,180 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.2:5000
+2026-05-11 18:17:18,180 [INFO] [33mPress CTRL+C to quit[0m
+2026-05-11 18:17:36,349 [INFO] 127.0.0.1 - - [11/May/2026 18:17:36] "[36mGET / HTTP/1.1[0m" 304 -
+2026-05-11 18:17:37,969 [INFO] 127.0.0.1 - - [11/May/2026 18:17:37] "GET /api/health HTTP/1.1" 200 -
+2026-05-11 18:17:47,152 [INFO] 127.0.0.1 - - [11/May/2026 18:17:47] "OPTIONS /api/chat HTTP/1.1" 200 -
+2026-05-11 18:18:08,523 [INFO] 127.0.0.1 - - [11/May/2026 18:18:08] "GET /api/health HTTP/1.1" 200 -
+2026-05-11 18:18:28,595 [INFO] 127.0.0.1 - - [11/May/2026 18:18:28] "POST /api/chat HTTP/1.1" 200 -
+2026-05-11 18:18:38,713 [INFO] 127.0.0.1 - - [11/May/2026 18:18:38] "GET /api/health HTTP/1.1" 200 -
+2026-05-11 18:19:08,710 [INFO] 127.0.0.1 - - [11/May/2026 18:19:08] "GET /api/health HTTP/1.1" 200 -
+2026-05-11 18:19:38,744 [INFO] 127.0.0.1 - - [11/May/2026 18:19:38] "GET /api/health HTTP/1.1" 200 -
+2026-05-11 18:20:08,715 [INFO] 127.0.0.1 - - [11/May/2026 18:20:08] "GET /api/health HTTP/1.1" 200 -
+2026-05-11 18:20:38,731 [INFO] 127.0.0.1 - - [11/May/2026 18:20:38] "GET /api/health HTTP/1.1" 200 -
+2026-05-11 18:21:08,738 [INFO] 127.0.0.1 - - [11/May/2026 18:21:08] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 09:38:03,227 [INFO] BAL Chatbot Web API starting...
+2026-05-12 09:38:03,242 [INFO] Backend: local
+2026-05-12 09:38:03,242 [INFO] Loading FAISS index...
+2026-05-12 09:38:03,249 [INFO] Loading chunk metadata...
+2026-05-12 09:38:03,261 [INFO] Loading embedding model: intfloat/multilingual-e5-large
+2026-05-12 09:38:03,266 [INFO] Use pytorch device_name: cuda:0
+2026-05-12 09:38:03,266 [INFO] Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2026-05-12 09:39:29,456 [INFO] BAL Chatbot Web API starting...
+2026-05-12 09:39:29,456 [INFO] Backend: local
+2026-05-12 09:39:29,456 [INFO] Loading FAISS index...
+2026-05-12 09:39:29,456 [INFO] Loading chunk metadata...
+2026-05-12 09:39:29,456 [INFO] Loading embedding model: intfloat/multilingual-e5-large
+2026-05-12 09:39:29,458 [INFO] Use pytorch device_name: cuda:0
+2026-05-12 09:39:29,458 [INFO] Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2026-05-12 09:39:34,457 [INFO] Vector store ready — 91 chunks
+2026-05-12 09:39:36,356 [INFO] Gemini API configured — model: gemini-3.1-flash-lite
+2026-05-12 09:39:36,356 [INFO] Server starting on http://localhost:5000
+2026-05-12 09:39:36,421 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.2:5000
+2026-05-12 09:39:36,421 [INFO] [33mPress CTRL+C to quit[0m
+2026-05-12 09:39:56,739 [INFO] 127.0.0.1 - - [12/May/2026 09:39:56] "[36mGET / HTTP/1.1[0m" 304 -
+2026-05-12 09:39:56,925 [INFO] 127.0.0.1 - - [12/May/2026 09:39:56] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 09:40:05,338 [INFO] 127.0.0.1 - - [12/May/2026 09:40:05] "OPTIONS /api/chat HTTP/1.1" 200 -
+2026-05-12 09:42:23,277 [INFO] 127.0.0.1 - - [12/May/2026 09:42:21] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 09:42:28,319 [INFO] 127.0.0.1 - - [12/May/2026 09:42:28] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 09:42:28,558 [INFO] 127.0.0.1 - - [12/May/2026 09:42:28] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 09:42:29,469 [INFO] 127.0.0.1 - - [12/May/2026 09:42:29] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 09:42:29,552 [INFO] 127.0.0.1 - - [12/May/2026 09:42:29] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 09:43:00,569 [INFO] 127.0.0.1 - - [12/May/2026 09:43:00] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 09:43:18,319 [INFO] 127.0.0.1 - - [12/May/2026 09:43:18] "POST /api/chat HTTP/1.1" 200 -
+2026-05-12 09:43:27,489 [INFO] 127.0.0.1 - - [12/May/2026 09:43:27] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 09:44:45,869 [INFO] 127.0.0.1 - - [12/May/2026 09:44:45] "[36mGET / HTTP/1.1[0m" 304 -
+2026-05-12 09:44:48,932 [INFO] 127.0.0.1 - - [12/May/2026 09:44:48] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 09:45:16,692 [INFO] 127.0.0.1 - - [12/May/2026 09:45:16] "OPTIONS /api/chat HTTP/1.1" 200 -
+2026-05-12 09:45:19,020 [INFO] 127.0.0.1 - - [12/May/2026 09:45:19] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 09:45:29,941 [INFO] 127.0.0.1 - - [12/May/2026 09:45:29] "POST /api/chat HTTP/1.1" 200 -
+2026-05-12 09:45:48,582 [INFO] 127.0.0.1 - - [12/May/2026 09:45:48] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 09:46:18,614 [INFO] 127.0.0.1 - - [12/May/2026 09:46:18] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 09:46:48,621 [INFO] 127.0.0.1 - - [12/May/2026 09:46:48] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 09:47:18,607 [INFO] 127.0.0.1 - - [12/May/2026 09:47:18] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 09:47:48,617 [INFO] 127.0.0.1 - - [12/May/2026 09:47:48] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 09:48:18,619 [INFO] 127.0.0.1 - - [12/May/2026 09:48:18] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 09:50:29,197 [INFO] BAL Chatbot Web API starting...
+2026-05-12 09:50:29,197 [INFO] Backend: api
+2026-05-12 09:50:29,198 [INFO] Loading FAISS index...
+2026-05-12 09:50:29,214 [INFO] Loading chunk metadata...
+2026-05-12 09:50:29,226 [INFO] Loading embedding model: intfloat/multilingual-e5-large
+2026-05-12 09:50:29,231 [INFO] Use pytorch device_name: cuda:0
+2026-05-12 09:50:29,231 [INFO] Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2026-05-12 09:50:34,539 [INFO] Vector store ready — 91 chunks
+2026-05-12 09:50:34,541 [INFO] Ollama service is reachable.
+2026-05-12 09:50:34,542 [INFO] Ollama model ready: turkish-bal
+2026-05-12 09:50:34,542 [INFO] Server starting on http://localhost:5000
+2026-05-12 09:50:34,657 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.2:5000
+2026-05-12 09:50:34,658 [INFO] [33mPress CTRL+C to quit[0m
+2026-05-12 09:51:44,735 [INFO] 127.0.0.1 - - [12/May/2026 09:51:44] "[36mGET / HTTP/1.1[0m" 304 -
+2026-05-12 09:51:44,821 [INFO] 127.0.0.1 - - [12/May/2026 09:51:44] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 09:51:54,115 [INFO] 127.0.0.1 - - [12/May/2026 09:51:54] "OPTIONS /api/chat HTTP/1.1" 200 -
+2026-05-12 09:51:56,732 [INFO] 127.0.0.1 - - [12/May/2026 09:51:56] "[35m[1mPOST /api/chat HTTP/1.1[0m" 500 -
+2026-05-12 09:51:56,795 [ERROR] Error on request:
+Traceback (most recent call last):
+  File "/home/burak/venv/lib/python3.12/site-packages/werkzeug/serving.py", line 370, in run_wsgi
+    execute(self.server.app)
+  File "/home/burak/venv/lib/python3.12/site-packages/werkzeug/serving.py", line 333, in execute
+    for data in application_iter:
+  File "/home/burak/venv/lib/python3.12/site-packages/werkzeug/wsgi.py", line 256, in __next__
+    return self._next()
+           ^^^^^^^^^^^^
+  File "/home/burak/venv/lib/python3.12/site-packages/werkzeug/wrappers/response.py", line 32, in _iter_encoded
+    for item in iterable:
+  File "/home/burak/venv/lib/python3.12/site-packages/flask/helpers.py", line 132, in generator
+    yield from gen
+  File "/home/burak/Masaüstü/ChatbotBAL/web/app.py", line 519, in generate
+    for event in token_stream:
+  File "/home/burak/Masaüstü/ChatbotBAL/web/app.py", line 379, in stream_gemini
+    model = gemini_client.GenerativeModel(
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'GenerativeModel'
+2026-05-12 09:52:15,533 [INFO] 127.0.0.1 - - [12/May/2026 09:52:15] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 09:52:45,533 [INFO] 127.0.0.1 - - [12/May/2026 09:52:45] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 09:53:15,530 [INFO] 127.0.0.1 - - [12/May/2026 09:53:15] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 09:53:48,803 [INFO] BAL Chatbot Web API starting...
+2026-05-12 09:53:48,803 [INFO] Backend: api
+2026-05-12 09:53:48,803 [INFO] Loading FAISS index...
+2026-05-12 09:53:48,803 [INFO] Loading chunk metadata...
+2026-05-12 09:53:48,804 [INFO] Loading embedding model: intfloat/multilingual-e5-large
+2026-05-12 09:53:48,805 [INFO] Use pytorch device_name: cuda:0
+2026-05-12 09:53:48,805 [INFO] Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2026-05-12 09:53:53,074 [INFO] Vector store ready — 91 chunks
+2026-05-12 09:53:53,074 [ERROR] Gemini API key is not set. Edit CONFIG['gemini_api_key'] in app.py.
+2026-05-12 09:56:12,901 [INFO] BAL Chatbot Web API starting...
+2026-05-12 09:56:12,902 [INFO] Backend: api
+2026-05-12 09:56:12,902 [INFO] Loading FAISS index...
+2026-05-12 09:56:12,902 [INFO] Loading chunk metadata...
+2026-05-12 09:56:12,902 [INFO] Loading embedding model: intfloat/multilingual-e5-large
+2026-05-12 09:56:12,903 [INFO] Use pytorch device_name: cuda:0
+2026-05-12 09:56:12,903 [INFO] Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2026-05-12 09:56:17,275 [INFO] Vector store ready — 91 chunks
+2026-05-12 09:56:17,276 [ERROR] Gemini API key is not set. Edit CONFIG['gemini_api_key'] in app.py.
+2026-05-12 09:58:43,497 [INFO] BAL Chatbot Web API starting...
+2026-05-12 09:58:43,497 [INFO] Backend: api
+2026-05-12 09:58:43,498 [INFO] Loading FAISS index...
+2026-05-12 09:58:43,498 [INFO] Loading chunk metadata...
+2026-05-12 09:58:43,498 [INFO] Loading embedding model: intfloat/multilingual-e5-large
+2026-05-12 09:58:43,499 [INFO] Use pytorch device_name: cuda:0
+2026-05-12 09:58:43,499 [INFO] Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2026-05-12 09:58:47,956 [INFO] Vector store ready — 91 chunks
+2026-05-12 09:58:47,956 [ERROR] Gemini API key is not set. Edit CONFIG['gemini_api_key'] in app.py.
+2026-05-12 10:00:39,697 [INFO] BAL Chatbot Web API starting...
+2026-05-12 10:00:39,697 [INFO] Backend: api
+2026-05-12 10:00:39,697 [INFO] Loading FAISS index...
+2026-05-12 10:00:39,697 [INFO] Loading chunk metadata...
+2026-05-12 10:00:39,698 [INFO] Loading embedding model: intfloat/multilingual-e5-large
+2026-05-12 10:00:39,699 [INFO] Use pytorch device_name: cuda:0
+2026-05-12 10:00:39,699 [INFO] Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2026-05-12 10:00:44,077 [INFO] Vector store ready — 91 chunks
+2026-05-12 10:00:44,164 [INFO] Gemini API configured — model: gemini-3.1-flash-lite
+2026-05-12 10:00:44,164 [INFO] Server starting on http://localhost:5000
+2026-05-12 10:00:44,166 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.2:5000
+2026-05-12 10:00:44,166 [INFO] [33mPress CTRL+C to quit[0m
+2026-05-12 10:00:46,436 [INFO] 127.0.0.1 - - [12/May/2026 10:00:46] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 10:01:16,434 [INFO] 127.0.0.1 - - [12/May/2026 10:01:16] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 10:01:47,333 [INFO] 127.0.0.1 - - [12/May/2026 10:01:47] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 10:02:17,340 [INFO] 127.0.0.1 - - [12/May/2026 10:02:17] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 10:02:47,892 [INFO] 127.0.0.1 - - [12/May/2026 10:02:47] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 10:03:17,895 [INFO] 127.0.0.1 - - [12/May/2026 10:03:17] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 10:03:47,895 [INFO] 127.0.0.1 - - [12/May/2026 10:03:47] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 10:04:17,904 [INFO] 127.0.0.1 - - [12/May/2026 10:04:17] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 10:04:47,905 [INFO] 127.0.0.1 - - [12/May/2026 10:04:47] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 10:05:17,904 [INFO] 127.0.0.1 - - [12/May/2026 10:05:17] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 10:05:47,907 [INFO] 127.0.0.1 - - [12/May/2026 10:05:47] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 10:05:49,145 [INFO] 127.0.0.1 - - [12/May/2026 10:05:49] "GET / HTTP/1.1" 200 -
+2026-05-12 10:05:49,481 [INFO] 127.0.0.1 - - [12/May/2026 10:05:49] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 10:05:49,685 [INFO] 127.0.0.1 - - [12/May/2026 10:05:49] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-05-12 10:05:55,389 [INFO] 127.0.0.1 - - [12/May/2026 10:05:55] "OPTIONS /api/chat HTTP/1.1" 200 -
+2026-05-12 10:06:07,294 [INFO] 127.0.0.1 - - [12/May/2026 10:06:07] "POST /api/chat HTTP/1.1" 200 -
+2026-05-12 10:06:18,041 [INFO] 127.0.0.1 - - [12/May/2026 10:06:18] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 10:06:19,717 [INFO] 127.0.0.1 - - [12/May/2026 10:06:19] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 10:06:35,126 [INFO] 127.0.0.1 - - [12/May/2026 10:06:35] "[35m[1mGET / HTTP/1.1[0m" 206 -
+2026-05-12 10:06:35,434 [INFO] 127.0.0.1 - - [12/May/2026 10:06:35] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-05-12 10:06:48,046 [INFO] 127.0.0.1 - - [12/May/2026 10:06:48] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 11:06:05,802 [INFO] 127.0.0.1 - - [12/May/2026 11:06:05] "GET / HTTP/1.1" 200 -
+2026-05-12 11:06:07,138 [INFO] 127.0.0.1 - - [12/May/2026 11:06:07] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-05-12 11:39:07,796 [INFO] 127.0.0.1 - - [12/May/2026 11:39:07] "GET / HTTP/1.1" 200 -
+2026-05-12 11:47:16,421 [INFO] 127.0.0.1 - - [12/May/2026 11:47:16] "[36mGET / HTTP/1.1[0m" 304 -
+2026-05-12 11:47:16,744 [INFO] 127.0.0.1 - - [12/May/2026 11:47:16] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 11:47:23,452 [INFO] 127.0.0.1 - - [12/May/2026 11:47:23] "OPTIONS /api/chat HTTP/1.1" 200 -
+2026-05-12 11:47:34,352 [INFO] 127.0.0.1 - - [12/May/2026 11:47:34] "POST /api/chat HTTP/1.1" 200 -
+2026-05-12 11:47:47,316 [INFO] 127.0.0.1 - - [12/May/2026 11:47:47] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 11:48:17,316 [INFO] 127.0.0.1 - - [12/May/2026 11:48:17] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 11:48:47,316 [INFO] 127.0.0.1 - - [12/May/2026 11:48:47] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 11:49:17,318 [INFO] 127.0.0.1 - - [12/May/2026 11:49:17] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 11:49:46,927 [INFO] 127.0.0.1 - - [12/May/2026 11:49:46] "[36mGET / HTTP/1.1[0m" 304 -
+2026-05-12 11:49:49,564 [INFO] 127.0.0.1 - - [12/May/2026 11:49:49] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 11:50:19,568 [INFO] 127.0.0.1 - - [12/May/2026 11:50:19] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 11:50:49,569 [INFO] 127.0.0.1 - - [12/May/2026 11:50:49] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 11:51:19,569 [INFO] 127.0.0.1 - - [12/May/2026 11:51:19] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 11:51:49,570 [INFO] 127.0.0.1 - - [12/May/2026 11:51:49] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 11:52:07,127 [INFO] 127.0.0.1 - - [12/May/2026 11:52:07] "GET / HTTP/1.1" 200 -
+2026-05-12 11:52:19,571 [INFO] 127.0.0.1 - - [12/May/2026 11:52:19] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 11:52:49,571 [INFO] 127.0.0.1 - - [12/May/2026 11:52:49] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 11:53:19,571 [INFO] 127.0.0.1 - - [12/May/2026 11:53:19] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 11:53:49,572 [INFO] 127.0.0.1 - - [12/May/2026 11:53:49] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 11:54:19,572 [INFO] 127.0.0.1 - - [12/May/2026 11:54:19] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 11:54:49,573 [INFO] 127.0.0.1 - - [12/May/2026 11:54:49] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 11:55:19,574 [INFO] 127.0.0.1 - - [12/May/2026 11:55:19] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 11:55:49,574 [INFO] 127.0.0.1 - - [12/May/2026 11:55:49] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 11:56:19,575 [INFO] 127.0.0.1 - - [12/May/2026 11:56:19] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 11:56:49,575 [INFO] 127.0.0.1 - - [12/May/2026 11:56:49] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 11:57:19,575 [INFO] 127.0.0.1 - - [12/May/2026 11:57:19] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 11:57:49,575 [INFO] 127.0.0.1 - - [12/May/2026 11:57:49] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 11:58:19,576 [INFO] 127.0.0.1 - - [12/May/2026 11:58:19] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 11:58:49,577 [INFO] 127.0.0.1 - - [12/May/2026 11:58:49] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 11:59:19,577 [INFO] 127.0.0.1 - - [12/May/2026 11:59:19] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 11:59:49,577 [INFO] 127.0.0.1 - - [12/May/2026 11:59:49] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:00:19,578 [INFO] 127.0.0.1 - - [12/May/2026 12:00:19] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:00:49,578 [INFO] 127.0.0.1 - - [12/May/2026 12:00:49] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:01:19,579 [INFO] 127.0.0.1 - - [12/May/2026 12:01:19] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:01:49,579 [INFO] 127.0.0.1 - - [12/May/2026 12:01:49] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:02:19,579 [INFO] 127.0.0.1 - - [12/May/2026 12:02:19] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:02:49,579 [INFO] 127.0.0.1 - - [12/May/2026 12:02:49] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:03:19,581 [INFO] 127.0.0.1 - - [12/May/2026 12:03:19] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:03:49,581 [INFO] 127.0.0.1 - - [12/May/2026 12:03:49] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:04:19,581 [INFO] 127.0.0.1 - - [12/May/2026 12:04:19] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:04:49,582 [INFO] 127.0.0.1 - - [12/May/2026 12:04:49] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:05:19,582 [INFO] 127.0.0.1 - - [12/May/2026 12:05:19] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:05:49,585 [INFO] 127.0.0.1 - - [12/May/2026 12:05:49] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:06:19,583 [INFO] 127.0.0.1 - - [12/May/2026 12:06:19] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:06:49,583 [INFO] 127.0.0.1 - - [12/May/2026 12:06:49] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:07:19,584 [INFO] 127.0.0.1 - - [12/May/2026 12:07:19] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:07:49,584 [INFO] 127.0.0.1 - - [12/May/2026 12:07:49] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:08:19,585 [INFO] 127.0.0.1 - - [12/May/2026 12:08:19] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:08:49,583 [INFO] 127.0.0.1 - - [12/May/2026 12:08:49] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:09:19,585 [INFO] 127.0.0.1 - - [12/May/2026 12:09:19] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:09:49,585 [INFO] 127.0.0.1 - - [12/May/2026 12:09:49] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:10:19,586 [INFO] 127.0.0.1 - - [12/May/2026 12:10:19] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:10:49,586 [INFO] 127.0.0.1 - - [12/May/2026 12:10:49] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:11:19,587 [INFO] 127.0.0.1 - - [12/May/2026 12:11:19] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:11:49,587 [INFO] 127.0.0.1 - - [12/May/2026 12:11:49] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:12:19,588 [INFO] 127.0.0.1 - - [12/May/2026 12:12:19] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:12:49,588 [INFO] 127.0.0.1 - - [12/May/2026 12:12:49] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:13:19,589 [INFO] 127.0.0.1 - - [12/May/2026 12:13:19] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:13:49,589 [INFO] 127.0.0.1 - - [12/May/2026 12:13:49] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:14:19,590 [INFO] 127.0.0.1 - - [12/May/2026 12:14:19] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:14:49,590 [INFO] 127.0.0.1 - - [12/May/2026 12:14:49] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:15:19,591 [INFO] 127.0.0.1 - - [12/May/2026 12:15:19] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:15:49,591 [INFO] 127.0.0.1 - - [12/May/2026 12:15:49] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:16:19,592 [INFO] 127.0.0.1 - - [12/May/2026 12:16:19] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:16:49,592 [INFO] 127.0.0.1 - - [12/May/2026 12:16:49] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:17:19,593 [INFO] 127.0.0.1 - - [12/May/2026 12:17:19] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:17:49,594 [INFO] 127.0.0.1 - - [12/May/2026 12:17:49] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:18:19,594 [INFO] 127.0.0.1 - - [12/May/2026 12:18:19] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:18:49,594 [INFO] 127.0.0.1 - - [12/May/2026 12:18:49] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:19:19,595 [INFO] 127.0.0.1 - - [12/May/2026 12:19:19] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:19:49,595 [INFO] 127.0.0.1 - - [12/May/2026 12:19:49] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:20:19,596 [INFO] 127.0.0.1 - - [12/May/2026 12:20:19] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:20:49,596 [INFO] 127.0.0.1 - - [12/May/2026 12:20:49] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:21:19,597 [INFO] 127.0.0.1 - - [12/May/2026 12:21:19] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:21:49,597 [INFO] 127.0.0.1 - - [12/May/2026 12:21:49] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:22:19,598 [INFO] 127.0.0.1 - - [12/May/2026 12:22:19] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:22:49,598 [INFO] 127.0.0.1 - - [12/May/2026 12:22:49] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:23:19,597 [INFO] 127.0.0.1 - - [12/May/2026 12:23:19] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:23:49,599 [INFO] 127.0.0.1 - - [12/May/2026 12:23:49] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:24:19,600 [INFO] 127.0.0.1 - - [12/May/2026 12:24:19] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:24:49,599 [INFO] 127.0.0.1 - - [12/May/2026 12:24:49] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:25:19,600 [INFO] 127.0.0.1 - - [12/May/2026 12:25:19] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:25:49,600 [INFO] 127.0.0.1 - - [12/May/2026 12:25:49] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:26:19,601 [INFO] 127.0.0.1 - - [12/May/2026 12:26:19] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:26:49,602 [INFO] 127.0.0.1 - - [12/May/2026 12:26:49] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:27:19,603 [INFO] 127.0.0.1 - - [12/May/2026 12:27:19] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:27:49,603 [INFO] 127.0.0.1 - - [12/May/2026 12:27:49] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:28:19,603 [INFO] 127.0.0.1 - - [12/May/2026 12:28:19] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:28:49,604 [INFO] 127.0.0.1 - - [12/May/2026 12:28:49] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:29:19,604 [INFO] 127.0.0.1 - - [12/May/2026 12:29:19] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:29:49,604 [INFO] 127.0.0.1 - - [12/May/2026 12:29:49] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:30:19,605 [INFO] 127.0.0.1 - - [12/May/2026 12:30:19] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:30:49,605 [INFO] 127.0.0.1 - - [12/May/2026 12:30:49] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:31:19,606 [INFO] 127.0.0.1 - - [12/May/2026 12:31:19] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:31:49,607 [INFO] 127.0.0.1 - - [12/May/2026 12:31:49] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:32:19,607 [INFO] 127.0.0.1 - - [12/May/2026 12:32:19] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:32:49,607 [INFO] 127.0.0.1 - - [12/May/2026 12:32:49] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:33:19,608 [INFO] 127.0.0.1 - - [12/May/2026 12:33:19] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:33:49,608 [INFO] 127.0.0.1 - - [12/May/2026 12:33:49] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:34:19,609 [INFO] 127.0.0.1 - - [12/May/2026 12:34:19] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:34:49,609 [INFO] 127.0.0.1 - - [12/May/2026 12:34:49] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:35:19,610 [INFO] 127.0.0.1 - - [12/May/2026 12:35:19] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:35:49,610 [INFO] 127.0.0.1 - - [12/May/2026 12:35:49] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:36:19,610 [INFO] 127.0.0.1 - - [12/May/2026 12:36:19] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:36:49,611 [INFO] 127.0.0.1 - - [12/May/2026 12:36:49] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:37:19,611 [INFO] 127.0.0.1 - - [12/May/2026 12:37:19] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:37:49,611 [INFO] 127.0.0.1 - - [12/May/2026 12:37:49] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:38:19,612 [INFO] 127.0.0.1 - - [12/May/2026 12:38:19] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:38:49,613 [INFO] 127.0.0.1 - - [12/May/2026 12:38:49] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:39:19,613 [INFO] 127.0.0.1 - - [12/May/2026 12:39:19] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:39:49,614 [INFO] 127.0.0.1 - - [12/May/2026 12:39:49] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:40:19,613 [INFO] 127.0.0.1 - - [12/May/2026 12:40:19] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:40:49,615 [INFO] 127.0.0.1 - - [12/May/2026 12:40:49] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:41:19,615 [INFO] 127.0.0.1 - - [12/May/2026 12:41:19] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:41:49,616 [INFO] 127.0.0.1 - - [12/May/2026 12:41:49] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:42:19,616 [INFO] 127.0.0.1 - - [12/May/2026 12:42:19] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:42:49,616 [INFO] 127.0.0.1 - - [12/May/2026 12:42:49] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:43:19,616 [INFO] 127.0.0.1 - - [12/May/2026 12:43:19] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:43:49,617 [INFO] 127.0.0.1 - - [12/May/2026 12:43:49] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:44:19,617 [INFO] 127.0.0.1 - - [12/May/2026 12:44:19] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:44:49,618 [INFO] 127.0.0.1 - - [12/May/2026 12:44:49] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:45:19,618 [INFO] 127.0.0.1 - - [12/May/2026 12:45:19] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:45:49,618 [INFO] 127.0.0.1 - - [12/May/2026 12:45:49] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:46:19,619 [INFO] 127.0.0.1 - - [12/May/2026 12:46:19] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:46:49,620 [INFO] 127.0.0.1 - - [12/May/2026 12:46:49] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:47:19,620 [INFO] 127.0.0.1 - - [12/May/2026 12:47:19] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:47:49,620 [INFO] 127.0.0.1 - - [12/May/2026 12:47:49] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:48:19,620 [INFO] 127.0.0.1 - - [12/May/2026 12:48:19] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:48:49,624 [INFO] 127.0.0.1 - - [12/May/2026 12:48:49] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:49:19,622 [INFO] 127.0.0.1 - - [12/May/2026 12:49:19] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:49:49,622 [INFO] 127.0.0.1 - - [12/May/2026 12:49:49] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:50:19,623 [INFO] 127.0.0.1 - - [12/May/2026 12:50:19] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:50:49,623 [INFO] 127.0.0.1 - - [12/May/2026 12:50:49] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:51:19,623 [INFO] 127.0.0.1 - - [12/May/2026 12:51:19] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:51:49,624 [INFO] 127.0.0.1 - - [12/May/2026 12:51:49] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:52:19,865 [INFO] 127.0.0.1 - - [12/May/2026 12:52:19] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:52:49,859 [INFO] 127.0.0.1 - - [12/May/2026 12:52:49] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:53:19,860 [INFO] 127.0.0.1 - - [12/May/2026 12:53:19] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:54:24,864 [INFO] BAL Chatbot Web API starting...
+2026-05-12 12:54:24,864 [INFO] Backend: api
+2026-05-12 12:54:24,864 [INFO] Loading FAISS index...
+2026-05-12 12:54:24,865 [INFO] Loading chunk metadata...
+2026-05-12 12:54:24,865 [INFO] Loading embedding model: intfloat/multilingual-e5-large
+2026-05-12 12:54:24,866 [INFO] Use pytorch device_name: cuda:0
+2026-05-12 12:54:24,867 [INFO] Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2026-05-12 12:54:43,568 [INFO] Vector store ready — 91 chunks
+2026-05-12 12:54:44,282 [INFO] Gemini API configured — model: gemini-3.1-flash-lite
+2026-05-12 12:54:44,282 [INFO] Server starting on http://localhost:5000
+2026-05-12 12:54:44,337 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.2:5000
+2026-05-12 12:54:44,338 [INFO] [33mPress CTRL+C to quit[0m
+2026-05-12 12:54:49,867 [INFO] 127.0.0.1 - - [12/May/2026 12:54:49] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:55:19,866 [INFO] 127.0.0.1 - - [12/May/2026 12:55:19] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:55:36,543 [INFO] 127.0.0.1 - - [12/May/2026 12:55:36] "GET / HTTP/1.1" 200 -
+2026-05-12 12:55:49,865 [INFO] 127.0.0.1 - - [12/May/2026 12:55:49] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:56:20,582 [INFO] 127.0.0.1 - - [12/May/2026 12:56:20] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:56:35,516 [INFO] 127.0.0.1 - - [12/May/2026 12:56:35] "GET / HTTP/1.1" 200 -
+2026-05-12 12:56:35,739 [INFO] 127.0.0.1 - - [12/May/2026 12:56:35] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:56:47,615 [INFO] 127.0.0.1 - - [12/May/2026 12:56:47] "[35m[1mGET / HTTP/1.1[0m" 206 -
+2026-05-12 12:56:47,951 [INFO] 127.0.0.1 - - [12/May/2026 12:56:47] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-05-12 12:56:50,582 [INFO] 127.0.0.1 - - [12/May/2026 12:56:50] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:57:05,742 [INFO] 127.0.0.1 - - [12/May/2026 12:57:05] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:57:14,996 [INFO] 127.0.0.1 - - [12/May/2026 12:57:14] "GET / HTTP/1.1" 200 -
+2026-05-12 12:57:15,819 [INFO] 127.0.0.1 - - [12/May/2026 12:57:15] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:57:21,290 [INFO] 127.0.0.1 - - [12/May/2026 12:57:21] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:57:35,742 [INFO] 127.0.0.1 - - [12/May/2026 12:57:35] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:57:45,765 [INFO] 127.0.0.1 - - [12/May/2026 12:57:45] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:57:51,290 [INFO] 127.0.0.1 - - [12/May/2026 12:57:51] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:57:54,483 [INFO] 127.0.0.1 - - [12/May/2026 12:57:54] "POST /api/chat HTTP/1.1" 200 -
+2026-05-12 12:58:15,763 [INFO] 127.0.0.1 - - [12/May/2026 12:58:15] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 12:59:07,627 [INFO] 127.0.0.1 - - [12/May/2026 12:59:07] "GET /api/health HTTP/1.1" 200 -
+2026-05-13 11:48:33,349 [INFO] BAL Chatbot Web API starting...
+2026-05-13 11:48:33,380 [INFO] Backend: api
+2026-05-13 11:48:33,380 [INFO] Loading FAISS index...
+2026-05-13 11:48:33,405 [INFO] Loading chunk metadata...
+2026-05-13 11:48:33,416 [INFO] Loading embedding model: intfloat/multilingual-e5-large
+2026-05-13 11:48:33,419 [INFO] Use pytorch device_name: cuda:0
+2026-05-13 11:48:33,420 [INFO] Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2026-05-13 11:48:59,015 [INFO] Vector store ready — 91 chunks
+2026-05-13 11:49:00,728 [INFO] Gemini API configured — model: gemini-3.1-flash-lite
+2026-05-13 11:49:00,729 [INFO] Server starting on http://localhost:5000
+2026-05-13 11:49:00,789 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.2:5000
+2026-05-13 11:49:00,789 [INFO] [33mPress CTRL+C to quit[0m
+2026-05-13 11:50:33,551 [INFO] 127.0.0.1 - - [13/May/2026 11:50:33] "[33mGET /apple-touch-icon-precomposed.png HTTP/1.1[0m" 404 -
+2026-05-13 11:50:33,601 [INFO] 127.0.0.1 - - [13/May/2026 11:50:33] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-05-13 11:50:33,604 [INFO] 127.0.0.1 - - [13/May/2026 11:50:33] "[33mGET /apple-touch-icon.png HTTP/1.1[0m" 404 -
+2026-05-13 11:50:38,351 [INFO] 127.0.0.1 - - [13/May/2026 11:50:38] "GET / HTTP/1.1" 200 -
+2026-05-13 11:50:39,161 [INFO] 127.0.0.1 - - [13/May/2026 11:50:39] "GET /api/health HTTP/1.1" 200 -
+2026-05-13 11:51:09,165 [INFO] 127.0.0.1 - - [13/May/2026 11:51:09] "GET /api/health HTTP/1.1" 200 -
+2026-05-13 11:51:39,169 [INFO] 127.0.0.1 - - [13/May/2026 11:51:39] "GET /api/health HTTP/1.1" 200 -
+2026-05-13 11:51:41,837 [INFO] 127.0.0.1 - - [13/May/2026 11:51:41] "POST /api/chat HTTP/1.1" 200 -
+2026-05-14 14:04:44,751 [INFO] BAL Chatbot Web API starting...
+2026-05-14 14:04:44,776 [INFO] Backend: api
+2026-05-14 14:04:44,777 [INFO] Loading FAISS index...
+2026-05-14 14:04:44,793 [INFO] Loading chunk metadata...
+2026-05-14 14:04:44,805 [INFO] Loading embedding model: intfloat/multilingual-e5-large
+2026-05-14 14:04:44,810 [INFO] Use pytorch device_name: cuda:0
+2026-05-14 14:04:44,810 [INFO] Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2026-05-14 14:05:10,419 [INFO] Vector store ready — 91 chunks
+2026-05-14 14:05:11,874 [INFO] Gemini API configured — model: gemini-3.1-flash-lite
+2026-05-14 14:05:11,874 [INFO] Server starting on http://localhost:5000
+2026-05-14 14:05:11,934 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.2:5000
+2026-05-14 14:05:11,934 [INFO] [33mPress CTRL+C to quit[0m
+2026-05-15 10:55:28,386 [INFO] BAL Chatbot Web API starting...
+2026-05-15 10:55:28,411 [INFO] Backend: api
+2026-05-15 10:55:28,412 [INFO] Loading FAISS index...
+2026-05-15 10:55:28,428 [INFO] Loading chunk metadata...
+2026-05-15 10:55:28,440 [INFO] Loading embedding model: intfloat/multilingual-e5-large
+2026-05-15 10:55:28,445 [INFO] Use pytorch device_name: cuda:0
+2026-05-15 10:55:28,445 [INFO] Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2026-05-15 10:55:50,988 [INFO] Vector store ready — 91 chunks
+2026-05-15 10:55:52,509 [INFO] Gemini API configured — model: gemini-3.1-flash-lite
+2026-05-15 10:55:52,510 [INFO] Server starting on http://localhost:5000
+2026-05-15 10:55:52,570 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.2:5000
+2026-05-15 10:55:52,570 [INFO] [33mPress CTRL+C to quit[0m
+2026-05-21 10:56:08,043 [INFO] BAL Chatbot Web API starting...
+2026-05-21 10:56:08,067 [INFO] Backend: api
+2026-05-21 10:56:08,067 [INFO] Loading FAISS index...
+2026-05-21 10:56:08,084 [INFO] Loading chunk metadata...
+2026-05-21 10:56:08,095 [INFO] Loading embedding model: intfloat/multilingual-e5-large
+2026-05-21 10:56:08,102 [INFO] Use pytorch device_name: cpu
+2026-05-21 10:56:08,102 [INFO] Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2026-05-21 10:56:22,400 [INFO] Vector store ready — 91 chunks
+2026-05-21 10:56:23,815 [INFO] Gemini API configured — model: gemini-3.1-flash-lite
+2026-05-21 10:56:23,815 [INFO] Server starting on http://localhost:5000
+2026-05-21 10:56:23,884 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.2:5000
+2026-05-21 10:56:23,885 [INFO] [33mPress CTRL+C to quit[0m
+2026-05-21 11:15:22,185 [INFO] 127.0.0.1 - - [21/May/2026 11:15:22] "GET / HTTP/1.1" 200 -
+2026-05-21 11:15:23,381 [INFO] 127.0.0.1 - - [21/May/2026 11:15:23] "GET /api/health HTTP/1.1" 200 -
+2026-05-21 11:15:53,298 [INFO] 127.0.0.1 - - [21/May/2026 11:15:53] "GET /api/health HTTP/1.1" 200 -
+2026-05-21 11:15:53,564 [INFO] 127.0.0.1 - - [21/May/2026 11:15:53] "POST /api/chat HTTP/1.1" 200 -
+2026-05-21 11:16:17,747 [INFO] 127.0.0.1 - - [21/May/2026 11:16:17] "POST /api/chat HTTP/1.1" 200 -
+2026-05-21 11:16:23,280 [INFO] 127.0.0.1 - - [21/May/2026 11:16:23] "GET /api/health HTTP/1.1" 200 -
+2026-05-21 12:45:08,764 [INFO] 127.0.0.1 - - [21/May/2026 12:45:08] "[35m[1mGET / HTTP/1.1[0m" 206 -
+2026-05-21 12:45:09,408 [INFO] 127.0.0.1 - - [21/May/2026 12:45:09] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-05-21 12:46:10,930 [INFO] 127.0.0.1 - - [21/May/2026 12:46:10] "GET / HTTP/1.1" 200 -
+2026-05-21 12:46:11,472 [INFO] 127.0.0.1 - - [21/May/2026 12:46:11] "GET /api/health HTTP/1.1" 200 -
+2026-05-21 12:46:12,037 [INFO] 127.0.0.1 - - [21/May/2026 12:46:12] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-05-21 12:46:16,399 [INFO] 127.0.0.1 - - [21/May/2026 12:46:16] "POST /api/chat HTTP/1.1" 200 -
+2026-05-21 12:46:29,858 [INFO] 127.0.0.1 - - [21/May/2026 12:46:29] "POST /api/chat HTTP/1.1" 200 -
+2026-05-21 12:46:41,499 [INFO] 127.0.0.1 - - [21/May/2026 12:46:41] "GET /api/health HTTP/1.1" 200 -
+2026-05-21 12:46:42,843 [INFO] 127.0.0.1 - - [21/May/2026 12:46:42] "POST /api/chat HTTP/1.1" 200 -
+2026-05-21 12:46:50,134 [INFO] 127.0.0.1 - - [21/May/2026 12:46:50] "POST /api/chat HTTP/1.1" 200 -
+2026-05-21 12:46:54,909 [INFO] 127.0.0.1 - - [21/May/2026 12:46:54] "POST /api/chat HTTP/1.1" 200 -
+2026-05-21 12:47:08,089 [INFO] 127.0.0.1 - - [21/May/2026 12:47:08] "POST /api/chat HTTP/1.1" 200 -
+2026-05-21 12:47:11,475 [INFO] 127.0.0.1 - - [21/May/2026 12:47:11] "GET /api/health HTTP/1.1" 200 -
+2026-05-21 12:47:38,623 [INFO] 127.0.0.1 - - [21/May/2026 12:47:38] "POST /api/chat HTTP/1.1" 200 -
+2026-05-21 12:47:41,463 [INFO] 127.0.0.1 - - [21/May/2026 12:47:41] "GET /api/health HTTP/1.1" 200 -
+2026-05-21 12:48:11,467 [INFO] 127.0.0.1 - - [21/May/2026 12:48:11] "GET /api/health HTTP/1.1" 200 -
+2026-05-21 12:48:26,369 [INFO] 127.0.0.1 - - [21/May/2026 12:48:26] "POST /api/chat HTTP/1.1" 200 -
+2026-05-21 12:48:39,085 [INFO] 127.0.0.1 - - [21/May/2026 12:48:39] "POST /api/chat HTTP/1.1" 200 -
+2026-05-21 12:48:41,479 [INFO] 127.0.0.1 - - [21/May/2026 12:48:41] "GET /api/health HTTP/1.1" 200 -
+2026-05-21 12:48:47,061 [INFO] 127.0.0.1 - - [21/May/2026 12:48:47] "POST /api/chat HTTP/1.1" 200 -
+2026-05-21 12:49:02,705 [INFO] 127.0.0.1 - - [21/May/2026 12:49:02] "POST /api/chat HTTP/1.1" 200 -
+2026-05-21 12:49:11,464 [INFO] 127.0.0.1 - - [21/May/2026 12:49:11] "GET /api/health HTTP/1.1" 200 -
+2026-05-21 12:49:36,062 [INFO] 127.0.0.1 - - [21/May/2026 12:49:36] "POST /api/chat HTTP/1.1" 200 -
+2026-05-21 12:49:41,486 [INFO] 127.0.0.1 - - [21/May/2026 12:49:41] "GET /api/health HTTP/1.1" 200 -
+2026-05-21 12:49:46,253 [INFO] 127.0.0.1 - - [21/May/2026 12:49:46] "POST /api/chat HTTP/1.1" 200 -
+2026-05-21 12:50:06,331 [INFO] 127.0.0.1 - - [21/May/2026 12:50:06] "POST /api/chat HTTP/1.1" 200 -
+2026-05-21 12:50:11,766 [INFO] 127.0.0.1 - - [21/May/2026 12:50:11] "GET /api/health HTTP/1.1" 200 -
+2026-05-21 12:50:33,906 [INFO] 127.0.0.1 - - [21/May/2026 12:50:33] "POST /api/chat HTTP/1.1" 200 -
+2026-05-21 12:50:41,457 [INFO] 127.0.0.1 - - [21/May/2026 12:50:41] "GET /api/health HTTP/1.1" 200 -
+2026-05-21 12:50:47,351 [INFO] 127.0.0.1 - - [21/May/2026 12:50:47] "POST /api/chat HTTP/1.1" 200 -
+2026-05-21 12:51:11,990 [INFO] 127.0.0.1 - - [21/May/2026 12:51:11] "GET /api/health HTTP/1.1" 200 -
+2026-05-21 12:51:30,883 [INFO] Session cleared: session_i9w0w6i
+2026-05-21 12:51:30,884 [INFO] 127.0.0.1 - - [21/May/2026 12:51:30] "POST /api/clear HTTP/1.1" 200 -
+2026-05-21 12:51:41,477 [INFO] 127.0.0.1 - - [21/May/2026 12:51:41] "GET /api/health HTTP/1.1" 200 -
+2026-05-21 12:51:45,536 [INFO] 127.0.0.1 - - [21/May/2026 12:51:45] "POST /api/chat HTTP/1.1" 200 -
+2026-05-21 12:52:08,035 [INFO] 127.0.0.1 - - [21/May/2026 12:52:08] "POST /api/chat HTTP/1.1" 200 -
+2026-05-21 12:52:11,992 [INFO] 127.0.0.1 - - [21/May/2026 12:52:11] "GET /api/health HTTP/1.1" 200 -
+2026-05-21 12:52:41,476 [INFO] 127.0.0.1 - - [21/May/2026 12:52:41] "GET /api/health HTTP/1.1" 200 -
+2026-05-21 12:53:11,475 [INFO] 127.0.0.1 - - [21/May/2026 12:53:11] "GET /api/health HTTP/1.1" 200 -
+2026-05-21 12:53:41,994 [INFO] 127.0.0.1 - - [21/May/2026 12:53:41] "GET /api/health HTTP/1.1" 200 -
+2026-05-21 12:54:12,322 [INFO] 127.0.0.1 - - [21/May/2026 12:54:12] "GET /api/health HTTP/1.1" 200 -
+2026-05-21 12:55:18,997 [INFO] 127.0.0.1 - - [21/May/2026 12:55:18] "GET /api/health HTTP/1.1" 200 -
+2026-05-21 12:56:19,000 [INFO] 127.0.0.1 - - [21/May/2026 12:56:18] "GET /api/health HTTP/1.1" 200 -
+2026-05-21 12:57:19,008 [INFO] 127.0.0.1 - - [21/May/2026 12:57:19] "GET /api/health HTTP/1.1" 200 -
+2026-05-21 12:58:18,991 [INFO] 127.0.0.1 - - [21/May/2026 12:58:18] "GET /api/health HTTP/1.1" 200 -
+2026-05-21 12:59:19,025 [INFO] 127.0.0.1 - - [21/May/2026 12:59:19] "GET /api/health HTTP/1.1" 200 -
+2026-05-21 13:00:19,056 [INFO] 127.0.0.1 - - [21/May/2026 13:00:19] "GET /api/health HTTP/1.1" 200 -
+2026-05-21 13:01:27,372 [INFO] 127.0.0.1 - - [21/May/2026 13:01:27] "GET /api/health HTTP/1.1" 200 -
+2026-05-21 13:02:18,998 [INFO] 127.0.0.1 - - [21/May/2026 13:02:18] "GET /api/health HTTP/1.1" 200 -
+2026-05-21 13:03:19,059 [INFO] 127.0.0.1 - - [21/May/2026 13:03:19] "GET /api/health HTTP/1.1" 200 -
+2026-05-21 13:04:19,026 [INFO] 127.0.0.1 - - [21/May/2026 13:04:19] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 13:59:31,198 [INFO] BAL Chatbot Web API starting...
+2026-05-31 13:59:31,198 [INFO] Provider: groq
+2026-05-31 13:59:31,199 [INFO] Loading FAISS index...
+2026-05-31 13:59:31,214 [INFO] Loading chunk metadata...
+2026-05-31 13:59:31,216 [INFO] Loading embedding model: intfloat/multilingual-e5-large
+2026-05-31 13:59:31,223 [INFO] Use pytorch device_name: cuda:0
+2026-05-31 13:59:31,224 [INFO] Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2026-05-31 13:59:35,593 [INFO] Vector store ready — 91 chunks
+2026-05-31 13:59:35,593 [INFO] Groq configured — model: llama-3.3-70b-versatile
+2026-05-31 13:59:35,593 [INFO] LLM gateway ready — active provider: groq
+2026-05-31 13:59:35,593 [INFO] Server starting on http://localhost:5000
+2026-05-31 13:59:35,640 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.2:5000
+2026-05-31 13:59:35,640 [INFO] [33mPress CTRL+C to quit[0m
+2026-05-31 14:01:03,668 [INFO] 127.0.0.1 - - [31/May/2026 14:01:03] "GET / HTTP/1.1" 200 -
+2026-05-31 14:01:04,089 [INFO] 127.0.0.1 - - [31/May/2026 14:01:04] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 14:01:04,276 [INFO] 127.0.0.1 - - [31/May/2026 14:01:04] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-05-31 14:01:17,068 [INFO] 127.0.0.1 - - [31/May/2026 14:01:17] "POST /api/chat HTTP/1.1" 200 -
+2026-05-31 14:01:34,259 [INFO] 127.0.0.1 - - [31/May/2026 14:01:34] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 14:02:00,855 [INFO] 127.0.0.1 - - [31/May/2026 14:02:00] "POST /api/chat HTTP/1.1" 200 -
+2026-05-31 14:02:04,261 [INFO] 127.0.0.1 - - [31/May/2026 14:02:04] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 14:02:12,446 [INFO] 127.0.0.1 - - [31/May/2026 14:02:12] "POST /api/chat HTTP/1.1" 200 -
+2026-05-31 14:02:24,152 [INFO] 127.0.0.1 - - [31/May/2026 14:02:24] "POST /api/chat HTTP/1.1" 200 -
+2026-05-31 14:02:34,270 [INFO] 127.0.0.1 - - [31/May/2026 14:02:34] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 14:02:39,701 [INFO] 127.0.0.1 - - [31/May/2026 14:02:39] "POST /api/chat HTTP/1.1" 200 -
+2026-05-31 14:03:01,139 [INFO] 127.0.0.1 - - [31/May/2026 14:03:01] "POST /api/chat HTTP/1.1" 200 -
+2026-05-31 14:03:04,296 [INFO] 127.0.0.1 - - [31/May/2026 14:03:04] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 14:03:34,298 [INFO] 127.0.0.1 - - [31/May/2026 14:03:34] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 14:03:41,836 [INFO] 127.0.0.1 - - [31/May/2026 14:03:41] "POST /api/chat HTTP/1.1" 200 -
+2026-05-31 14:03:56,044 [INFO] 127.0.0.1 - - [31/May/2026 14:03:56] "POST /api/chat HTTP/1.1" 200 -
+2026-05-31 14:04:04,326 [INFO] 127.0.0.1 - - [31/May/2026 14:04:04] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 14:04:23,307 [INFO] 127.0.0.1 - - [31/May/2026 14:04:23] "POST /api/chat HTTP/1.1" 200 -
+2026-05-31 14:04:34,326 [INFO] 127.0.0.1 - - [31/May/2026 14:04:34] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 14:04:38,078 [INFO] 127.0.0.1 - - [31/May/2026 14:04:38] "POST /api/chat HTTP/1.1" 200 -
+2026-05-31 14:04:59,931 [INFO] 127.0.0.1 - - [31/May/2026 14:04:59] "POST /api/chat HTTP/1.1" 200 -
+2026-05-31 14:05:04,500 [INFO] 127.0.0.1 - - [31/May/2026 14:05:04] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 14:05:34,503 [INFO] 127.0.0.1 - - [31/May/2026 14:05:34] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 14:05:36,175 [INFO] 127.0.0.1 - - [31/May/2026 14:05:36] "POST /api/chat HTTP/1.1" 200 -
+2026-05-31 14:11:23,283 [INFO] BAL Chatbot Web API starting...
+2026-05-31 14:11:23,283 [INFO] Provider: groq
+2026-05-31 14:11:23,283 [INFO] Loading FAISS index...
+2026-05-31 14:11:23,284 [INFO] Loading chunk metadata...
+2026-05-31 14:11:23,285 [INFO] Loading embedding model: intfloat/multilingual-e5-large
+2026-05-31 14:11:23,287 [INFO] Use pytorch device_name: cuda:0
+2026-05-31 14:11:23,287 [INFO] Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2026-05-31 14:11:28,321 [INFO] Vector store ready — 108 chunks
+2026-05-31 14:11:28,321 [INFO] Groq configured — model: llama-3.3-70b-versatile
+2026-05-31 14:11:28,321 [INFO] LLM gateway ready — active provider: groq
+2026-05-31 14:11:28,321 [INFO] Server starting on http://localhost:5000
+2026-05-31 14:11:28,323 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.2:5000
+2026-05-31 14:11:28,323 [INFO] [33mPress CTRL+C to quit[0m
+2026-05-31 14:11:50,701 [INFO] 127.0.0.1 - - [31/May/2026 14:11:50] "[36mGET / HTTP/1.1[0m" 304 -
+2026-05-31 14:11:50,882 [INFO] 127.0.0.1 - - [31/May/2026 14:11:50] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 14:12:06,230 [INFO] 127.0.0.1 - - [31/May/2026 14:12:06] "POST /api/chat HTTP/1.1" 200 -
+2026-05-31 14:12:18,524 [INFO] 127.0.0.1 - - [31/May/2026 14:12:18] "POST /api/chat HTTP/1.1" 200 -
+2026-05-31 14:12:20,926 [INFO] 127.0.0.1 - - [31/May/2026 14:12:20] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 14:12:34,010 [INFO] 127.0.0.1 - - [31/May/2026 14:12:34] "POST /api/chat HTTP/1.1" 200 -
+2026-05-31 14:12:50,926 [INFO] 127.0.0.1 - - [31/May/2026 14:12:50] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 14:12:54,083 [INFO] 127.0.0.1 - - [31/May/2026 14:12:54] "POST /api/chat HTTP/1.1" 200 -
+2026-05-31 14:13:21,038 [INFO] 127.0.0.1 - - [31/May/2026 14:13:21] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 14:13:41,472 [INFO] 127.0.0.1 - - [31/May/2026 14:13:41] "POST /api/chat HTTP/1.1" 200 -
+2026-05-31 14:13:51,109 [INFO] 127.0.0.1 - - [31/May/2026 14:13:51] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 14:13:57,352 [INFO] 127.0.0.1 - - [31/May/2026 14:13:57] "POST /api/chat HTTP/1.1" 200 -
+2026-05-31 14:14:21,136 [INFO] 127.0.0.1 - - [31/May/2026 14:14:21] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 14:14:22,927 [INFO] 127.0.0.1 - - [31/May/2026 14:14:22] "POST /api/chat HTTP/1.1" 200 -
+2026-05-31 14:14:46,956 [INFO] 127.0.0.1 - - [31/May/2026 14:14:46] "POST /api/chat HTTP/1.1" 200 -
+2026-05-31 14:14:51,372 [INFO] 127.0.0.1 - - [31/May/2026 14:14:51] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 14:15:12,036 [INFO] 127.0.0.1 - - [31/May/2026 14:15:12] "POST /api/chat HTTP/1.1" 200 -
+2026-05-31 14:15:21,509 [INFO] 127.0.0.1 - - [31/May/2026 14:15:21] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 14:15:51,510 [INFO] 127.0.0.1 - - [31/May/2026 14:15:51] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 14:15:58,219 [INFO] 127.0.0.1 - - [31/May/2026 14:15:58] "POST /api/chat HTTP/1.1" 200 -
+2026-05-31 14:16:04,083 [INFO] 127.0.0.1 - - [31/May/2026 14:16:04] "POST /api/chat HTTP/1.1" 200 -
+2026-05-31 14:16:21,508 [INFO] 127.0.0.1 - - [31/May/2026 14:16:21] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 14:16:22,745 [INFO] 127.0.0.1 - - [31/May/2026 14:16:22] "POST /api/chat HTTP/1.1" 200 -
+2026-05-31 14:16:39,803 [INFO] 127.0.0.1 - - [31/May/2026 14:16:39] "POST /api/chat HTTP/1.1" 200 -
+2026-05-31 14:16:51,506 [INFO] 127.0.0.1 - - [31/May/2026 14:16:51] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 14:16:58,813 [INFO] 127.0.0.1 - - [31/May/2026 14:16:58] "POST /api/chat HTTP/1.1" 200 -
+2026-05-31 14:17:12,211 [INFO] 127.0.0.1 - - [31/May/2026 14:17:12] "POST /api/chat HTTP/1.1" 200 -
+2026-05-31 14:17:21,569 [INFO] 127.0.0.1 - - [31/May/2026 14:17:21] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 14:17:21,705 [INFO] 127.0.0.1 - - [31/May/2026 14:17:21] "POST /api/chat HTTP/1.1" 200 -
+2026-05-31 14:17:31,687 [INFO] 127.0.0.1 - - [31/May/2026 14:17:31] "POST /api/chat HTTP/1.1" 200 -
+2026-05-31 14:17:39,847 [INFO] 127.0.0.1 - - [31/May/2026 14:17:39] "POST /api/chat HTTP/1.1" 200 -
+2026-05-31 14:17:51,566 [INFO] 127.0.0.1 - - [31/May/2026 14:17:51] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 14:40:51,241 [INFO] BAL Chatbot Web API starting...
+2026-05-31 14:40:51,242 [INFO] Provider: groq
+2026-05-31 14:40:51,242 [INFO] HTTPS enforcement: True
+2026-05-31 14:40:51,242 [WARNING] FLASK_SECRET_KEY is not set. Sessions will reset after server restart.
+2026-05-31 14:40:51,242 [INFO] Loading FAISS index...
+2026-05-31 14:40:51,243 [INFO] Loading chunk metadata...
+2026-05-31 14:40:51,244 [INFO] Loading embedding model: intfloat/multilingual-e5-large
+2026-05-31 14:40:51,247 [INFO] Use pytorch device_name: cuda:0
+2026-05-31 14:40:51,247 [INFO] Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2026-05-31 14:40:56,627 [INFO] Vector store ready — 108 chunks
+2026-05-31 14:40:56,627 [INFO] Groq configured — model: llama-3.3-70b-versatile
+2026-05-31 14:40:56,627 [INFO] LLM gateway ready — active provider: groq
+2026-05-31 14:40:56,627 [INFO] Server starting on https://localhost:5000
+2026-05-31 14:40:56,701 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on https://127.0.0.1:5000
+ * Running on https://192.168.1.2:5000
+2026-05-31 14:40:56,701 [INFO] [33mPress CTRL+C to quit[0m
+2026-05-31 14:41:08,784 [INFO] 127.0.0.1 - - [31/May/2026 14:41:08] "GET / HTTP/1.1" 200 -
+2026-05-31 14:41:09,034 [INFO] 127.0.0.1 - - [31/May/2026 14:41:09] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 14:41:09,036 [INFO] 127.0.0.1 - - [31/May/2026 14:41:09] "GET /api/auth/status HTTP/1.1" 200 -
+2026-05-31 14:41:09,253 [INFO] 127.0.0.1 - - [31/May/2026 14:41:09] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-05-31 14:41:25,035 [INFO] 127.0.0.1 - - [31/May/2026 14:41:25] "POST /api/auth/guest HTTP/1.1" 200 -
+2026-05-31 14:41:39,040 [INFO] 127.0.0.1 - - [31/May/2026 14:41:39] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 14:41:50,511 [INFO] 127.0.0.1 - - [31/May/2026 14:41:50] "POST /api/chat HTTP/1.1" 200 -
+2026-05-31 14:42:09,042 [INFO] 127.0.0.1 - - [31/May/2026 14:42:09] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 14:59:04,165 [INFO] BAL Chatbot Web API starting...
+2026-05-31 14:59:04,181 [INFO] Provider: groq
+2026-05-31 14:59:04,181 [INFO] HTTPS enforcement: True
+2026-05-31 14:59:04,181 [INFO] Loading FAISS index...
+2026-05-31 14:59:04,196 [INFO] Loading chunk metadata...
+2026-05-31 14:59:04,218 [INFO] Loading embedding model: intfloat/multilingual-e5-large
+2026-05-31 14:59:04,222 [INFO] Use pytorch device_name: cuda:0
+2026-05-31 14:59:04,222 [INFO] Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2026-05-31 14:59:08,799 [INFO] Vector store ready — 108 chunks
+2026-05-31 14:59:08,799 [INFO] Groq configured — model: llama-3.3-70b-versatile
+2026-05-31 14:59:08,799 [INFO] LLM gateway ready — active provider: groq
+2026-05-31 14:59:08,799 [INFO] Server starting on https://localhost:5000
+2026-05-31 14:59:08,818 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on https://127.0.0.1:5000
+ * Running on https://192.168.1.2:5000
+2026-05-31 14:59:08,818 [INFO] [33mPress CTRL+C to quit[0m
+2026-05-31 14:59:35,507 [INFO] 127.0.0.1 - - [31/May/2026 14:59:35] "GET / HTTP/1.1" 200 -
+2026-05-31 14:59:35,648 [INFO] 127.0.0.1 - - [31/May/2026 14:59:35] "GET /api/auth/status HTTP/1.1" 200 -
+2026-05-31 14:59:35,861 [INFO] 127.0.0.1 - - [31/May/2026 14:59:35] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 14:59:57,595 [INFO] 127.0.0.1 - - [31/May/2026 14:59:57] "POST /api/auth/register HTTP/1.1" 200 -
+2026-05-31 15:00:05,789 [INFO] 127.0.0.1 - - [31/May/2026 15:00:05] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 15:00:09,116 [INFO] 127.0.0.1 - - [31/May/2026 15:00:09] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 15:00:35,798 [INFO] 127.0.0.1 - - [31/May/2026 15:00:35] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 15:01:05,801 [INFO] 127.0.0.1 - - [31/May/2026 15:01:05] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 15:01:35,793 [INFO] 127.0.0.1 - - [31/May/2026 15:01:35] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 15:02:05,794 [INFO] 127.0.0.1 - - [31/May/2026 15:02:05] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 15:02:29,568 [INFO] 127.0.0.1 - - [31/May/2026 15:02:29] "POST /api/auth/logout HTTP/1.1" 200 -
+2026-05-31 15:02:29,605 [INFO] 127.0.0.1 - - [31/May/2026 15:02:29] "[36mGET / HTTP/1.1[0m" 304 -
+2026-05-31 15:02:29,628 [INFO] 127.0.0.1 - - [31/May/2026 15:02:29] "GET /api/auth/status HTTP/1.1" 200 -
+2026-05-31 15:02:29,838 [INFO] 127.0.0.1 - - [31/May/2026 15:02:29] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 15:02:36,097 [INFO] 127.0.0.1 - - [31/May/2026 15:02:36] "POST /api/auth/guest HTTP/1.1" 200 -
+2026-05-31 15:02:59,908 [INFO] 127.0.0.1 - - [31/May/2026 15:02:59] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 15:03:30,141 [INFO] 127.0.0.1 - - [31/May/2026 15:03:30] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 15:03:36,619 [INFO] 127.0.0.1 - - [31/May/2026 15:03:36] "POST /api/auth/logout HTTP/1.1" 200 -
+2026-05-31 15:03:36,644 [INFO] 127.0.0.1 - - [31/May/2026 15:03:36] "[36mGET / HTTP/1.1[0m" 304 -
+2026-05-31 15:03:36,672 [INFO] 127.0.0.1 - - [31/May/2026 15:03:36] "GET /api/auth/status HTTP/1.1" 200 -
+2026-05-31 15:03:36,887 [INFO] 127.0.0.1 - - [31/May/2026 15:03:36] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 15:03:43,794 [INFO] 127.0.0.1 - - [31/May/2026 15:03:43] "[31m[1mPOST /api/auth/login HTTP/1.1[0m" 401 -
+2026-05-31 15:03:49,279 [INFO] 127.0.0.1 - - [31/May/2026 15:03:49] "POST /api/auth/login HTTP/1.1" 200 -
+2026-05-31 15:03:59,027 [INFO] 127.0.0.1 - - [31/May/2026 15:03:59] "POST /api/chat HTTP/1.1" 200 -
+2026-05-31 15:04:07,525 [INFO] 127.0.0.1 - - [31/May/2026 15:04:07] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 15:04:37,513 [INFO] 127.0.0.1 - - [31/May/2026 15:04:37] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 15:05:41,566 [INFO] 127.0.0.1 - - [31/May/2026 15:05:41] "[36mGET / HTTP/1.1[0m" 304 -
+2026-05-31 15:05:41,897 [INFO] 127.0.0.1 - - [31/May/2026 15:05:41] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 15:05:42,726 [INFO] 127.0.0.1 - - [31/May/2026 15:05:42] "GET /api/auth/status HTTP/1.1" 200 -
+2026-05-31 15:06:01,622 [INFO] 127.0.0.1 - - [31/May/2026 15:06:01] "POST /api/auth/logout HTTP/1.1" 200 -
+2026-05-31 15:06:01,649 [INFO] 127.0.0.1 - - [31/May/2026 15:06:01] "[36mGET / HTTP/1.1[0m" 304 -
+2026-05-31 15:06:01,702 [INFO] 127.0.0.1 - - [31/May/2026 15:06:01] "GET /api/auth/status HTTP/1.1" 200 -
+2026-05-31 15:06:01,911 [INFO] 127.0.0.1 - - [31/May/2026 15:06:01] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 15:06:03,787 [INFO] 127.0.0.1 - - [31/May/2026 15:06:03] "POST /api/auth/guest HTTP/1.1" 200 -
+2026-05-31 15:06:09,642 [INFO] 127.0.0.1 - - [31/May/2026 15:06:09] "POST /api/chat HTTP/1.1" 200 -
+2026-05-31 15:06:13,924 [INFO] 127.0.0.1 - - [31/May/2026 15:06:13] "POST /api/auth/logout HTTP/1.1" 200 -
+2026-05-31 15:06:13,951 [INFO] 127.0.0.1 - - [31/May/2026 15:06:13] "[36mGET / HTTP/1.1[0m" 304 -
+2026-05-31 15:06:13,968 [INFO] 127.0.0.1 - - [31/May/2026 15:06:13] "GET /api/auth/status HTTP/1.1" 200 -
+2026-05-31 15:06:14,178 [INFO] 127.0.0.1 - - [31/May/2026 15:06:14] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 15:06:15,457 [INFO] 127.0.0.1 - - [31/May/2026 15:06:15] "POST /api/auth/guest HTTP/1.1" 200 -
+2026-05-31 15:09:18,164 [INFO] BAL Chatbot Web API starting...
+2026-05-31 15:09:18,164 [INFO] Provider: groq
+2026-05-31 15:09:18,164 [INFO] HTTPS enforcement: True
+2026-05-31 15:09:18,165 [INFO] Loading FAISS index...
+2026-05-31 15:09:18,187 [INFO] Loading chunk metadata...
+2026-05-31 15:09:18,209 [INFO] Loading embedding model: intfloat/multilingual-e5-large
+2026-05-31 15:09:18,215 [INFO] Use pytorch device_name: cuda:0
+2026-05-31 15:09:18,215 [INFO] Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2026-05-31 15:09:22,587 [INFO] Vector store ready — 108 chunks
+2026-05-31 15:09:22,587 [INFO] Groq configured — model: llama-3.3-70b-versatile
+2026-05-31 15:09:22,587 [INFO] LLM gateway ready — active provider: groq
+2026-05-31 15:09:22,587 [INFO] Server starting on https://localhost:5000
+2026-05-31 15:09:22,639 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on https://127.0.0.1:5000
+ * Running on https://192.168.1.2:5000
+2026-05-31 15:09:22,639 [INFO] [33mPress CTRL+C to quit[0m
+2026-05-31 15:10:27,039 [INFO] 127.0.0.1 - - [31/May/2026 15:10:27] "[36mGET / HTTP/1.1[0m" 304 -
+2026-05-31 15:10:27,100 [INFO] 127.0.0.1 - - [31/May/2026 15:10:27] "GET /api/auth/status HTTP/1.1" 200 -
+2026-05-31 15:10:27,308 [INFO] 127.0.0.1 - - [31/May/2026 15:10:27] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 15:10:38,666 [INFO] 127.0.0.1 - - [31/May/2026 15:10:38] "POST /api/auth/login HTTP/1.1" 200 -
+2026-05-31 15:10:45,267 [INFO] 127.0.0.1 - - [31/May/2026 15:10:45] "POST /api/auth/logout HTTP/1.1" 200 -
+2026-05-31 15:10:45,286 [INFO] 127.0.0.1 - - [31/May/2026 15:10:45] "[36mGET / HTTP/1.1[0m" 304 -
+2026-05-31 15:10:45,303 [INFO] 127.0.0.1 - - [31/May/2026 15:10:45] "GET /api/auth/status HTTP/1.1" 200 -
+2026-05-31 15:10:45,513 [INFO] 127.0.0.1 - - [31/May/2026 15:10:45] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 15:10:48,748 [INFO] 127.0.0.1 - - [31/May/2026 15:10:48] "POST /api/auth/guest HTTP/1.1" 200 -
+2026-05-31 15:10:56,356 [INFO] 127.0.0.1 - - [31/May/2026 15:10:56] "POST /api/chat HTTP/1.1" 200 -
+2026-05-31 15:11:14,745 [INFO] 127.0.0.1 - - [31/May/2026 15:11:14] "POST /api/auth/logout HTTP/1.1" 200 -
+2026-05-31 15:11:14,775 [INFO] 127.0.0.1 - - [31/May/2026 15:11:14] "[36mGET / HTTP/1.1[0m" 304 -
+2026-05-31 15:11:15,017 [INFO] 127.0.0.1 - - [31/May/2026 15:11:15] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 15:11:15,830 [INFO] 127.0.0.1 - - [31/May/2026 15:11:15] "GET /api/auth/status HTTP/1.1" 200 -
+2026-05-31 15:11:17,490 [INFO] 127.0.0.1 - - [31/May/2026 15:11:17] "POST /api/auth/logout HTTP/1.1" 200 -
+2026-05-31 15:11:17,516 [INFO] 127.0.0.1 - - [31/May/2026 15:11:17] "[36mGET / HTTP/1.1[0m" 304 -
+2026-05-31 15:11:17,751 [INFO] 127.0.0.1 - - [31/May/2026 15:11:17] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 15:11:18,180 [INFO] 127.0.0.1 - - [31/May/2026 15:11:18] "GET /api/auth/status HTTP/1.1" 200 -
+2026-05-31 15:11:19,596 [INFO] 127.0.0.1 - - [31/May/2026 15:11:19] "POST /api/auth/logout HTTP/1.1" 200 -
+2026-05-31 15:11:19,631 [INFO] 127.0.0.1 - - [31/May/2026 15:11:19] "[36mGET / HTTP/1.1[0m" 304 -
+2026-05-31 15:11:19,945 [INFO] 127.0.0.1 - - [31/May/2026 15:11:19] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 15:11:20,370 [INFO] 127.0.0.1 - - [31/May/2026 15:11:20] "GET /api/auth/status HTTP/1.1" 200 -
+2026-05-31 15:11:36,003 [INFO] 127.0.0.1 - - [31/May/2026 15:11:36] "[36mGET / HTTP/1.1[0m" 304 -
+2026-05-31 15:11:36,262 [INFO] 127.0.0.1 - - [31/May/2026 15:11:36] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 15:11:36,683 [INFO] 127.0.0.1 - - [31/May/2026 15:11:36] "GET /api/auth/status HTTP/1.1" 200 -
+2026-05-31 15:11:41,220 [INFO] 127.0.0.1 - - [31/May/2026 15:11:41] "POST /api/auth/logout HTTP/1.1" 200 -
+2026-05-31 15:11:41,241 [INFO] 127.0.0.1 - - [31/May/2026 15:11:41] "[36mGET / HTTP/1.1[0m" 304 -
+2026-05-31 15:11:41,466 [INFO] 127.0.0.1 - - [31/May/2026 15:11:41] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 15:11:41,888 [INFO] 127.0.0.1 - - [31/May/2026 15:11:41] "GET /api/auth/status HTTP/1.1" 200 -
+2026-05-31 15:16:45,884 [INFO] BAL Chatbot Web API starting...
+2026-05-31 15:16:45,885 [INFO] Provider: groq
+2026-05-31 15:16:45,885 [INFO] HTTPS enforcement: True
+2026-05-31 15:16:45,885 [INFO] Loading FAISS index...
+2026-05-31 15:16:45,954 [INFO] Loading chunk metadata...
+2026-05-31 15:16:45,976 [INFO] Loading embedding model: intfloat/multilingual-e5-large
+2026-05-31 15:16:45,977 [INFO] Use pytorch device_name: cuda:0
+2026-05-31 15:16:45,977 [INFO] Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2026-05-31 15:16:50,301 [INFO] Vector store ready — 108 chunks
+2026-05-31 15:16:50,301 [INFO] Groq configured — model: llama-3.3-70b-versatile
+2026-05-31 15:16:50,301 [INFO] LLM gateway ready — active provider: groq
+2026-05-31 15:16:50,301 [INFO] Server starting on https://localhost:5000
+2026-05-31 15:16:50,373 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on https://127.0.0.1:5000
+ * Running on https://192.168.1.2:5000
+2026-05-31 15:16:50,373 [INFO] [33mPress CTRL+C to quit[0m
+2026-05-31 15:16:58,178 [INFO] 127.0.0.1 - - [31/May/2026 15:16:58] "[36mGET / HTTP/1.1[0m" 304 -
+2026-05-31 15:16:58,215 [INFO] 127.0.0.1 - - [31/May/2026 15:16:58] "GET /api/auth/status HTTP/1.1" 200 -
+2026-05-31 15:16:58,418 [INFO] 127.0.0.1 - - [31/May/2026 15:16:58] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 15:17:00,733 [INFO] 127.0.0.1 - - [31/May/2026 15:17:00] "POST /api/auth/guest HTTP/1.1" 200 -
+2026-05-31 15:17:05,059 [INFO] 127.0.0.1 - - [31/May/2026 15:17:05] "POST /api/auth/logout HTTP/1.1" 200 -
+2026-05-31 15:17:05,090 [INFO] 127.0.0.1 - - [31/May/2026 15:17:05] "[36mGET / HTTP/1.1[0m" 304 -
+2026-05-31 15:17:05,115 [INFO] 127.0.0.1 - - [31/May/2026 15:17:05] "GET /api/auth/status HTTP/1.1" 200 -
+2026-05-31 15:17:05,313 [INFO] 127.0.0.1 - - [31/May/2026 15:17:05] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 15:17:17,064 [INFO] 127.0.0.1 - - [31/May/2026 15:17:17] "POST /api/auth/guest HTTP/1.1" 200 -
+2026-05-31 15:17:21,424 [ERROR] Groq API HTTP error
+Traceback (most recent call last):
+  File "/home/burak/Masaüstü/ChatbotBAL/web/app.py", line 549, in stream_groq
+    resp.raise_for_status()
+  File "/home/burak/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 429 Client Error: Too Many Requests for url: https://api.groq.com/openai/v1/chat/completions
+2026-05-31 15:17:21,436 [INFO] 127.0.0.1 - - [31/May/2026 15:17:21] "POST /api/chat HTTP/1.1" 200 -
+2026-05-31 15:17:35,322 [INFO] 127.0.0.1 - - [31/May/2026 15:17:35] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 15:18:05,543 [INFO] 127.0.0.1 - - [31/May/2026 15:18:05] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 15:18:35,544 [INFO] 127.0.0.1 - - [31/May/2026 15:18:35] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 15:18:43,443 [ERROR] Groq API HTTP error
+Traceback (most recent call last):
+  File "/home/burak/Masaüstü/ChatbotBAL/web/app.py", line 549, in stream_groq
+    resp.raise_for_status()
+  File "/home/burak/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 429 Client Error: Too Many Requests for url: https://api.groq.com/openai/v1/chat/completions
+2026-05-31 15:18:43,443 [INFO] 127.0.0.1 - - [31/May/2026 15:18:43] "POST /api/chat HTTP/1.1" 200 -
+2026-05-31 15:19:05,542 [INFO] 127.0.0.1 - - [31/May/2026 15:19:05] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 15:19:26,041 [ERROR] Groq API HTTP error
+Traceback (most recent call last):
+  File "/home/burak/Masaüstü/ChatbotBAL/web/app.py", line 549, in stream_groq
+    resp.raise_for_status()
+  File "/home/burak/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 429 Client Error: Too Many Requests for url: https://api.groq.com/openai/v1/chat/completions
+2026-05-31 15:19:26,043 [INFO] 127.0.0.1 - - [31/May/2026 15:19:26] "POST /api/chat HTTP/1.1" 200 -
+2026-05-31 15:19:35,582 [INFO] 127.0.0.1 - - [31/May/2026 15:19:35] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 15:20:05,542 [INFO] 127.0.0.1 - - [31/May/2026 15:20:05] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 15:20:35,540 [INFO] 127.0.0.1 - - [31/May/2026 15:20:35] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 15:21:05,547 [INFO] 127.0.0.1 - - [31/May/2026 15:21:05] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 15:21:35,540 [INFO] 127.0.0.1 - - [31/May/2026 15:21:35] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 15:22:05,539 [INFO] 127.0.0.1 - - [31/May/2026 15:22:05] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 15:22:35,631 [INFO] 127.0.0.1 - - [31/May/2026 15:22:35] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 15:23:05,639 [INFO] 127.0.0.1 - - [31/May/2026 15:23:05] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 15:23:35,637 [INFO] 127.0.0.1 - - [31/May/2026 15:23:35] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 15:24:05,632 [INFO] 127.0.0.1 - - [31/May/2026 15:24:05] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 15:24:35,637 [INFO] 127.0.0.1 - - [31/May/2026 15:24:35] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 15:25:05,631 [INFO] 127.0.0.1 - - [31/May/2026 15:25:05] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 15:25:29,534 [ERROR] Groq API HTTP error
+Traceback (most recent call last):
+  File "/home/burak/Masaüstü/ChatbotBAL/web/app.py", line 549, in stream_groq
+    resp.raise_for_status()
+  File "/home/burak/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 429 Client Error: Too Many Requests for url: https://api.groq.com/openai/v1/chat/completions
+2026-05-31 15:25:29,535 [INFO] 127.0.0.1 - - [31/May/2026 15:25:29] "POST /api/chat HTTP/1.1" 200 -
+2026-05-31 15:25:35,636 [INFO] 127.0.0.1 - - [31/May/2026 15:25:35] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 15:26:05,640 [INFO] 127.0.0.1 - - [31/May/2026 15:26:05] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 15:26:35,640 [INFO] 127.0.0.1 - - [31/May/2026 15:26:35] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 15:27:05,637 [INFO] 127.0.0.1 - - [31/May/2026 15:27:05] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 15:27:35,633 [INFO] 127.0.0.1 - - [31/May/2026 15:27:35] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 15:28:05,640 [INFO] 127.0.0.1 - - [31/May/2026 15:28:05] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 15:28:35,639 [INFO] 127.0.0.1 - - [31/May/2026 15:28:35] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 15:29:05,634 [INFO] 127.0.0.1 - - [31/May/2026 15:29:05] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 15:29:35,641 [INFO] 127.0.0.1 - - [31/May/2026 15:29:35] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 15:30:05,640 [INFO] 127.0.0.1 - - [31/May/2026 15:30:05] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 15:30:35,640 [INFO] 127.0.0.1 - - [31/May/2026 15:30:35] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 15:31:05,636 [INFO] 127.0.0.1 - - [31/May/2026 15:31:05] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 15:31:35,633 [INFO] 127.0.0.1 - - [31/May/2026 15:31:35] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 15:32:05,639 [INFO] 127.0.0.1 - - [31/May/2026 15:32:05] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 15:32:35,641 [INFO] 127.0.0.1 - - [31/May/2026 15:32:35] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 15:33:05,640 [INFO] 127.0.0.1 - - [31/May/2026 15:33:05] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 15:33:35,637 [INFO] 127.0.0.1 - - [31/May/2026 15:33:35] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 15:34:12,067 [INFO] BAL Chatbot Web API starting...
+2026-05-31 15:34:12,068 [INFO] Provider: groq
+2026-05-31 15:34:12,068 [INFO] HTTPS enforcement: True
+2026-05-31 15:34:12,068 [INFO] Loading FAISS index...
+2026-05-31 15:34:12,069 [INFO] Loading chunk metadata...
+2026-05-31 15:34:12,071 [INFO] Loading embedding model: intfloat/multilingual-e5-large
+2026-05-31 15:34:12,075 [INFO] Use pytorch device_name: cuda:0
+2026-05-31 15:34:12,075 [INFO] Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2026-05-31 15:34:16,432 [INFO] Vector store ready — 108 chunks
+2026-05-31 15:34:16,433 [INFO] Groq configured — model: llama-3.3-70b-versatile
+2026-05-31 15:34:16,433 [INFO] LLM gateway ready — active provider: groq
+2026-05-31 15:34:16,433 [INFO] Server starting on https://localhost:5000
+2026-05-31 15:34:16,468 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on https://127.0.0.1:5000
+ * Running on https://192.168.1.2:5000
+2026-05-31 15:34:16,468 [INFO] [33mPress CTRL+C to quit[0m
+2026-05-31 15:34:37,046 [INFO] 127.0.0.1 - - [31/May/2026 15:34:37] "[36mGET / HTTP/1.1[0m" 304 -
+2026-05-31 15:34:37,299 [INFO] 127.0.0.1 - - [31/May/2026 15:34:37] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 15:34:37,995 [INFO] 127.0.0.1 - - [31/May/2026 15:34:37] "GET /api/auth/status HTTP/1.1" 200 -
+2026-05-31 15:34:42,286 [INFO] 127.0.0.1 - - [31/May/2026 15:34:42] "POST /api/auth/logout HTTP/1.1" 200 -
+2026-05-31 15:34:42,317 [INFO] 127.0.0.1 - - [31/May/2026 15:34:42] "[36mGET / HTTP/1.1[0m" 304 -
+2026-05-31 15:34:42,351 [INFO] 127.0.0.1 - - [31/May/2026 15:34:42] "GET /api/auth/status HTTP/1.1" 200 -
+2026-05-31 15:34:42,543 [INFO] 127.0.0.1 - - [31/May/2026 15:34:42] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 15:34:45,839 [INFO] 127.0.0.1 - - [31/May/2026 15:34:45] "POST /api/auth/guest HTTP/1.1" 200 -
+2026-05-31 15:34:51,956 [ERROR] Groq API HTTP error status=429 model=llama-3.3-70b-versatile rate_headers={'retry-after': '543', 'x-ratelimit-limit-requests': '1000', 'x-ratelimit-limit-tokens': '12000', 'x-ratelimit-remaining-requests': '1000', 'x-ratelimit-remaining-tokens': '12000', 'x-ratelimit-reset-requests': '1ms', 'x-ratelimit-reset-tokens': '1ms', 'x-request-id': 'req_01ksz0facvf92aecggzqh2x29v'} body=
+Traceback (most recent call last):
+  File "/home/burak/Masaüstü/ChatbotBAL/web/app.py", line 549, in stream_groq
+    resp.raise_for_status()
+  File "/home/burak/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 429 Client Error: Too Many Requests for url: https://api.groq.com/openai/v1/chat/completions
+2026-05-31 15:34:51,956 [INFO] 127.0.0.1 - - [31/May/2026 15:34:51] "POST /api/chat HTTP/1.1" 200 -
+2026-05-31 15:35:12,571 [INFO] 127.0.0.1 - - [31/May/2026 15:35:12] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 15:35:42,567 [INFO] 127.0.0.1 - - [31/May/2026 15:35:42] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 15:36:12,571 [INFO] 127.0.0.1 - - [31/May/2026 15:36:12] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 15:36:15,211 [ERROR] Groq API HTTP error status=429 model=llama-3.3-70b-versatile rate_headers={'retry-after': '460', 'x-ratelimit-limit-requests': '1000', 'x-ratelimit-limit-tokens': '12000', 'x-ratelimit-remaining-requests': '1000', 'x-ratelimit-remaining-tokens': '12000', 'x-ratelimit-reset-requests': '1ms', 'x-ratelimit-reset-tokens': '1ms', 'x-request-id': 'req_01ksz0hvphfrhv8xanxqs1fxm3'} body=
+Traceback (most recent call last):
+  File "/home/burak/Masaüstü/ChatbotBAL/web/app.py", line 549, in stream_groq
+    resp.raise_for_status()
+  File "/home/burak/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 429 Client Error: Too Many Requests for url: https://api.groq.com/openai/v1/chat/completions
+2026-05-31 15:36:15,212 [INFO] 127.0.0.1 - - [31/May/2026 15:36:15] "POST /api/chat HTTP/1.1" 200 -
+2026-05-31 15:36:42,561 [INFO] 127.0.0.1 - - [31/May/2026 15:36:42] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 15:37:12,576 [INFO] 127.0.0.1 - - [31/May/2026 15:37:12] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 15:37:31,742 [ERROR] Groq API HTTP error status=429 model=llama-3.3-70b-versatile rate_headers={'retry-after': '464', 'x-ratelimit-limit-requests': '1000', 'x-ratelimit-limit-tokens': '12000', 'x-ratelimit-remaining-requests': '1000', 'x-ratelimit-remaining-tokens': '12000', 'x-ratelimit-reset-requests': '1ms', 'x-ratelimit-reset-tokens': '1ms', 'x-request-id': 'req_01ksz0m6e2e3f91rqg34kc1kwk'} body=
+Traceback (most recent call last):
+  File "/home/burak/Masaüstü/ChatbotBAL/web/app.py", line 549, in stream_groq
+    resp.raise_for_status()
+  File "/home/burak/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 429 Client Error: Too Many Requests for url: https://api.groq.com/openai/v1/chat/completions
+2026-05-31 15:37:31,744 [INFO] 127.0.0.1 - - [31/May/2026 15:37:31] "POST /api/chat HTTP/1.1" 200 -
+2026-05-31 15:37:42,557 [INFO] 127.0.0.1 - - [31/May/2026 15:37:42] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 15:38:12,569 [INFO] 127.0.0.1 - - [31/May/2026 15:38:12] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 15:38:42,565 [INFO] 127.0.0.1 - - [31/May/2026 15:38:42] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 15:39:12,576 [INFO] 127.0.0.1 - - [31/May/2026 15:39:12] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 15:39:42,569 [INFO] 127.0.0.1 - - [31/May/2026 15:39:42] "GET /api/health HTTP/1.1" 200 -

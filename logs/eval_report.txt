@@ -1,0 +1,131 @@
+BAL Chatbot — Retrieval Kalite Raporu
+============================================================
+Tarih: 2026-05-06 12:35:40
+Toplam test sorusu: 10
+
+── Soru 1: BAL'ın kuruluş tarihi nedir?
+   Recall      : 100%
+   Top Score   : 0.845
+   Avg Score   : 0.836
+   Bulunan kw  : ['1953', 'Ege Koleji', 'Giraud']
+   Eksik kw    : []
+
+   Chunk başlıkları:
+     [0.845] Bornova Anadolu Lisesi (BAL) — Kapsamlı RAG Bilgi Seti > §B — Kulüpler, Topluluklar ve Etkinlikler > B.2 Spor Toplulukları > B.2.1 BALspor (Bornova Anadolu Lisesi Spor Kulübü) — Kuruluş: 2004 yılında BAL mezunları tarafından İzmir'de kurulmuştur. Faaliyet al...
+     [0.837] Bornova Anadolu Lisesi (BAL) — Kapsamlı RAG Bilgi Seti > 2. Okul Kültürü ve Gelenekler > 2.6 Spor: BALspor Kulübü — BAL Spor Kulübü (BALspor), 2004 yılında okulun mezunları tarafından kurulmuş olu...
+     [0.835] Bornova Anadolu Lisesi (BAL) — Kapsamlı RAG Bilgi Seti > 4. Sıkça Sorulan Sorular (SSS) > Bölüm E: Okul Kültürü ve Etkinlikler — S25: Ayran Günü nedir? Her yıl Mayıs ayında gerçekleştirilen BAL'ın en köklü gel...
+
+── Soru 2: Almanca bölümünün LGS taban puanı kaçtır?
+   Recall      : 100%
+   Top Score   : 0.879
+   Avg Score   : 0.854
+   Bulunan kw  : ['484', 'Almanca', 'taban']
+   Eksik kw    : []
+
+   Chunk başlıkları:
+     [0.879] Bornova Anadolu Lisesi (BAL) — Kapsamlı RAG Bilgi Seti > §C — SSS Güncellemeleri (Mevcut §4'e Eklenecek) > Bölüm J: LGS Taban Puanları — S51: BAL'ın LGS taban puanları yıllar içinde nasıl değişti? Tüm üç bölümde 2021'...
+     [0.860] Bornova Anadolu Lisesi (BAL) — Kapsamlı RAG Bilgi Seti > §A — LGS Taban Puanları: Yıllara Göre Tarihsel Tablo (2018–2025) > A.5 Genel Değerlendirme: Puan Trendi — Tüm üç bölümde de LGS taban puanları 2021'den 2025'e kadar belirgin bir yükseliş...
+     [0.857] Bornova Anadolu Lisesi (BAL) — Kapsamlı RAG Bilgi Seti > §A — LGS Taban Puanları: Yıllara Göre Tarihsel Tablo (2018–2025) > A.3 Almanca Bölümü — Yıllara Göre LGS Taban Puanları — Yıl Taban Puanı Yüzdelik Dilim Kontenjan Not 2018 — — 60 Arşiv veriye ulaşılamad...
+
+── Soru 3: Ayran Günü nedir?
+   Recall      : 100%
+   Top Score   : 0.873
+   Avg Score   : 0.812
+   Bulunan kw  : ['Mayıs', 'şenlik', 'geleneksel', 'müzik']
+   Eksik kw    : []
+
+   Chunk başlıkları:
+     [0.873] Bornova Anadolu Lisesi (BAL) — Kapsamlı RAG Bilgi Seti > 2. Okul Kültürü ve Gelenekler > 2.2 Ayran Günü — Ayran Günü, her yıl eğitim-öğretim döneminin sonunda, genellikle Mayıs ayında, d...
+     [0.819] Bornova Anadolu Lisesi (BAL) — Kapsamlı RAG Bilgi Seti > 4. Sıkça Sorulan Sorular (SSS) > Bölüm E: Okul Kültürü ve Etkinlikler — S25: Ayran Günü nedir? Her yıl Mayıs ayında gerçekleştirilen BAL'ın en köklü gel...
+     [0.815] Bornova Anadolu Lisesi (BAL) — Kapsamlı RAG Bilgi Seti > §B — Kulüpler, Topluluklar ve Etkinlikler > B.4 Kültür, Sanat ve Dil Etkinlikleri > B.4.3 Kültür ve Sanat Şenlikleri — Yıl boyunca düzenlenen kültür-sanat etkinliklerinde öğrenciler çeşitli alanlarda...
+
+── Soru 4: BALEV bursuna nasıl başvurabilirim?
+   Recall      : 100%
+   Top Score   : 0.922
+   Avg Score   : 0.856
+   Bulunan kw  : ['balev.org.tr', 'burs', 'başvuru']
+   Eksik kw    : []
+
+   Chunk başlıkları:
+     [0.922] Bornova Anadolu Lisesi (BAL) — Kapsamlı RAG Bilgi Seti > 4. Sıkça Sorulan Sorular (SSS) > Bölüm F: BALEV Bursları — S30: BALEV bursu nedir, kimler başvurabilir? BALEV Burs Kulübü, 1983'te kurulan ...
+     [0.875] Bornova Anadolu Lisesi (BAL) — Kapsamlı RAG Bilgi Seti > 2. Okul Kültürü ve Gelenekler > 2.8 Mezun Ağı ve Destek Yapıları — BALEV (Bornova Anadolu Lisesi Eğitim Vakfı) BALEV, 1981 yılında BAL mezunları ta...
+     [0.830] Bornova Anadolu Lisesi (BAL) — Kapsamlı RAG Bilgi Seti > 4. Sıkça Sorulan Sorular (SSS) > Bölüm A: Kayıt, Yerleştirme ve Kabul — S1: BAL'a nasıl öğrenci alınır? BAL, MEB tarafından düzenlenen LGS (Liselere Geç...
+
+── Soru 5: Okula metro ile nasıl gidebilirim?
+   Recall      : 100%
+   Top Score   : 0.831
+   Avg Score   : 0.800
+   Bulunan kw  : ['Bornova Metro', 'otobüs', '267', '268']
+   Eksik kw    : []
+
+   Chunk başlıkları:
+     [0.831] Bornova Anadolu Lisesi (BAL) — Kapsamlı RAG Bilgi Seti > 5. İletişim ve Ulaşım — Özet Referans > 5.3 Toplu Taşıma ile Ulaşım — Bornova Metro İstasyonu çıkışından 267, 268, 368, 59 veya 505 numaralı ESHOT/İZU...
+     [0.806] Bornova Anadolu Lisesi (BAL) — Kapsamlı RAG Bilgi Seti > 4. Sıkça Sorulan Sorular (SSS) > Bölüm G: İletişim ve Ulaşım — S32: BAL'ın telefon numarası nedir? 0232 388 10 39 (Kaynak: izmirbal.meb.k12.tr ...
+     [0.799] Bornova Anadolu Lisesi (BAL) — Kapsamlı RAG Bilgi Seti > 4. Sıkça Sorulan Sorular (SSS) > Bölüm C: Günlük Okul Hayatı — S14: Okul kaçta başlıyor, kaçta bitiyor? Resmi MEB verilerine göre: Sabah girişi...
+
+── Soru 6: Ultimate Frizbi takımı var mı?
+   Recall      : 100%
+   Top Score   : 0.854
+   Avg Score   : 0.810
+   Bulunan kw  : ['Ultimate Frizbi', 'tek lise', 'BALspor']
+   Eksik kw    : []
+
+   Chunk başlıkları:
+     [0.854] Bornova Anadolu Lisesi (BAL) — Kapsamlı RAG Bilgi Seti > 2. Okul Kültürü ve Gelenekler > 2.6 Spor: BALspor Kulübü — BAL Spor Kulübü (BALspor), 2004 yılında okulun mezunları tarafından kurulmuş olu...
+     [0.824] Bornova Anadolu Lisesi (BAL) — Kapsamlı RAG Bilgi Seti > §B — Kulüpler, Topluluklar ve Etkinlikler > B.2 Spor Toplulukları > B.2.1 BALspor (Bornova Anadolu Lisesi Spor Kulübü) — Kuruluş: 2004 yılında BAL mezunları tarafından İzmir'de kurulmuştur. Faaliyet al...
+     [0.819] Bornova Anadolu Lisesi (BAL) — Kapsamlı RAG Bilgi Seti > 4. Sıkça Sorulan Sorular (SSS) > Bölüm E: Okul Kültürü ve Etkinlikler — S25: Ayran Günü nedir? Her yıl Mayıs ayında gerçekleştirilen BAL'ın en köklü gel...
+
+── Soru 7: Hazırlık sınıfında ne öğretilir?
+   Recall      : 100%
+   Top Score   : 0.805
+   Avg Score   : 0.792
+   Bulunan kw  : ['yabancı dil', 'yoğunlaştırılmış', 'hazırlık']
+   Eksik kw    : []
+
+   Chunk başlıkları:
+     [0.805] Bornova Anadolu Lisesi (BAL) — Kapsamlı RAG Bilgi Seti > 4. Sıkça Sorulan Sorular (SSS) > Bölüm B: Eğitim, Bölümler ve Programlar — S7: BAL kaç yıllık eğitim veriyor? 2022 itibarıyla hazırlık sınıfının yeniden aç...
+     [0.798] Bornova Anadolu Lisesi (BAL) — Kapsamlı RAG Bilgi Seti > 1. Resmi ve Akademik Bilgiler > 1.6 Eğitim Yapısı ve Bölümler — BAL, hazırlık sınıfı dahil 5 yıllık eğitim vermektedir. Her yıl toplam 13 şube a...
+     [0.791] Bornova Anadolu Lisesi (BAL) — Kapsamlı RAG Bilgi Seti > 3. Fiziksel İmkânlar ve Kampüs > 3.2 Derslikler ve Eğitim Sınıfları — MEB resmi verilerine göre: 50 derslik, 1 müzik sınıfı, 2 resim sınıfı, 1 BT sını...
+
+── Soru 8: DSD diploması nedir?
+   Recall      : 100%
+   Top Score   : 0.811
+   Avg Score   : 0.775
+   Bulunan kw  : ['Deutsches Sprachdiplom', 'Almanca', 'diploma']
+   Eksik kw    : []
+
+   Chunk başlıkları:
+     [0.811] Bornova Anadolu Lisesi (BAL) — Kapsamlı RAG Bilgi Seti > 2. Okul Kültürü ve Gelenekler > 2.7 Uluslararası Bağlantılar — PASCH Okullar Ağı (Schulen: Partner der Zukunft): BAL, Almanya Dışişleri Bakanlı...
+     [0.798] Bornova Anadolu Lisesi (BAL) — Kapsamlı RAG Bilgi Seti > 4. Sıkça Sorulan Sorular (SSS) > Bölüm B: Eğitim, Bölümler ve Programlar — S7: BAL kaç yıllık eğitim veriyor? 2022 itibarıyla hazırlık sınıfının yeniden aç...
+     [0.755] Bornova Anadolu Lisesi (BAL) — Kapsamlı RAG Bilgi Seti > §C — SSS Güncellemeleri (Mevcut §4'e Eklenecek) > Bölüm I: Kulüpler ve Topluluklar — S45: BAL'da hangi BALEV destekli topluluklar var? BALEV tarafından desteklenen d...
+
+── Soru 9: Okulun vizyon cümlesi nedir?
+   Recall      : 50%
+   Top Score   : 0.827
+   Avg Score   : 0.808
+   Bulunan kw  : ['Geleceğin Aydınlık Sesi']
+   Eksik kw    : ['vizyon']
+
+   Chunk başlıkları:
+     [0.827] Bornova Anadolu Lisesi (BAL) — Kapsamlı RAG Bilgi Seti > 1. Resmi ve Akademik Bilgiler > 1.4 Vizyon — > "Bornova Anadolu Lisesi; Geleceğin Aydınlık Sesi."...
+     [0.822] Bornova Anadolu Lisesi (BAL) — Kapsamlı RAG Bilgi Seti > 1. Resmi ve Akademik Bilgiler > 1.5 Misyon — BAL'ın resmi misyonu dört temel başlık altında özetlenebilir: Bireysel Değerler:...
+     [0.800] Bornova Anadolu Lisesi (BAL) — Kapsamlı RAG Bilgi Seti > 2. Okul Kültürü ve Gelenekler > 2.1 "BAL Ruhu" Nedir? — "BAL Ruhu", okulun görece şehirden uzak ve kapalı kampüs yapısının doğurduğu, ha...
+
+── Soru 10: Pansiyon ücreti ne kadar?
+   Recall      : 100%
+   Top Score   : 0.845
+   Avg Score   : 0.807
+   Bulunan kw  : ['pansiyon', 'güncel veri']
+   Eksik kw    : []
+
+   Chunk başlıkları:
+     [0.845] Bornova Anadolu Lisesi (BAL) — Kapsamlı RAG Bilgi Seti > 3. Fiziksel İmkânlar ve Kampüs > 3.9 Pansiyon — BAL, kız ve erkek öğrenciler için ayrı birimler hâlinde pansiyon sunmaktadır: - ...
+     [0.841] Bornova Anadolu Lisesi (BAL) — Kapsamlı RAG Bilgi Seti > 4. Sıkça Sorulan Sorular (SSS) > Bölüm D: Kampüs ve Olanaklar — S18: Okulda pansiyon var mı? Evet. 120 kız + 120 erkek = toplam 240 öğrenci kapa...
+     [0.787] Bornova Anadolu Lisesi (BAL) — Kapsamlı RAG Bilgi Seti > 4. Sıkça Sorulan Sorular (SSS) > Bölüm C: Günlük Okul Hayatı — S14: Okul kaçta başlıyor, kaçta bitiyor? Resmi MEB verilerine göre: Sabah girişi...
+
+
+============================================================
+ÖZET
+  Ortalama Recall  : 95%
+  Ortalama Top Skor: 0.849
+  Başarılı (≥70%)  : 9/10

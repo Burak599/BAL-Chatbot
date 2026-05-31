@@ -1,0 +1,430 @@
+2026-05-06 15:08:18,213 [INFO] BAL Chatbot Web API başlatılıyor...
+2026-05-06 15:08:18,214 [INFO] FAISS index yükleniyor...
+2026-05-06 15:08:18,237 [INFO] Chunk metadata yükleniyor...
+2026-05-06 15:08:18,249 [INFO] Embedding modeli yükleniyor: sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2
+2026-05-06 15:08:18,254 [INFO] Use pytorch device_name: cuda:0
+2026-05-06 15:08:18,254 [INFO] Load pretrained SentenceTransformer: sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2
+2026-05-06 15:09:58,847 [INFO] ✅ Vektör veritabanı hazır: 91 chunk
+2026-05-06 15:09:58,859 [INFO] 🌐 Sunucu başlatılıyor: http://localhost:5000
+2026-05-06 15:09:58,859 [INFO]    Arayüz: web/index.html dosyasını tarayıcıda açın
+2026-05-06 15:09:59,058 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.2:5000
+2026-05-06 15:09:59,059 [INFO] [33mPress CTRL+C to quit[0m
+2026-05-06 15:11:54,138 [INFO] 127.0.0.1 - - [06/May/2026 15:11:54] "[33mGET / HTTP/1.1[0m" 404 -
+2026-05-06 15:11:55,160 [INFO] 127.0.0.1 - - [06/May/2026 15:11:55] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-05-06 15:16:29,543 [INFO] BAL Chatbot Web API başlatılıyor...
+2026-05-06 15:16:29,543 [INFO] FAISS index yükleniyor...
+2026-05-06 15:16:29,568 [INFO] Chunk metadata yükleniyor...
+2026-05-06 15:16:29,580 [INFO] Embedding modeli yükleniyor: sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2
+2026-05-06 15:16:29,585 [INFO] Use pytorch device_name: cuda:0
+2026-05-06 15:16:29,585 [INFO] Load pretrained SentenceTransformer: sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2
+2026-05-06 15:16:35,162 [INFO] ✅ Vektör veritabanı hazır: 91 chunk
+2026-05-06 15:16:35,162 [INFO] 🌐 Sunucu başlatılıyor: http://localhost:5000
+2026-05-06 15:16:35,162 [INFO]    Arayüz: web/index.html dosyasını tarayıcıda açın
+2026-05-06 15:16:35,165 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.2:5000
+2026-05-06 15:16:35,165 [INFO] [33mPress CTRL+C to quit[0m
+2026-05-06 15:16:59,283 [INFO] 127.0.0.1 - - [06/May/2026 15:16:59] "GET / HTTP/1.1" 200 -
+2026-05-06 15:16:59,848 [INFO] 127.0.0.1 - - [06/May/2026 15:16:59] "GET /api/health HTTP/1.1" 200 -
+2026-05-06 15:17:23,408 [INFO] 127.0.0.1 - - [06/May/2026 15:17:23] "OPTIONS /api/chat HTTP/1.1" 200 -
+2026-05-06 15:17:24,024 [ERROR] Exception on /api/chat [POST]
+Traceback (most recent call last):
+  File "/home/burak/venv/lib/python3.12/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/burak/venv/lib/python3.12/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/burak/venv/lib/python3.12/site-packages/flask_cors/extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+                                                ^^^^^^^^^^^^^^^^^^
+  File "/home/burak/venv/lib/python3.12/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/burak/venv/lib/python3.12/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/burak/Masaüstü/ChatbotBAL/web/app.py", line 231, in chat
+    retrieved = retrieve(user_message, top_k=CONFIG["retrieval_top_k"])
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/burak/Masaüstü/ChatbotBAL/web/app.py", line 157, in retrieve
+    scores, indices = faiss_index.search(embedding, top_k)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/burak/venv/lib/python3.12/site-packages/faiss/class_wrappers.py", line 383, in replacement_search
+    assert d == self.d
+           ^^^^^^^^^^^
+AssertionError
+2026-05-06 15:17:24,437 [INFO] 127.0.0.1 - - [06/May/2026 15:17:24] "[35m[1mPOST /api/chat HTTP/1.1[0m" 500 -
+2026-05-06 15:17:29,856 [INFO] 127.0.0.1 - - [06/May/2026 15:17:29] "GET /api/health HTTP/1.1" 200 -
+2026-05-06 15:17:59,867 [INFO] 127.0.0.1 - - [06/May/2026 15:17:59] "GET /api/health HTTP/1.1" 200 -
+2026-05-06 15:18:29,879 [INFO] 127.0.0.1 - - [06/May/2026 15:18:29] "GET /api/health HTTP/1.1" 200 -
+2026-05-06 15:18:59,897 [INFO] 127.0.0.1 - - [06/May/2026 15:18:59] "GET /api/health HTTP/1.1" 200 -
+2026-05-06 15:19:30,604 [INFO] 127.0.0.1 - - [06/May/2026 15:19:30] "GET /api/health HTTP/1.1" 200 -
+2026-05-06 15:20:33,818 [INFO] BAL Chatbot Web API başlatılıyor...
+2026-05-06 15:20:33,818 [INFO] FAISS index yükleniyor...
+2026-05-06 15:20:33,818 [INFO] Chunk metadata yükleniyor...
+2026-05-06 15:20:33,819 [INFO] Embedding modeli yükleniyor: sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2
+2026-05-06 15:20:33,820 [INFO] Use pytorch device_name: cuda:0
+2026-05-06 15:20:33,820 [INFO] Load pretrained SentenceTransformer: sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2
+2026-05-06 15:20:37,523 [INFO] ✅ Vektör veritabanı hazır: 91 chunk
+2026-05-06 15:20:37,523 [INFO] 🌐 Sunucu başlatılıyor: http://localhost:5000
+2026-05-06 15:20:37,523 [INFO]    Arayüz: web/index.html dosyasını tarayıcıda açın
+2026-05-06 15:20:37,526 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.2:5000
+2026-05-06 15:20:37,526 [INFO] [33mPress CTRL+C to quit[0m
+2026-05-06 15:21:03,913 [INFO] 127.0.0.1 - - [06/May/2026 15:21:03] "[36mGET / HTTP/1.1[0m" 304 -
+2026-05-06 15:21:04,032 [INFO] 127.0.0.1 - - [06/May/2026 15:21:04] "GET /api/health HTTP/1.1" 200 -
+2026-05-06 15:21:10,778 [INFO] 127.0.0.1 - - [06/May/2026 15:21:10] "OPTIONS /api/chat HTTP/1.1" 200 -
+2026-05-06 15:21:11,057 [ERROR] Exception on /api/chat [POST]
+Traceback (most recent call last):
+  File "/home/burak/venv/lib/python3.12/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/burak/venv/lib/python3.12/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/burak/venv/lib/python3.12/site-packages/flask_cors/extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+                                                ^^^^^^^^^^^^^^^^^^
+  File "/home/burak/venv/lib/python3.12/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/burak/venv/lib/python3.12/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/burak/Masaüstü/ChatbotBAL/web/app.py", line 231, in chat
+    retrieved = retrieve(user_message, top_k=CONFIG["retrieval_top_k"])
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/burak/Masaüstü/ChatbotBAL/web/app.py", line 157, in retrieve
+    scores, indices = faiss_index.search(embedding, top_k)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/burak/venv/lib/python3.12/site-packages/faiss/class_wrappers.py", line 383, in replacement_search
+    assert d == self.d
+           ^^^^^^^^^^^
+AssertionError
+2026-05-06 15:21:11,058 [INFO] 127.0.0.1 - - [06/May/2026 15:21:11] "[35m[1mPOST /api/chat HTTP/1.1[0m" 500 -
+2026-05-06 15:21:34,200 [INFO] 127.0.0.1 - - [06/May/2026 15:21:34] "GET /api/health HTTP/1.1" 200 -
+2026-05-06 15:22:04,201 [INFO] 127.0.0.1 - - [06/May/2026 15:22:04] "GET /api/health HTTP/1.1" 200 -
+2026-05-06 15:22:34,195 [INFO] 127.0.0.1 - - [06/May/2026 15:22:34] "GET /api/health HTTP/1.1" 200 -
+2026-05-06 15:23:04,204 [INFO] 127.0.0.1 - - [06/May/2026 15:23:04] "GET /api/health HTTP/1.1" 200 -
+2026-05-06 15:23:34,202 [INFO] 127.0.0.1 - - [06/May/2026 15:23:34] "GET /api/health HTTP/1.1" 200 -
+2026-05-06 15:24:04,202 [INFO] 127.0.0.1 - - [06/May/2026 15:24:04] "GET /api/health HTTP/1.1" 200 -
+2026-05-06 15:24:39,079 [INFO] BAL Chatbot Web API başlatılıyor...
+2026-05-06 15:24:39,079 [INFO] FAISS index yükleniyor...
+2026-05-06 15:24:39,079 [INFO] Chunk metadata yükleniyor...
+2026-05-06 15:24:39,080 [INFO] Embedding modeli yükleniyor: intfloat/multilingual-e5-large
+2026-05-06 15:24:39,081 [INFO] Use pytorch device_name: cuda:0
+2026-05-06 15:24:39,081 [INFO] Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2026-05-06 15:24:54,407 [INFO] ✅ Vektör veritabanı hazır: 91 chunk
+2026-05-06 15:24:54,407 [INFO] 🌐 Sunucu başlatılıyor: http://localhost:5000
+2026-05-06 15:24:54,407 [INFO]    Arayüz: web/index.html dosyasını tarayıcıda açın
+2026-05-06 15:24:54,410 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.2:5000
+2026-05-06 15:24:54,410 [INFO] [33mPress CTRL+C to quit[0m
+2026-05-06 15:25:04,294 [INFO] 127.0.0.1 - - [06/May/2026 15:25:04] "GET /api/health HTTP/1.1" 200 -
+2026-05-06 15:25:11,110 [INFO] 127.0.0.1 - - [06/May/2026 15:25:11] "[36mGET / HTTP/1.1[0m" 304 -
+2026-05-06 15:25:11,248 [INFO] 127.0.0.1 - - [06/May/2026 15:25:11] "GET /api/health HTTP/1.1" 200 -
+2026-05-06 15:25:15,297 [INFO] 127.0.0.1 - - [06/May/2026 15:25:15] "OPTIONS /api/chat HTTP/1.1" 200 -
+2026-05-06 15:25:30,292 [INFO] 127.0.0.1 - - [06/May/2026 15:25:30] "POST /api/chat HTTP/1.1" 200 -
+2026-05-06 15:25:41,299 [INFO] 127.0.0.1 - - [06/May/2026 15:25:41] "GET /api/health HTTP/1.1" 200 -
+2026-05-06 15:26:11,300 [INFO] 127.0.0.1 - - [06/May/2026 15:26:11] "GET /api/health HTTP/1.1" 200 -
+2026-05-06 15:26:25,207 [INFO] 127.0.0.1 - - [06/May/2026 15:26:25] "OPTIONS /api/chat HTTP/1.1" 200 -
+2026-05-06 15:26:26,087 [INFO] 127.0.0.1 - - [06/May/2026 15:26:26] "POST /api/chat HTTP/1.1" 200 -
+2026-05-06 15:26:41,489 [INFO] 127.0.0.1 - - [06/May/2026 15:26:41] "GET /api/health HTTP/1.1" 200 -
+2026-05-06 15:26:49,480 [INFO] 127.0.0.1 - - [06/May/2026 15:26:49] "OPTIONS /api/chat HTTP/1.1" 200 -
+2026-05-06 15:26:51,340 [INFO] 127.0.0.1 - - [06/May/2026 15:26:51] "POST /api/chat HTTP/1.1" 200 -
+2026-05-06 15:27:12,727 [INFO] 127.0.0.1 - - [06/May/2026 15:27:12] "GET /api/health HTTP/1.1" 200 -
+2026-05-06 15:27:42,727 [INFO] 127.0.0.1 - - [06/May/2026 15:27:42] "GET /api/health HTTP/1.1" 200 -
+2026-05-12 10:00:01,888 [INFO] BAL Chatbot Web API starting...
+2026-05-12 10:00:01,943 [INFO] Backend: api
+2026-05-12 10:00:01,943 [ERROR] FAISS index not found: ../data/bal_faiss.index
+Run '01_build_vectorstore.py' first.
+2026-05-31 15:40:28,321 [INFO] BAL Chatbot Web API starting...
+2026-05-31 15:40:28,321 [INFO] Runtime pid=892981 cwd=/home/burak/Masaüstü/ChatbotBAL/web log_file=/home/burak/Masaüstü/ChatbotBAL/logs/web.log
+2026-05-31 15:40:28,322 [INFO] Provider: groq
+2026-05-31 15:40:28,322 [INFO] HTTPS enforcement: True
+2026-05-31 15:40:28,322 [INFO] Loading FAISS index...
+2026-05-31 15:40:28,344 [INFO] Loading chunk metadata...
+2026-05-31 15:40:28,368 [INFO] Loading embedding model: intfloat/multilingual-e5-large
+2026-05-31 15:40:28,374 [INFO] Use pytorch device_name: cuda:0
+2026-05-31 15:40:28,374 [INFO] Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2026-05-31 15:40:32,657 [INFO] Vector store ready — 108 chunks
+2026-05-31 15:40:32,658 [INFO] Groq configured — model: llama-3.3-70b-versatile
+2026-05-31 15:40:32,658 [INFO] LLM gateway ready — active provider: groq
+2026-05-31 15:40:32,658 [INFO] Server starting on https://localhost:5000
+2026-05-31 15:40:32,712 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on https://127.0.0.1:5000
+ * Running on https://192.168.1.2:5000
+2026-05-31 15:40:32,712 [INFO] [33mPress CTRL+C to quit[0m
+2026-05-31 15:40:35,461 [INFO] 127.0.0.1 - - [31/May/2026 15:40:35] "GET / HTTP/1.1" 200 -
+2026-05-31 15:40:35,989 [INFO] 127.0.0.1 - - [31/May/2026 15:40:35] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 15:40:36,177 [INFO] 127.0.0.1 - - [31/May/2026 15:40:36] "GET /api/auth/status HTTP/1.1" 200 -
+2026-05-31 15:41:05,715 [INFO] 127.0.0.1 - - [31/May/2026 15:41:05] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 15:41:07,446 [ERROR] Groq API HTTP error status=429 model=llama-3.3-70b-versatile rate_headers={'retry-after': '167', 'x-ratelimit-limit-requests': '1000', 'x-ratelimit-limit-tokens': '12000', 'x-ratelimit-remaining-requests': '1000', 'x-ratelimit-remaining-tokens': '12000', 'x-ratelimit-reset-requests': '1ms', 'x-ratelimit-reset-tokens': '1ms', 'x-request-id': 'req_01ksz0ts2tfhttbtybbpf0w5va'} body=
+Traceback (most recent call last):
+  File "/home/burak/Masaüstü/ChatbotBAL/web/app.py", line 552, in stream_groq
+    resp.raise_for_status()
+  File "/home/burak/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 429 Client Error: Too Many Requests for url: https://api.groq.com/openai/v1/chat/completions
+2026-05-31 15:41:07,460 [INFO] 127.0.0.1 - - [31/May/2026 15:41:07] "POST /api/chat HTTP/1.1" 200 -
+2026-05-31 15:41:35,731 [INFO] 127.0.0.1 - - [31/May/2026 15:41:35] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 15:42:05,718 [INFO] 127.0.0.1 - - [31/May/2026 15:42:05] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 15:42:35,732 [INFO] 127.0.0.1 - - [31/May/2026 15:42:35] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 15:43:05,721 [INFO] 127.0.0.1 - - [31/May/2026 15:43:05] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 15:43:35,738 [INFO] 127.0.0.1 - - [31/May/2026 15:43:35] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 15:44:05,720 [INFO] 127.0.0.1 - - [31/May/2026 15:44:05] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 15:44:35,735 [INFO] 127.0.0.1 - - [31/May/2026 15:44:35] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 15:45:05,721 [INFO] 127.0.0.1 - - [31/May/2026 15:45:05] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 15:45:35,731 [INFO] 127.0.0.1 - - [31/May/2026 15:45:35] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 15:45:55,029 [INFO] 127.0.0.1 - - [31/May/2026 15:45:55] "POST /api/chat HTTP/1.1" 200 -
+2026-05-31 15:45:59,000 [INFO] 127.0.0.1 - - [31/May/2026 15:45:59] "[31m[1mPOST /api/chat HTTP/1.1[0m" 429 -
+2026-05-31 15:46:04,997 [INFO] 127.0.0.1 - - [31/May/2026 15:46:04] "[36mGET / HTTP/1.1[0m" 304 -
+2026-05-31 15:46:05,258 [INFO] 127.0.0.1 - - [31/May/2026 15:46:05] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 15:46:05,673 [INFO] 127.0.0.1 - - [31/May/2026 15:46:05] "GET /api/auth/status HTTP/1.1" 200 -
+2026-05-31 16:05:41,893 [INFO] BAL Chatbot Web API starting...
+2026-05-31 16:05:41,893 [INFO] Runtime pid=1104063 cwd=/home/burak/Masaüstü/ChatbotBAL/web log_file=/home/burak/Masaüstü/ChatbotBAL/logs/web.log
+2026-05-31 16:05:41,893 [INFO] Provider: groq
+2026-05-31 16:05:41,893 [INFO] HTTPS enforcement: True
+2026-05-31 16:05:41,893 [INFO] Loading FAISS index...
+2026-05-31 16:05:41,894 [INFO] Loading chunk metadata...
+2026-05-31 16:05:41,894 [INFO] Loading embedding model: intfloat/multilingual-e5-large
+2026-05-31 16:05:41,896 [INFO] Use pytorch device_name: cuda:0
+2026-05-31 16:05:41,896 [INFO] Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2026-05-31 16:05:46,376 [INFO] Vector store ready — 108 chunks
+2026-05-31 16:05:46,376 [INFO] Groq configured — primary model: llama-3.3-70b-versatile
+2026-05-31 16:05:46,376 [INFO] LLM gateway ready — active provider: groq
+2026-05-31 16:05:46,376 [INFO] Server starting on https://localhost:5000
+2026-05-31 16:05:46,427 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on https://127.0.0.1:5000
+ * Running on https://192.168.1.2:5000
+2026-05-31 16:05:46,427 [INFO] [33mPress CTRL+C to quit[0m
+2026-05-31 16:06:26,717 [INFO] 127.0.0.1 - - [31/May/2026 16:06:26] "GET / HTTP/1.1" 200 -
+2026-05-31 16:06:27,240 [INFO] 127.0.0.1 - - [31/May/2026 16:06:27] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 16:06:27,455 [INFO] 127.0.0.1 - - [31/May/2026 16:06:27] "GET /api/auth/status HTTP/1.1" 200 -
+2026-05-31 16:06:35,170 [INFO] 127.0.0.1 - - [31/May/2026 16:06:35] "POST /api/auth/logout HTTP/1.1" 200 -
+2026-05-31 16:06:35,197 [INFO] 127.0.0.1 - - [31/May/2026 16:06:35] "[36mGET / HTTP/1.1[0m" 304 -
+2026-05-31 16:06:35,216 [INFO] 127.0.0.1 - - [31/May/2026 16:06:35] "GET /api/auth/status HTTP/1.1" 200 -
+2026-05-31 16:06:35,410 [INFO] 127.0.0.1 - - [31/May/2026 16:06:35] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 16:06:49,497 [INFO] 127.0.0.1 - - [31/May/2026 16:06:49] "POST /api/auth/login HTTP/1.1" 200 -
+2026-05-31 16:07:00,175 [ERROR] Groq API HTTP error status=429 model=llama-3.3-70b-versatile rate_headers={'retry-after': '1563', 'x-ratelimit-limit-requests': '1000', 'x-ratelimit-limit-tokens': '12000', 'x-ratelimit-remaining-requests': '1000', 'x-ratelimit-remaining-tokens': '12000', 'x-ratelimit-reset-requests': '1ms', 'x-ratelimit-reset-tokens': '1ms', 'x-request-id': 'req_01ksz2a5dneeet6h88h1cmr155'} body=
+Traceback (most recent call last):
+  File "/home/burak/Masaüstü/ChatbotBAL/web/app.py", line 564, in stream_groq_model
+    resp.raise_for_status()
+  File "/home/burak/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 429 Client Error: Too Many Requests for url: https://api.groq.com/openai/v1/chat/completions
+2026-05-31 16:07:00,340 [WARNING] Groq fallback switching from_model=llama-3.3-70b-versatile to_model=meta-llama/llama-4-maverick-17b-128e-instruct reason=http_429
+2026-05-31 16:07:00,340 [INFO] 127.0.0.1 - - [31/May/2026 16:07:00] "POST /api/chat HTTP/1.1" 200 -
+2026-05-31 16:07:00,471 [ERROR] Groq API HTTP error status=404 model=meta-llama/llama-4-maverick-17b-128e-instruct rate_headers={'x-request-id': 'req_01ksz2a5pve7ar0gb46ngfvx49'} body=
+Traceback (most recent call last):
+  File "/home/burak/Masaüstü/ChatbotBAL/web/app.py", line 564, in stream_groq_model
+    resp.raise_for_status()
+  File "/home/burak/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://api.groq.com/openai/v1/chat/completions
+2026-05-31 16:07:05,483 [INFO] 127.0.0.1 - - [31/May/2026 16:07:05] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 16:07:36,083 [INFO] 127.0.0.1 - - [31/May/2026 16:07:36] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 16:10:16,837 [INFO] BAL Chatbot Web API starting...
+2026-05-31 16:10:16,838 [INFO] Runtime pid=1141512 cwd=/home/burak/Masaüstü/ChatbotBAL/web log_file=/home/burak/Masaüstü/ChatbotBAL/logs/web.log
+2026-05-31 16:10:16,838 [INFO] Provider: groq
+2026-05-31 16:10:16,838 [INFO] HTTPS enforcement: True
+2026-05-31 16:10:16,838 [INFO] Loading FAISS index...
+2026-05-31 16:10:16,904 [INFO] Loading chunk metadata...
+2026-05-31 16:10:16,925 [INFO] Loading embedding model: intfloat/multilingual-e5-large
+2026-05-31 16:10:16,928 [INFO] Use pytorch device_name: cuda:0
+2026-05-31 16:10:16,928 [INFO] Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2026-05-31 16:10:21,164 [INFO] Vector store ready — 108 chunks
+2026-05-31 16:10:21,164 [INFO] Groq configured — primary model: llama-3.3-70b-versatile
+2026-05-31 16:10:21,164 [INFO] LLM gateway ready — active provider: groq
+2026-05-31 16:10:21,164 [INFO] Server starting on https://localhost:5000
+2026-05-31 16:10:21,225 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on https://127.0.0.1:5000
+ * Running on https://192.168.1.2:5000
+2026-05-31 16:10:21,225 [INFO] [33mPress CTRL+C to quit[0m
+2026-05-31 16:10:24,085 [INFO] 127.0.0.1 - - [31/May/2026 16:10:24] "[36mGET / HTTP/1.1[0m" 304 -
+2026-05-31 16:10:24,356 [INFO] 127.0.0.1 - - [31/May/2026 16:10:24] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 16:10:25,052 [INFO] 127.0.0.1 - - [31/May/2026 16:10:25] "GET /api/auth/status HTTP/1.1" 200 -
+2026-05-31 16:10:33,115 [ERROR] Groq API HTTP error status=429 model=llama-3.3-70b-versatile rate_headers={'retry-after': '981', 'x-ratelimit-limit-requests': '1000', 'x-ratelimit-limit-tokens': '12000', 'x-ratelimit-remaining-requests': '1000', 'x-ratelimit-remaining-tokens': '12000', 'x-ratelimit-reset-requests': '1ms', 'x-ratelimit-reset-tokens': '1ms', 'x-request-id': 'req_01ksz2gnbyeg5rp2th4pepcb9t'} body=
+Traceback (most recent call last):
+  File "/home/burak/Masaüstü/ChatbotBAL/web/app.py", line 564, in stream_groq_model
+    resp.raise_for_status()
+  File "/home/burak/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 429 Client Error: Too Many Requests for url: https://api.groq.com/openai/v1/chat/completions
+2026-05-31 16:10:33,116 [WARNING] Groq fallback switching from_model=llama-3.3-70b-versatile to_model=meta-llama/llama-4-maverick-17b-128e-instruct reason=http_429
+2026-05-31 16:10:33,116 [INFO] 127.0.0.1 - - [31/May/2026 16:10:33] "POST /api/chat HTTP/1.1" 200 -
+2026-05-31 16:10:33,244 [ERROR] Groq API HTTP error status=404 model=meta-llama/llama-4-maverick-17b-128e-instruct rate_headers={'x-request-id': 'req_01ksz2gng3fhzv0h8rapaqjzny'} body=
+Traceback (most recent call last):
+  File "/home/burak/Masaüstü/ChatbotBAL/web/app.py", line 564, in stream_groq_model
+    resp.raise_for_status()
+  File "/home/burak/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://api.groq.com/openai/v1/chat/completions
+2026-05-31 16:10:33,245 [WARNING] Groq fallback switching from_model=meta-llama/llama-4-maverick-17b-128e-instruct to_model=qwen/qwen3-32b reason=http_404
+2026-05-31 16:10:34,205 [WARNING] Groq fallback succeeded original_model=llama-3.3-70b-versatile active_model=qwen/qwen3-32b
+2026-05-31 16:10:54,090 [ERROR] Groq API HTTP error status=429 model=llama-3.3-70b-versatile rate_headers={'retry-after': '1867', 'x-ratelimit-limit-requests': '1000', 'x-ratelimit-limit-tokens': '12000', 'x-ratelimit-remaining-requests': '1000', 'x-ratelimit-remaining-tokens': '12000', 'x-ratelimit-reset-requests': '1ms', 'x-ratelimit-reset-tokens': '1ms', 'x-request-id': 'req_01ksz2h9vje43rpq86zmfkqxvz'} body=
+Traceback (most recent call last):
+  File "/home/burak/Masaüstü/ChatbotBAL/web/app.py", line 564, in stream_groq_model
+    resp.raise_for_status()
+  File "/home/burak/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 429 Client Error: Too Many Requests for url: https://api.groq.com/openai/v1/chat/completions
+2026-05-31 16:10:54,091 [WARNING] Groq fallback switching from_model=llama-3.3-70b-versatile to_model=meta-llama/llama-4-maverick-17b-128e-instruct reason=http_429
+2026-05-31 16:10:54,091 [INFO] 127.0.0.1 - - [31/May/2026 16:10:54] "POST /api/chat HTTP/1.1" 200 -
+2026-05-31 16:10:54,321 [ERROR] Groq API HTTP error status=404 model=meta-llama/llama-4-maverick-17b-128e-instruct rate_headers={'x-request-id': 'req_01ksz2ha0ve45997vnndze85qa'} body=
+Traceback (most recent call last):
+  File "/home/burak/Masaüstü/ChatbotBAL/web/app.py", line 564, in stream_groq_model
+    resp.raise_for_status()
+  File "/home/burak/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://api.groq.com/openai/v1/chat/completions
+2026-05-31 16:10:54,322 [WARNING] Groq fallback switching from_model=meta-llama/llama-4-maverick-17b-128e-instruct to_model=qwen/qwen3-32b reason=http_404
+2026-05-31 16:10:54,387 [INFO] 127.0.0.1 - - [31/May/2026 16:10:54] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 16:10:55,224 [WARNING] Groq fallback succeeded original_model=llama-3.3-70b-versatile active_model=qwen/qwen3-32b
+2026-05-31 16:11:24,481 [INFO] 127.0.0.1 - - [31/May/2026 16:11:24] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 16:15:20,562 [INFO] BAL Chatbot Web API starting...
+2026-05-31 16:15:20,562 [INFO] Runtime pid=1185382 cwd=/home/burak/Masaüstü/ChatbotBAL/web log_file=/home/burak/Masaüstü/ChatbotBAL/logs/web.log
+2026-05-31 16:15:20,562 [INFO] Provider: groq
+2026-05-31 16:15:20,562 [INFO] HTTPS enforcement: True
+2026-05-31 16:15:20,562 [INFO] Loading FAISS index...
+2026-05-31 16:15:20,562 [INFO] Loading chunk metadata...
+2026-05-31 16:15:20,564 [INFO] Loading embedding model: intfloat/multilingual-e5-large
+2026-05-31 16:15:20,566 [INFO] Use pytorch device_name: cuda:0
+2026-05-31 16:15:20,566 [INFO] Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2026-05-31 16:15:24,800 [INFO] Vector store ready — 108 chunks
+2026-05-31 16:15:24,800 [INFO] Groq configured — primary model: llama-3.3-70b-versatile
+2026-05-31 16:15:24,800 [INFO] LLM gateway ready — active provider: groq
+2026-05-31 16:15:24,800 [INFO] Server starting on https://localhost:5000
+2026-05-31 16:15:24,853 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on https://127.0.0.1:5000
+ * Running on https://192.168.1.2:5000
+2026-05-31 16:15:24,853 [INFO] [33mPress CTRL+C to quit[0m
+2026-05-31 16:15:28,609 [INFO] 127.0.0.1 - - [31/May/2026 16:15:28] "GET / HTTP/1.1" 200 -
+2026-05-31 16:15:28,831 [INFO] 127.0.0.1 - - [31/May/2026 16:15:28] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 16:15:29,581 [INFO] 127.0.0.1 - - [31/May/2026 16:15:29] "GET /api/auth/status HTTP/1.1" 200 -
+2026-05-31 16:15:38,498 [ERROR] Groq API HTTP error status=429 model=llama-3.3-70b-versatile rate_headers={'retry-after': '1043', 'x-ratelimit-limit-requests': '1000', 'x-ratelimit-limit-tokens': '12000', 'x-ratelimit-remaining-requests': '1000', 'x-ratelimit-remaining-tokens': '12000', 'x-ratelimit-reset-requests': '1ms', 'x-ratelimit-reset-tokens': '1ms', 'x-request-id': 'req_01ksz2szk1e1qa6np0wmyncs5n'} body=
+Traceback (most recent call last):
+  File "/home/burak/Masaüstü/ChatbotBAL/web/app.py", line 577, in stream_groq_model
+    resp.raise_for_status()
+  File "/home/burak/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 429 Client Error: Too Many Requests for url: https://api.groq.com/openai/v1/chat/completions
+2026-05-31 16:15:38,501 [WARNING] Groq fallback switching from_model=llama-3.3-70b-versatile to_model=meta-llama/llama-4-maverick-17b-128e-instruct reason=http_429
+2026-05-31 16:15:38,501 [INFO] 127.0.0.1 - - [31/May/2026 16:15:38] "POST /api/chat HTTP/1.1" 200 -
+2026-05-31 16:15:38,637 [ERROR] Groq API HTTP error status=404 model=meta-llama/llama-4-maverick-17b-128e-instruct rate_headers={'x-request-id': 'req_01ksz2szqhf2xa33rm3cqq56wq'} body=
+Traceback (most recent call last):
+  File "/home/burak/Masaüstü/ChatbotBAL/web/app.py", line 577, in stream_groq_model
+    resp.raise_for_status()
+  File "/home/burak/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://api.groq.com/openai/v1/chat/completions
+2026-05-31 16:15:38,638 [WARNING] Groq fallback switching from_model=meta-llama/llama-4-maverick-17b-128e-instruct to_model=qwen/qwen3-32b reason=http_404
+2026-05-31 16:15:39,528 [WARNING] Groq fallback succeeded original_model=llama-3.3-70b-versatile active_model=qwen/qwen3-32b
+2026-05-31 16:15:58,837 [INFO] 127.0.0.1 - - [31/May/2026 16:15:58] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 16:16:03,478 [ERROR] Groq API HTTP error status=429 model=llama-3.3-70b-versatile rate_headers={'retry-after': '650', 'x-ratelimit-limit-requests': '1000', 'x-ratelimit-limit-tokens': '12000', 'x-ratelimit-remaining-requests': '1000', 'x-ratelimit-remaining-tokens': '12000', 'x-ratelimit-reset-requests': '1ms', 'x-ratelimit-reset-tokens': '1ms', 'x-request-id': 'req_01ksz2tqztfv3b2s7kzwpmbxd0'} body=
+Traceback (most recent call last):
+  File "/home/burak/Masaüstü/ChatbotBAL/web/app.py", line 577, in stream_groq_model
+    resp.raise_for_status()
+  File "/home/burak/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 429 Client Error: Too Many Requests for url: https://api.groq.com/openai/v1/chat/completions
+2026-05-31 16:16:03,480 [WARNING] Groq fallback switching from_model=llama-3.3-70b-versatile to_model=meta-llama/llama-4-maverick-17b-128e-instruct reason=http_429
+2026-05-31 16:16:03,480 [INFO] 127.0.0.1 - - [31/May/2026 16:16:03] "POST /api/chat HTTP/1.1" 200 -
+2026-05-31 16:16:03,617 [ERROR] Groq API HTTP error status=404 model=meta-llama/llama-4-maverick-17b-128e-instruct rate_headers={'x-request-id': 'req_01ksz2tr45fv39fmz3msnek082'} body=
+Traceback (most recent call last):
+  File "/home/burak/Masaüstü/ChatbotBAL/web/app.py", line 577, in stream_groq_model
+    resp.raise_for_status()
+  File "/home/burak/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://api.groq.com/openai/v1/chat/completions
+2026-05-31 16:16:03,618 [WARNING] Groq fallback switching from_model=meta-llama/llama-4-maverick-17b-128e-instruct to_model=qwen/qwen3-32b reason=http_404
+2026-05-31 16:16:06,100 [WARNING] Groq fallback succeeded original_model=llama-3.3-70b-versatile active_model=qwen/qwen3-32b
+2026-05-31 16:16:28,870 [INFO] 127.0.0.1 - - [31/May/2026 16:16:28] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 16:16:58,840 [INFO] 127.0.0.1 - - [31/May/2026 16:16:58] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 20:09:53,629 [INFO] BAL Chatbot Web API starting...
+2026-05-31 20:09:53,658 [INFO] Runtime pid=167601 cwd=/home/burak/Masaüstü/ChatbotBAL/web log_file=/home/burak/Masaüstü/ChatbotBAL/logs/web.log
+2026-05-31 20:09:53,658 [INFO] Provider: groq
+2026-05-31 20:09:53,658 [INFO] HTTPS enforcement: True
+2026-05-31 20:09:53,658 [INFO] Loading FAISS index...
+2026-05-31 20:09:53,675 [INFO] Loading chunk metadata...
+2026-05-31 20:09:53,696 [INFO] Loading embedding model: intfloat/multilingual-e5-large
+2026-05-31 20:09:53,699 [INFO] Use pytorch device_name: cuda:0
+2026-05-31 20:09:53,699 [INFO] Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2026-05-31 20:10:19,266 [INFO] Vector store ready — 108 chunks
+2026-05-31 20:10:19,267 [INFO] Groq configured — key_count=1 primary_model=llama-3.3-70b-versatile
+2026-05-31 20:10:19,267 [INFO] LLM gateway ready — active provider: groq
+2026-05-31 20:10:19,267 [INFO] Server starting on https://localhost:5000
+2026-05-31 20:10:19,394 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on https://127.0.0.1:5000
+ * Running on https://192.168.1.2:5000
+2026-05-31 20:10:19,394 [INFO] [33mPress CTRL+C to quit[0m
+2026-05-31 20:10:28,256 [INFO] 127.0.0.1 - - [31/May/2026 20:10:28] "GET / HTTP/1.1" 200 -
+2026-05-31 20:10:28,328 [INFO] 127.0.0.1 - - [31/May/2026 20:10:28] "GET /api/auth/status HTTP/1.1" 200 -
+2026-05-31 20:10:28,533 [INFO] 127.0.0.1 - - [31/May/2026 20:10:28] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 20:10:49,955 [INFO] 127.0.0.1 - - [31/May/2026 20:10:49] "POST /api/auth/login HTTP/1.1" 200 -
+2026-05-31 20:10:58,528 [INFO] 127.0.0.1 - - [31/May/2026 20:10:58] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 20:11:06,503 [INFO] 127.0.0.1 - - [31/May/2026 20:11:06] "POST /api/chat HTTP/1.1" 200 -
+2026-05-31 20:11:28,573 [INFO] 127.0.0.1 - - [31/May/2026 20:11:28] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 20:11:37,720 [INFO] 127.0.0.1 - - [31/May/2026 20:11:37] "POST /api/chat HTTP/1.1" 200 -
+2026-05-31 20:11:58,585 [INFO] 127.0.0.1 - - [31/May/2026 20:11:58] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 20:18:47,679 [INFO] BAL Chatbot Web API starting...
+2026-05-31 20:18:47,679 [INFO] Runtime pid=259673 cwd=/home/burak/Masaüstü/ChatbotBAL/web log_file=/home/burak/Masaüstü/ChatbotBAL/logs/web.log
+2026-05-31 20:18:47,679 [INFO] Provider: groq
+2026-05-31 20:18:47,680 [INFO] HTTPS enforcement: True
+2026-05-31 20:18:47,680 [INFO] Loading FAISS index...
+2026-05-31 20:18:47,746 [INFO] Loading chunk metadata...
+2026-05-31 20:18:47,768 [INFO] Loading embedding model: intfloat/multilingual-e5-large
+2026-05-31 20:18:47,773 [INFO] Use pytorch device_name: cuda:0
+2026-05-31 20:18:47,773 [INFO] Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2026-05-31 20:18:52,680 [INFO] Vector store ready — 108 chunks
+2026-05-31 20:18:52,680 [INFO] Groq configured — key_count=1 primary_model=llama-3.3-70b-versatile
+2026-05-31 20:18:52,680 [INFO] LLM gateway ready — active provider: groq
+2026-05-31 20:18:52,680 [INFO] Server starting on https://localhost:5000
+2026-05-31 20:18:52,761 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on https://127.0.0.1:5000
+ * Running on https://192.168.1.2:5000
+2026-05-31 20:18:52,761 [INFO] [33mPress CTRL+C to quit[0m
+2026-05-31 20:19:06,145 [INFO] 127.0.0.1 - - [31/May/2026 20:19:06] "GET / HTTP/1.1" 200 -
+2026-05-31 20:19:06,379 [INFO] 127.0.0.1 - - [31/May/2026 20:19:06] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 20:19:07,151 [INFO] 127.0.0.1 - - [31/May/2026 20:19:07] "GET /api/auth/status HTTP/1.1" 200 -
+2026-05-31 20:19:17,780 [INFO] 127.0.0.1 - - [31/May/2026 20:19:17] "POST /api/chat HTTP/1.1" 200 -
+2026-05-31 20:19:29,426 [INFO] 127.0.0.1 - - [31/May/2026 20:19:29] "POST /api/auth/logout HTTP/1.1" 200 -
+2026-05-31 20:19:29,456 [INFO] 127.0.0.1 - - [31/May/2026 20:19:29] "[36mGET / HTTP/1.1[0m" 304 -
+2026-05-31 20:19:29,485 [INFO] 127.0.0.1 - - [31/May/2026 20:19:29] "GET /api/auth/status HTTP/1.1" 200 -
+2026-05-31 20:19:29,679 [INFO] 127.0.0.1 - - [31/May/2026 20:19:29] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 20:19:59,860 [INFO] 127.0.0.1 - - [31/May/2026 20:19:59] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 20:20:30,002 [INFO] 127.0.0.1 - - [31/May/2026 20:20:30] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 20:21:00,207 [INFO] 127.0.0.1 - - [31/May/2026 20:21:00] "GET /api/health HTTP/1.1" 200 -
+2026-05-31 20:37:00,036 [INFO] BAL Chatbot Web API starting...
+2026-05-31 20:37:00,036 [INFO] Runtime pid=442435 cwd=/home/burak/Masaüstü/ChatbotBAL/web log_file=/home/burak/Masaüstü/ChatbotBAL/logs/web.log
+2026-05-31 20:37:00,037 [INFO] Provider: groq
+2026-05-31 20:37:00,037 [INFO] HTTPS enforcement: True
+2026-05-31 20:37:00,037 [INFO] Loading FAISS index...
+2026-05-31 20:37:00,038 [INFO] Loading chunk metadata...
+2026-05-31 20:37:00,040 [INFO] Loading embedding model: intfloat/multilingual-e5-large
+2026-05-31 20:37:00,045 [INFO] Use pytorch device_name: cuda:0
+2026-05-31 20:37:00,045 [INFO] Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2026-05-31 20:37:05,156 [INFO] Vector store ready — 108 chunks
+2026-05-31 20:37:05,156 [INFO] Groq configured — key_count=1 primary_model=llama-3.3-70b-versatile
+2026-05-31 20:37:05,157 [INFO] LLM gateway ready — active provider: groq
+2026-05-31 20:37:05,157 [INFO] Server starting on https://0.0.0.0:5000
+2026-05-31 20:37:05,233 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on https://127.0.0.1:5000
+ * Running on https://192.168.1.2:5000
+2026-05-31 20:37:05,233 [INFO] [33mPress CTRL+C to quit[0m

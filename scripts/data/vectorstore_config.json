@@ -1,0 +1,12 @@
+{
+  "dataset_path": "/home/burak/Masaüstü/ChatbotBAL/Dataset/RAG_Dataset_BAL.md",
+  "embedding_model": "intfloat/multilingual-e5-large",
+  "chunk_size": 400,
+  "chunk_overlap": 80,
+  "output_dir": "data",
+  "faiss_index_file": "data/bal_faiss.index",
+  "chunks_meta_file": "data/bal_chunks.json",
+  "total_chunks": 108,
+  "embedding_dim": 1024,
+  "build_timestamp": "2026-05-31 13:19:58"
+}

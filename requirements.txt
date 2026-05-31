@@ -1,0 +1,34 @@
+# BAL Chatbot — Python Bağımlılıkları
+# Kurulum: pip install -r requirements.txt
+
+# Embedding ve vektör arama
+sentence-transformers>=2.7.0     # Çok dilli embedding modelleri
+faiss-cpu>=1.8.0                 # Vektör veritabanı (GPU kullanmak için: faiss-gpu)
+
+# HTTP istekleri (Groq API)
+requests>=2.31.0
+
+# Web API ve production oturum altyapisi
+Flask>=3.0.0
+flask-cors>=4.0.0
+gunicorn>=22.0.0
+Werkzeug>=3.0.0
+cryptography>=42.0.0
+SQLAlchemy>=2.0.0
+psycopg[binary]>=3.1.0
+
+# Ortam değişkenleri (.env)
+python-dotenv>=1.0.1
+
+# Sayısal işlemler
+numpy>=1.26.0
+
+# ── Opsiyonel (gelişmiş özellikler) ──────────────────────────────────────────
+# torch>=2.1.0                   # CUDA destekli embedding için (isteğe bağlı)
+# transformers>=4.40.0           # Model hub erişimi için
+# accelerate>=0.27.0             # Hızlandırılmış inference için
+
+# Not: PyTorch kurulumu için işletim sisteminize uygun sürümü
+# https://pytorch.org/get-started/locally/ adresinden seçin.
+# Örnek (CPU):
+#   pip install torch --index-url https://download.pytorch.org/whl/cpu
