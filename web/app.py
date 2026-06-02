@@ -1204,17 +1204,20 @@ def startup():
 
     llm_gateway = LLMGateway(CONFIG)
     log.info(f"LLM gateway ready — active provider: {llm_gateway.active_provider}")
-    port = int(os.getenv("PORT", "5000"))
-    scheme = "https" if CONFIG["local_https"] and not os.getenv("PORT") else "http"
-    log.info(f"Server starting on {scheme}://0.0.0.0:{port}")
+
+
+# ── Flask'a startup fonksiyonunu kaydet ──
+# Bu kanca, uygulama hangi sunucuyla (Gunicorn vb.) başlarsa başlasın İLK istek gelmeden veya sunucu ayağa kalkarken ÇALIŞIR.
+app.before_running_from_cli(lambda _spec: startup())
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# Entry Point
+# Entry Point (Sadece Local Geliştirme İçin)
 # ═══════════════════════════════════════════════════════════════════════════════
 
 if __name__ == "__main__":
-    startup()
+    # Localde python app.py deyince burası tetiklenir, cli kancasından önce startup'ı biz çağırırız
+    startup() 
     port = int(os.getenv("PORT", "5000"))
     ssl_context = "adhoc" if CONFIG["local_https"] and not os.getenv("PORT") else None
     app.run(
