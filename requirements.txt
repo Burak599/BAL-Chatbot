@@ -1,34 +1,53 @@
-# BAL Chatbot — Python Bağımlılıkları
-# Kurulum: pip install -r requirements.txt
+# =============================================================
+# BAL Chatbot — Python Dependencies
+# Install: pip install -r requirements.txt
+# =============================================================
 
-# Embedding ve vektör arama
-sentence-transformers>=2.7.0     # Çok dilli embedding modelleri
-faiss-cpu>=1.8.0                 # Vektör veritabanı (GPU kullanmak için: faiss-gpu)
+# ── AI / Embeddings ───────────────────────────────────────────
 
-# HTTP istekleri (Groq API)
+numpy>=1.26.0
+faiss-cpu>=1.8.0
+
+# Gemini SDK (01_build_vectorstore.py)
+google-genai>=1.20.0
+
+# Gemini SDK (web/app.py — embed_content kullanımı)
+
+# ── HTTP / API Requests ───────────────────────────────────────
+
 requests>=2.31.0
 
-# Web API ve production oturum altyapisi
+# ── Web Backend / Production ──────────────────────────────────
+
 Flask>=3.0.0
 flask-cors>=4.0.0
 gunicorn>=22.0.0
 Werkzeug>=3.0.0
-cryptography>=42.0.0
+
+# ── Database / Auth / Sessions ────────────────────────────────
+
 SQLAlchemy>=2.0.0
 psycopg[binary]>=3.1.0
 
-# Ortam değişkenleri (.env)
+# ── Environment Variables ─────────────────────────────────────
+
 python-dotenv>=1.0.1
 
-# Sayısal işlemler
-numpy>=1.26.0
+# ── Security / Crypto ─────────────────────────────────────────
 
-# ── Opsiyonel (gelişmiş özellikler) ──────────────────────────────────────────
-# torch>=2.1.0                   # CUDA destekli embedding için (isteğe bağlı)
-# transformers>=4.40.0           # Model hub erişimi için
-# accelerate>=0.27.0             # Hızlandırılmış inference için
+cryptography>=42.0.0
 
-# Not: PyTorch kurulumu için işletim sisteminize uygun sürümü
-# https://pytorch.org/get-started/locally/ adresinden seçin.
-# Örnek (CPU):
-#   pip install torch --index-url https://download.pytorch.org/whl/cpu
+# =============================================================
+# OPTIONAL (only if needed)
+# =============================================================
+
+# CUDA FAISS:
+# faiss-gpu>=1.8.0
+
+# PyTorch ecosystem (NOT required by current code)
+# torch>=2.1.0
+# transformers>=4.40.0
+# accelerate>=0.27.0
+
+# CPU PyTorch example:
+# pip install torch --index-url https://download.pytorch.org/whl/cpu
