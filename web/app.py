@@ -275,31 +275,6 @@ engine = create_engine(
 SessionLocal = sessionmaker(bind=engine, autoflush=False, expire_on_commit=False, future=True)
 Base = declarative_base()
 
-def run_startup_safely():
-    global vector_store, llm_gateway
-    
-    LOG_DIR.mkdir(parents=True, exist_ok=True)
-    init_db()
-    
-    try:
-        vector_store = VectorStore(
-            CONFIG["faiss_index_file"],
-            CONFIG["chunks_meta_file"],
-            CONFIG["embedding_model"],
-        )
-    except Exception as e:
-        print(f"CRITICAL: Vector store yuklenemedi: {e}")
-        sys.exit(1)
-
-    if not CONFIG["groq_api_keys"] or not CONFIG["gemini_api_keys"]:
-        print("CRITICAL: API anahtarlari eksik!")
-        sys.exit(1)
-
-    llm_gateway = LLMGateway(CONFIG)
-
-# Uygulama nesnesi yaratılır yaratılmaz hafıza yüklemesini tetikle
-run_startup_safely()
-
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # Auth, Persistence and Quotas
@@ -1232,6 +1207,32 @@ def startup():
     scheme = "https" if CONFIG["local_https"] and not os.getenv("PORT") else "http"
     log.info(f"Server starting on {scheme}://0.0.0.0:{port}")
 
+def run_startup_safely():
+    global vector_store, llm_gateway
+    
+    LOG_DIR.mkdir(parents=True, exist_ok=True)
+    
+    # Artık init_db yukarıda tanımlandığı için Python bunu tanıyacak ve NameError vermeyecek!
+    init_db()
+    
+    try:
+        vector_store = VectorStore(
+            CONFIG["faiss_index_file"],
+            CONFIG["chunks_meta_file"],
+            CONFIG["embedding_model"],
+        )
+    except Exception as e:
+        print(f"CRITICAL: Vector store yuklenemedi: {e}")
+        sys.exit(1)
+
+    if not CONFIG["groq_api_keys"] or not CONFIG["gemini_api_keys"]:
+        print("CRITICAL: API anahtarlari eksik!")
+        sys.exit(1)
+
+    llm_gateway = LLMGateway(CONFIG)
+
+# GUNICORN'UN UYGULAMAYI BAŞLATMASI İÇİN BURADA ÇAĞIRIYORUZ
+run_startup_safely()
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # Entry Point
