@@ -251,7 +251,6 @@ Only provide these when asked or when directly relevant:
 app = Flask(__name__)
 CORS(app, supports_credentials=True)   # Allow requests from the frontend
 app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_port=1)
-
 app.config.update(
     SECRET_KEY=CONFIG["secret_key"] or secrets.token_hex(32),
     SESSION_COOKIE_HTTPONLY=True,
@@ -1204,20 +1203,17 @@ def startup():
 
     llm_gateway = LLMGateway(CONFIG)
     log.info(f"LLM gateway ready — active provider: {llm_gateway.active_provider}")
-
-
-# ── Flask'a startup fonksiyonunu kaydet ──
-# Bu kanca, uygulama hangi sunucuyla (Gunicorn vb.) başlarsa başlasın İLK istek gelmeden veya sunucu ayağa kalkarken ÇALIŞIR.
-app.before_running_from_cli(lambda _spec: startup())
+    port = int(os.getenv("PORT", "5000"))
+    scheme = "https" if CONFIG["local_https"] and not os.getenv("PORT") else "http"
+    log.info(f"Server starting on {scheme}://0.0.0.0:{port}")
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# Entry Point (Sadece Local Geliştirme İçin)
+# Entry Point
 # ═══════════════════════════════════════════════════════════════════════════════
 
 if __name__ == "__main__":
-    # Localde python app.py deyince burası tetiklenir, cli kancasından önce startup'ı biz çağırırız
-    startup() 
+    startup()
     port = int(os.getenv("PORT", "5000"))
     ssl_context = "adhoc" if CONFIG["local_https"] and not os.getenv("PORT") else None
     app.run(
