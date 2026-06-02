@@ -251,7 +251,7 @@ Only provide these when asked or when directly relevant:
 app = Flask(__name__)
 CORS(app, supports_credentials=True)   # Allow requests from the frontend
 app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_port=1)
-startup()
+
 app.config.update(
     SECRET_KEY=CONFIG["secret_key"] or secrets.token_hex(32),
     SESSION_COOKIE_HTTPONLY=True,
