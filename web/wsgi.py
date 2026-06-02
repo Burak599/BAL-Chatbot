@@ -1,6 +1,6 @@
 """Production WSGI entry point for Render/Gunicorn."""
 
-from app import app, startup
+from web.app import app, startup
 
 
 startup()

@@ -33,7 +33,6 @@ from typing import List, Dict, Generator, Optional, Tuple
 import numpy as np
 import faiss
 import requests
-from sentence_transformers import SentenceTransformer
 from sqlalchemy import Column, Integer, String, Text, create_engine, text
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import declarative_base, sessionmaker
@@ -42,6 +41,7 @@ from flask_cors import CORS
 from dotenv import load_dotenv
 from werkzeug.middleware.proxy_fix import ProxyFix
 from werkzeug.security import generate_password_hash, check_password_hash
+from google import genai
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 WEB_DIR = Path(__file__).resolve().parent
@@ -68,6 +68,27 @@ def get_groq_api_keys() -> List[str]:
         if key and key not in seen:
             keys.append(key)
             seen.add(key)
+    return keys
+
+
+def get_gemini_api_keys() -> List[str]:
+    candidates = []
+
+    candidates.extend(split_env_csv("GEMINI_API_KEYS", []))
+
+    for i in range(1,6):
+        candidates.append(os.getenv(f"GEMINI_API_KEY_{i}", ""))
+
+    keys=[]
+    seen=set()
+
+    for key in candidates:
+        key=key.strip()
+
+        if key and key not in seen:
+            keys.append(key)
+            seen.add(key)
+
     return keys
 
 
@@ -116,7 +137,7 @@ CONFIG = {
     "chunks_meta_file": str(PROJECT_ROOT / "data" / "bal_chunks.json"),
 
     # Embedding model (MUST match 01_build_vectorstore.py)
-    "embedding_model": "intfloat/multilingual-e5-large",
+    "embedding_model":"models/gemini-embedding-001",
 
     # How many chunks to retrieve per query (top-k)
     "retrieval_top_k": 5,
@@ -133,6 +154,7 @@ CONFIG = {
         "meta-llama/llama-4-scout-17b-16e-instruct",
     ]),
     "groq_api_keys": get_groq_api_keys(),
+    "gemini_api_keys": get_gemini_api_keys(),
     "groq_timeout": 120,             # seconds
 
     # ── LLM generation parameters ────────────────────────────────────────────
@@ -470,8 +492,8 @@ class VectorStore:
         with open(chunks_path, "r", encoding="utf-8") as f:
             self.chunks: List[Dict] = json.load(f)
 
-        log.info(f"Loading embedding model: {model_name}")
-        self.model = SentenceTransformer(model_name)
+        self.embedding_model_name = model_name
+        self.gemini_keys = CONFIG["gemini_api_keys"]
 
         log.info(f"Vector store ready — {self.index.ntotal} chunks")
 
@@ -481,11 +503,49 @@ class VectorStore:
         E5 model requires the 'query:' prefix for retrieval queries.
         """
         query_text = f"query: {query}"
-        embedding = self.model.encode(
-            [query_text],
-            normalize_embeddings=True,
-            convert_to_numpy=True,
-        ).astype("float32")
+
+        embedding = None
+        last_error = None
+
+        for key_index, api_key in enumerate(self.gemini_keys,1):
+
+            try:
+
+                client = genai.Client(api_key=api_key)
+
+                client = genai.Client(api_key=api_key)
+
+                response = client.models.embed_content(
+                    model="models/gemini-embedding-001",
+                    contents=query_text,
+                    config={
+                        "task_type":"RETRIEVAL_QUERY"
+                    }
+                )
+
+                embedding = np.array(
+                    [response.embeddings[0].values],
+                    dtype="float32"
+                )
+
+                faiss.normalize_L2(embedding)
+
+                break
+
+            except Exception as e:
+
+                log.warning(
+                    f"Gemini embedding failed key={key_index} error={e}"
+                )
+
+                last_error=e
+
+                continue
+
+        if embedding is None:
+            raise RuntimeError(
+                f"All Gemini embedding keys failed: {last_error}"
+            )
 
         scores, indices = self.index.search(embedding, top_k)
 
@@ -1135,6 +1195,11 @@ def startup():
         len(CONFIG["groq_api_keys"]),
         CONFIG["groq_model_chain"][0],
     )
+    if not CONFIG["gemini_api_keys"]:
+        log.error(
+            "No Gemini API key configured."
+        )
+        sys.exit(1)
 
     llm_gateway = LLMGateway(CONFIG)
     log.info(f"LLM gateway ready — active provider: {llm_gateway.active_provider}")
