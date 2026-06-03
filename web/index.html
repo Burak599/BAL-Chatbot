@@ -147,6 +147,15 @@
       white-space: nowrap;
     }
 
+    #quota-display-fixed {
+      position: fixed;
+      top: 16px;
+      left: 16px;
+      z-index: 20;
+      box-shadow: 0 14px 30px rgba(0,0,0,.08);
+      background: rgba(255,255,255,.96);
+    }
+
     .text-btn {
       border: 1px solid var(--border);
       background: #fff;
@@ -745,6 +754,8 @@
 </head>
 
 <body>
+  <!-- Quota display (top-left) -->
+  <div id="quota-display-fixed" class="quota-pill" aria-live="polite">+0/40&nbsp;&nbsp;+0/5</div>
   <!-- Header -->
   <header>
     <div class="header-inner">
@@ -818,6 +829,30 @@
 
     let isStreaming = false;
     const notifiedFallbackModels = new Set();
+    const quotaEl = document.getElementById('quota-display-fixed');
+    let quotaInfo = {
+      daily_used: 0,
+      minute_used: 0,
+      daily_limit: 40,
+      minute_limit: 5,
+    };
+
+    function updateQuotaDisplay() {
+      const dailyRemaining = Math.max(quotaInfo.daily_limit - quotaInfo.daily_used, 0);
+      const minuteRemaining = Math.max(quotaInfo.minute_limit - quotaInfo.minute_used, 0);
+      quotaEl.innerHTML = `+${dailyRemaining}/${quotaInfo.daily_limit}&nbsp;&nbsp;+${minuteRemaining}/${quotaInfo.minute_limit}`;
+    }
+
+    function setQuotaFromStatus(data) {
+      if (!data) return;
+      quotaInfo.daily_used = Number.isFinite(data.daily_used) ? data.daily_used : 0;
+      quotaInfo.minute_used = Number.isFinite(data.minute_used) ? data.minute_used : 0;
+      quotaInfo.daily_limit = Number.isFinite(data.daily_limit) ? data.daily_limit : 40;
+      quotaInfo.minute_limit = Number.isFinite(data.minute_limit) ? data.minute_limit : 5;
+      updateQuotaDisplay();
+    }
+
+    updateQuotaDisplay();
 
     async function apiFetch(path, options = {}) {
       const res = await fetch(`${API_BASE}${path}`, {
@@ -884,6 +919,7 @@
       try {
         const data = await apiFetch('/auth/status', { method: 'GET', headers: {} });
         if (data.near_limit) showLimitNotice();
+        setQuotaFromStatus(data);
       } catch {
         // Auth durumu başarısız olsa da sohbet çalışmaya devam eder.
       }
@@ -1056,6 +1092,7 @@
         let sources = [];
         let sseBuffer = '';
 
+        let sseHadError = false;
         const processSseLine = line => {
           if (!line.startsWith('data: ')) return;
           try {
@@ -1069,6 +1106,7 @@
 
             if (data.error) {
               bubble.innerHTML = `<p style="color:#e05252">${data.error}</p>`;
+              sseHadError = true;
             }
 
             if (data.model_fallback) {
@@ -1112,6 +1150,9 @@
             sourcesEl.appendChild(chip);
           });
           wrap.appendChild(sourcesEl);
+        }
+        if (!sseHadError) {
+          await loadAuthStatus();
         }
 
       } catch (err) {

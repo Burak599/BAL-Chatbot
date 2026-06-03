@@ -949,9 +949,15 @@ def auth_status():
         })
 
     usage = quota_snapshot(identity)
+    limits = CONFIG["limits"].get(identity["role"], CONFIG["limits"]["user"])
     return jsonify({
         "authenticated": True,
         "user": identity["public"],
+        "role": identity["role"],
+        "daily_used": usage["daily_used"],
+        "minute_used": usage["minute_used"],
+        "daily_limit": limits["daily"],
+        "minute_limit": limits["minute"],
         "near_limit": usage["daily_used"] >= 30,
         "google_configured": bool(CONFIG["google_client_id"]),
         "google_client_id": CONFIG["google_client_id"],
