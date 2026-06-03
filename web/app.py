@@ -413,6 +413,10 @@ def get_current_identity() -> Optional[Dict]:
             with SessionLocal() as db:
                 user = db.query(User).filter(User.fingerprint == fingerprint).first()
                 if user is None:
+                    log.info("No existing user with fingerprint found: %s", fingerprint)
+                else:
+                    log.info("Found existing user id=%s for fingerprint", user.id)
+                if user is None:
                     user = User(
                         email=None,
                         fingerprint=fingerprint,
@@ -425,9 +429,12 @@ def get_current_identity() -> Optional[Dict]:
                     try:
                         db.commit()
                         db.refresh(user)
+                        log.info("Created visitor user id=%s fingerprint=%s", user.id, fingerprint)
                     except IntegrityError:
                         db.rollback()
                         user = db.query(User).filter(User.fingerprint == fingerprint).first()
+                        if user:
+                            log.info("Detected concurrent creation; using existing user id=%s", user.id)
 
                 if user:
                     session["fingerprint"] = fingerprint
