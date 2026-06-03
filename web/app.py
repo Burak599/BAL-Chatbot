@@ -34,7 +34,7 @@ import hashlib
 import numpy as np
 import faiss
 import requests
-from sqlalchemy import Column, Integer, String, Text, create_engine, inspect, text
+from sqlalchemy import Column, Integer, String, Text, create_engine, inspect, text, func
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import declarative_base, sessionmaker
 from flask import Flask, request, jsonify, Response, stream_with_context, send_from_directory, session
@@ -316,6 +316,17 @@ class UsageCounter(Base):
     period_key = Column(String(64), primary_key=True)
     count = Column(Integer, nullable=False, default=0)
     updated_at = Column(String(64), nullable=False)
+
+
+class ChatLog(Base):
+    __tablename__ = "chat_logs"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    user_id = Column(Integer, nullable=False, index=True)
+    question_index = Column(Integer, nullable=False, default=0, index=True)
+    question = Column(Text, nullable=False)
+    answer = Column(Text, nullable=False)
+    created_at = Column(String(64), nullable=False)
 
 
 def init_db() -> None:
@@ -1118,6 +1129,23 @@ def chat():
             # Cap history length
             if len(history) > CONFIG["max_history_turns"] * 2:
                 conversation_sessions[session_id] = history[-(CONFIG["max_history_turns"] * 2):]
+
+            # Persist question-answer pair in chat_logs
+            try:
+                with SessionLocal() as db:
+                    last_index = db.query(func.max(ChatLog.question_index)).filter(ChatLog.user_id == int(identity["subject_id"])) .scalar()
+                    next_index = (last_index or 0) + 1
+                    log_entry = ChatLog(
+                        user_id=int(identity["subject_id"]),
+                        question_index=next_index,
+                        question=user_message,
+                        answer=full_response,
+                        created_at=utc_now().isoformat(),
+                    )
+                    db.add(log_entry)
+                    db.commit()
+            except Exception:
+                log.exception("Failed to save chat log for user_id=%s", identity["subject_id"])
 
         # ── Final event: sources ──────────────────────────────────────────────
         sources = build_sources_payload(retrieved, CONFIG["retrieval_score_threshold"])
