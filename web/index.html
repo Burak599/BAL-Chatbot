@@ -745,44 +745,6 @@
 </head>
 
 <body>
-  <div id="auth-screen">
-    <section class="auth-hero">
-      <div class="auth-mark">B</div>
-      <h1>BAL hakkında net cevaplar.</h1>
-      <p>Bornova Anadolu Lisesi bilgileri için hazırlanmış, kaynaklı ve kısa cevap veren okul asistanı.</p>
-      <div class="auth-points">
-        <span>Okul bilgileri, kayıt, ulaşım ve kampüs olanakları</span>
-        <span>LGS puanları, programlar ve öğrenci yaşamı</span>
-        <span>Günlük kullanım hakları hesap türüne göre yönetilir</span>
-      </div>
-    </section>
-
-    <section class="auth-panel">
-      <h2>BAL Asistan</h2>
-      <p>Hesapla giriş yapan kullanıcıların günlük hakkı daha yüksektir. Misafir olarak devam edersen daha sınırlı kullanım hakkın olur.</p>
-
-      <div class="auth-grid">
-        <div class="limit-box"><strong>Misafir</strong>10 soru/gün · dakikada 3</div>
-        <div class="limit-box"><strong>Hesaplı</strong>50 soru/gün · dakikada 8</div>
-      </div>
-
-      <div class="auth-tabs">
-        <button class="auth-tab active" id="login-tab" onclick="setAuthMode('login')">Giriş yap</button>
-        <button class="auth-tab" id="register-tab" onclick="setAuthMode('register')">Hesap aç</button>
-      </div>
-
-      <form class="auth-form" onsubmit="submitPasswordAuth(event)">
-        <input id="auth-email" type="email" autocomplete="email" placeholder="E-posta adresi" required />
-        <input id="auth-password" type="password" autocomplete="current-password" placeholder="Şifre" minlength="8" required />
-        <button class="auth-primary" id="auth-submit" type="submit">Giriş yap</button>
-      </form>
-
-      <div id="google-wrap"></div>
-      <button class="auth-secondary" onclick="continueAsGuest()">Misafir olarak devam et</button>
-      <div id="auth-error"></div>
-    </section>
-  </div>
-
   <!-- Header -->
   <header>
     <div class="header-inner">
@@ -797,14 +759,6 @@
       </div>
     </div>
   </header>
-
-  <div class="account-bar" id="account-bar">
-    <div class="account-meta">
-      <span id="account-label">Oturum</span>
-      <span class="quota-pill" id="quota-label">Limit yükleniyor</span>
-    </div>
-    <button class="text-btn" onclick="logout()">Çıkış</button>
-  </div>
 
   <!-- Chat -->
   <div id="chat-container">
@@ -860,28 +814,10 @@
     const statusText  = document.getElementById('status-text');
     const charCount   = document.getElementById('char-count');
     const welcomeMsg  = document.getElementById('welcome-msg');
-    const authScreen  = document.getElementById('auth-screen');
-    const authError   = document.getElementById('auth-error');
-    const authSubmit  = document.getElementById('auth-submit');
-    const accountBar  = document.getElementById('account-bar');
-    const accountLabel = document.getElementById('account-label');
-    const quotaLabel  = document.getElementById('quota-label');
     const noticeLayer = document.getElementById('notice-layer');
 
     let isStreaming = false;
-    let authMode = 'login';
-    let currentUser = null;
-    let currentQuota = null;
     const notifiedFallbackModels = new Set();
-
-    function setAuthMode(mode) {
-      authMode = mode;
-      document.getElementById('login-tab').classList.toggle('active', mode === 'login');
-      document.getElementById('register-tab').classList.toggle('active', mode === 'register');
-      authSubmit.textContent = mode === 'login' ? 'Giriş yap' : 'Hesap aç';
-      document.getElementById('auth-password').autocomplete = mode === 'login' ? 'current-password' : 'new-password';
-      authError.textContent = '';
-    }
 
     async function apiFetch(path, options = {}) {
       const res = await fetch(`${API_BASE}${path}`, {
@@ -894,25 +830,25 @@
       return data;
     }
 
-    function applyAuth(data) {
-      currentUser = data.user || null;
-      currentQuota = data.quota || null;
+    function showLimitNotice() {
+      if (!noticeLayer) return;
+      noticeLayer.innerHTML = '';
+      const pill = document.createElement('div');
+      pill.className = 'notice-pill';
 
-      if (currentUser) {
-        authScreen.classList.add('hidden');
-        accountBar.classList.add('active');
-        accountLabel.textContent = currentUser.mode === 'guest'
-          ? 'Misafir'
-          : `${currentUser.email} · ${currentUser.role}`;
-        updateQuota(currentQuota);
-        inputEl.focus();
-      }
-    }
+      const text = document.createElement('span');
+      text.textContent = 'Hakkınız azalıyor, 30 soruya yaklaştınız.';
+      pill.appendChild(text);
 
-    function updateQuota(quota) {
-      if (!quota) return;
-      currentQuota = quota;
-      quotaLabel.textContent = `${quota.daily_remaining}/${quota.daily_limit} günlük hak · ${quota.minute_remaining}/${quota.minute_limit} dakika`;
+      const close = document.createElement('button');
+      close.className = 'notice-close';
+      close.type = 'button';
+      close.textContent = '×';
+      close.title = 'Bildirimi kapat';
+      close.onclick = () => { noticeLayer.innerHTML = ''; };
+      pill.appendChild(close);
+
+      noticeLayer.appendChild(pill);
     }
 
     function showModelFallbackNotice(notice) {
@@ -947,86 +883,10 @@
     async function loadAuthStatus() {
       try {
         const data = await apiFetch('/auth/status', { method: 'GET', headers: {} });
-        if (data.authenticated) {
-          applyAuth(data);
-        } else {
-          authScreen.classList.remove('hidden');
-          initGoogle(data.google_client_id);
-        }
+        if (data.near_limit) showLimitNotice();
       } catch {
-        authScreen.classList.remove('hidden');
+        // Auth durumu başarısız olsa da sohbet çalışmaya devam eder.
       }
-    }
-
-    async function submitPasswordAuth(event) {
-      event.preventDefault();
-      authError.textContent = '';
-      authSubmit.disabled = true;
-      try {
-        const email = document.getElementById('auth-email').value.trim();
-        const password = document.getElementById('auth-password').value;
-        const data = await apiFetch(authMode === 'login' ? '/auth/login' : '/auth/register', {
-          method: 'POST',
-          body: JSON.stringify({ email, password }),
-        });
-        applyAuth(data);
-      } catch (err) {
-        authError.textContent = err.message;
-      } finally {
-        authSubmit.disabled = false;
-      }
-    }
-
-    async function continueAsGuest() {
-      authError.textContent = '';
-      try {
-        const data = await apiFetch('/auth/guest', { method: 'POST', body: JSON.stringify({}) });
-        applyAuth(data);
-      } catch (err) {
-        authError.textContent = err.message;
-      }
-    }
-
-    async function logout() {
-      try {
-        await apiFetch('/auth/logout', { method: 'POST', body: JSON.stringify({}) });
-      } catch { /* sessizce geç */ }
-      window.location.reload();
-    }
-
-    function initGoogle(clientId) {
-      const wrap = document.getElementById('google-wrap');
-      if (!clientId) {
-        wrap.innerHTML = '<span style="color:var(--text-muted);font-size:.76rem">Google girişi için GOOGLE_CLIENT_ID tanımlanmalı.</span>';
-        return;
-      }
-      const tryRender = () => {
-        if (!window.google?.accounts?.id) {
-          setTimeout(tryRender, 200);
-          return;
-        }
-        window.google.accounts.id.initialize({
-          client_id: clientId,
-          callback: async response => {
-            try {
-              const data = await apiFetch('/auth/google', {
-                method: 'POST',
-                body: JSON.stringify({ credential: response.credential }),
-              });
-              applyAuth(data);
-            } catch (err) {
-              authError.textContent = err.message;
-            }
-          },
-        });
-        window.google.accounts.id.renderButton(wrap, {
-          theme: 'filled_black',
-          size: 'large',
-          width: 320,
-          text: 'continue_with',
-        });
-      };
-      tryRender();
     }
 
     // ── Sağlık kontrolü ───────────────────────────────────────
@@ -1166,7 +1026,7 @@
 
         if (!response.ok) {
           const data = await response.json().catch(() => ({}));
-          if (data.quota) updateQuota(data.quota);
+          if (data.near_limit) showLimitNotice();
           throw new Error(data.error || `HTTP ${response.status}`);
         }
 
@@ -1217,7 +1077,7 @@
 
             if (data.done) {
               sources = data.sources || [];
-              if (data.quota) updateQuota(data.quota);
+              if (data.near_limit) showLimitNotice();
             }
           } catch { /* JSON parse hataları yoksay */ }
         };

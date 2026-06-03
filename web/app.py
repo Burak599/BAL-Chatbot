@@ -29,6 +29,7 @@ import re
 from pathlib import Path
 from datetime import datetime, timezone
 from typing import List, Dict, Generator, Optional, Tuple
+import hashlib
 
 import numpy as np
 import faiss
@@ -173,7 +174,7 @@ CONFIG = {
     "google_client_id": os.getenv("GOOGLE_CLIENT_ID", ""),
     "admin_emails": split_env_list("ADMIN_EMAILS"),
     "limits": {
-        "guest": {"daily": 10, "minute": 3},
+        "visitor": {"daily": 40, "minute": 5},
         "user": {"daily": 50, "minute": 8},
         "admin": {"daily": 500, "minute": 20},
     },
@@ -296,7 +297,10 @@ class User(Base):
     __tablename__ = "users"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    email = Column(String(255), nullable=False, unique=True, index=True)
+    # email kept for backwards compatibility but optional now
+    email = Column(String(255), nullable=True, unique=True, index=True)
+    # browser/device fingerprint used to identify users without accounts
+    fingerprint = Column(String(255), nullable=True, unique=True, index=True)
     password_hash = Column(Text, nullable=True)
     provider = Column(String(32), nullable=False, default="password")
     role = Column(String(32), nullable=False, default="user", index=True)
@@ -341,40 +345,26 @@ def role_for_email(email: str) -> str:
 def user_to_public(user: User) -> Dict:
     role = user.role
     limits = CONFIG["limits"].get(role, CONFIG["limits"]["user"])
-    is_guest = role == "guest" or user.provider == "guest"
+    # treat fingerprint-identified users as visitors for display
+    is_visitor = role == "visitor" or user.provider == "fingerprint"
     return {
         "id": user.id,
-        "email": None if is_guest else user.email,
-        "role": role,
-        "mode": "guest" if is_guest else "account",
-        "daily_limit": limits["daily"],
-        "minute_limit": limits["minute"],
+        "email": None if is_visitor else user.email,
+        "role": "visitor" if is_visitor else role,
+        "mode": "visitor" if is_visitor else "account",
     }
 
 
-def create_guest_user() -> User:
-    """Create a persisted guest user so guest quotas survive logout/re-entry."""
-    with SessionLocal() as db:
-        for _ in range(3):
-            guest_email = f"guest-{secrets.token_urlsafe(16)}@guest.local"
-            user = User(
-                email=guest_email,
-                password_hash=None,
-                provider="guest",
-                role="guest",
-                created_at=utc_now().isoformat(),
-            )
-            db.add(user)
-            try:
-                db.commit()
-                db.refresh(user)
-                return user
-            except IntegrityError:
-                db.rollback()
-        raise RuntimeError("Guest user could not be created.")
+def build_fingerprint() -> str:
+    user_agent = request.headers.get("User-Agent", "")
+    ip = request.headers.get("X-Forwarded-For", request.remote_addr) or ""
+    language = request.headers.get("Accept-Language", "")
+    fingerprint_source = f"{ip}|{user_agent}|{language}"
+    return hashlib.sha256(fingerprint_source.encode("utf-8")).hexdigest()
 
 
 def get_current_identity() -> Optional[Dict]:
+    # 1) If a server-side session user_id exists, prefer it (backwards compat)
     user_id = session.get("user_id")
     if user_id:
         with SessionLocal() as db:
@@ -388,18 +378,42 @@ def get_current_identity() -> Optional[Dict]:
                 }
         session.pop("user_id", None)
 
-    active_guest_user_id = session.get("active_guest_user_id")
-    if active_guest_user_id:
+    # 2) Fingerprint-based identity (preferred for anonymous flow)
+    fingerprint = session.get("fingerprint")
+    if not fingerprint:
+        fingerprint = request.headers.get("X-Client-Fingerprint")
+    if not fingerprint:
+        fingerprint = build_fingerprint()
+
+    if fingerprint:
         with SessionLocal() as db:
-            guest = db.get(User, int(active_guest_user_id))
-            if guest and guest.role == "guest":
+            user = db.query(User).filter(User.fingerprint == fingerprint).first()
+            if user is None:
+                user = User(
+                    email=None,
+                    fingerprint=fingerprint,
+                    password_hash=None,
+                    provider="fingerprint",
+                    role="visitor",
+                    created_at=utc_now().isoformat(),
+                )
+                db.add(user)
+                try:
+                    db.commit()
+                    db.refresh(user)
+                except IntegrityError:
+                    db.rollback()
+                    user = db.query(User).filter(User.fingerprint == fingerprint).first()
+
+            if user:
+                session["fingerprint"] = fingerprint
                 return {
                     "subject_type": "user",
-                    "subject_id": str(guest.id),
-                    "role": "guest",
-                    "public": user_to_public(guest),
+                    "subject_id": str(user.id),
+                    "role": user.role,
+                    "public": user_to_public(user),
                 }
-        session.pop("active_guest_user_id", None)
+
     return None
 
 
@@ -870,147 +884,45 @@ def auth_status():
             "google_client_id": CONFIG["google_client_id"],
             "https_required": CONFIG["force_https"],
         })
+
+    usage = quota_snapshot(identity)
     return jsonify({
         "authenticated": True,
         "user": identity["public"],
-        "quota": quota_snapshot(identity),
+        "near_limit": usage["daily_used"] >= 30,
         "google_configured": bool(CONFIG["google_client_id"]),
         "google_client_id": CONFIG["google_client_id"],
         "https_required": CONFIG["force_https"],
     })
 
 
+def unsupported_auth():
+    return jsonify({"error": "Authentication flow is not supported for this app."}), 404
+
+
 @app.route("/api/auth/guest", methods=["POST"])
 def auth_guest():
-    session.pop("user_id", None)
-    guest_user_id = session.get("known_guest_user_id") or session.get("guest_user_id")
-    if guest_user_id:
-        with SessionLocal() as db:
-            guest = db.get(User, int(guest_user_id))
-        if not guest or guest.role != "guest":
-            session.pop("known_guest_user_id", None)
-            session.pop("guest_user_id", None)
-            guest_user_id = None
-
-    if not guest_user_id:
-        guest = create_guest_user()
-        guest_user_id = guest.id
-
-    session["known_guest_user_id"] = guest_user_id
-    session["active_guest_user_id"] = guest_user_id
-    session.pop("guest_user_id", None)
-    identity = get_current_identity()
-    return jsonify({"status": "ok", "user": identity["public"], "quota": quota_snapshot(identity)})
+    return unsupported_auth()
 
 
 @app.route("/api/auth/register", methods=["POST"])
 def auth_register():
-    body = request.get_json() or {}
-    email = normalize_email(body.get("email", ""))
-    password = body.get("password", "")
-
-    if not email or "@" not in email:
-        return jsonify({"error": "Geçerli bir e-posta adresi gerekli."}), 400
-    if len(password) < 8:
-        return jsonify({"error": "Şifre en az 8 karakter olmalı."}), 400
-
-    try:
-        with SessionLocal() as db:
-            user = User(
-                email=email,
-                password_hash=generate_password_hash(password),
-                provider="password",
-                role=role_for_email(email),
-                created_at=utc_now().isoformat(),
-            )
-            db.add(user)
-            db.commit()
-            db.refresh(user)
-            user_id = user.id
-    except IntegrityError:
-        return jsonify({"error": "Bu e-posta ile kayıtlı bir hesap var."}), 409
-
-    session.clear()
-    session["user_id"] = user_id
-    identity = get_current_identity()
-    return jsonify({"status": "ok", "user": identity["public"], "quota": quota_snapshot(identity)})
+    return unsupported_auth()
 
 
 @app.route("/api/auth/login", methods=["POST"])
 def auth_login():
-    body = request.get_json() or {}
-    email = normalize_email(body.get("email", ""))
-    password = body.get("password", "")
-
-    with SessionLocal() as db:
-        user = db.query(User).filter(User.email == email).first()
-
-    if not user or not user.password_hash or not check_password_hash(user.password_hash, password):
-        return jsonify({"error": "E-posta veya şifre hatalı."}), 401
-
-    session.clear()
-    session["user_id"] = user.id
-    identity = get_current_identity()
-    return jsonify({"status": "ok", "user": identity["public"], "quota": quota_snapshot(identity)})
+    return unsupported_auth()
 
 
 @app.route("/api/auth/google", methods=["POST"])
 def auth_google():
-    if not CONFIG["google_client_id"]:
-        return jsonify({"error": "Google giriş ayarı eksik: GOOGLE_CLIENT_ID tanımlanmalı."}), 503
-
-    body = request.get_json() or {}
-    credential = body.get("credential", "")
-    if not credential:
-        return jsonify({"error": "Google kimlik bilgisi eksik."}), 400
-
-    try:
-        resp = requests.get(
-            "https://oauth2.googleapis.com/tokeninfo",
-            params={"id_token": credential},
-            timeout=10,
-        )
-        resp.raise_for_status()
-        profile = resp.json()
-    except requests.RequestException:
-        log.exception("Google token verification failed")
-        return jsonify({"error": "Google hesabı doğrulanamadı."}), 401
-
-    if profile.get("aud") != CONFIG["google_client_id"] or profile.get("email_verified") != "true":
-        return jsonify({"error": "Google hesabı doğrulanamadı."}), 401
-
-    email = normalize_email(profile.get("email", ""))
-    if not email:
-        return jsonify({"error": "Google hesabında e-posta bulunamadı."}), 401
-
-    with SessionLocal() as db:
-        user = db.query(User).filter(User.email == email).first()
-        if user is None:
-            user = User(
-                email=email,
-                password_hash=None,
-                provider="google",
-                role=role_for_email(email),
-                created_at=utc_now().isoformat(),
-            )
-            db.add(user)
-            db.commit()
-            db.refresh(user)
-        user_id = user.id
-
-    session.clear()
-    session["user_id"] = user_id
-    identity = get_current_identity()
-    return jsonify({"status": "ok", "user": identity["public"], "quota": quota_snapshot(identity)})
+    return unsupported_auth()
 
 
 @app.route("/api/auth/logout", methods=["POST"])
 def auth_logout():
-    known_guest_user_id = session.get("known_guest_user_id") or session.get("active_guest_user_id")
-    session.clear()
-    if known_guest_user_id:
-        session["known_guest_user_id"] = known_guest_user_id
-    return jsonify({"status": "logged_out"})
+    return unsupported_auth()
 
 
 @app.route("/api/health", methods=["GET"])
@@ -1068,11 +980,11 @@ def chat():
 
     identity = get_current_identity()
     if not identity:
-        return jsonify({"error": "Devam etmek için giriş yap veya misafir olarak kullan."}), 401
+        return jsonify({"error": "Ziyaretçi kimliği alınamadı; lütfen sayfayı yenileyin."}), 401
 
     quota_ok, quota, quota_error = check_quota(identity)
     if not quota_ok:
-        return jsonify({"error": quota_error, "quota": quota}), 429
+        return jsonify({"error": quota_error}), 429
 
     quota = increment_usage(identity)
 
@@ -1129,7 +1041,7 @@ def chat():
 
         # ── Final event: sources ──────────────────────────────────────────────
         sources = build_sources_payload(retrieved, CONFIG["retrieval_score_threshold"])
-        yield f"data: {json.dumps({'done': True, 'sources': sources, 'quota': quota})}\n\n"
+        yield f"data: {json.dumps({'done': True, 'sources': sources, 'near_limit': quota['daily_used'] >= 30})}\n\n"
 
     return Response(
         stream_with_context(generate()),
