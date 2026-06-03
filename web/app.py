@@ -409,33 +409,41 @@ def get_current_identity() -> Optional[Dict]:
         fingerprint = build_fingerprint()
 
     if fingerprint:
-        with SessionLocal() as db:
-            user = db.query(User).filter(User.fingerprint == fingerprint).first()
-            if user is None:
-                user = User(
-                    email=None,
-                    fingerprint=fingerprint,
-                    password_hash=None,
-                    provider="fingerprint",
-                    role="visitor",
-                    created_at=utc_now().isoformat(),
-                )
-                db.add(user)
-                try:
-                    db.commit()
-                    db.refresh(user)
-                except IntegrityError:
-                    db.rollback()
-                    user = db.query(User).filter(User.fingerprint == fingerprint).first()
+        try:
+            with SessionLocal() as db:
+                user = db.query(User).filter(User.fingerprint == fingerprint).first()
+                if user is None:
+                    user = User(
+                        email=None,
+                        fingerprint=fingerprint,
+                        password_hash=None,
+                        provider="fingerprint",
+                        role="visitor",
+                        created_at=utc_now().isoformat(),
+                    )
+                    db.add(user)
+                    try:
+                        db.commit()
+                        db.refresh(user)
+                    except IntegrityError:
+                        db.rollback()
+                        user = db.query(User).filter(User.fingerprint == fingerprint).first()
 
-            if user:
-                session["fingerprint"] = fingerprint
-                return {
-                    "subject_type": "user",
-                    "subject_id": str(user.id),
-                    "role": user.role,
-                    "public": user_to_public(user),
-                }
+                if user:
+                    session["fingerprint"] = fingerprint
+                    return {
+                        "subject_type": "user",
+                        "subject_id": str(user.id),
+                        "role": user.role,
+                        "public": user_to_public(user),
+                    }
+        except Exception as e:
+            log.exception("Failed to establish fingerprint identity (%s). Headers: %s", e, {
+                "X-Forwarded-For": request.headers.get("X-Forwarded-For"),
+                "X-Client-Fingerprint": request.headers.get("X-Client-Fingerprint"),
+                "User-Agent": request.headers.get("User-Agent"),
+            })
+            return None
 
     return None
 
