@@ -1246,7 +1246,7 @@ def run_startup_safely():
         sys.exit(1)
 
     if not CONFIG["groq_api_keys"] or not CONFIG["gemini_api_keys"]:
-        print("CRITICAL: API anahtarlari eksik!")
+        print("CRITICAL: API anahtarlari eksik!!!")
         sys.exit(1)
 
     llm_gateway = LLMGateway(CONFIG)
