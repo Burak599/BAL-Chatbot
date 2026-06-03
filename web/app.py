@@ -419,12 +419,7 @@ def get_current_identity() -> Optional[Dict]:
 
 def get_usage(subject_type: str, subject_id: str, period_type: str, period_key: str) -> int:
     with SessionLocal() as db:
-        row = db.get(UsageCounter, {
-            "subject_type": subject_type,
-            "subject_id": subject_id,
-            "period_type": period_type,
-            "period_key": period_key,
-        })
+        row = db.get(UsageCounter, (subject_type, subject_id, period_type, period_key))
         return int(row.count) if row else 0
 
 
@@ -456,15 +451,22 @@ def increment_usage(identity: Dict) -> Dict:
     rows = [("day", today_key()), ("minute", minute_key())]
     with SessionLocal() as db:
         for period_type, period_key in rows:
-            key = {
-                "subject_type": identity["subject_type"],
-                "subject_id": identity["subject_id"],
-                "period_type": period_type,
-                "period_key": period_key,
-            }
+            key = (
+                identity["subject_type"],
+                identity["subject_id"],
+                period_type,
+                period_key,
+            )
             counter = db.get(UsageCounter, key)
             if counter is None:
-                counter = UsageCounter(**key, count=1, updated_at=now)
+                counter = UsageCounter(
+                    subject_type=identity["subject_type"],
+                    subject_id=identity["subject_id"],
+                    period_type=period_type,
+                    period_key=period_key,
+                    count=1,
+                    updated_at=now,
+                )
                 db.add(counter)
             else:
                 counter.count += 1
