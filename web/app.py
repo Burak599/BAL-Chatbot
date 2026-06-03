@@ -34,7 +34,7 @@ import hashlib
 import numpy as np
 import faiss
 import requests
-from sqlalchemy import Column, Integer, String, Text, create_engine, text
+from sqlalchemy import Column, Integer, String, Text, create_engine, inspect, text
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import declarative_base, sessionmaker
 from flask import Flask, request, jsonify, Response, stream_with_context, send_from_directory, session
@@ -322,6 +322,29 @@ def init_db() -> None:
     if CONFIG["database_url"].startswith("sqlite"):
         Path(PROJECT_ROOT / "data").mkdir(parents=True, exist_ok=True)
     Base.metadata.create_all(bind=engine)
+    _ensure_user_fingerprint_column()
+
+
+def _ensure_user_fingerprint_column() -> None:
+    """Ensure an existing users table has the fingerprint column required by the anonymous flow."""
+    inspector = inspect(engine)
+    if not inspector.has_table("users"):
+        return
+
+    existing_columns = {col["name"] for col in inspector.get_columns("users")}
+    if "fingerprint" in existing_columns:
+        return
+
+    log.warning("Adding missing users.fingerprint column to existing database schema.")
+    with engine.begin() as conn:
+        if engine.dialect.name == "sqlite":
+            conn.execute(text("ALTER TABLE users ADD COLUMN fingerprint VARCHAR(255)"))
+        else:
+            conn.execute(text("ALTER TABLE users ADD COLUMN fingerprint VARCHAR(255)"))
+        try:
+            conn.execute(text("CREATE UNIQUE INDEX IF NOT EXISTS ix_users_fingerprint ON users (fingerprint)"))
+        except Exception:
+            log.exception("Could not create index for users.fingerprint. This is non-fatal.")
 
 
 def database_ready() -> bool:
