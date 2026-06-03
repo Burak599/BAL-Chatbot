@@ -1013,6 +1013,17 @@ def chat():
 
     identity = get_current_identity()
     if not identity:
+        try:
+            headers_snapshot = {
+                "X-Client-Fingerprint": request.headers.get("X-Client-Fingerprint"),
+                "User-Agent": request.headers.get("User-Agent"),
+                "Accept-Language": request.headers.get("Accept-Language"),
+                "X-Forwarded-For": request.headers.get("X-Forwarded-For"),
+            }
+            log.warning("Visitor identity missing for /api/chat. Request cookies: %s, headers: %s, remote_addr: %s",
+                        dict(request.cookies), headers_snapshot, request.remote_addr)
+        except Exception:
+            log.exception("Failed to log missing identity details")
         return jsonify({"error": "Ziyaretçi kimliği alınamadı; lütfen sayfayı yenileyin."}), 401
 
     quota_ok, quota, quota_error = check_quota(identity)
