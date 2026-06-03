@@ -16,16 +16,18 @@ import os
 import re
 import json
 import time
-import pickle
 import logging
 from pathlib import Path
 from typing import List, Dict, Tuple
+from google import genai
 
 import numpy as np
-from sentence_transformers import SentenceTransformer
 import faiss
+from dotenv import load_dotenv
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
+
+load_dotenv(PROJECT_ROOT / ".env")
 
 # ── Logging ──────────────────────────────────────────────────────────────────
 logging.basicConfig(
@@ -38,12 +40,24 @@ logging.basicConfig(
 )
 log = logging.getLogger(__name__)
 
+def get_gemini_api_keys():
+    keys = []
+
+    for i in range(1,6):
+        k = os.getenv(f"GEMINI_API_KEY_{i}","").strip()
+
+        if k:
+            keys.append(k)
+
+    return keys
+
 # ── Konfigürasyon ─────────────────────────────────────────────────────────────
 CONFIG = {
     # Doküman yolu (masaüstünde olduğunu varsayıyoruz; gerekirse düzeltin)
     "dataset_path": str(PROJECT_ROOT / "Dataset" / "RAG_Dataset_BAL.md"),
     # Embedding modeli — çok dilli, Türkçe'yi iyi destekler
-    "embedding_model": "intfloat/multilingual-e5-large",
+    "embedding_model": "models/gemini-embedding-001",
+    "gemini_api_keys": get_gemini_api_keys(),
     # Alternatifler (daha hızlı ama biraz daha düşük kalite):
     #   "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
     #   "emrecan/bert-base-turkish-cased-mean-nli-stsb-tr"
@@ -198,7 +212,7 @@ def build_chunks(sections: List[Dict], config: Dict) -> List[Dict]:
         
         for i, chunk_text in enumerate(sub_chunks):
             # Embedding için önek ekle (E5 modeli için gerekli)
-            embed_text = f"passage: {section['breadcrumb']}\n{chunk_text}"
+            embed_text = f"{section['breadcrumb']}\n\n{chunk_text}"
             
             all_chunks.append({
                 "id": chunk_id,
@@ -228,7 +242,11 @@ def generate_embeddings(chunks: List[Dict], model_name: str) -> np.ndarray:
     Büyük veri setlerinde batch processing kullanır.
     """
     log.info(f"Embedding modeli yükleniyor: {model_name}")
-    model = SentenceTransformer(model_name)
+
+    api_keys = CONFIG["gemini_api_keys"]
+
+    if not api_keys:
+        raise RuntimeError("Gemini API key bulunamadı.")
     
     texts = [c["embed_text"] for c in chunks]
     total = len(texts)
@@ -239,15 +257,71 @@ def generate_embeddings(chunks: List[Dict], model_name: str) -> np.ndarray:
     all_embeddings = []
     
     for i in range(0, total, batch_size):
+
         batch = texts[i: i + batch_size]
-        embeddings = model.encode(
-            batch,
-            normalize_embeddings=True,   # Cosine similarity için normalize
-            show_progress_bar=False,
-            convert_to_numpy=True,
-        )
+
+        success = False
+
+        for key in api_keys:
+
+            try:
+
+                client = genai.Client(api_key=key)
+
+                batch_embeddings = []
+
+                for text in batch:
+
+                    response = client.models.embed_content(
+                        model=model_name,
+                        contents=text,
+                        config={
+                            "task_type":"RETRIEVAL_DOCUMENT"
+                        }
+                    )
+
+                    batch_embeddings.append(
+                        response.embeddings[0].values
+                    )
+
+                embeddings = np.array(
+                    batch_embeddings,
+                    dtype="float32"
+                )
+
+                # <<< NORMALIZATION BURAYA >>>
+
+                embeddings = embeddings / np.linalg.norm(
+                    embeddings,
+                    axis=1,
+                    keepdims=True
+                )
+
+                success = True
+                break
+
+            except Exception as e:
+
+                log.warning(
+                    f"API key failed: {str(e)}"
+                )
+
+                continue
+
+
+        # <<< ALL KEYS FAIL CHECK BURAYA >>>
+
+        if not success:
+
+            raise RuntimeError(
+                "Tüm Gemini API keyleri tükendi."
+            )
+
         all_embeddings.append(embeddings)
-        log.info(f"  [{i + len(batch)}/{total}] chunk işlendi")
+
+        log.info(
+            f"[{i+len(batch)}/{total}] chunk işlendi"
+        )
     
     result = np.vstack(all_embeddings).astype("float32")
     log.info(f"  Embedding boyutu: {result.shape}")

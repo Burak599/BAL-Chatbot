@@ -323,6 +323,7 @@ def init_db() -> None:
         Path(PROJECT_ROOT / "data").mkdir(parents=True, exist_ok=True)
     Base.metadata.create_all(bind=engine)
     _ensure_user_fingerprint_column()
+    _ensure_user_email_nullable()
 
 
 def _ensure_user_fingerprint_column() -> None:
@@ -345,6 +346,28 @@ def _ensure_user_fingerprint_column() -> None:
             conn.execute(text("CREATE UNIQUE INDEX IF NOT EXISTS ix_users_fingerprint ON users (fingerprint)"))
         except Exception:
             log.exception("Could not create index for users.fingerprint. This is non-fatal.")
+
+
+def _ensure_user_email_nullable() -> None:
+    """Ensure the users.email column allows NULL so anonymous visitors can be created."""
+    inspector = inspect(engine)
+    if not inspector.has_table("users"):
+        return
+    # Only attempt on Postgres; SQLite ALTER COLUMN is limited.
+    if engine.dialect.name == "sqlite":
+        return
+    cols = {c["name"]: c for c in inspector.get_columns("users")}
+    if "email" not in cols:
+        return
+    # If the column is already nullable, nothing to do
+    if cols["email"].get("nullable", True):
+        return
+    log.warning("Making users.email column nullable to support anonymous fingerprint users.")
+    try:
+        with engine.begin() as conn:
+            conn.execute(text("ALTER TABLE users ALTER COLUMN email DROP NOT NULL"))
+    except Exception:
+        log.exception("Failed to alter users.email to nullable; anonymous user creation may fail.")
 
 
 def database_ready() -> bool:

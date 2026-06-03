@@ -428,3 +428,413 @@ requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://api.
  * Running on https://127.0.0.1:5000
  * Running on https://192.168.1.2:5000
 2026-05-31 20:37:05,233 [INFO] [33mPress CTRL+C to quit[0m
+2026-06-01 18:13:13,306 [INFO] BAL Chatbot Web API starting...
+2026-06-01 18:13:13,307 [INFO] Runtime pid=248788 cwd=/home/burak/Masaüstü/ChatbotBAL/web log_file=/home/burak/Masaüstü/ChatbotBAL/logs/web.log
+2026-06-01 18:13:13,307 [INFO] Provider: groq
+2026-06-01 18:13:13,307 [INFO] HTTPS enforcement: True
+2026-06-01 18:13:13,308 [INFO] Loading FAISS index...
+2026-06-01 18:13:13,324 [INFO] Loading chunk metadata...
+2026-06-01 18:13:13,327 [INFO] Loading embedding model: intfloat/multilingual-e5-large
+2026-06-01 18:13:13,332 [INFO] Use pytorch device_name: cuda:0
+2026-06-01 18:13:13,332 [INFO] Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2026-06-01 18:13:42,284 [INFO] Vector store ready — 108 chunks
+2026-06-01 18:13:42,284 [INFO] Groq configured — key_count=1 primary_model=llama-3.3-70b-versatile
+2026-06-01 18:13:42,284 [INFO] LLM gateway ready — active provider: groq
+2026-06-01 18:13:42,284 [INFO] Server starting on https://0.0.0.0:5000
+2026-06-01 18:13:42,981 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on https://127.0.0.1:5000
+ * Running on https://192.168.1.2:5000
+2026-06-01 18:13:42,982 [INFO] [33mPress CTRL+C to quit[0m
+2026-06-01 18:14:07,259 [INFO] 127.0.0.1 - - [01/Jun/2026 18:14:07] "[33mGET / HTTP/1.1[0m" 404 -
+2026-06-01 18:15:31,118 [INFO] BAL Chatbot Web API starting...
+2026-06-01 18:15:31,119 [INFO] Runtime pid=250746 cwd=/home/burak/Masaüstü/ChatbotBAL/web log_file=/home/burak/Masaüstü/ChatbotBAL/logs/web.log
+2026-06-01 18:15:31,119 [INFO] Provider: groq
+2026-06-01 18:15:31,119 [INFO] HTTPS enforcement: True
+2026-06-01 18:15:31,120 [INFO] Loading FAISS index...
+2026-06-01 18:15:31,235 [INFO] Loading chunk metadata...
+2026-06-01 18:15:31,248 [INFO] Loading embedding model: intfloat/multilingual-e5-large
+2026-06-01 18:15:31,254 [INFO] Use pytorch device_name: cuda:0
+2026-06-01 18:15:31,254 [INFO] Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2026-06-01 18:15:38,267 [INFO] Vector store ready — 108 chunks
+2026-06-01 18:15:38,267 [INFO] Groq configured — key_count=1 primary_model=llama-3.3-70b-versatile
+2026-06-01 18:15:38,267 [INFO] LLM gateway ready — active provider: groq
+2026-06-01 18:15:38,267 [INFO] Server starting on https://0.0.0.0:5000
+2026-06-01 18:15:38,393 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on https://127.0.0.1:5000
+ * Running on https://192.168.1.2:5000
+2026-06-01 18:15:38,393 [INFO] [33mPress CTRL+C to quit[0m
+2026-06-01 18:15:57,794 [INFO] 127.0.0.1 - - [01/Jun/2026 18:15:57] "GET / HTTP/1.1" 200 -
+2026-06-01 18:15:58,665 [INFO] 127.0.0.1 - - [01/Jun/2026 18:15:58] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-01 18:15:58,856 [INFO] 127.0.0.1 - - [01/Jun/2026 18:15:58] "GET /api/health HTTP/1.1" 200 -
+2026-06-01 18:16:02,227 [INFO] 127.0.0.1 - - [01/Jun/2026 18:16:02] "POST /api/auth/guest HTTP/1.1" 200 -
+2026-06-01 18:16:15,632 [INFO] 127.0.0.1 - - [01/Jun/2026 18:16:15] "POST /api/chat HTTP/1.1" 200 -
+2026-06-01 18:16:19,731 [INFO] 127.0.0.1 - - [01/Jun/2026 18:16:19] "POST /api/auth/logout HTTP/1.1" 200 -
+2026-06-01 18:16:19,772 [INFO] 127.0.0.1 - - [01/Jun/2026 18:16:19] "[36mGET / HTTP/1.1[0m" 304 -
+2026-06-01 18:16:19,897 [INFO] 127.0.0.1 - - [01/Jun/2026 18:16:19] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-01 18:16:20,120 [INFO] 127.0.0.1 - - [01/Jun/2026 18:16:20] "GET /api/health HTTP/1.1" 200 -
+2026-06-02 17:42:13,453 [INFO] BAL Chatbot Web API starting...
+2026-06-02 17:42:13,453 [INFO] Runtime pid=9574 cwd=/home/burak/Masaüstü/ChatbotBAL/web log_file=/home/burak/Masaüstü/ChatbotBAL/logs/web.log
+2026-06-02 17:42:13,454 [INFO] Provider: groq
+2026-06-02 17:42:13,454 [INFO] HTTPS enforcement: True
+2026-06-02 17:42:13,454 [INFO] Loading FAISS index...
+2026-06-02 17:42:13,477 [INFO] Loading chunk metadata...
+2026-06-02 17:42:13,478 [INFO] Loading embedding model: intfloat/multilingual-e5-large
+2026-06-02 17:42:13,486 [INFO] Use pytorch device_name: cuda:0
+2026-06-02 17:42:13,486 [INFO] Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2026-06-02 17:42:38,872 [INFO] Vector store ready — 108 chunks
+2026-06-02 17:42:38,872 [INFO] Groq configured — key_count=1 primary_model=llama-3.3-70b-versatile
+2026-06-02 17:42:38,872 [INFO] LLM gateway ready — active provider: groq
+2026-06-02 17:42:38,872 [INFO] Server starting on https://0.0.0.0:5000
+2026-06-02 17:42:39,023 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on https://127.0.0.1:5000
+ * Running on https://192.168.1.2:5000
+2026-06-02 17:42:39,023 [INFO] [33mPress CTRL+C to quit[0m
+2026-06-02 17:44:07,893 [INFO] 127.0.0.1 - - [02/Jun/2026 17:44:07] "GET / HTTP/1.1" 200 -
+2026-06-02 17:44:08,072 [INFO] 127.0.0.1 - - [02/Jun/2026 17:44:08] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-02 17:44:08,293 [INFO] 127.0.0.1 - - [02/Jun/2026 17:44:08] "GET /api/health HTTP/1.1" 200 -
+2026-06-02 17:44:22,578 [INFO] 127.0.0.1 - - [02/Jun/2026 17:44:22] "POST /api/auth/guest HTTP/1.1" 200 -
+2026-06-02 17:44:38,850 [INFO] 127.0.0.1 - - [02/Jun/2026 17:44:38] "GET /api/health HTTP/1.1" 200 -
+2026-06-02 17:44:40,957 [INFO] 127.0.0.1 - - [02/Jun/2026 17:44:40] "POST /api/chat HTTP/1.1" 200 -
+2026-06-02 17:45:08,653 [INFO] 127.0.0.1 - - [02/Jun/2026 17:45:08] "GET /api/health HTTP/1.1" 200 -
+2026-06-02 17:45:11,015 [INFO] 127.0.0.1 - - [02/Jun/2026 17:45:11] "POST /api/chat HTTP/1.1" 200 -
+2026-06-02 17:45:29,695 [INFO] 127.0.0.1 - - [02/Jun/2026 17:45:29] "POST /api/chat HTTP/1.1" 200 -
+2026-06-02 17:45:38,680 [INFO] 127.0.0.1 - - [02/Jun/2026 17:45:38] "GET /api/health HTTP/1.1" 200 -
+2026-06-02 17:45:57,940 [INFO] 127.0.0.1 - - [02/Jun/2026 17:45:57] "POST /api/chat HTTP/1.1" 200 -
+2026-06-02 17:46:08,939 [INFO] 127.0.0.1 - - [02/Jun/2026 17:46:08] "GET /api/health HTTP/1.1" 200 -
+2026-06-02 17:46:38,690 [INFO] 127.0.0.1 - - [02/Jun/2026 17:46:38] "GET /api/health HTTP/1.1" 200 -
+2026-06-02 17:47:09,139 [INFO] 127.0.0.1 - - [02/Jun/2026 17:47:09] "GET /api/health HTTP/1.1" 200 -
+2026-06-02 17:47:39,138 [INFO] 127.0.0.1 - - [02/Jun/2026 17:47:39] "GET /api/health HTTP/1.1" 200 -
+2026-06-02 18:36:14,735 [INFO] BAL Chatbot Web API starting...
+2026-06-02 18:36:14,753 [INFO] Runtime pid=55558 cwd=/home/burak/Masaüstü/ChatbotBAL/web log_file=/home/burak/Masaüstü/ChatbotBAL/logs/web.log
+2026-06-02 18:36:14,754 [INFO] Provider: groq
+2026-06-02 18:36:14,754 [INFO] HTTPS enforcement: True
+2026-06-02 18:36:14,754 [INFO] Loading FAISS index...
+2026-06-02 18:36:14,771 [INFO] Loading chunk metadata...
+2026-06-02 18:36:14,774 [INFO] Vector store ready — 108 chunks
+2026-06-02 18:36:14,775 [INFO] Groq configured — key_count=1 primary_model=llama-3.3-70b-versatile
+2026-06-02 18:36:14,775 [ERROR] No Gemini API key configured.
+2026-06-02 18:37:11,008 [INFO] BAL Chatbot Web API starting...
+2026-06-02 18:37:11,009 [INFO] Runtime pid=56409 cwd=/home/burak/Masaüstü/ChatbotBAL/web log_file=/home/burak/Masaüstü/ChatbotBAL/logs/web.log
+2026-06-02 18:37:11,009 [INFO] Provider: groq
+2026-06-02 18:37:11,009 [INFO] HTTPS enforcement: True
+2026-06-02 18:37:11,009 [INFO] Loading FAISS index...
+2026-06-02 18:37:11,010 [INFO] Loading chunk metadata...
+2026-06-02 18:37:11,013 [INFO] Vector store ready — 108 chunks
+2026-06-02 18:37:11,013 [INFO] Groq configured — key_count=1 primary_model=llama-3.3-70b-versatile
+2026-06-02 18:37:11,013 [INFO] LLM gateway ready — active provider: groq
+2026-06-02 18:37:11,014 [INFO] Server starting on https://0.0.0.0:5000
+2026-06-02 18:37:11,063 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on https://127.0.0.1:5000
+ * Running on https://192.168.1.2:5000
+2026-06-02 18:37:11,063 [INFO] [33mPress CTRL+C to quit[0m
+2026-06-02 18:37:31,998 [INFO] 127.0.0.1 - - [02/Jun/2026 18:37:31] "[36mGET / HTTP/1.1[0m" 304 -
+2026-06-02 18:37:32,781 [INFO] 127.0.0.1 - - [02/Jun/2026 18:37:32] "GET /api/health HTTP/1.1" 200 -
+2026-06-02 18:37:32,944 [INFO] 127.0.0.1 - - [02/Jun/2026 18:37:32] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-02 18:37:36,405 [WARNING] Gemini embedding failed key=1 error=404 models/text-embedding-004 is not found for API version v1beta, or is not supported for embedContent. Call ModelService.ListModels to see the list of available models and their supported methods.
+2026-06-02 18:37:36,406 [ERROR] Exception on /api/chat [POST]
+Traceback (most recent call last):
+  File "/home/burak/venv/lib/python3.12/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/burak/venv/lib/python3.12/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/burak/venv/lib/python3.12/site-packages/flask_cors/extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+                                                ^^^^^^^^^^^^^^^^^^
+  File "/home/burak/venv/lib/python3.12/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/burak/venv/lib/python3.12/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/burak/Masaüstü/ChatbotBAL/web/app.py", line 1082, in chat
+    retrieved = vector_store.retrieve(user_message, top_k=CONFIG["retrieval_top_k"])
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/burak/Masaüstü/ChatbotBAL/web/app.py", line 542, in retrieve
+    raise RuntimeError(
+RuntimeError: All Gemini embedding keys failed: 404 models/text-embedding-004 is not found for API version v1beta, or is not supported for embedContent. Call ModelService.ListModels to see the list of available models and their supported methods.
+2026-06-02 18:37:36,424 [INFO] 127.0.0.1 - - [02/Jun/2026 18:37:36] "[35m[1mPOST /api/chat HTTP/1.1[0m" 500 -
+2026-06-02 18:38:02,674 [INFO] 127.0.0.1 - - [02/Jun/2026 18:38:02] "GET /api/health HTTP/1.1" 200 -
+2026-06-02 18:38:15,181 [WARNING] Gemini embedding failed key=1 error=404 models/text-embedding-004 is not found for API version v1beta, or is not supported for embedContent. Call ModelService.ListModels to see the list of available models and their supported methods.
+2026-06-02 18:38:15,182 [ERROR] Exception on /api/chat [POST]
+Traceback (most recent call last):
+  File "/home/burak/venv/lib/python3.12/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/burak/venv/lib/python3.12/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/burak/venv/lib/python3.12/site-packages/flask_cors/extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+                                                ^^^^^^^^^^^^^^^^^^
+  File "/home/burak/venv/lib/python3.12/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/burak/venv/lib/python3.12/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/burak/Masaüstü/ChatbotBAL/web/app.py", line 1082, in chat
+    retrieved = vector_store.retrieve(user_message, top_k=CONFIG["retrieval_top_k"])
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/burak/Masaüstü/ChatbotBAL/web/app.py", line 542, in retrieve
+    raise RuntimeError(
+RuntimeError: All Gemini embedding keys failed: 404 models/text-embedding-004 is not found for API version v1beta, or is not supported for embedContent. Call ModelService.ListModels to see the list of available models and their supported methods.
+2026-06-02 18:38:15,185 [INFO] 127.0.0.1 - - [02/Jun/2026 18:38:15] "[35m[1mPOST /api/chat HTTP/1.1[0m" 500 -
+2026-06-02 18:38:32,789 [INFO] 127.0.0.1 - - [02/Jun/2026 18:38:32] "GET /api/health HTTP/1.1" 200 -
+2026-06-02 18:39:02,787 [INFO] 127.0.0.1 - - [02/Jun/2026 18:39:02] "GET /api/health HTTP/1.1" 200 -
+2026-06-02 18:39:32,789 [INFO] 127.0.0.1 - - [02/Jun/2026 18:39:32] "GET /api/health HTTP/1.1" 200 -
+2026-06-02 18:41:04,983 [INFO] BAL Chatbot Web API starting...
+2026-06-02 18:41:04,984 [INFO] Runtime pid=59641 cwd=/home/burak/Masaüstü/ChatbotBAL/web log_file=/home/burak/Masaüstü/ChatbotBAL/logs/web.log
+2026-06-02 18:41:04,984 [INFO] Provider: groq
+2026-06-02 18:41:04,984 [INFO] HTTPS enforcement: True
+2026-06-02 18:41:04,984 [INFO] Loading FAISS index...
+2026-06-02 18:41:04,985 [INFO] Loading chunk metadata...
+2026-06-02 18:41:04,988 [INFO] Vector store ready — 108 chunks
+2026-06-02 18:41:04,988 [INFO] Groq configured — key_count=1 primary_model=llama-3.3-70b-versatile
+2026-06-02 18:41:04,988 [INFO] LLM gateway ready — active provider: groq
+2026-06-02 18:41:04,988 [INFO] Server starting on https://0.0.0.0:5000
+2026-06-02 18:41:05,032 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on https://127.0.0.1:5000
+ * Running on https://192.168.1.2:5000
+2026-06-02 18:41:05,032 [INFO] [33mPress CTRL+C to quit[0m
+2026-06-02 18:41:15,387 [INFO] 127.0.0.1 - - [02/Jun/2026 18:41:15] "[36mGET / HTTP/1.1[0m" 304 -
+2026-06-02 18:41:15,634 [INFO] 127.0.0.1 - - [02/Jun/2026 18:41:15] "GET /api/health HTTP/1.1" 200 -
+2026-06-02 18:41:16,693 [INFO] 127.0.0.1 - - [02/Jun/2026 18:41:16] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-02 18:41:20,102 [WARNING] Gemini embedding failed key=1 error=404 models/text-embedding-004 is not found for API version v1beta, or is not supported for embedContent. Call ModelService.ListModels to see the list of available models and their supported methods.
+2026-06-02 18:41:20,103 [ERROR] Exception on /api/chat [POST]
+Traceback (most recent call last):
+  File "/home/burak/venv/lib/python3.12/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/burak/venv/lib/python3.12/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/burak/venv/lib/python3.12/site-packages/flask_cors/extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+                                                ^^^^^^^^^^^^^^^^^^
+  File "/home/burak/venv/lib/python3.12/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/burak/venv/lib/python3.12/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/burak/Masaüstü/ChatbotBAL/web/app.py", line 1082, in chat
+    retrieved = vector_store.retrieve(user_message, top_k=CONFIG["retrieval_top_k"])
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/burak/Masaüstü/ChatbotBAL/web/app.py", line 542, in retrieve
+    raise RuntimeError(
+RuntimeError: All Gemini embedding keys failed: 404 models/text-embedding-004 is not found for API version v1beta, or is not supported for embedContent. Call ModelService.ListModels to see the list of available models and their supported methods.
+2026-06-02 18:41:20,107 [INFO] 127.0.0.1 - - [02/Jun/2026 18:41:20] "[35m[1mPOST /api/chat HTTP/1.1[0m" 500 -
+2026-06-02 18:41:39,021 [WARNING] Gemini embedding failed key=1 error=404 models/text-embedding-004 is not found for API version v1beta, or is not supported for embedContent. Call ModelService.ListModels to see the list of available models and their supported methods.
+2026-06-02 18:41:39,021 [ERROR] Exception on /api/chat [POST]
+Traceback (most recent call last):
+  File "/home/burak/venv/lib/python3.12/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/burak/venv/lib/python3.12/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/burak/venv/lib/python3.12/site-packages/flask_cors/extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+                                                ^^^^^^^^^^^^^^^^^^
+  File "/home/burak/venv/lib/python3.12/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/burak/venv/lib/python3.12/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/burak/Masaüstü/ChatbotBAL/web/app.py", line 1082, in chat
+    retrieved = vector_store.retrieve(user_message, top_k=CONFIG["retrieval_top_k"])
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/burak/Masaüstü/ChatbotBAL/web/app.py", line 542, in retrieve
+    raise RuntimeError(
+RuntimeError: All Gemini embedding keys failed: 404 models/text-embedding-004 is not found for API version v1beta, or is not supported for embedContent. Call ModelService.ListModels to see the list of available models and their supported methods.
+2026-06-02 18:41:39,024 [INFO] 127.0.0.1 - - [02/Jun/2026 18:41:39] "[35m[1mPOST /api/chat HTTP/1.1[0m" 500 -
+2026-06-02 18:41:45,694 [INFO] 127.0.0.1 - - [02/Jun/2026 18:41:45] "GET /api/health HTTP/1.1" 200 -
+2026-06-02 18:42:15,910 [INFO] 127.0.0.1 - - [02/Jun/2026 18:42:15] "GET /api/health HTTP/1.1" 200 -
+2026-06-02 18:44:12,173 [INFO] BAL Chatbot Web API starting...
+2026-06-02 18:44:12,173 [INFO] Runtime pid=62239 cwd=/home/burak/Masaüstü/ChatbotBAL/web log_file=/home/burak/Masaüstü/ChatbotBAL/logs/web.log
+2026-06-02 18:44:12,174 [INFO] Provider: groq
+2026-06-02 18:44:12,174 [INFO] HTTPS enforcement: True
+2026-06-02 18:44:12,174 [INFO] Loading FAISS index...
+2026-06-02 18:44:12,175 [INFO] Loading chunk metadata...
+2026-06-02 18:44:12,177 [INFO] Vector store ready — 108 chunks
+2026-06-02 18:44:12,178 [INFO] Groq configured — key_count=1 primary_model=llama-3.3-70b-versatile
+2026-06-02 18:44:12,178 [INFO] LLM gateway ready — active provider: groq
+2026-06-02 18:44:12,178 [INFO] Server starting on https://0.0.0.0:5000
+2026-06-02 18:44:12,200 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on https://127.0.0.1:5000
+ * Running on https://192.168.1.2:5000
+2026-06-02 18:44:12,200 [INFO] [33mPress CTRL+C to quit[0m
+2026-06-02 18:44:19,479 [INFO] 127.0.0.1 - - [02/Jun/2026 18:44:19] "[36mGET / HTTP/1.1[0m" 304 -
+2026-06-02 18:44:19,743 [INFO] 127.0.0.1 - - [02/Jun/2026 18:44:19] "GET /api/health HTTP/1.1" 200 -
+2026-06-02 18:44:20,484 [INFO] 127.0.0.1 - - [02/Jun/2026 18:44:20] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-02 18:44:28,176 [WARNING] Gemini embedding failed key=1 error=module 'google.genai' has no attribute 'configure'
+2026-06-02 18:44:28,176 [ERROR] Exception on /api/chat [POST]
+Traceback (most recent call last):
+  File "/home/burak/venv/lib/python3.12/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/burak/venv/lib/python3.12/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/burak/venv/lib/python3.12/site-packages/flask_cors/extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+                                                ^^^^^^^^^^^^^^^^^^
+  File "/home/burak/venv/lib/python3.12/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/burak/venv/lib/python3.12/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/burak/Masaüstü/ChatbotBAL/web/app.py", line 1086, in chat
+    retrieved = vector_store.retrieve(user_message, top_k=CONFIG["retrieval_top_k"])
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/burak/Masaüstü/ChatbotBAL/web/app.py", line 546, in retrieve
+    raise RuntimeError(
+RuntimeError: All Gemini embedding keys failed: module 'google.genai' has no attribute 'configure'
+2026-06-02 18:44:28,182 [INFO] 127.0.0.1 - - [02/Jun/2026 18:44:28] "[35m[1mPOST /api/chat HTTP/1.1[0m" 500 -
+2026-06-02 18:44:48,211 [WARNING] Gemini embedding failed key=1 error=module 'google.genai' has no attribute 'configure'
+2026-06-02 18:44:48,212 [ERROR] Exception on /api/chat [POST]
+Traceback (most recent call last):
+  File "/home/burak/venv/lib/python3.12/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/burak/venv/lib/python3.12/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/burak/venv/lib/python3.12/site-packages/flask_cors/extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+                                                ^^^^^^^^^^^^^^^^^^
+  File "/home/burak/venv/lib/python3.12/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/burak/venv/lib/python3.12/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/burak/Masaüstü/ChatbotBAL/web/app.py", line 1086, in chat
+    retrieved = vector_store.retrieve(user_message, top_k=CONFIG["retrieval_top_k"])
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/burak/Masaüstü/ChatbotBAL/web/app.py", line 546, in retrieve
+    raise RuntimeError(
+RuntimeError: All Gemini embedding keys failed: module 'google.genai' has no attribute 'configure'
+2026-06-02 18:44:48,215 [INFO] 127.0.0.1 - - [02/Jun/2026 18:44:48] "[35m[1mPOST /api/chat HTTP/1.1[0m" 500 -
+2026-06-02 18:44:49,805 [INFO] 127.0.0.1 - - [02/Jun/2026 18:44:49] "GET /api/health HTTP/1.1" 200 -
+2026-06-02 18:45:20,151 [INFO] 127.0.0.1 - - [02/Jun/2026 18:45:20] "GET /api/health HTTP/1.1" 200 -
+2026-06-02 18:46:56,939 [INFO] BAL Chatbot Web API starting...
+2026-06-02 18:46:56,940 [INFO] Runtime pid=64510 cwd=/home/burak/Masaüstü/ChatbotBAL/web log_file=/home/burak/Masaüstü/ChatbotBAL/logs/web.log
+2026-06-02 18:46:56,940 [INFO] Provider: groq
+2026-06-02 18:46:56,940 [INFO] HTTPS enforcement: True
+2026-06-02 18:46:56,940 [INFO] Loading FAISS index...
+2026-06-02 18:46:56,941 [INFO] Loading chunk metadata...
+2026-06-02 18:46:56,944 [INFO] Vector store ready — 108 chunks
+2026-06-02 18:46:56,944 [INFO] Groq configured — key_count=1 primary_model=llama-3.3-70b-versatile
+2026-06-02 18:46:56,945 [INFO] LLM gateway ready — active provider: groq
+2026-06-02 18:46:56,945 [INFO] Server starting on https://0.0.0.0:5000
+2026-06-02 18:46:56,982 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on https://127.0.0.1:5000
+ * Running on https://192.168.1.2:5000
+2026-06-02 18:46:56,982 [INFO] [33mPress CTRL+C to quit[0m
+2026-06-02 18:47:44,482 [INFO] 127.0.0.1 - - [02/Jun/2026 18:47:44] "[36mGET / HTTP/1.1[0m" 304 -
+2026-06-02 18:47:44,752 [INFO] 127.0.0.1 - - [02/Jun/2026 18:47:44] "GET /api/health HTTP/1.1" 200 -
+2026-06-02 18:47:45,486 [INFO] 127.0.0.1 - - [02/Jun/2026 18:47:45] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-02 18:47:49,216 [INFO] 127.0.0.1 - - [02/Jun/2026 18:47:49] "[31m[1mPOST /api/chat HTTP/1.1[0m" 429 -
+2026-06-02 18:47:53,891 [INFO] 127.0.0.1 - - [02/Jun/2026 18:47:53] "POST /api/auth/logout HTTP/1.1" 200 -
+2026-06-02 18:47:53,932 [INFO] 127.0.0.1 - - [02/Jun/2026 18:47:53] "[36mGET / HTTP/1.1[0m" 304 -
+2026-06-02 18:47:53,965 [INFO] 127.0.0.1 - - [02/Jun/2026 18:47:53] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-02 18:47:54,175 [INFO] 127.0.0.1 - - [02/Jun/2026 18:47:54] "GET /api/health HTTP/1.1" 200 -
+2026-06-02 18:48:07,075 [INFO] 127.0.0.1 - - [02/Jun/2026 18:48:07] "POST /api/auth/login HTTP/1.1" 200 -
+2026-06-02 18:48:11,329 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/text-embedding-004:batchEmbedContents "HTTP/1.1 404 Not Found"
+2026-06-02 18:48:11,331 [WARNING] Gemini embedding failed key=1 error=404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/text-embedding-004 is not found for API version v1beta, or is not supported for embedContent. Call ModelService.ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}
+2026-06-02 18:48:11,332 [ERROR] Exception on /api/chat [POST]
+Traceback (most recent call last):
+  File "/home/burak/venv/lib/python3.12/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/burak/venv/lib/python3.12/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/burak/venv/lib/python3.12/site-packages/flask_cors/extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+                                                ^^^^^^^^^^^^^^^^^^
+  File "/home/burak/venv/lib/python3.12/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/burak/venv/lib/python3.12/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/burak/Masaüstü/ChatbotBAL/web/app.py", line 1083, in chat
+    retrieved = vector_store.retrieve(user_message, top_k=CONFIG["retrieval_top_k"])
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/burak/Masaüstü/ChatbotBAL/web/app.py", line 543, in retrieve
+    raise RuntimeError(
+RuntimeError: All Gemini embedding keys failed: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/text-embedding-004 is not found for API version v1beta, or is not supported for embedContent. Call ModelService.ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}
+2026-06-02 18:48:11,334 [INFO] 127.0.0.1 - - [02/Jun/2026 18:48:11] "[35m[1mPOST /api/chat HTTP/1.1[0m" 500 -
+2026-06-02 18:48:24,206 [INFO] 127.0.0.1 - - [02/Jun/2026 18:48:24] "GET /api/health HTTP/1.1" 200 -
+2026-06-02 18:57:09,722 [INFO] BAL Chatbot Web API starting...
+2026-06-02 18:57:09,729 [INFO] Runtime pid=72985 cwd=/home/burak/Masaüstü/ChatbotBAL/web log_file=/home/burak/Masaüstü/ChatbotBAL/logs/web.log
+2026-06-02 18:57:09,729 [INFO] Provider: groq
+2026-06-02 18:57:09,729 [INFO] HTTPS enforcement: True
+2026-06-02 18:57:09,730 [INFO] Loading FAISS index...
+2026-06-02 18:57:09,732 [INFO] Loading chunk metadata...
+2026-06-02 18:57:09,735 [INFO] Vector store ready — 108 chunks
+2026-06-02 18:57:09,735 [INFO] Groq configured — key_count=1 primary_model=llama-3.3-70b-versatile
+2026-06-02 18:57:09,735 [INFO] LLM gateway ready — active provider: groq
+2026-06-02 18:57:09,735 [INFO] Server starting on https://0.0.0.0:5000
+2026-06-02 18:57:09,763 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on https://127.0.0.1:5000
+ * Running on https://192.168.1.2:5000
+2026-06-02 18:57:09,763 [INFO] [33mPress CTRL+C to quit[0m
+2026-06-02 18:57:17,395 [INFO] 127.0.0.1 - - [02/Jun/2026 18:57:17] "[36mGET / HTTP/1.1[0m" 304 -
+2026-06-02 18:57:17,652 [INFO] 127.0.0.1 - - [02/Jun/2026 18:57:17] "GET /api/health HTTP/1.1" 200 -
+2026-06-02 18:57:18,425 [INFO] 127.0.0.1 - - [02/Jun/2026 18:57:18] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-02 18:57:23,352 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-02 18:57:23,851 [INFO] 127.0.0.1 - - [02/Jun/2026 18:57:23] "POST /api/chat HTTP/1.1" 200 -
+2026-06-02 18:57:47,708 [INFO] 127.0.0.1 - - [02/Jun/2026 18:57:47] "GET /api/health HTTP/1.1" 200 -
+2026-06-02 18:58:17,718 [INFO] 127.0.0.1 - - [02/Jun/2026 18:58:17] "GET /api/health HTTP/1.1" 200 -
+2026-06-02 18:58:47,712 [INFO] 127.0.0.1 - - [02/Jun/2026 18:58:47] "GET /api/health HTTP/1.1" 200 -
+2026-06-02 18:59:17,722 [INFO] 127.0.0.1 - - [02/Jun/2026 18:59:17] "GET /api/health HTTP/1.1" 200 -
+2026-06-02 18:59:47,711 [INFO] 127.0.0.1 - - [02/Jun/2026 18:59:47] "GET /api/health HTTP/1.1" 200 -
+2026-06-02 19:00:17,720 [INFO] 127.0.0.1 - - [02/Jun/2026 19:00:17] "GET /api/health HTTP/1.1" 200 -
+2026-06-02 19:00:47,712 [INFO] 127.0.0.1 - - [02/Jun/2026 19:00:47] "GET /api/health HTTP/1.1" 200 -
+2026-06-02 19:01:17,722 [INFO] 127.0.0.1 - - [02/Jun/2026 19:01:17] "GET /api/health HTTP/1.1" 200 -
+2026-06-02 19:01:47,715 [INFO] 127.0.0.1 - - [02/Jun/2026 19:01:47] "GET /api/health HTTP/1.1" 200 -
+2026-06-02 19:02:17,719 [INFO] 127.0.0.1 - - [02/Jun/2026 19:02:17] "GET /api/health HTTP/1.1" 200 -
+2026-06-02 19:02:47,716 [INFO] 127.0.0.1 - - [02/Jun/2026 19:02:47] "GET /api/health HTTP/1.1" 200 -
+2026-06-02 19:03:17,722 [INFO] 127.0.0.1 - - [02/Jun/2026 19:03:17] "GET /api/health HTTP/1.1" 200 -
+2026-06-02 19:03:47,717 [INFO] 127.0.0.1 - - [02/Jun/2026 19:03:47] "GET /api/health HTTP/1.1" 200 -
+2026-06-02 19:04:17,724 [INFO] 127.0.0.1 - - [02/Jun/2026 19:04:17] "GET /api/health HTTP/1.1" 200 -
+2026-06-02 19:04:47,718 [INFO] 127.0.0.1 - - [02/Jun/2026 19:04:47] "GET /api/health HTTP/1.1" 200 -
+2026-06-02 19:05:17,727 [INFO] 127.0.0.1 - - [02/Jun/2026 19:05:17] "GET /api/health HTTP/1.1" 200 -
+2026-06-02 19:05:48,092 [INFO] 127.0.0.1 - - [02/Jun/2026 19:05:48] "GET /api/health HTTP/1.1" 200 -
+2026-06-02 19:06:18,448 [INFO] 127.0.0.1 - - [02/Jun/2026 19:06:18] "GET /api/health HTTP/1.1" 200 -
+2026-06-02 19:06:36,304 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-02 19:06:36,918 [INFO] 127.0.0.1 - - [02/Jun/2026 19:06:36] "POST /api/chat HTTP/1.1" 200 -
+2026-06-02 19:06:46,375 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-02 19:06:46,798 [INFO] 127.0.0.1 - - [02/Jun/2026 19:06:46] "POST /api/chat HTTP/1.1" 200 -
+2026-06-02 19:06:48,491 [INFO] 127.0.0.1 - - [02/Jun/2026 19:06:48] "GET /api/health HTTP/1.1" 200 -
+2026-06-02 19:07:04,965 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-02 19:07:05,707 [INFO] 127.0.0.1 - - [02/Jun/2026 19:07:05] "POST /api/chat HTTP/1.1" 200 -
+2026-06-02 19:07:18,501 [INFO] 127.0.0.1 - - [02/Jun/2026 19:07:18] "GET /api/health HTTP/1.1" 200 -
+2026-06-02 19:07:20,657 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-02 19:07:21,243 [INFO] 127.0.0.1 - - [02/Jun/2026 19:07:21] "POST /api/chat HTTP/1.1" 200 -
+2026-06-02 19:07:35,043 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-02 19:07:35,431 [INFO] 127.0.0.1 - - [02/Jun/2026 19:07:35] "POST /api/chat HTTP/1.1" 200 -
+2026-06-02 19:07:48,492 [INFO] 127.0.0.1 - - [02/Jun/2026 19:07:48] "GET /api/health HTTP/1.1" 200 -
+2026-06-02 19:08:02,314 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-02 19:08:02,652 [INFO] 127.0.0.1 - - [02/Jun/2026 19:08:02] "POST /api/chat HTTP/1.1" 200 -
+2026-06-02 19:08:12,657 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-02 19:08:13,104 [INFO] 127.0.0.1 - - [02/Jun/2026 19:08:13] "POST /api/chat HTTP/1.1" 200 -
+2026-06-02 19:08:18,504 [INFO] 127.0.0.1 - - [02/Jun/2026 19:08:18] "GET /api/health HTTP/1.1" 200 -
+2026-06-02 19:08:34,595 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-02 19:08:35,538 [INFO] 127.0.0.1 - - [02/Jun/2026 19:08:35] "POST /api/chat HTTP/1.1" 200 -
+2026-06-02 19:08:48,491 [INFO] 127.0.0.1 - - [02/Jun/2026 19:08:48] "GET /api/health HTTP/1.1" 200 -

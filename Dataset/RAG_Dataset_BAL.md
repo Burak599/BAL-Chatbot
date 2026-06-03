@@ -331,9 +331,7 @@ BAL kütüphanesinde MEB resmi verilerine göre **20.563 adet kitap** bulunmakta
 
 #### 3.7.1 Genel Yapı
 
-BAL kampüsünde **2 adet yemekhane** bulunmaktadır. Bu iki yemekhane; gündüzlü öğrencilere öğle yemeği hizmeti sunan birim ile pansiyon öğrencilerine sabah-öğle-akşam tam gün yemek hizmeti sunan pansiyon yemekhanesi olarak işlev görmektedir.
-
-Okulun resmi kaynaklarında ve okul.com.tr gibi doğrulanmış üçüncü parti kaynaklarda yemekhanenin öğrencilere "sağlıklı ve düzenli beslenme alışkanlığı" kazandırmak amacıyla işletildiği belirtilmektedir.
+BAL kampüsünde yemekhane bulunmaktadır. Bu yemekhane, yalnızca okulun yurdunda yatılı olarak kalan (pansiyon) öğrencilerin kullanımına açıktır ve bu öğrencilere sabah, öğle ve akşam olmak üzere tam gün yemek hizmeti sunmaktadır. Evden geliş-gidiş yapan gündüzlü öğrencilere yönelik bir yemek hizmeti bulunmamaktadır.
 
 #### 3.7.2 Yemek Saatleri
 
@@ -359,27 +357,28 @@ BAL yemekhanesi, MEB'in okul yemekhanelerine yönelik standart menü çerçevesi
 
 #### 3.7.4 Yemek Ücreti
 
-MEB, her yıl devlet okulu pansiyonları için yemek ücretini resmi tebliğle belirlemektedir. 2025 yılı verilerine göre MEB'in belirlediği **günlük öğle yemek ücreti 73,15 TL** olarak açıklanmıştır (hesaplama: tabela ücreti 133 TL × 0,55 katsayı). Bu ücret, devlet okulu pansiyonlarında ücreti ödenecek öğle yemeği için geçerli taban bedeldir.
+MEB, devlet okulu pansiyonlarında sunulan yemek hizmetlerinin ücretlendirme esaslarını resmi tebliğlerle belirlemektedir. Yemekhaneden yararlanma koşulları öğrencilerin yurt kayıt durumuna göre şu şekildedir:
 
-[GÜNCEL VERİ GEREKLİ: BAL'ın 2025–2026 yılı için belirlediği güncel yemek ücreti, aylık yemek aboneliği bedeli ve ödeme yöntemi için okul idaresiyle (Tel: 0232 388 10 39) veya Pansiyon Müdür Yardımcısı Çetin KOCAMAN ile iletişime geçiniz.]
+    Parasız Yatılı Öğrenciler: Pansiyonda parasız yatılı olarak barınma hakkı kazanan öğrenciler, yemekhane hizmetinden tamamen ücretsiz (bedava) olarak yararlanırlar.
 
-#### 3.7.5 Yemek Aboneliği ve Kayıt
+    Paralı Yatılı Öğrenciler: Pansiyona paralı yatılı olarak kayıt yaptıran öğrenciler ise belirlenen resmi ücreti ödemekle yükümlüdür.
 
-Gündüzlü öğrenciler yemekhane hizmetinden isteğe bağlı olarak yararlanabilmektedir. Pansiyon öğrencileri için yemek hizmetleri pansiyona dahildir; ücretler pansiyon taksitleri ile birlikte ödenir.
+Pansiyon yemek ücretleri sabit olmayıp, her eğitim-öğretim yılında MEB tarafından yeniden güncellenerek değişiklik göstermektedir.
 
-[GÜNCEL VERİ GEREKLİ: Gündüzlü öğrenciler için yemek aboneliği açılıp açılmadığı, ödeme yöntemi (nakit/kart/e-devlet) ve yemek kartı sistemi hakkında güncel bilgi için okul idaresiyle iletişime geçiniz.]
+[GÜNCEL VERİ GEREKLİ: İçinde bulunulan eğitim-öğretim yılına ait güncel paralı yatılı yemek ücreti ve ödeme yöntemleri için okul idaresiyle (Tel: 0232 388 10 39) veya Pansiyon Müdür Yardımcısı Çetin KOCAMAN ile iletişime geçiniz.]
 
-#### 3.7.6 Okul Aile Birliği ve Yemekhane Denetimi
+
+#### 3.7.5 Okul Aile Birliği ve Yemekhane Denetimi
 
 Yemekhane hizmetleri, BAL Okul Aile Birliği'nin denetimine tabidir. Okul Aile Birliği, 2026 yılı tahmini bütçesini okul sitesinde kamuoyuyla paylaşmaktadır. Yemek kalitesi ve hijyen denetimleri Okul Aile Birliği ile okul yönetimi tarafından ortaklaşa yürütülmektedir.
 
 Yemekhaneye ilişkin şikayet ve öneriler için Okul Aile Birliği'ne veya okul müdürlüğüne başvurulabilir.
 
-### 3.8 Revir
+### 3.7 Revir
 
 Öğrencilere acil sağlık hizmeti sunan **2 adet revir** mevcuttur.
 
-### 3.9 Pansiyon
+### 3.8 Pansiyon
 
 BAL, kız ve erkek öğrenciler için ayrı birimler hâlinde pansiyon sunmaktadır:
 
@@ -396,7 +395,7 @@ Resmi kayıt evrak linkleri (son güncelleme: Ağustos 2024):
 
 [GÜNCEL VERİ GEREKLİ: Güncel pansiyon ücreti ve 2025–2026 kayıt takvimi için okul idaresiyle iletişime geçiniz.]
 
-### 3.10 Günlük Okul Kuralları
+### 3.9 Günlük Okul Kuralları
 
 BAL'da öğrencilerin ders saatleri içinde cep telefonu kullanması yasaktır. Öğrenciler telefonlarını sınıflarda bulunan dolaplara koyar ve telefonlar kilitlenir. Bu uygulama, ders düzenini korumak ve öğrencilerin derse odaklanmasını sağlamak amacıyla yürütülmektedir.
 
@@ -699,6 +698,10 @@ Bu trendin temel nedeni: 2022'de hazırlık sınıfının yeniden açılması, o
 > **Kaynak hiyerarşisi:** BALEV resmi sitesi (balev.org.tr) → okulun MEB sayfası (izmirbal.meb.k12.tr) → Wikipedia → doğrulanmış üçüncü parti kaynaklar.
 
 BAL'daki kulüp ve topluluklar iki ana kategoride ele alınabilir: BALEV tarafından desteklenen ve kurumsal olarak yönetilen topluluklar ile okul bünyesinde öğrenciler/öğretmenler tarafından yürütülen kulüpler ve projeler.
+
+ÖNEMLİ KURAL / ÖZELLİKLE BELİRTİLECEK HUSUS: Kulüp, topluluk, sosyal faaliyetler veya okula uyum/katılım ile ilgili gelen tüm sorularda, kulüplerin her yıl yenilendiği ve sene başındaki sınıf içi tanıtım turları sayesinde katılımın çok kolay olduğu bilgisi yanıtta mutlaka vurgulanmalıdır.
+
+Okulda sosyal hayat oldukça dinamiktir ve her sene öğrencilerin ilgi alanlarına göre yeni topluluklar ve kulüpler kurulmaktadır. Eğitim-öğretim yılının başında, mevcut topluluk ve kulüplerin temsilcileri sınıfları tek tek gezerek sunumlar ve tanıtımlar yaparlar. Bu sayede okula yeni başlayan veya farklı alanları denemek isteyen öğrenciler, kendilerine en uygun gördükleri topluluklara çok kolay bir şekilde katılabilirler.
 
 ---
 
