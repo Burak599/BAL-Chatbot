@@ -29,7 +29,6 @@ import re
 from pathlib import Path
 from datetime import datetime, timezone
 from typing import List, Dict, Generator, Optional, Tuple
-import hashlib
 
 import numpy as np
 import faiss
@@ -169,8 +168,8 @@ CONFIG = {
     # ── Auth and quota ─────────────────────────────────────────────────────
     "database_url": get_database_url(),
     "secret_key": os.getenv("FLASK_SECRET_KEY", ""),
-    "force_https": env_bool("FORCE_HTTPS", True),
-    "local_https": env_bool("LOCAL_HTTPS", True),
+    "force_https": env_bool("FORCE_HTTPS", False),
+    "local_https": env_bool("LOCAL_HTTPS", False),
     "google_client_id": os.getenv("GOOGLE_CLIENT_ID", ""),
     "admin_emails": split_env_list("ADMIN_EMAILS"),
     "limits": {
@@ -225,6 +224,8 @@ Never make things up.
 - For individual student data such as grades, absenteeism status or class lists, say: "Bu bilgilere erişimim yok, okul idaresiyle iletişime geç."
 - If asked who made you, what you think, or who you are, briefly say that you were developed by BAL Yapay Zeka Topluluğu.
 - If the user insults you or uses inappropriate language, do not insult back and do not use profanity. Give one polite warning and return to the BAL topic.
+- Do not discuss, speculate about, confirm or deny allegations involving drugs, criminal activity, violence, illegal behavior, abuse, harassment, corruption, safety incidents or other serious misconduct related to the school, its students, teachers or staff.
+- For such claims or questions, answer exactly: "Bu konuda yardımcı olamam, BAL hakkında başka bir sorun var mı?"
 
 ## NEVER WRITE
 - "bağlamı kontrol etmem gerekiyor"
@@ -401,7 +402,6 @@ def role_for_email(email: str) -> str:
 
 def user_to_public(user: User) -> Dict:
     role = user.role
-    limits = CONFIG["limits"].get(role, CONFIG["limits"]["user"])
     # treat fingerprint-identified users as visitors for display
     is_visitor = role == "visitor" or user.provider == "fingerprint"
     return {
@@ -412,12 +412,15 @@ def user_to_public(user: User) -> Dict:
     }
 
 
-def build_fingerprint() -> str:
-    user_agent = request.headers.get("User-Agent", "")
-    ip = request.headers.get("X-Forwarded-For", request.remote_addr) or ""
-    language = request.headers.get("Accept-Language", "")
-    fingerprint_source = f"{ip}|{user_agent}|{language}"
-    return hashlib.sha256(fingerprint_source.encode("utf-8")).hexdigest()
+def get_client_fingerprint() -> Optional[str]:
+    """Read and validate the FingerprintJS visitorId sent by the browser."""
+    fingerprint = (request.headers.get("X-Client-Fingerprint") or "").strip()
+    if not fingerprint:
+        return None
+    if not re.fullmatch(r"[A-Za-z0-9_-]{8,255}", fingerprint):
+        log.warning("Rejected malformed client fingerprint: %r", fingerprint[:80])
+        return None
+    return fingerprint
 
 
 def get_current_identity() -> Optional[Dict]:
@@ -435,12 +438,10 @@ def get_current_identity() -> Optional[Dict]:
                 }
         session.pop("user_id", None)
 
-    # 2) Fingerprint-based identity (preferred for anonymous flow)
-    fingerprint = session.get("fingerprint")
-    if not fingerprint:
-        fingerprint = request.headers.get("X-Client-Fingerprint")
-    if not fingerprint:
-        fingerprint = build_fingerprint()
+    # 2) FingerprintJS-based identity (preferred for anonymous flow).
+    # Prefer the current browser-generated visitorId over any older session
+    # value so weak legacy fingerprints migrate naturally.
+    fingerprint = get_client_fingerprint() or session.get("fingerprint")
 
     if fingerprint:
         try:
@@ -575,15 +576,67 @@ class VectorStore:
 
         log.info("Loading FAISS index...")
         self.index = faiss.read_index(index_path)
+        log.info(f"FAISS index loaded: {self.index.ntotal} vectors")
 
         log.info("Loading chunk metadata...")
         with open(chunks_path, "r", encoding="utf-8") as f:
             self.chunks: List[Dict] = json.load(f)
+        log.info(f"Chunk metadata loaded: {len(self.chunks)} chunks")
 
         self.embedding_model_name = model_name
         self.gemini_keys = CONFIG["gemini_api_keys"]
 
+        # Test embedding on startup
+        log.info(f"Testing embedding API with {len(self.gemini_keys)} key(s)...")
+        try:
+            test_query = "test"
+            embedding = self._embed_text(test_query)
+            if embedding is not None:
+                log.info(f"✓ Embedding API test successful (dim={embedding.shape})")
+            else:
+                log.error("✗ Embedding API test failed: returned None")
+        except Exception as e:
+            log.error(f"✗ Embedding API test failed: {e}")
+            raise RuntimeError(f"Embedding service unavailable at startup: {e}")
+
         log.info(f"Vector store ready — {self.index.ntotal} chunks")
+
+    def _embed_text(self, text: str) -> Optional[np.ndarray]:
+        """
+        Helper: embed a single text string.
+        Returns normalized embedding array or None on failure.
+        """
+        for key_index, api_key in enumerate(self.gemini_keys, 1):
+            if not api_key or not api_key.strip():
+                log.debug(f"Gemini key {key_index} is empty, skipping")
+                continue
+            
+            try:
+                log.debug(f"Embedding with key {key_index}/{len(self.gemini_keys)}")
+                client = genai.Client(api_key=api_key)
+                response = client.models.embed_content(
+                    model=self.embedding_model_name,
+                    contents=text,
+                    config={"task_type": "RETRIEVAL_QUERY"},
+                )
+                
+                if not response.embeddings or not response.embeddings[0].values:
+                    log.warning(f"Empty embedding response from key {key_index}")
+                    continue
+                
+                embedding = np.array(
+                    [response.embeddings[0].values],
+                    dtype="float32"
+                )
+                faiss.normalize_L2(embedding)
+                log.debug(f"Embedding successful with key {key_index}")
+                return embedding
+                
+            except Exception as e:
+                log.warning(f"Embedding failed with key {key_index}: {e}")
+                continue
+        
+        return None
 
     def retrieve(self, query: str, top_k: int = 5) -> List[Dict]:
         """
@@ -592,47 +645,11 @@ class VectorStore:
         """
         query_text = f"query: {query}"
 
-        embedding = None
-        last_error = None
-
-        for key_index, api_key in enumerate(self.gemini_keys,1):
-
-            try:
-
-                client = genai.Client(api_key=api_key)
-
-                client = genai.Client(api_key=api_key)
-
-                response = client.models.embed_content(
-                    model="models/gemini-embedding-001",
-                    contents=query_text,
-                    config={
-                        "task_type":"RETRIEVAL_QUERY"
-                    }
-                )
-
-                embedding = np.array(
-                    [response.embeddings[0].values],
-                    dtype="float32"
-                )
-
-                faiss.normalize_L2(embedding)
-
-                break
-
-            except Exception as e:
-
-                log.warning(
-                    f"Gemini embedding failed key={key_index} error={e}"
-                )
-
-                last_error=e
-
-                continue
-
+        embedding = self._embed_text(query_text)
         if embedding is None:
+            log.error(f"Could not embed query (all Gemini keys failed): {query[:100]}")
             raise RuntimeError(
-                f"All Gemini embedding keys failed: {last_error}"
+                "Sorgu embedding'i başarısız. Lütfen daha sonra tekrar deneyin."
             )
 
         scores, indices = self.index.search(embedding, top_k)
@@ -947,6 +964,10 @@ def index():
     """Serves the frontend HTML file."""
     return send_from_directory(WEB_DIR, "index.html")
 
+@app.route("/<path:filename>")
+def serve_files(filename):
+    return send_from_directory(WEB_DIR, filename)
+
 
 @app.route("/api/auth/status", methods=["GET"])
 def auth_status():
@@ -1252,13 +1273,14 @@ def run_startup_safely():
     llm_gateway = LLMGateway(CONFIG)
 
 # GUNICORN'UN UYGULAMAYI BAŞLATMASI İÇİN BURADA ÇAĞIRIYORUZ
-run_startup_safely()
+#run_startup_safely()
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # Entry Point
 # ═══════════════════════════════════════════════════════════════════════════════
 
 if __name__ == "__main__":
+    startup()
     port = int(os.getenv("PORT", "5000"))
     ssl_context = "adhoc" if CONFIG["local_https"] and not os.getenv("PORT") else None
     app.run(
