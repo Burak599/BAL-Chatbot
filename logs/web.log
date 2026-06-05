@@ -1824,3 +1824,869 @@ requests.exceptions.HTTPError: 429 Client Error: Too Many Requests for url: http
 2026-06-04 21:07:08,834 [INFO] Found existing user id=34 for fingerprint
 2026-06-04 21:07:09,337 [INFO] 212.252.116.251 - - [04/Jun/2026 21:07:09] "GET /api/auth/status HTTP/1.1" 200 -
 2026-06-04 21:07:16,305 [INFO] 212.252.116.251 - - [04/Jun/2026 21:07:16] "GET /api/health HTTP/1.1" 200 -
+2026-06-04 21:53:51,939 [INFO] BAL Chatbot Web API starting...
+2026-06-04 21:53:51,940 [INFO] Runtime pid=302928 cwd=/home/burak/Masaüstü/ChatbotBAL/web log_file=/home/burak/Masaüstü/ChatbotBAL/logs/web.log
+2026-06-04 21:53:51,940 [INFO] Provider: groq
+2026-06-04 21:53:51,940 [INFO] HTTPS enforcement: False
+2026-06-04 21:53:51,941 [INFO] Loading FAISS index...
+2026-06-04 21:53:51,944 [INFO] FAISS index loaded: 137 vectors
+2026-06-04 21:53:51,944 [INFO] Loading chunk metadata...
+2026-06-04 21:53:51,946 [INFO] Chunk metadata loaded: 137 chunks
+2026-06-04 21:53:51,946 [INFO] Testing embedding API with 5 key(s)...
+2026-06-04 21:53:52,435 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-04 21:53:52,465 [INFO] ✓ Embedding API test successful (dim=(1, 3072))
+2026-06-04 21:53:52,465 [INFO] Vector store ready — 137 chunks
+2026-06-04 21:53:52,465 [INFO] Groq configured — key_count=2 primary_model=llama-3.3-70b-versatile
+2026-06-04 21:53:52,465 [INFO] LLM gateway ready — active provider: groq
+2026-06-04 21:53:52,466 [INFO] Server starting on http://0.0.0.0:5000
+2026-06-04 21:53:52,472 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.2:5000
+2026-06-04 21:53:52,472 [INFO] [33mPress CTRL+C to quit[0m
+2026-06-04 21:54:05,202 [INFO] 212.252.116.251 - - [04/Jun/2026 21:54:05] "[36mGET / HTTP/1.1[0m" 304 -
+2026-06-04 21:54:05,691 [INFO] 212.252.116.251 - - [04/Jun/2026 21:54:05] "[36mGET /BAL_Logo.png HTTP/1.1[0m" 304 -
+2026-06-04 21:54:05,713 [INFO] 212.252.116.251 - - [04/Jun/2026 21:54:05] "[36mGET /vendor/fingerprintjs/fp.esm.js HTTP/1.1[0m" 304 -
+2026-06-04 21:54:06,900 [INFO] 212.252.116.251 - - [04/Jun/2026 21:54:06] "GET /api/health HTTP/1.1" 200 -
+2026-06-04 21:54:07,094 [INFO] Found existing user id=34 for fingerprint
+2026-06-04 21:54:08,048 [INFO] 212.252.116.251 - - [04/Jun/2026 21:54:08] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-04 21:54:15,290 [INFO] Found existing user id=34 for fingerprint
+2026-06-04 21:54:17,057 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-04 21:54:17,566 [INFO] 212.252.116.251 - - [04/Jun/2026 21:54:17] "POST /api/chat HTTP/1.1" 200 -
+2026-06-04 21:54:18,383 [INFO] Found existing user id=34 for fingerprint
+2026-06-04 21:54:18,860 [INFO] 212.252.116.251 - - [04/Jun/2026 21:54:18] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-04 21:54:24,956 [INFO] Found existing user id=34 for fingerprint
+2026-06-04 21:54:26,743 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-04 21:54:26,916 [ERROR] Groq API HTTP error status=429 model=llama-3.3-70b-versatile rate_headers={'retry-after': '596', 'x-ratelimit-limit-requests': '1000', 'x-ratelimit-limit-tokens': '12000', 'x-ratelimit-remaining-requests': '999', 'x-ratelimit-remaining-tokens': '10602', 'x-ratelimit-reset-requests': '1m26.4s', 'x-ratelimit-reset-tokens': '6.99s', 'x-request-id': 'req_01kt9zs7j3en38x103jp5gr56m'} body=
+Traceback (most recent call last):
+  File "/home/burak/Masaüstü/ChatbotBAL/web/app.py", line 757, in stream_groq_model
+    resp.raise_for_status()
+  File "/home/burak/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 429 Client Error: Too Many Requests for url: https://api.groq.com/openai/v1/chat/completions
+2026-06-04 21:54:26,948 [WARNING] Groq fallback switching key_index=1 from_model=llama-3.3-70b-versatile to_model=meta-llama/llama-4-maverick-17b-128e-instruct reason=http_429
+2026-06-04 21:54:27,089 [ERROR] Groq API HTTP error status=404 model=meta-llama/llama-4-maverick-17b-128e-instruct rate_headers={'x-request-id': 'req_01kt9zs7qgen4afrw1qhnk18jx'} body=
+Traceback (most recent call last):
+  File "/home/burak/Masaüstü/ChatbotBAL/web/app.py", line 757, in stream_groq_model
+    resp.raise_for_status()
+  File "/home/burak/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://api.groq.com/openai/v1/chat/completions
+2026-06-04 21:54:27,089 [WARNING] Groq fallback switching key_index=1 from_model=meta-llama/llama-4-maverick-17b-128e-instruct to_model=qwen/qwen3-32b reason=http_404
+2026-06-04 21:54:27,570 [INFO] 212.252.116.251 - - [04/Jun/2026 21:54:27] "POST /api/chat HTTP/1.1" 200 -
+2026-06-04 21:54:29,008 [WARNING] Groq fallback succeeded key_index=1 original_model=llama-3.3-70b-versatile active_model=qwen/qwen3-32b
+2026-06-04 21:54:29,540 [INFO] Found existing user id=34 for fingerprint
+2026-06-04 21:54:30,007 [INFO] 212.252.116.251 - - [04/Jun/2026 21:54:30] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-04 21:54:35,599 [INFO] 212.252.116.251 - - [04/Jun/2026 21:54:35] "GET /api/health HTTP/1.1" 200 -
+2026-06-04 21:55:05,859 [INFO] 212.252.116.251 - - [04/Jun/2026 21:55:05] "GET /api/health HTTP/1.1" 200 -
+2026-06-04 21:57:25,746 [INFO] BAL Chatbot Web API starting...
+2026-06-04 21:57:25,747 [INFO] Runtime pid=304894 cwd=/home/burak/Masaüstü/ChatbotBAL/web log_file=/home/burak/Masaüstü/ChatbotBAL/logs/web.log
+2026-06-04 21:57:25,747 [INFO] Provider: groq
+2026-06-04 21:57:25,747 [INFO] HTTPS enforcement: False
+2026-06-04 21:57:25,747 [INFO] Loading FAISS index...
+2026-06-04 21:57:25,750 [INFO] FAISS index loaded: 137 vectors
+2026-06-04 21:57:25,751 [INFO] Loading chunk metadata...
+2026-06-04 21:57:25,754 [INFO] Chunk metadata loaded: 137 chunks
+2026-06-04 21:57:25,754 [INFO] Testing embedding API with 5 key(s)...
+2026-06-04 21:57:26,244 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-04 21:57:26,274 [INFO] ✓ Embedding API test successful (dim=(1, 3072))
+2026-06-04 21:57:26,275 [INFO] Vector store ready — 137 chunks
+2026-06-04 21:57:26,275 [INFO] Groq configured — key_count=2 primary_model=llama-3.3-70b-versatile
+2026-06-04 21:57:26,275 [INFO] LLM gateway ready — active provider: groq
+2026-06-04 21:57:26,275 [INFO] Server starting on http://0.0.0.0:5000
+2026-06-04 21:57:26,281 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.2:5000
+2026-06-04 21:57:26,282 [INFO] [33mPress CTRL+C to quit[0m
+2026-06-04 21:57:34,583 [INFO] 212.252.116.251 - - [04/Jun/2026 21:57:34] "[36mGET / HTTP/1.1[0m" 304 -
+2026-06-04 21:57:34,775 [INFO] 212.252.116.251 - - [04/Jun/2026 21:57:34] "[36mGET /BAL_Logo.png HTTP/1.1[0m" 304 -
+2026-06-04 21:57:34,779 [INFO] 212.252.116.251 - - [04/Jun/2026 21:57:34] "[36mGET /vendor/fingerprintjs/fp.esm.js HTTP/1.1[0m" 304 -
+2026-06-04 21:57:35,063 [INFO] 212.252.116.251 - - [04/Jun/2026 21:57:35] "GET /api/health HTTP/1.1" 200 -
+2026-06-04 21:57:35,367 [INFO] Found existing user id=34 for fingerprint
+2026-06-04 21:57:36,192 [INFO] 212.252.116.251 - - [04/Jun/2026 21:57:36] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-04 21:57:48,464 [INFO] Found existing user id=34 for fingerprint
+2026-06-04 21:57:52,339 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-04 21:57:52,633 [INFO] 212.252.116.251 - - [04/Jun/2026 21:57:52] "POST /api/chat HTTP/1.1" 200 -
+2026-06-04 21:57:54,399 [INFO] Found existing user id=34 for fingerprint
+2026-06-04 21:57:55,593 [INFO] 212.252.116.251 - - [04/Jun/2026 21:57:55] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-04 21:58:05,015 [INFO] 212.252.116.251 - - [04/Jun/2026 21:58:05] "GET /api/health HTTP/1.1" 200 -
+2026-06-04 21:58:35,125 [INFO] 212.252.116.251 - - [04/Jun/2026 21:58:35] "GET /api/health HTTP/1.1" 200 -
+2026-06-04 21:59:05,125 [INFO] 212.252.116.251 - - [04/Jun/2026 21:59:05] "GET /api/health HTTP/1.1" 200 -
+2026-06-04 21:59:43,816 [INFO] BAL Chatbot Web API starting...
+2026-06-04 21:59:43,816 [INFO] Runtime pid=306126 cwd=/home/burak/Masaüstü/ChatbotBAL/web log_file=/home/burak/Masaüstü/ChatbotBAL/logs/web.log
+2026-06-04 21:59:43,817 [INFO] Provider: groq
+2026-06-04 21:59:43,817 [INFO] HTTPS enforcement: False
+2026-06-04 21:59:43,817 [INFO] Loading FAISS index...
+2026-06-04 21:59:43,820 [INFO] FAISS index loaded: 137 vectors
+2026-06-04 21:59:43,820 [INFO] Loading chunk metadata...
+2026-06-04 21:59:43,823 [INFO] Chunk metadata loaded: 137 chunks
+2026-06-04 21:59:43,823 [INFO] Testing embedding API with 5 key(s)...
+2026-06-04 21:59:44,304 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-04 21:59:44,334 [INFO] ✓ Embedding API test successful (dim=(1, 3072))
+2026-06-04 21:59:44,334 [INFO] Vector store ready — 137 chunks
+2026-06-04 21:59:44,334 [INFO] Groq configured — key_count=2 primary_model=llama-3.3-70b-versatile
+2026-06-04 21:59:44,334 [INFO] LLM gateway ready — active provider: groq
+2026-06-04 21:59:44,334 [INFO] Server starting on http://0.0.0.0:5000
+2026-06-04 21:59:44,341 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.2:5000
+2026-06-04 21:59:44,341 [INFO] [33mPress CTRL+C to quit[0m
+2026-06-04 21:59:58,146 [INFO] 212.252.116.251 - - [04/Jun/2026 21:59:58] "[36mGET / HTTP/1.1[0m" 304 -
+2026-06-04 21:59:58,292 [INFO] 212.252.116.251 - - [04/Jun/2026 21:59:58] "[36mGET /BAL_Logo.png HTTP/1.1[0m" 304 -
+2026-06-04 21:59:58,297 [INFO] 212.252.116.251 - - [04/Jun/2026 21:59:58] "[36mGET /vendor/fingerprintjs/fp.esm.js HTTP/1.1[0m" 304 -
+2026-06-04 21:59:58,502 [INFO] 212.252.116.251 - - [04/Jun/2026 21:59:58] "GET /api/health HTTP/1.1" 200 -
+2026-06-04 21:59:58,764 [INFO] Found existing user id=34 for fingerprint
+2026-06-04 21:59:59,230 [INFO] 212.252.116.251 - - [04/Jun/2026 21:59:59] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-04 22:00:06,555 [INFO] Found existing user id=34 for fingerprint
+2026-06-04 22:00:08,376 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-04 22:00:08,621 [ERROR] Groq API HTTP error status=429 model=llama-3.3-70b-versatile rate_headers={'retry-after': '471', 'x-ratelimit-limit-requests': '1000', 'x-ratelimit-limit-tokens': '12000', 'x-ratelimit-remaining-requests': '1000', 'x-ratelimit-remaining-tokens': '12000', 'x-ratelimit-reset-requests': '1ms', 'x-ratelimit-reset-tokens': '1ms', 'x-request-id': 'req_01kta03n89f9cavty3vxqkqsc5'} body=
+Traceback (most recent call last):
+  File "/home/burak/Masaüstü/ChatbotBAL/web/app.py", line 758, in stream_groq_model
+    resp.raise_for_status()
+  File "/home/burak/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 429 Client Error: Too Many Requests for url: https://api.groq.com/openai/v1/chat/completions
+2026-06-04 22:00:08,625 [WARNING] Groq fallback switching key_index=1 from_model=llama-3.3-70b-versatile to_model=meta-llama/llama-4-maverick-17b-128e-instruct reason=http_429
+2026-06-04 22:00:08,770 [ERROR] Groq API HTTP error status=404 model=meta-llama/llama-4-maverick-17b-128e-instruct rate_headers={'x-request-id': 'req_01kta03ncxf9hva4mrxb54cnrs'} body=
+Traceback (most recent call last):
+  File "/home/burak/Masaüstü/ChatbotBAL/web/app.py", line 758, in stream_groq_model
+    resp.raise_for_status()
+  File "/home/burak/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://api.groq.com/openai/v1/chat/completions
+2026-06-04 22:00:08,772 [WARNING] Groq fallback switching key_index=1 from_model=meta-llama/llama-4-maverick-17b-128e-instruct to_model=qwen/qwen3-32b reason=http_404
+2026-06-04 22:00:09,112 [INFO] 212.252.116.251 - - [04/Jun/2026 22:00:09] "POST /api/chat HTTP/1.1" 200 -
+2026-06-04 22:00:09,950 [WARNING] Groq fallback succeeded key_index=1 original_model=llama-3.3-70b-versatile active_model=qwen/qwen3-32b
+2026-06-04 22:00:10,484 [INFO] Found existing user id=34 for fingerprint
+2026-06-04 22:00:10,946 [INFO] 212.252.116.251 - - [04/Jun/2026 22:00:10] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-04 22:00:25,131 [INFO] Found existing user id=34 for fingerprint
+2026-06-04 22:00:26,908 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-04 22:00:27,085 [ERROR] Groq API HTTP error status=429 model=llama-3.3-70b-versatile rate_headers={'retry-after': '947', 'x-ratelimit-limit-requests': '1000', 'x-ratelimit-limit-tokens': '12000', 'x-ratelimit-remaining-requests': '1000', 'x-ratelimit-remaining-tokens': '12000', 'x-ratelimit-reset-requests': '1ms', 'x-ratelimit-reset-tokens': '1ms', 'x-request-id': 'req_01kta04799fh98dzfy567wbyzb'} body=
+Traceback (most recent call last):
+  File "/home/burak/Masaüstü/ChatbotBAL/web/app.py", line 758, in stream_groq_model
+    resp.raise_for_status()
+  File "/home/burak/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 429 Client Error: Too Many Requests for url: https://api.groq.com/openai/v1/chat/completions
+2026-06-04 22:00:27,087 [WARNING] Groq fallback switching key_index=1 from_model=llama-3.3-70b-versatile to_model=meta-llama/llama-4-maverick-17b-128e-instruct reason=http_429
+2026-06-04 22:00:27,229 [ERROR] Groq API HTTP error status=404 model=meta-llama/llama-4-maverick-17b-128e-instruct rate_headers={'x-request-id': 'req_01kta047dsf98vwvfmbpdd6x0j'} body=
+Traceback (most recent call last):
+  File "/home/burak/Masaüstü/ChatbotBAL/web/app.py", line 758, in stream_groq_model
+    resp.raise_for_status()
+  File "/home/burak/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://api.groq.com/openai/v1/chat/completions
+2026-06-04 22:00:27,231 [WARNING] Groq fallback switching key_index=1 from_model=meta-llama/llama-4-maverick-17b-128e-instruct to_model=qwen/qwen3-32b reason=http_404
+2026-06-04 22:00:27,764 [INFO] 212.252.116.251 - - [04/Jun/2026 22:00:27] "POST /api/chat HTTP/1.1" 200 -
+2026-06-04 22:00:28,505 [INFO] 212.252.116.251 - - [04/Jun/2026 22:00:28] "GET /api/health HTTP/1.1" 200 -
+2026-06-04 22:00:29,839 [WARNING] Groq fallback succeeded key_index=1 original_model=llama-3.3-70b-versatile active_model=qwen/qwen3-32b
+2026-06-04 22:00:30,103 [INFO] Found existing user id=34 for fingerprint
+2026-06-04 22:00:30,563 [INFO] 212.252.116.251 - - [04/Jun/2026 22:00:30] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-04 22:00:37,625 [INFO] Found existing user id=34 for fingerprint
+2026-06-04 22:00:39,403 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-04 22:00:39,580 [ERROR] Groq API HTTP error status=429 model=llama-3.3-70b-versatile rate_headers={'retry-after': '934', 'x-ratelimit-limit-requests': '1000', 'x-ratelimit-limit-tokens': '12000', 'x-ratelimit-remaining-requests': '1000', 'x-ratelimit-remaining-tokens': '12000', 'x-ratelimit-reset-requests': '1ms', 'x-ratelimit-reset-tokens': '1ms', 'x-request-id': 'req_01kta04kfpfs5vm43gbk7bmaaz'} body=
+Traceback (most recent call last):
+  File "/home/burak/Masaüstü/ChatbotBAL/web/app.py", line 758, in stream_groq_model
+    resp.raise_for_status()
+  File "/home/burak/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 429 Client Error: Too Many Requests for url: https://api.groq.com/openai/v1/chat/completions
+2026-06-04 22:00:39,582 [WARNING] Groq fallback switching key_index=1 from_model=llama-3.3-70b-versatile to_model=meta-llama/llama-4-maverick-17b-128e-instruct reason=http_429
+2026-06-04 22:00:39,724 [ERROR] Groq API HTTP error status=404 model=meta-llama/llama-4-maverick-17b-128e-instruct rate_headers={'x-request-id': 'req_01kta04km7fahrvvx5x7aw4sbw'} body=
+Traceback (most recent call last):
+  File "/home/burak/Masaüstü/ChatbotBAL/web/app.py", line 758, in stream_groq_model
+    resp.raise_for_status()
+  File "/home/burak/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://api.groq.com/openai/v1/chat/completions
+2026-06-04 22:00:39,725 [WARNING] Groq fallback switching key_index=1 from_model=meta-llama/llama-4-maverick-17b-128e-instruct to_model=qwen/qwen3-32b reason=http_404
+2026-06-04 22:00:39,875 [ERROR] Groq API HTTP error status=429 model=qwen/qwen3-32b rate_headers={'retry-after': '13', 'x-ratelimit-limit-requests': '1000', 'x-ratelimit-limit-tokens': '6000', 'x-ratelimit-remaining-requests': '998', 'x-ratelimit-remaining-tokens': '1604', 'x-ratelimit-reset-requests': '2m52.8s', 'x-ratelimit-reset-tokens': '43.96s', 'x-request-id': 'req_01kta04krsfsabr5tbzm8aqsbm'} body=
+Traceback (most recent call last):
+  File "/home/burak/Masaüstü/ChatbotBAL/web/app.py", line 758, in stream_groq_model
+    resp.raise_for_status()
+  File "/home/burak/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 429 Client Error: Too Many Requests for url: https://api.groq.com/openai/v1/chat/completions
+2026-06-04 22:00:39,877 [WARNING] Groq fallback switching key_index=1 from_model=qwen/qwen3-32b to_model=meta-llama/llama-4-scout-17b-16e-instruct reason=http_429
+2026-06-04 22:00:40,477 [INFO] 212.252.116.251 - - [04/Jun/2026 22:00:40] "POST /api/chat HTTP/1.1" 200 -
+2026-06-04 22:00:41,136 [WARNING] Groq fallback succeeded key_index=1 original_model=llama-3.3-70b-versatile active_model=meta-llama/llama-4-scout-17b-16e-instruct
+2026-06-04 22:00:41,660 [INFO] Found existing user id=34 for fingerprint
+2026-06-04 22:00:42,127 [INFO] 212.252.116.251 - - [04/Jun/2026 22:00:42] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-04 22:00:58,608 [INFO] 212.252.116.251 - - [04/Jun/2026 22:00:58] "GET /api/health HTTP/1.1" 200 -
+2026-06-04 22:01:21,920 [INFO] Found existing user id=34 for fingerprint
+2026-06-04 22:01:23,777 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-04 22:01:23,937 [ERROR] Groq API HTTP error status=429 model=llama-3.3-70b-versatile rate_headers={'retry-after': '2217', 'x-ratelimit-limit-requests': '1000', 'x-ratelimit-limit-tokens': '12000', 'x-ratelimit-remaining-requests': '1000', 'x-ratelimit-remaining-tokens': '12000', 'x-ratelimit-reset-requests': '1ms', 'x-ratelimit-reset-tokens': '1ms', 'x-request-id': 'req_01kta05yszeytazmxp7y6vt5nd'} body=
+Traceback (most recent call last):
+  File "/home/burak/Masaüstü/ChatbotBAL/web/app.py", line 758, in stream_groq_model
+    resp.raise_for_status()
+  File "/home/burak/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 429 Client Error: Too Many Requests for url: https://api.groq.com/openai/v1/chat/completions
+2026-06-04 22:01:23,938 [WARNING] Groq fallback switching key_index=1 from_model=llama-3.3-70b-versatile to_model=meta-llama/llama-4-maverick-17b-128e-instruct reason=http_429
+2026-06-04 22:01:24,092 [ERROR] Groq API HTTP error status=404 model=meta-llama/llama-4-maverick-17b-128e-instruct rate_headers={'x-request-id': 'req_01kta05yymfmw90dwy4wfyxcp2'} body=
+Traceback (most recent call last):
+  File "/home/burak/Masaüstü/ChatbotBAL/web/app.py", line 758, in stream_groq_model
+    resp.raise_for_status()
+  File "/home/burak/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://api.groq.com/openai/v1/chat/completions
+2026-06-04 22:01:24,093 [WARNING] Groq fallback switching key_index=1 from_model=meta-llama/llama-4-maverick-17b-128e-instruct to_model=qwen/qwen3-32b reason=http_404
+2026-06-04 22:01:24,646 [INFO] 212.252.116.251 - - [04/Jun/2026 22:01:24] "POST /api/chat HTTP/1.1" 200 -
+2026-06-04 22:01:25,747 [WARNING] Groq fallback succeeded key_index=1 original_model=llama-3.3-70b-versatile active_model=qwen/qwen3-32b
+2026-06-04 22:01:26,274 [INFO] Found existing user id=34 for fingerprint
+2026-06-04 22:01:26,736 [INFO] 212.252.116.251 - - [04/Jun/2026 22:01:26] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-04 22:01:28,613 [INFO] 212.252.116.251 - - [04/Jun/2026 22:01:28] "GET /api/health HTTP/1.1" 200 -
+2026-06-04 22:01:38,522 [INFO] Found existing user id=34 for fingerprint
+2026-06-04 22:01:40,276 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-04 22:01:40,462 [ERROR] Groq API HTTP error status=429 model=llama-3.3-70b-versatile rate_headers={'retry-after': '1118', 'x-ratelimit-limit-requests': '1000', 'x-ratelimit-limit-tokens': '12000', 'x-ratelimit-remaining-requests': '1000', 'x-ratelimit-remaining-tokens': '12000', 'x-ratelimit-reset-requests': '1ms', 'x-ratelimit-reset-tokens': '1ms', 'x-request-id': 'req_01kta06ey7e9majet7d1p0f3tt'} body=
+Traceback (most recent call last):
+  File "/home/burak/Masaüstü/ChatbotBAL/web/app.py", line 758, in stream_groq_model
+    resp.raise_for_status()
+  File "/home/burak/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 429 Client Error: Too Many Requests for url: https://api.groq.com/openai/v1/chat/completions
+2026-06-04 22:01:40,464 [WARNING] Groq fallback switching key_index=1 from_model=llama-3.3-70b-versatile to_model=meta-llama/llama-4-maverick-17b-128e-instruct reason=http_429
+2026-06-04 22:01:40,609 [ERROR] Groq API HTTP error status=404 model=meta-llama/llama-4-maverick-17b-128e-instruct rate_headers={'x-request-id': 'req_01kta06f2we9ntfrqwwf00kd8c'} body=
+Traceback (most recent call last):
+  File "/home/burak/Masaüstü/ChatbotBAL/web/app.py", line 758, in stream_groq_model
+    resp.raise_for_status()
+  File "/home/burak/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://api.groq.com/openai/v1/chat/completions
+2026-06-04 22:01:40,610 [WARNING] Groq fallback switching key_index=1 from_model=meta-llama/llama-4-maverick-17b-128e-instruct to_model=qwen/qwen3-32b reason=http_404
+2026-06-04 22:01:41,088 [INFO] 212.252.116.251 - - [04/Jun/2026 22:01:41] "POST /api/chat HTTP/1.1" 200 -
+2026-06-04 22:01:42,614 [WARNING] Groq fallback succeeded key_index=1 original_model=llama-3.3-70b-versatile active_model=qwen/qwen3-32b
+2026-06-04 22:01:43,140 [INFO] Found existing user id=34 for fingerprint
+2026-06-04 22:01:43,621 [INFO] 212.252.116.251 - - [04/Jun/2026 22:01:43] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-04 22:01:58,607 [INFO] 212.252.116.251 - - [04/Jun/2026 22:01:58] "GET /api/health HTTP/1.1" 200 -
+2026-06-04 22:02:28,611 [INFO] 212.252.116.251 - - [04/Jun/2026 22:02:28] "GET /api/health HTTP/1.1" 200 -
+2026-06-04 22:02:58,614 [INFO] 212.252.116.251 - - [04/Jun/2026 22:02:58] "GET /api/health HTTP/1.1" 200 -
+2026-06-04 22:03:28,611 [INFO] 212.252.116.251 - - [04/Jun/2026 22:03:28] "GET /api/health HTTP/1.1" 200 -
+2026-06-04 22:03:58,654 [INFO] 212.252.116.251 - - [04/Jun/2026 22:03:58] "GET /api/health HTTP/1.1" 200 -
+2026-06-04 22:04:28,746 [INFO] 212.252.116.251 - - [04/Jun/2026 22:04:28] "GET /api/health HTTP/1.1" 200 -
+2026-06-04 22:04:58,826 [INFO] 212.252.116.251 - - [04/Jun/2026 22:04:58] "GET /api/health HTTP/1.1" 200 -
+2026-06-04 22:05:28,812 [INFO] 212.252.116.251 - - [04/Jun/2026 22:05:28] "GET /api/health HTTP/1.1" 200 -
+2026-06-04 22:05:58,811 [INFO] 212.252.116.251 - - [04/Jun/2026 22:05:58] "GET /api/health HTTP/1.1" 200 -
+2026-06-04 22:06:29,127 [INFO] 212.252.116.251 - - [04/Jun/2026 22:06:29] "GET /api/health HTTP/1.1" 200 -
+2026-06-04 22:06:59,950 [INFO] 212.252.116.251 - - [04/Jun/2026 22:06:59] "GET /api/health HTTP/1.1" 200 -
+2026-06-04 23:38:48,268 [INFO] BAL Chatbot Web API starting...
+2026-06-04 23:38:48,268 [INFO] Runtime pid=349971 cwd=/home/burak/Masaüstü/ChatbotBAL/web log_file=/home/burak/Masaüstü/ChatbotBAL/logs/web.log
+2026-06-04 23:38:48,269 [INFO] Provider: groq
+2026-06-04 23:38:48,269 [INFO] HTTPS enforcement: False
+2026-06-04 23:38:48,269 [INFO] Loading FAISS index...
+2026-06-04 23:38:48,273 [INFO] FAISS index loaded: 134 vectors
+2026-06-04 23:38:48,273 [INFO] Loading chunk metadata...
+2026-06-04 23:38:48,276 [INFO] Chunk metadata loaded: 134 chunks
+2026-06-04 23:38:48,276 [INFO] Testing embedding API with 5 key(s)...
+2026-06-04 23:38:48,751 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-04 23:38:48,782 [INFO] ✓ Embedding API test successful (dim=(1, 3072))
+2026-06-04 23:38:48,783 [INFO] Vector store ready — 134 chunks
+2026-06-04 23:38:48,783 [INFO] Groq configured — key_count=2 primary_model=llama-3.3-70b-versatile
+2026-06-04 23:38:48,783 [INFO] LLM gateway ready — active provider: groq
+2026-06-04 23:38:48,783 [INFO] Server starting on http://0.0.0.0:5000
+2026-06-04 23:38:48,790 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.2:5000
+2026-06-04 23:38:48,790 [INFO] [33mPress CTRL+C to quit[0m
+2026-06-04 23:39:16,975 [INFO] 212.252.116.251 - - [04/Jun/2026 23:39:16] "[36mGET / HTTP/1.1[0m" 304 -
+2026-06-04 23:39:17,122 [INFO] 212.252.116.251 - - [04/Jun/2026 23:39:17] "[36mGET /BAL_Logo.png HTTP/1.1[0m" 304 -
+2026-06-04 23:39:17,289 [INFO] 212.252.116.251 - - [04/Jun/2026 23:39:17] "[36mGET /vendor/fingerprintjs/fp.esm.js HTTP/1.1[0m" 304 -
+2026-06-04 23:39:17,500 [INFO] 212.252.116.251 - - [04/Jun/2026 23:39:17] "GET /api/health HTTP/1.1" 200 -
+2026-06-04 23:39:17,769 [INFO] Found existing user id=34 for fingerprint
+2026-06-04 23:39:18,264 [INFO] 212.252.116.251 - - [04/Jun/2026 23:39:18] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-04 23:39:26,820 [INFO] Found existing user id=34 for fingerprint
+2026-06-04 23:39:28,612 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-04 23:39:29,074 [INFO] 212.252.116.251 - - [04/Jun/2026 23:39:29] "POST /api/chat HTTP/1.1" 200 -
+2026-06-04 23:39:30,055 [INFO] Found existing user id=34 for fingerprint
+2026-06-04 23:39:30,541 [INFO] 212.252.116.251 - - [04/Jun/2026 23:39:30] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-04 23:39:47,503 [INFO] 212.252.116.251 - - [04/Jun/2026 23:39:47] "GET /api/health HTTP/1.1" 200 -
+2026-06-04 23:39:48,944 [INFO] Found existing user id=34 for fingerprint
+2026-06-04 23:39:50,698 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-04 23:39:51,107 [INFO] 212.252.116.251 - - [04/Jun/2026 23:39:51] "POST /api/chat HTTP/1.1" 200 -
+2026-06-04 23:39:51,894 [INFO] Found existing user id=34 for fingerprint
+2026-06-04 23:39:52,374 [INFO] 212.252.116.251 - - [04/Jun/2026 23:39:52] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-04 23:39:58,560 [INFO] Found existing user id=34 for fingerprint
+2026-06-04 23:40:00,344 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-04 23:40:00,536 [ERROR] Groq API HTTP error status=429 model=llama-3.3-70b-versatile rate_headers={'retry-after': '1850', 'x-ratelimit-limit-requests': '1000', 'x-ratelimit-limit-tokens': '12000', 'x-ratelimit-remaining-requests': '998', 'x-ratelimit-remaining-tokens': '11362', 'x-ratelimit-reset-requests': '2m52.8s', 'x-ratelimit-reset-tokens': '3.19s', 'x-request-id': 'req_01kta5tgqmef1b01kahxa098jc'} body=
+Traceback (most recent call last):
+  File "/home/burak/Masaüstü/ChatbotBAL/web/app.py", line 758, in stream_groq_model
+    resp.raise_for_status()
+  File "/home/burak/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 429 Client Error: Too Many Requests for url: https://api.groq.com/openai/v1/chat/completions
+2026-06-04 23:40:00,539 [WARNING] Groq fallback switching key_index=1 from_model=llama-3.3-70b-versatile to_model=meta-llama/llama-4-maverick-17b-128e-instruct reason=http_429
+2026-06-04 23:40:00,686 [ERROR] Groq API HTTP error status=404 model=meta-llama/llama-4-maverick-17b-128e-instruct rate_headers={'x-request-id': 'req_01kta5tgwhfpgvxs49exct1tmn'} body=
+Traceback (most recent call last):
+  File "/home/burak/Masaüstü/ChatbotBAL/web/app.py", line 758, in stream_groq_model
+    resp.raise_for_status()
+  File "/home/burak/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://api.groq.com/openai/v1/chat/completions
+2026-06-04 23:40:00,687 [WARNING] Groq fallback switching key_index=1 from_model=meta-llama/llama-4-maverick-17b-128e-instruct to_model=qwen/qwen3-32b reason=http_404
+2026-06-04 23:40:01,092 [INFO] 212.252.116.251 - - [04/Jun/2026 23:40:01] "POST /api/chat HTTP/1.1" 200 -
+2026-06-04 23:40:03,400 [WARNING] Groq fallback succeeded key_index=1 original_model=llama-3.3-70b-versatile active_model=qwen/qwen3-32b
+2026-06-04 23:40:03,945 [INFO] Found existing user id=34 for fingerprint
+2026-06-04 23:40:04,432 [INFO] 212.252.116.251 - - [04/Jun/2026 23:40:04] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-04 23:40:17,819 [INFO] 212.252.116.251 - - [04/Jun/2026 23:40:17] "GET /api/health HTTP/1.1" 200 -
+2026-06-04 23:40:33,020 [INFO] Found existing user id=34 for fingerprint
+2026-06-04 23:40:34,829 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-04 23:40:35,017 [ERROR] Groq API HTTP error status=429 model=llama-3.3-70b-versatile rate_headers={'retry-after': '1674', 'x-ratelimit-limit-requests': '1000', 'x-ratelimit-limit-tokens': '12000', 'x-ratelimit-remaining-requests': '998', 'x-ratelimit-remaining-tokens': '12000', 'x-ratelimit-reset-requests': '2m52.8s', 'x-ratelimit-reset-tokens': '1ms', 'x-request-id': 'req_01kta5vjdaft7v67fj1zst95rd'} body=
+Traceback (most recent call last):
+  File "/home/burak/Masaüstü/ChatbotBAL/web/app.py", line 758, in stream_groq_model
+    resp.raise_for_status()
+  File "/home/burak/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 429 Client Error: Too Many Requests for url: https://api.groq.com/openai/v1/chat/completions
+2026-06-04 23:40:35,019 [WARNING] Groq fallback switching key_index=1 from_model=llama-3.3-70b-versatile to_model=meta-llama/llama-4-maverick-17b-128e-instruct reason=http_429
+2026-06-04 23:40:35,174 [ERROR] Groq API HTTP error status=404 model=meta-llama/llama-4-maverick-17b-128e-instruct rate_headers={'x-request-id': 'req_01kta5vjj9e06tj1qb4nckracz'} body=
+Traceback (most recent call last):
+  File "/home/burak/Masaüstü/ChatbotBAL/web/app.py", line 758, in stream_groq_model
+    resp.raise_for_status()
+  File "/home/burak/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://api.groq.com/openai/v1/chat/completions
+2026-06-04 23:40:35,176 [WARNING] Groq fallback switching key_index=1 from_model=meta-llama/llama-4-maverick-17b-128e-instruct to_model=qwen/qwen3-32b reason=http_404
+2026-06-04 23:40:35,339 [ERROR] Groq API HTTP error status=429 model=qwen/qwen3-32b rate_headers={'retry-after': '12', 'x-ratelimit-limit-requests': '1000', 'x-ratelimit-limit-tokens': '6000', 'x-ratelimit-remaining-requests': '999', 'x-ratelimit-remaining-tokens': '3551', 'x-ratelimit-reset-requests': '1m26.4s', 'x-ratelimit-reset-tokens': '24.49s', 'x-request-id': 'req_01kta5vjq7ft9b8vygzyc791tn'} body=
+Traceback (most recent call last):
+  File "/home/burak/Masaüstü/ChatbotBAL/web/app.py", line 758, in stream_groq_model
+    resp.raise_for_status()
+  File "/home/burak/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 429 Client Error: Too Many Requests for url: https://api.groq.com/openai/v1/chat/completions
+2026-06-04 23:40:35,341 [WARNING] Groq fallback switching key_index=1 from_model=qwen/qwen3-32b to_model=meta-llama/llama-4-scout-17b-16e-instruct reason=http_429
+2026-06-04 23:40:35,707 [INFO] 212.252.116.251 - - [04/Jun/2026 23:40:35] "POST /api/chat HTTP/1.1" 200 -
+2026-06-04 23:40:35,743 [WARNING] Groq fallback succeeded key_index=1 original_model=llama-3.3-70b-versatile active_model=meta-llama/llama-4-scout-17b-16e-instruct
+2026-06-04 23:40:36,286 [INFO] Found existing user id=34 for fingerprint
+2026-06-04 23:40:36,766 [INFO] 212.252.116.251 - - [04/Jun/2026 23:40:36] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-04 23:40:44,359 [INFO] Session cleared: session_sq9evyb
+2026-06-04 23:40:44,360 [INFO] 212.252.116.251 - - [04/Jun/2026 23:40:44] "POST /api/clear HTTP/1.1" 200 -
+2026-06-04 23:40:45,662 [INFO] Session cleared: session_sq9evyb
+2026-06-04 23:40:45,663 [INFO] 212.252.116.251 - - [04/Jun/2026 23:40:45] "POST /api/clear HTTP/1.1" 200 -
+2026-06-04 23:40:47,818 [INFO] 212.252.116.251 - - [04/Jun/2026 23:40:47] "GET /api/health HTTP/1.1" 200 -
+2026-06-04 23:40:49,611 [INFO] Found existing user id=34 for fingerprint
+2026-06-04 23:40:51,383 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-04 23:40:51,566 [ERROR] Groq API HTTP error status=429 model=llama-3.3-70b-versatile rate_headers={'retry-after': '784', 'x-ratelimit-limit-requests': '1000', 'x-ratelimit-limit-tokens': '12000', 'x-ratelimit-remaining-requests': '998', 'x-ratelimit-remaining-tokens': '12000', 'x-ratelimit-reset-requests': '2m52.8s', 'x-ratelimit-reset-tokens': '1ms', 'x-request-id': 'req_01kta5w2jhe4dvmzxk472s2hh0'} body=
+Traceback (most recent call last):
+  File "/home/burak/Masaüstü/ChatbotBAL/web/app.py", line 758, in stream_groq_model
+    resp.raise_for_status()
+  File "/home/burak/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 429 Client Error: Too Many Requests for url: https://api.groq.com/openai/v1/chat/completions
+2026-06-04 23:40:51,568 [WARNING] Groq fallback switching key_index=1 from_model=llama-3.3-70b-versatile to_model=meta-llama/llama-4-maverick-17b-128e-instruct reason=http_429
+2026-06-04 23:40:51,716 [ERROR] Groq API HTTP error status=404 model=meta-llama/llama-4-maverick-17b-128e-instruct rate_headers={'x-request-id': 'req_01kta5w2q5e4dtxemybs4fkzbx'} body=
+Traceback (most recent call last):
+  File "/home/burak/Masaüstü/ChatbotBAL/web/app.py", line 758, in stream_groq_model
+    resp.raise_for_status()
+  File "/home/burak/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://api.groq.com/openai/v1/chat/completions
+2026-06-04 23:40:51,717 [WARNING] Groq fallback switching key_index=1 from_model=meta-llama/llama-4-maverick-17b-128e-instruct to_model=qwen/qwen3-32b reason=http_404
+2026-06-04 23:40:52,108 [INFO] 212.252.116.251 - - [04/Jun/2026 23:40:52] "POST /api/chat HTTP/1.1" 200 -
+2026-06-04 23:40:53,303 [WARNING] Groq fallback succeeded key_index=1 original_model=llama-3.3-70b-versatile active_model=qwen/qwen3-32b
+2026-06-04 23:40:53,844 [INFO] Found existing user id=34 for fingerprint
+2026-06-04 23:40:54,326 [INFO] 212.252.116.251 - - [04/Jun/2026 23:40:54] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-04 23:41:05,520 [INFO] Found existing user id=34 for fingerprint
+2026-06-04 23:41:07,287 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-04 23:41:07,475 [ERROR] Groq API HTTP error status=429 model=llama-3.3-70b-versatile rate_headers={'retry-after': '1195', 'x-ratelimit-limit-requests': '1000', 'x-ratelimit-limit-tokens': '12000', 'x-ratelimit-remaining-requests': '998', 'x-ratelimit-remaining-tokens': '12000', 'x-ratelimit-reset-requests': '2m52.8s', 'x-ratelimit-reset-tokens': '1ms', 'x-request-id': 'req_01kta5wj3mf11a3gn3n29r97a1'} body=
+Traceback (most recent call last):
+  File "/home/burak/Masaüstü/ChatbotBAL/web/app.py", line 758, in stream_groq_model
+    resp.raise_for_status()
+  File "/home/burak/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 429 Client Error: Too Many Requests for url: https://api.groq.com/openai/v1/chat/completions
+2026-06-04 23:41:07,476 [WARNING] Groq fallback switching key_index=1 from_model=llama-3.3-70b-versatile to_model=meta-llama/llama-4-maverick-17b-128e-instruct reason=http_429
+2026-06-04 23:41:07,626 [ERROR] Groq API HTTP error status=404 model=meta-llama/llama-4-maverick-17b-128e-instruct rate_headers={'x-request-id': 'req_01kta5wj8ce0nbxtan2r75xrj1'} body=
+Traceback (most recent call last):
+  File "/home/burak/Masaüstü/ChatbotBAL/web/app.py", line 758, in stream_groq_model
+    resp.raise_for_status()
+  File "/home/burak/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://api.groq.com/openai/v1/chat/completions
+2026-06-04 23:41:07,627 [WARNING] Groq fallback switching key_index=1 from_model=meta-llama/llama-4-maverick-17b-128e-instruct to_model=qwen/qwen3-32b reason=http_404
+2026-06-04 23:41:07,782 [ERROR] Groq API HTTP error status=429 model=qwen/qwen3-32b rate_headers={'retry-after': '18', 'x-ratelimit-limit-requests': '1000', 'x-ratelimit-limit-tokens': '6000', 'x-ratelimit-remaining-requests': '998', 'x-ratelimit-remaining-tokens': '1828', 'x-ratelimit-reset-requests': '2m52.8s', 'x-ratelimit-reset-tokens': '41.72s', 'x-request-id': 'req_01kta5wjd6e77a9kzvr3h7p5h2'} body=
+Traceback (most recent call last):
+  File "/home/burak/Masaüstü/ChatbotBAL/web/app.py", line 758, in stream_groq_model
+    resp.raise_for_status()
+  File "/home/burak/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 429 Client Error: Too Many Requests for url: https://api.groq.com/openai/v1/chat/completions
+2026-06-04 23:41:07,784 [WARNING] Groq fallback switching key_index=1 from_model=qwen/qwen3-32b to_model=meta-llama/llama-4-scout-17b-16e-instruct reason=http_429
+2026-06-04 23:41:08,181 [INFO] 212.252.116.251 - - [04/Jun/2026 23:41:08] "POST /api/chat HTTP/1.1" 200 -
+2026-06-04 23:41:08,228 [WARNING] Groq fallback succeeded key_index=1 original_model=llama-3.3-70b-versatile active_model=meta-llama/llama-4-scout-17b-16e-instruct
+2026-06-04 23:41:08,770 [INFO] Found existing user id=34 for fingerprint
+2026-06-04 23:41:09,253 [INFO] 212.252.116.251 - - [04/Jun/2026 23:41:09] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-04 23:41:12,297 [INFO] Found existing user id=34 for fingerprint
+2026-06-04 23:41:14,022 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-04 23:41:14,201 [ERROR] Groq API HTTP error status=429 model=llama-3.3-70b-versatile rate_headers={'retry-after': '1017', 'x-ratelimit-limit-requests': '1000', 'x-ratelimit-limit-tokens': '12000', 'x-ratelimit-remaining-requests': '998', 'x-ratelimit-remaining-tokens': '12000', 'x-ratelimit-reset-requests': '2m52.8s', 'x-ratelimit-reset-tokens': '1ms', 'x-request-id': 'req_01kta5wrnre24ap1e17svgr24z'} body=
+Traceback (most recent call last):
+  File "/home/burak/Masaüstü/ChatbotBAL/web/app.py", line 758, in stream_groq_model
+    resp.raise_for_status()
+  File "/home/burak/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 429 Client Error: Too Many Requests for url: https://api.groq.com/openai/v1/chat/completions
+2026-06-04 23:41:14,202 [WARNING] Groq fallback switching key_index=1 from_model=llama-3.3-70b-versatile to_model=meta-llama/llama-4-maverick-17b-128e-instruct reason=http_429
+2026-06-04 23:41:14,350 [ERROR] Groq API HTTP error status=404 model=meta-llama/llama-4-maverick-17b-128e-instruct rate_headers={'x-request-id': 'req_01kta5wrtfe25aty40as81gf8g'} body=
+Traceback (most recent call last):
+  File "/home/burak/Masaüstü/ChatbotBAL/web/app.py", line 758, in stream_groq_model
+    resp.raise_for_status()
+  File "/home/burak/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://api.groq.com/openai/v1/chat/completions
+2026-06-04 23:41:14,351 [WARNING] Groq fallback switching key_index=1 from_model=meta-llama/llama-4-maverick-17b-128e-instruct to_model=qwen/qwen3-32b reason=http_404
+2026-06-04 23:41:14,508 [ERROR] Groq API HTTP error status=429 model=qwen/qwen3-32b rate_headers={'retry-after': '9', 'x-ratelimit-limit-requests': '1000', 'x-ratelimit-limit-tokens': '6000', 'x-ratelimit-remaining-requests': '998', 'x-ratelimit-remaining-tokens': '2501', 'x-ratelimit-reset-requests': '2m52.8s', 'x-ratelimit-reset-tokens': '34.99s', 'x-request-id': 'req_01kta5wrzae9a9dsf4pg56cwhn'} body=
+Traceback (most recent call last):
+  File "/home/burak/Masaüstü/ChatbotBAL/web/app.py", line 758, in stream_groq_model
+    resp.raise_for_status()
+  File "/home/burak/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 429 Client Error: Too Many Requests for url: https://api.groq.com/openai/v1/chat/completions
+2026-06-04 23:41:14,510 [WARNING] Groq fallback switching key_index=1 from_model=qwen/qwen3-32b to_model=meta-llama/llama-4-scout-17b-16e-instruct reason=http_429
+2026-06-04 23:41:14,881 [INFO] 212.252.116.251 - - [04/Jun/2026 23:41:14] "POST /api/chat HTTP/1.1" 200 -
+2026-06-04 23:41:14,917 [WARNING] Groq fallback succeeded key_index=1 original_model=llama-3.3-70b-versatile active_model=meta-llama/llama-4-scout-17b-16e-instruct
+2026-06-04 23:41:15,459 [INFO] Found existing user id=34 for fingerprint
+2026-06-04 23:41:15,940 [INFO] 212.252.116.251 - - [04/Jun/2026 23:41:15] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-04 23:41:18,086 [INFO] 212.252.116.251 - - [04/Jun/2026 23:41:18] "GET /api/health HTTP/1.1" 200 -
+2026-06-05 10:51:42,498 [INFO] BAL Chatbot Web API starting...
+2026-06-05 10:51:42,524 [INFO] Runtime pid=37845 cwd=/home/burak/Masaüstü/ChatbotBAL/web log_file=/home/burak/Masaüstü/ChatbotBAL/logs/web.log
+2026-06-05 10:51:42,524 [INFO] Provider: groq
+2026-06-05 10:51:42,524 [INFO] HTTPS enforcement: False
+2026-06-05 10:51:42,525 [INFO] Loading FAISS index...
+2026-06-05 10:51:42,544 [INFO] FAISS index loaded: 134 vectors
+2026-06-05 10:51:42,544 [INFO] Loading chunk metadata...
+2026-06-05 10:51:42,554 [INFO] Chunk metadata loaded: 134 chunks
+2026-06-05 10:51:42,555 [INFO] Testing embedding API with 5 key(s)...
+2026-06-05 10:51:43,206 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-05 10:51:43,238 [INFO] ✓ Embedding API test successful (dim=(1, 3072))
+2026-06-05 10:51:43,238 [INFO] Vector store ready — 134 chunks
+2026-06-05 10:51:43,239 [INFO] Groq configured — key_count=2 primary_model=llama-3.3-70b-versatile
+2026-06-05 10:51:43,239 [INFO] LLM gateway ready — active provider: groq
+2026-06-05 10:51:43,239 [INFO] Server starting on http://0.0.0.0:5000
+2026-06-05 10:51:43,263 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.2:5000
+2026-06-05 10:51:43,263 [INFO] [33mPress CTRL+C to quit[0m
+2026-06-05 15:23:49,631 [INFO] 77.67.129.135 - - [05/Jun/2026 15:23:49] "GET / HTTP/1.1" 200 -
+2026-06-05 15:23:49,898 [INFO] 77.67.129.135 - - [05/Jun/2026 15:23:49] "GET /BAL_Logo.png HTTP/1.1" 200 -
+2026-06-05 15:23:50,298 [INFO] 77.67.129.135 - - [05/Jun/2026 15:23:50] "GET /vendor/fingerprintjs/fp.esm.js HTTP/1.1" 200 -
+2026-06-05 15:23:51,813 [INFO] 77.67.129.135 - - [05/Jun/2026 15:23:51] "GET /api/health HTTP/1.1" 200 -
+2026-06-05 15:23:57,790 [INFO] No existing user with fingerprint found: 38254dc93cf3ac09ca869f0082fc2c1e
+2026-06-05 15:23:58,055 [INFO] Created visitor user id=37 fingerprint=38254dc93cf3ac09ca869f0082fc2c1e
+2026-06-05 15:23:58,512 [INFO] 77.67.129.135 - - [05/Jun/2026 15:23:58] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-05 15:24:20,501 [INFO] 77.67.129.135 - - [05/Jun/2026 15:24:20] "GET /api/health HTTP/1.1" 200 -
+2026-06-05 15:24:22,168 [INFO] Found existing user id=37 for fingerprint
+2026-06-05 15:24:23,878 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-05 15:24:24,362 [INFO] 77.67.129.135 - - [05/Jun/2026 15:24:24] "POST /api/chat HTTP/1.1" 200 -
+2026-06-05 15:24:24,975 [INFO] Found existing user id=37 for fingerprint
+2026-06-05 15:24:25,418 [INFO] 77.67.129.135 - - [05/Jun/2026 15:24:25] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-05 15:24:51,008 [INFO] 77.67.129.135 - - [05/Jun/2026 15:24:51] "GET /api/health HTTP/1.1" 200 -
+2026-06-05 15:24:58,616 [INFO] Found existing user id=37 for fingerprint
+2026-06-05 15:25:00,297 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-05 15:25:00,805 [INFO] 77.67.129.135 - - [05/Jun/2026 15:25:00] "POST /api/chat HTTP/1.1" 200 -
+2026-06-05 15:25:01,409 [INFO] Found existing user id=37 for fingerprint
+2026-06-05 15:25:01,865 [INFO] 77.67.129.135 - - [05/Jun/2026 15:25:01] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-05 15:25:21,332 [INFO] 77.67.129.135 - - [05/Jun/2026 15:25:21] "GET /api/health HTTP/1.1" 200 -
+2026-06-05 15:25:46,201 [INFO] Found existing user id=37 for fingerprint
+2026-06-05 15:25:47,859 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-05 15:25:48,310 [INFO] 77.67.129.135 - - [05/Jun/2026 15:25:48] "POST /api/chat HTTP/1.1" 200 -
+2026-06-05 15:25:48,932 [INFO] Found existing user id=37 for fingerprint
+2026-06-05 15:25:49,375 [INFO] 77.67.129.135 - - [05/Jun/2026 15:25:49] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-05 15:25:51,355 [INFO] 77.67.129.135 - - [05/Jun/2026 15:25:51] "GET /api/health HTTP/1.1" 200 -
+2026-06-05 15:26:21,364 [INFO] 77.67.129.135 - - [05/Jun/2026 15:26:21] "GET /api/health HTTP/1.1" 200 -
+2026-06-05 15:26:51,395 [INFO] 77.67.129.135 - - [05/Jun/2026 15:26:51] "GET /api/health HTTP/1.1" 200 -
+2026-06-05 15:27:21,773 [INFO] 77.67.129.135 - - [05/Jun/2026 15:27:21] "GET /api/health HTTP/1.1" 200 -
+2026-06-05 15:27:51,778 [INFO] 77.67.129.135 - - [05/Jun/2026 15:27:51] "GET /api/health HTTP/1.1" 200 -
+2026-06-05 15:27:52,332 [INFO] Found existing user id=37 for fingerprint
+2026-06-05 15:27:54,005 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-05 15:27:54,441 [INFO] 77.67.129.135 - - [05/Jun/2026 15:27:54] "POST /api/chat HTTP/1.1" 200 -
+2026-06-05 15:27:55,056 [INFO] Found existing user id=37 for fingerprint
+2026-06-05 15:27:55,498 [INFO] 77.67.129.135 - - [05/Jun/2026 15:27:55] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-05 15:28:19,574 [INFO] Found existing user id=37 for fingerprint
+2026-06-05 15:28:21,233 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-05 15:28:21,688 [INFO] 77.67.129.135 - - [05/Jun/2026 15:28:21] "POST /api/chat HTTP/1.1" 200 -
+2026-06-05 15:28:22,250 [INFO] Found existing user id=37 for fingerprint
+2026-06-05 15:28:22,358 [INFO] 77.67.129.135 - - [05/Jun/2026 15:28:22] "GET /api/health HTTP/1.1" 200 -
+2026-06-05 15:28:22,702 [INFO] 77.67.129.135 - - [05/Jun/2026 15:28:22] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-05 15:28:52,058 [INFO] 77.67.129.135 - - [05/Jun/2026 15:28:52] "GET /api/health HTTP/1.1" 200 -
+2026-06-05 15:29:22,073 [INFO] 77.67.129.135 - - [05/Jun/2026 15:29:22] "GET /api/health HTTP/1.1" 200 -
+2026-06-05 15:29:51,178 [INFO] Found existing user id=37 for fingerprint
+2026-06-05 15:29:52,134 [INFO] 77.67.129.135 - - [05/Jun/2026 15:29:52] "GET /api/health HTTP/1.1" 200 -
+2026-06-05 15:29:52,868 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-05 15:29:53,243 [INFO] 77.67.129.135 - - [05/Jun/2026 15:29:53] "POST /api/chat HTTP/1.1" 200 -
+2026-06-05 15:29:53,814 [INFO] Found existing user id=37 for fingerprint
+2026-06-05 15:29:54,265 [INFO] 77.67.129.135 - - [05/Jun/2026 15:29:54] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-05 15:30:22,135 [INFO] 77.67.129.135 - - [05/Jun/2026 15:30:22] "GET /api/health HTTP/1.1" 200 -
+2026-06-05 15:30:52,119 [INFO] 77.67.129.135 - - [05/Jun/2026 15:30:52] "GET /api/health HTTP/1.1" 200 -
+2026-06-05 15:32:26,436 [INFO] 77.67.129.135 - - [05/Jun/2026 15:32:26] "GET /api/health HTTP/1.1" 200 -
+2026-06-05 15:32:56,118 [INFO] 77.67.129.135 - - [05/Jun/2026 15:32:56] "GET /api/health HTTP/1.1" 200 -
+2026-06-05 15:33:26,145 [INFO] 77.67.129.135 - - [05/Jun/2026 15:33:26] "GET /api/health HTTP/1.1" 200 -
+2026-06-05 15:42:40,719 [INFO] 77.67.129.135 - - [05/Jun/2026 15:42:40] "GET /api/health HTTP/1.1" 200 -
+2026-06-05 17:00:17,601 [INFO] 212.252.116.251 - - [05/Jun/2026 17:00:17] "GET / HTTP/1.1" 200 -
+2026-06-05 17:00:17,882 [INFO] 212.252.116.251 - - [05/Jun/2026 17:00:17] "[36mGET /BAL_Logo.png HTTP/1.1[0m" 304 -
+2026-06-05 17:00:17,916 [INFO] 212.252.116.251 - - [05/Jun/2026 17:00:17] "[36mGET /vendor/fingerprintjs/fp.esm.js HTTP/1.1[0m" 304 -
+2026-06-05 17:00:19,334 [INFO] 212.252.116.251 - - [05/Jun/2026 17:00:19] "GET /api/health HTTP/1.1" 200 -
+2026-06-05 17:00:19,474 [INFO] No existing user with fingerprint found: 0c921994f31b2d951d6f3ec64cee0c0a
+2026-06-05 17:00:20,027 [INFO] Created visitor user id=38 fingerprint=0c921994f31b2d951d6f3ec64cee0c0a
+2026-06-05 17:00:20,511 [INFO] 212.252.116.251 - - [05/Jun/2026 17:00:20] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-05 17:00:22,492 [INFO] Found existing user id=38 for fingerprint
+2026-06-05 17:00:24,288 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-05 17:00:25,346 [INFO] 212.252.116.251 - - [05/Jun/2026 17:00:25] "POST /api/chat HTTP/1.1" 200 -
+2026-06-05 17:00:26,149 [INFO] Found existing user id=38 for fingerprint
+2026-06-05 17:00:26,623 [INFO] 212.252.116.251 - - [05/Jun/2026 17:00:26] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-05 17:57:04,954 [INFO] 212.252.116.251 - - [05/Jun/2026 17:57:04] "[36mGET / HTTP/1.1[0m" 304 -
+2026-06-05 17:57:05,126 [INFO] 212.252.116.251 - - [05/Jun/2026 17:57:05] "[36mGET /BAL_Logo.png HTTP/1.1[0m" 304 -
+2026-06-05 17:57:05,131 [INFO] 212.252.116.251 - - [05/Jun/2026 17:57:05] "[36mGET /vendor/fingerprintjs/fp.esm.js HTTP/1.1[0m" 304 -
+2026-06-05 17:57:06,532 [INFO] 212.252.116.251 - - [05/Jun/2026 17:57:06] "GET /api/health HTTP/1.1" 200 -
+2026-06-05 17:57:06,550 [INFO] Found existing user id=34 for fingerprint
+2026-06-05 17:57:07,032 [INFO] 212.252.116.251 - - [05/Jun/2026 17:57:07] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-05 17:57:16,143 [INFO] Found existing user id=34 for fingerprint
+2026-06-05 17:57:18,015 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-05 17:57:18,451 [INFO] 212.252.116.251 - - [05/Jun/2026 17:57:18] "POST /api/chat HTTP/1.1" 200 -
+2026-06-05 17:57:19,040 [INFO] Found existing user id=34 for fingerprint
+2026-06-05 17:57:19,514 [INFO] 212.252.116.251 - - [05/Jun/2026 17:57:19] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-05 17:57:33,512 [INFO] Found existing user id=34 for fingerprint
+2026-06-05 17:57:35,344 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-05 17:57:35,740 [INFO] 212.252.116.251 - - [05/Jun/2026 17:57:35] "POST /api/chat HTTP/1.1" 200 -
+2026-06-05 17:57:35,967 [INFO] 212.252.116.251 - - [05/Jun/2026 17:57:35] "GET /api/health HTTP/1.1" 200 -
+2026-06-05 17:57:36,547 [INFO] Found existing user id=34 for fingerprint
+2026-06-05 17:57:37,022 [INFO] 212.252.116.251 - - [05/Jun/2026 17:57:37] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-05 17:57:45,756 [INFO] Found existing user id=34 for fingerprint
+2026-06-05 17:57:47,554 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-05 17:57:47,885 [INFO] 212.252.116.251 - - [05/Jun/2026 17:57:47] "POST /api/chat HTTP/1.1" 200 -
+2026-06-05 17:57:48,555 [INFO] Found existing user id=34 for fingerprint
+2026-06-05 17:57:49,030 [INFO] 212.252.116.251 - - [05/Jun/2026 17:57:49] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-05 17:58:02,053 [INFO] Found existing user id=34 for fingerprint
+2026-06-05 17:58:03,891 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-05 17:58:04,289 [INFO] 212.252.116.251 - - [05/Jun/2026 17:58:04] "POST /api/chat HTTP/1.1" 200 -
+2026-06-05 17:58:04,931 [INFO] Found existing user id=34 for fingerprint
+2026-06-05 17:58:05,406 [INFO] 212.252.116.251 - - [05/Jun/2026 17:58:05] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-05 17:58:06,031 [INFO] 212.252.116.251 - - [05/Jun/2026 17:58:06] "GET /api/health HTTP/1.1" 200 -
+2026-06-05 17:58:17,371 [INFO] Found existing user id=34 for fingerprint
+2026-06-05 17:58:19,155 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-05 17:58:19,548 [INFO] 212.252.116.251 - - [05/Jun/2026 17:58:19] "POST /api/chat HTTP/1.1" 200 -
+2026-06-05 17:58:20,195 [INFO] Found existing user id=34 for fingerprint
+2026-06-05 17:58:20,672 [INFO] 212.252.116.251 - - [05/Jun/2026 17:58:20] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-05 17:58:36,427 [INFO] 212.252.116.251 - - [05/Jun/2026 17:58:36] "GET /api/health HTTP/1.1" 200 -
+2026-06-05 17:59:06,425 [INFO] 212.252.116.251 - - [05/Jun/2026 17:59:06] "GET /api/health HTTP/1.1" 200 -
+2026-06-05 17:59:36,431 [INFO] 212.252.116.251 - - [05/Jun/2026 17:59:36] "GET /api/health HTTP/1.1" 200 -
+2026-06-05 17:59:54,465 [INFO] Found existing user id=34 for fingerprint
+2026-06-05 17:59:56,317 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-05 17:59:56,714 [INFO] 212.252.116.251 - - [05/Jun/2026 17:59:56] "POST /api/chat HTTP/1.1" 200 -
+2026-06-05 17:59:57,586 [INFO] Found existing user id=34 for fingerprint
+2026-06-05 17:59:58,062 [INFO] 212.252.116.251 - - [05/Jun/2026 17:59:58] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-05 18:00:06,524 [INFO] 212.252.116.251 - - [05/Jun/2026 18:00:06] "GET /api/health HTTP/1.1" 200 -
+2026-06-05 18:00:12,418 [INFO] Found existing user id=34 for fingerprint
+2026-06-05 18:00:14,190 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-05 18:00:17,274 [INFO] 212.252.116.251 - - [05/Jun/2026 18:00:17] "POST /api/chat HTTP/1.1" 200 -
+2026-06-05 18:00:17,863 [INFO] Found existing user id=34 for fingerprint
+2026-06-05 18:00:18,337 [INFO] 212.252.116.251 - - [05/Jun/2026 18:00:18] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-05 18:00:37,150 [INFO] 212.252.116.251 - - [05/Jun/2026 18:00:37] "GET /api/health HTTP/1.1" 200 -
+2026-06-05 18:01:07,709 [INFO] 212.252.116.251 - - [05/Jun/2026 18:01:07] "GET /api/health HTTP/1.1" 200 -
+2026-06-05 18:01:37,902 [INFO] 212.252.116.251 - - [05/Jun/2026 18:01:37] "GET /api/health HTTP/1.1" 200 -
+2026-06-05 18:02:08,436 [INFO] 212.252.116.251 - - [05/Jun/2026 18:02:08] "GET /api/health HTTP/1.1" 200 -
+2026-06-05 18:02:38,423 [INFO] 212.252.116.251 - - [05/Jun/2026 18:02:38] "GET /api/health HTTP/1.1" 200 -
+2026-06-05 18:03:09,204 [INFO] 212.252.116.251 - - [05/Jun/2026 18:03:09] "GET /api/health HTTP/1.1" 200 -
+2026-06-05 18:03:39,205 [INFO] 212.252.116.251 - - [05/Jun/2026 18:03:39] "GET /api/health HTTP/1.1" 200 -
+2026-06-05 18:04:09,982 [INFO] 212.252.116.251 - - [05/Jun/2026 18:04:09] "GET /api/health HTTP/1.1" 200 -
+2026-06-05 18:04:40,199 [INFO] 212.252.116.251 - - [05/Jun/2026 18:04:40] "GET /api/health HTTP/1.1" 200 -
+2026-06-05 18:05:10,960 [INFO] 212.252.116.251 - - [05/Jun/2026 18:05:10] "GET /api/health HTTP/1.1" 200 -
+2026-06-05 18:05:37,449 [INFO] BAL Chatbot Web API starting...
+2026-06-05 18:05:37,450 [INFO] Runtime pid=95368 cwd=/home/burak/Masaüstü/ChatbotBAL/web log_file=/home/burak/Masaüstü/ChatbotBAL/logs/web.log
+2026-06-05 18:05:37,450 [INFO] Provider: groq
+2026-06-05 18:05:37,450 [INFO] HTTPS enforcement: False
+2026-06-05 18:05:37,451 [INFO] Loading FAISS index...
+2026-06-05 18:05:37,453 [INFO] FAISS index loaded: 134 vectors
+2026-06-05 18:05:37,453 [INFO] Loading chunk metadata...
+2026-06-05 18:05:37,456 [INFO] Chunk metadata loaded: 134 chunks
+2026-06-05 18:05:37,456 [INFO] Testing embedding API with 5 key(s)...
+2026-06-05 18:05:38,004 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-05 18:05:38,029 [INFO] ✓ Embedding API test successful (dim=(1, 3072))
+2026-06-05 18:05:38,029 [INFO] Vector store ready — 134 chunks
+2026-06-05 18:05:38,029 [INFO] Groq configured — key_count=2 primary_model=llama-3.3-70b-versatile
+2026-06-05 18:05:38,029 [INFO] LLM gateway ready — active provider: groq
+2026-06-05 18:05:38,029 [INFO] Server starting on http://0.0.0.0:5000
+2026-06-05 18:05:38,031 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.2:5000
+2026-06-05 18:05:38,031 [INFO] [33mPress CTRL+C to quit[0m
+2026-06-05 18:06:01,616 [INFO] 212.252.116.251 - - [05/Jun/2026 18:06:01] "[36mGET / HTTP/1.1[0m" 304 -
+2026-06-05 18:06:01,750 [INFO] 212.252.116.251 - - [05/Jun/2026 18:06:01] "[36mGET /BAL_Logo.png HTTP/1.1[0m" 304 -
+2026-06-05 18:06:01,755 [INFO] 212.252.116.251 - - [05/Jun/2026 18:06:01] "[36mGET /vendor/fingerprintjs/fp.esm.js HTTP/1.1[0m" 304 -
+2026-06-05 18:06:01,965 [INFO] 212.252.116.251 - - [05/Jun/2026 18:06:01] "GET /api/health HTTP/1.1" 200 -
+2026-06-05 18:06:02,250 [INFO] Found existing user id=34 for fingerprint
+2026-06-05 18:06:02,739 [INFO] 212.252.116.251 - - [05/Jun/2026 18:06:02] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-05 18:06:10,882 [INFO] Found existing user id=34 for fingerprint
+2026-06-05 18:06:12,666 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-05 18:06:13,591 [INFO] 212.252.116.251 - - [05/Jun/2026 18:06:13] "POST /api/chat HTTP/1.1" 200 -
+2026-06-05 18:06:14,161 [INFO] Found existing user id=34 for fingerprint
+2026-06-05 18:06:14,642 [INFO] 212.252.116.251 - - [05/Jun/2026 18:06:14] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-05 18:06:20,102 [INFO] Found existing user id=34 for fingerprint
+2026-06-05 18:06:21,912 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-05 18:06:22,299 [INFO] 212.252.116.251 - - [05/Jun/2026 18:06:22] "POST /api/chat HTTP/1.1" 200 -
+2026-06-05 18:06:23,008 [INFO] Found existing user id=34 for fingerprint
+2026-06-05 18:06:23,489 [INFO] 212.252.116.251 - - [05/Jun/2026 18:06:23] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-05 18:06:32,087 [INFO] 212.252.116.251 - - [05/Jun/2026 18:06:32] "GET /api/health HTTP/1.1" 200 -
+2026-06-05 18:06:34,265 [INFO] Found existing user id=34 for fingerprint
+2026-06-05 18:06:36,139 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-05 18:06:36,702 [INFO] 212.252.116.251 - - [05/Jun/2026 18:06:36] "POST /api/chat HTTP/1.1" 200 -
+2026-06-05 18:06:37,294 [INFO] Found existing user id=34 for fingerprint
+2026-06-05 18:06:37,780 [INFO] 212.252.116.251 - - [05/Jun/2026 18:06:37] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-05 18:06:47,032 [INFO] Found existing user id=34 for fingerprint
+2026-06-05 18:06:48,877 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-05 18:06:49,330 [INFO] 212.252.116.251 - - [05/Jun/2026 18:06:49] "POST /api/chat HTTP/1.1" 200 -
+2026-06-05 18:06:50,759 [INFO] Found existing user id=34 for fingerprint
+2026-06-05 18:06:51,239 [INFO] 212.252.116.251 - - [05/Jun/2026 18:06:51] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-05 18:07:02,093 [INFO] 212.252.116.251 - - [05/Jun/2026 18:07:02] "GET /api/health HTTP/1.1" 200 -
+2026-06-05 18:07:13,221 [INFO] Found existing user id=34 for fingerprint
+2026-06-05 18:07:15,096 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-05 18:07:15,527 [INFO] 212.252.116.251 - - [05/Jun/2026 18:07:15] "POST /api/chat HTTP/1.1" 200 -
+2026-06-05 18:07:16,223 [INFO] Found existing user id=34 for fingerprint
+2026-06-05 18:07:16,702 [INFO] 212.252.116.251 - - [05/Jun/2026 18:07:16] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-05 18:07:32,099 [INFO] 212.252.116.251 - - [05/Jun/2026 18:07:32] "GET /api/health HTTP/1.1" 200 -
+2026-06-05 18:07:38,928 [INFO] Found existing user id=34 for fingerprint
+2026-06-05 18:07:40,816 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-05 18:07:41,223 [INFO] 212.252.116.251 - - [05/Jun/2026 18:07:41] "POST /api/chat HTTP/1.1" 200 -
+2026-06-05 18:07:42,676 [INFO] Found existing user id=34 for fingerprint
+2026-06-05 18:07:43,158 [INFO] 212.252.116.251 - - [05/Jun/2026 18:07:43] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-05 18:08:00,713 [INFO] Found existing user id=34 for fingerprint
+2026-06-05 18:08:02,426 [INFO] 212.252.116.251 - - [05/Jun/2026 18:08:02] "GET /api/health HTTP/1.1" 200 -
+2026-06-05 18:08:02,537 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-05 18:08:03,308 [INFO] 212.252.116.251 - - [05/Jun/2026 18:08:03] "POST /api/chat HTTP/1.1" 200 -
+2026-06-05 18:08:03,893 [INFO] Found existing user id=34 for fingerprint
+2026-06-05 18:08:04,379 [INFO] 212.252.116.251 - - [05/Jun/2026 18:08:04] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-05 18:08:17,451 [INFO] Found existing user id=34 for fingerprint
+2026-06-05 18:08:19,219 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 429 Too Many Requests"
+2026-06-05 18:08:19,221 [WARNING] Embedding failed with key 1: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'Resource exhausted. Please try again later. Please refer to https://cloud.google.com/vertex-ai/generative-ai/docs/error-code-429 for more details.', 'status': 'RESOURCE_EXHAUSTED'}}
+2026-06-05 18:08:19,753 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-05 18:08:20,135 [INFO] 212.252.116.251 - - [05/Jun/2026 18:08:20] "POST /api/chat HTTP/1.1" 200 -
+2026-06-05 18:08:21,483 [INFO] Found existing user id=34 for fingerprint
+2026-06-05 18:08:21,975 [INFO] 212.252.116.251 - - [05/Jun/2026 18:08:21] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-05 18:08:32,127 [INFO] 212.252.116.251 - - [05/Jun/2026 18:08:32] "GET /api/health HTTP/1.1" 200 -
+2026-06-05 18:08:38,229 [INFO] Found existing user id=34 for fingerprint
+2026-06-05 18:08:39,950 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 429 Too Many Requests"
+2026-06-05 18:08:39,952 [WARNING] Embedding failed with key 1: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'Resource exhausted. Please try again later. Please refer to https://cloud.google.com/vertex-ai/generative-ai/docs/error-code-429 for more details.', 'status': 'RESOURCE_EXHAUSTED'}}
+2026-06-05 18:08:40,589 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-05 18:08:41,094 [INFO] 212.252.116.251 - - [05/Jun/2026 18:08:41] "POST /api/chat HTTP/1.1" 200 -
+2026-06-05 18:08:41,668 [INFO] Found existing user id=34 for fingerprint
+2026-06-05 18:08:42,152 [INFO] 212.252.116.251 - - [05/Jun/2026 18:08:42] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-05 18:09:02,603 [INFO] 212.252.116.251 - - [05/Jun/2026 18:09:02] "GET /api/health HTTP/1.1" 200 -
+2026-06-05 18:09:32,603 [INFO] 212.252.116.251 - - [05/Jun/2026 18:09:32] "GET /api/health HTTP/1.1" 200 -
+2026-06-05 18:10:02,602 [INFO] 212.252.116.251 - - [05/Jun/2026 18:10:02] "GET /api/health HTTP/1.1" 200 -
+2026-06-05 18:10:32,734 [INFO] 212.252.116.251 - - [05/Jun/2026 18:10:32] "GET /api/health HTTP/1.1" 200 -
+2026-06-05 18:10:50,430 [INFO] BAL Chatbot Web API starting...
+2026-06-05 18:10:50,430 [INFO] Runtime pid=97940 cwd=/home/burak/Masaüstü/ChatbotBAL/web log_file=/home/burak/Masaüstü/ChatbotBAL/logs/web.log
+2026-06-05 18:10:50,431 [INFO] Provider: groq
+2026-06-05 18:10:50,431 [INFO] HTTPS enforcement: False
+2026-06-05 18:10:50,431 [INFO] Loading FAISS index...
+2026-06-05 18:10:50,434 [INFO] FAISS index loaded: 134 vectors
+2026-06-05 18:10:50,434 [INFO] Loading chunk metadata...
+2026-06-05 18:10:50,437 [INFO] Chunk metadata loaded: 134 chunks
+2026-06-05 18:10:50,437 [INFO] Testing embedding API with 5 key(s)...
+2026-06-05 18:10:51,054 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-05 18:10:51,084 [INFO] ✓ Embedding API test successful (dim=(1, 3072))
+2026-06-05 18:10:51,085 [INFO] Vector store ready — 134 chunks
+2026-06-05 18:10:51,085 [INFO] Groq configured — key_count=2 primary_model=llama-3.3-70b-versatile
+2026-06-05 18:10:51,085 [INFO] LLM gateway ready — active provider: groq
+2026-06-05 18:10:51,085 [INFO] Server starting on http://0.0.0.0:5000
+2026-06-05 18:10:51,091 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.2:5000
+2026-06-05 18:10:51,091 [INFO] [33mPress CTRL+C to quit[0m
+2026-06-05 18:11:02,886 [INFO] 212.252.116.251 - - [05/Jun/2026 18:11:02] "GET /api/health HTTP/1.1" 200 -
+2026-06-05 18:11:06,272 [INFO] 212.252.116.251 - - [05/Jun/2026 18:11:06] "[36mGET / HTTP/1.1[0m" 304 -
+2026-06-05 18:11:06,471 [INFO] 212.252.116.251 - - [05/Jun/2026 18:11:06] "[36mGET /BAL_Logo.png HTTP/1.1[0m" 304 -
+2026-06-05 18:11:06,525 [INFO] 212.252.116.251 - - [05/Jun/2026 18:11:06] "[36mGET /vendor/fingerprintjs/fp.esm.js HTTP/1.1[0m" 304 -
+2026-06-05 18:11:06,673 [INFO] 212.252.116.251 - - [05/Jun/2026 18:11:06] "GET /api/health HTTP/1.1" 200 -
+2026-06-05 18:11:07,013 [INFO] Found existing user id=34 for fingerprint
+2026-06-05 18:11:07,476 [INFO] 212.252.116.251 - - [05/Jun/2026 18:11:07] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-05 18:11:36,861 [INFO] 212.252.116.251 - - [05/Jun/2026 18:11:36] "GET /api/health HTTP/1.1" 200 -
+2026-06-05 18:11:52,692 [INFO] Found existing user id=34 for fingerprint
+2026-06-05 18:11:54,459 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-05 18:11:55,185 [INFO] 212.252.116.251 - - [05/Jun/2026 18:11:55] "POST /api/chat HTTP/1.1" 200 -
+2026-06-05 18:11:55,758 [INFO] Found existing user id=34 for fingerprint
+2026-06-05 18:11:56,212 [INFO] 212.252.116.251 - - [05/Jun/2026 18:11:56] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-05 18:12:06,860 [INFO] 212.252.116.251 - - [05/Jun/2026 18:12:06] "GET /api/health HTTP/1.1" 200 -
+2026-06-05 18:12:36,853 [INFO] 212.252.116.251 - - [05/Jun/2026 18:12:36] "GET /api/health HTTP/1.1" 200 -
+2026-06-05 18:13:06,855 [INFO] 212.252.116.251 - - [05/Jun/2026 18:13:06] "GET /api/health HTTP/1.1" 200 -
+2026-06-05 18:13:21,963 [INFO] Found existing user id=34 for fingerprint
+2026-06-05 18:13:23,817 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-05 18:13:24,222 [INFO] 212.252.116.251 - - [05/Jun/2026 18:13:24] "POST /api/chat HTTP/1.1" 200 -
+2026-06-05 18:13:24,759 [INFO] Found existing user id=34 for fingerprint
+2026-06-05 18:13:25,212 [INFO] 212.252.116.251 - - [05/Jun/2026 18:13:25] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-05 18:13:35,446 [INFO] Found existing user id=34 for fingerprint
+2026-06-05 18:13:36,899 [INFO] 212.252.116.251 - - [05/Jun/2026 18:13:36] "GET /api/health HTTP/1.1" 200 -
+2026-06-05 18:13:37,237 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-05 18:13:37,409 [ERROR] Groq API HTTP error status=429 model=llama-3.3-70b-versatile rate_headers={'retry-after': '676', 'x-ratelimit-limit-requests': '1000', 'x-ratelimit-limit-tokens': '12000', 'x-ratelimit-remaining-requests': '990', 'x-ratelimit-remaining-tokens': '12000', 'x-ratelimit-reset-requests': '14m24s', 'x-ratelimit-reset-tokens': '1ms', 'x-request-id': 'req_01ktc5hkjsfa3te2s71p03fh4x'} body=
+Traceback (most recent call last):
+  File "/home/burak/Masaüstü/ChatbotBAL/web/app.py", line 744, in stream_groq_model
+    resp.raise_for_status()
+  File "/home/burak/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 429 Client Error: Too Many Requests for url: https://api.groq.com/openai/v1/chat/completions
+2026-06-05 18:13:37,430 [WARNING] Groq fallback switching key_index=1 from_model=llama-3.3-70b-versatile to_model=meta-llama/llama-4-maverick-17b-128e-instruct reason=http_429
+2026-06-05 18:13:37,576 [ERROR] Groq API HTTP error status=404 model=meta-llama/llama-4-maverick-17b-128e-instruct rate_headers={'x-request-id': 'req_01ktc5hkqyfeavp59g0ezvg4rp'} body=
+Traceback (most recent call last):
+  File "/home/burak/Masaüstü/ChatbotBAL/web/app.py", line 744, in stream_groq_model
+    resp.raise_for_status()
+  File "/home/burak/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://api.groq.com/openai/v1/chat/completions
+2026-06-05 18:13:37,578 [WARNING] Groq fallback switching key_index=1 from_model=meta-llama/llama-4-maverick-17b-128e-instruct to_model=qwen/qwen3-32b reason=http_404
+2026-06-05 18:13:38,043 [INFO] 212.252.116.251 - - [05/Jun/2026 18:13:38] "POST /api/chat HTTP/1.1" 200 -
+2026-06-05 18:13:39,507 [WARNING] Groq fallback succeeded key_index=1 original_model=llama-3.3-70b-versatile active_model=qwen/qwen3-32b
+2026-06-05 18:13:40,036 [INFO] Found existing user id=34 for fingerprint
+2026-06-05 18:13:40,490 [INFO] 212.252.116.251 - - [05/Jun/2026 18:13:40] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-05 18:14:06,894 [INFO] 212.252.116.251 - - [05/Jun/2026 18:14:06] "GET /api/health HTTP/1.1" 200 -
+2026-06-05 18:14:21,071 [INFO] Found existing user id=34 for fingerprint
+2026-06-05 18:14:22,864 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-05 18:14:23,040 [ERROR] Groq API HTTP error status=429 model=llama-3.3-70b-versatile rate_headers={'retry-after': '335', 'x-ratelimit-limit-requests': '1000', 'x-ratelimit-limit-tokens': '12000', 'x-ratelimit-remaining-requests': '990', 'x-ratelimit-remaining-tokens': '12000', 'x-ratelimit-reset-requests': '14m24s', 'x-ratelimit-reset-tokens': '1ms', 'x-request-id': 'req_01ktc5k04pfs29z8862352429h'} body=
+Traceback (most recent call last):
+  File "/home/burak/Masaüstü/ChatbotBAL/web/app.py", line 744, in stream_groq_model
+    resp.raise_for_status()
+  File "/home/burak/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 429 Client Error: Too Many Requests for url: https://api.groq.com/openai/v1/chat/completions
+2026-06-05 18:14:23,042 [WARNING] Groq fallback switching key_index=1 from_model=llama-3.3-70b-versatile to_model=meta-llama/llama-4-maverick-17b-128e-instruct reason=http_429
+2026-06-05 18:14:23,179 [ERROR] Groq API HTTP error status=404 model=meta-llama/llama-4-maverick-17b-128e-instruct rate_headers={'x-request-id': 'req_01ktc5k096fjgvf2xts8nmknyq'} body=
+Traceback (most recent call last):
+  File "/home/burak/Masaüstü/ChatbotBAL/web/app.py", line 744, in stream_groq_model
+    resp.raise_for_status()
+  File "/home/burak/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://api.groq.com/openai/v1/chat/completions
+2026-06-05 18:14:23,181 [WARNING] Groq fallback switching key_index=1 from_model=meta-llama/llama-4-maverick-17b-128e-instruct to_model=qwen/qwen3-32b reason=http_404
+2026-06-05 18:14:24,214 [INFO] 212.252.116.251 - - [05/Jun/2026 18:14:24] "POST /api/chat HTTP/1.1" 200 -
+2026-06-05 18:14:25,901 [WARNING] Groq fallback succeeded key_index=1 original_model=llama-3.3-70b-versatile active_model=qwen/qwen3-32b
+2026-06-05 18:14:26,457 [INFO] Found existing user id=34 for fingerprint
+2026-06-05 18:14:26,911 [INFO] 212.252.116.251 - - [05/Jun/2026 18:14:26] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-05 18:14:36,905 [INFO] 212.252.116.251 - - [05/Jun/2026 18:14:36] "GET /api/health HTTP/1.1" 200 -
+2026-06-05 18:14:43,734 [INFO] Found existing user id=34 for fingerprint
+2026-06-05 18:14:45,481 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-05 18:14:45,686 [ERROR] Groq API HTTP error status=429 model=llama-3.3-70b-versatile rate_headers={'retry-after': '1953', 'x-ratelimit-limit-requests': '1000', 'x-ratelimit-limit-tokens': '12000', 'x-ratelimit-remaining-requests': '990', 'x-ratelimit-remaining-tokens': '12000', 'x-ratelimit-reset-requests': '14m24s', 'x-ratelimit-reset-tokens': '1ms', 'x-request-id': 'req_01ktc5kp8dfpmshy4vv05gdcnb'} body=
+Traceback (most recent call last):
+  File "/home/burak/Masaüstü/ChatbotBAL/web/app.py", line 744, in stream_groq_model
+    resp.raise_for_status()
+  File "/home/burak/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 429 Client Error: Too Many Requests for url: https://api.groq.com/openai/v1/chat/completions
+2026-06-05 18:14:45,688 [WARNING] Groq fallback switching key_index=1 from_model=llama-3.3-70b-versatile to_model=meta-llama/llama-4-maverick-17b-128e-instruct reason=http_429
+2026-06-05 18:14:45,847 [ERROR] Groq API HTTP error status=404 model=meta-llama/llama-4-maverick-17b-128e-instruct rate_headers={'x-request-id': 'req_01ktc5kpdhe7ctpwb1rctj2x5h'} body=
+Traceback (most recent call last):
+  File "/home/burak/Masaüstü/ChatbotBAL/web/app.py", line 744, in stream_groq_model
+    resp.raise_for_status()
+  File "/home/burak/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://api.groq.com/openai/v1/chat/completions
+2026-06-05 18:14:45,848 [WARNING] Groq fallback switching key_index=1 from_model=meta-llama/llama-4-maverick-17b-128e-instruct to_model=qwen/qwen3-32b reason=http_404
+2026-06-05 18:14:46,010 [ERROR] Groq API HTTP error status=429 model=qwen/qwen3-32b rate_headers={'retry-after': '1', 'x-ratelimit-limit-requests': '1000', 'x-ratelimit-limit-tokens': '6000', 'x-ratelimit-remaining-requests': '998', 'x-ratelimit-remaining-tokens': '5340', 'x-ratelimit-reset-requests': '2m52.8s', 'x-ratelimit-reset-tokens': '6.6s', 'x-request-id': 'req_01ktc5kpjbfxp8rrpkw2vrknze'} body=
+Traceback (most recent call last):
+  File "/home/burak/Masaüstü/ChatbotBAL/web/app.py", line 744, in stream_groq_model
+    resp.raise_for_status()
+  File "/home/burak/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 429 Client Error: Too Many Requests for url: https://api.groq.com/openai/v1/chat/completions
+2026-06-05 18:14:46,011 [WARNING] Groq fallback switching key_index=1 from_model=qwen/qwen3-32b to_model=meta-llama/llama-4-scout-17b-16e-instruct reason=http_429
+2026-06-05 18:14:46,970 [INFO] 212.252.116.251 - - [05/Jun/2026 18:14:46] "POST /api/chat HTTP/1.1" 200 -
+2026-06-05 18:14:47,078 [WARNING] Groq fallback succeeded key_index=1 original_model=llama-3.3-70b-versatile active_model=meta-llama/llama-4-scout-17b-16e-instruct
+2026-06-05 18:14:47,604 [INFO] Found existing user id=34 for fingerprint
+2026-06-05 18:14:48,059 [INFO] 212.252.116.251 - - [05/Jun/2026 18:14:48] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-05 18:15:07,094 [INFO] 212.252.116.251 - - [05/Jun/2026 18:15:07] "GET /api/health HTTP/1.1" 200 -
+2026-06-05 18:15:19,049 [INFO] Found existing user id=34 for fingerprint
+2026-06-05 18:15:20,810 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-05 18:15:20,996 [ERROR] Groq API HTTP error status=429 model=llama-3.3-70b-versatile rate_headers={'retry-after': '1824', 'x-ratelimit-limit-requests': '1000', 'x-ratelimit-limit-tokens': '12000', 'x-ratelimit-remaining-requests': '991', 'x-ratelimit-remaining-tokens': '12000', 'x-ratelimit-reset-requests': '12m57.599s', 'x-ratelimit-reset-tokens': '1ms', 'x-request-id': 'req_01ktc5mrqxfyba8dpfpj7b1t50'} body=
+Traceback (most recent call last):
+  File "/home/burak/Masaüstü/ChatbotBAL/web/app.py", line 744, in stream_groq_model
+    resp.raise_for_status()
+  File "/home/burak/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 429 Client Error: Too Many Requests for url: https://api.groq.com/openai/v1/chat/completions
+2026-06-05 18:15:20,998 [WARNING] Groq fallback switching key_index=1 from_model=llama-3.3-70b-versatile to_model=meta-llama/llama-4-maverick-17b-128e-instruct reason=http_429
+2026-06-05 18:15:21,151 [ERROR] Groq API HTTP error status=404 model=meta-llama/llama-4-maverick-17b-128e-instruct rate_headers={'x-request-id': 'req_01ktc5mrwsfynb1qa449nk3mjw'} body=
+Traceback (most recent call last):
+  File "/home/burak/Masaüstü/ChatbotBAL/web/app.py", line 744, in stream_groq_model
+    resp.raise_for_status()
+  File "/home/burak/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://api.groq.com/openai/v1/chat/completions
+2026-06-05 18:15:21,152 [WARNING] Groq fallback switching key_index=1 from_model=meta-llama/llama-4-maverick-17b-128e-instruct to_model=qwen/qwen3-32b reason=http_404
+2026-06-05 18:15:21,768 [INFO] 212.252.116.251 - - [05/Jun/2026 18:15:21] "POST /api/chat HTTP/1.1" 200 -
+2026-06-05 18:15:23,099 [WARNING] Groq fallback succeeded key_index=1 original_model=llama-3.3-70b-versatile active_model=qwen/qwen3-32b
+2026-06-05 18:15:23,620 [INFO] Found existing user id=34 for fingerprint
+2026-06-05 18:15:24,077 [INFO] 212.252.116.251 - - [05/Jun/2026 18:15:24] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-05 18:15:37,098 [INFO] 212.252.116.251 - - [05/Jun/2026 18:15:37] "GET /api/health HTTP/1.1" 200 -
+2026-06-05 18:15:46,178 [INFO] Found existing user id=34 for fingerprint
+2026-06-05 18:15:47,901 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-05 18:15:48,090 [ERROR] Groq API HTTP error status=429 model=llama-3.3-70b-versatile rate_headers={'retry-after': '1702', 'x-ratelimit-limit-requests': '1000', 'x-ratelimit-limit-tokens': '12000', 'x-ratelimit-remaining-requests': '991', 'x-ratelimit-remaining-tokens': '12000', 'x-ratelimit-reset-requests': '12m57.599s', 'x-ratelimit-reset-tokens': '1ms', 'x-request-id': 'req_01ktc5nk6pek6v1wfetzjt7k1c'} body=
+Traceback (most recent call last):
+  File "/home/burak/Masaüstü/ChatbotBAL/web/app.py", line 744, in stream_groq_model
+    resp.raise_for_status()
+  File "/home/burak/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 429 Client Error: Too Many Requests for url: https://api.groq.com/openai/v1/chat/completions
+2026-06-05 18:15:48,091 [WARNING] Groq fallback switching key_index=1 from_model=llama-3.3-70b-versatile to_model=meta-llama/llama-4-maverick-17b-128e-instruct reason=http_429
+2026-06-05 18:15:48,226 [ERROR] Groq API HTTP error status=404 model=meta-llama/llama-4-maverick-17b-128e-instruct rate_headers={'x-request-id': 'req_01ktc5nkaweakrhar6w3bzx1b1'} body=
+Traceback (most recent call last):
+  File "/home/burak/Masaüstü/ChatbotBAL/web/app.py", line 744, in stream_groq_model
+    resp.raise_for_status()
+  File "/home/burak/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://api.groq.com/openai/v1/chat/completions
+2026-06-05 18:15:48,227 [WARNING] Groq fallback switching key_index=1 from_model=meta-llama/llama-4-maverick-17b-128e-instruct to_model=qwen/qwen3-32b reason=http_404
+2026-06-05 18:15:48,384 [ERROR] Groq API HTTP error status=429 model=qwen/qwen3-32b rate_headers={'retry-after': '24', 'x-ratelimit-limit-requests': '1000', 'x-ratelimit-limit-tokens': '6000', 'x-ratelimit-remaining-requests': '997', 'x-ratelimit-remaining-tokens': '2803', 'x-ratelimit-reset-requests': '4m19.2s', 'x-ratelimit-reset-tokens': '31.97s', 'x-request-id': 'req_01ktc5nkfnevwtg0s1zex315k1'} body=
+Traceback (most recent call last):
+  File "/home/burak/Masaüstü/ChatbotBAL/web/app.py", line 744, in stream_groq_model
+    resp.raise_for_status()
+  File "/home/burak/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 429 Client Error: Too Many Requests for url: https://api.groq.com/openai/v1/chat/completions
+2026-06-05 18:15:48,386 [WARNING] Groq fallback switching key_index=1 from_model=qwen/qwen3-32b to_model=meta-llama/llama-4-scout-17b-16e-instruct reason=http_429
+2026-06-05 18:15:49,182 [INFO] 212.252.116.251 - - [05/Jun/2026 18:15:49] "POST /api/chat HTTP/1.1" 200 -
+2026-06-05 18:15:49,242 [WARNING] Groq fallback succeeded key_index=1 original_model=llama-3.3-70b-versatile active_model=meta-llama/llama-4-scout-17b-16e-instruct
+2026-06-05 18:15:49,779 [INFO] Found existing user id=34 for fingerprint
+2026-06-05 18:15:50,237 [INFO] 212.252.116.251 - - [05/Jun/2026 18:15:50] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-05 18:16:04,411 [INFO] Found existing user id=34 for fingerprint
+2026-06-05 18:16:06,141 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-05 18:16:06,319 [ERROR] Groq API HTTP error status=429 model=llama-3.3-70b-versatile rate_headers={'retry-after': '353', 'x-ratelimit-limit-requests': '1000', 'x-ratelimit-limit-tokens': '12000', 'x-ratelimit-remaining-requests': '991', 'x-ratelimit-remaining-tokens': '12000', 'x-ratelimit-reset-requests': '12m57.599s', 'x-ratelimit-reset-tokens': '1ms', 'x-request-id': 'req_01ktc5p506ererz9vxqmk09t6p'} body=
+Traceback (most recent call last):
+  File "/home/burak/Masaüstü/ChatbotBAL/web/app.py", line 744, in stream_groq_model
+    resp.raise_for_status()
+  File "/home/burak/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 429 Client Error: Too Many Requests for url: https://api.groq.com/openai/v1/chat/completions
+2026-06-05 18:16:06,321 [WARNING] Groq fallback switching key_index=1 from_model=llama-3.3-70b-versatile to_model=meta-llama/llama-4-maverick-17b-128e-instruct reason=http_429
+2026-06-05 18:16:06,464 [ERROR] Groq API HTTP error status=404 model=meta-llama/llama-4-maverick-17b-128e-instruct rate_headers={'x-request-id': 'req_01ktc5p54verhtxdve53h8yknr'} body=
+Traceback (most recent call last):
+  File "/home/burak/Masaüstü/ChatbotBAL/web/app.py", line 744, in stream_groq_model
+    resp.raise_for_status()
+  File "/home/burak/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://api.groq.com/openai/v1/chat/completions
+2026-06-05 18:16:06,465 [WARNING] Groq fallback switching key_index=1 from_model=meta-llama/llama-4-maverick-17b-128e-instruct to_model=qwen/qwen3-32b reason=http_404
+2026-06-05 18:16:07,150 [INFO] 212.252.116.251 - - [05/Jun/2026 18:16:07] "GET /api/health HTTP/1.1" 200 -
+2026-06-05 18:16:08,070 [INFO] 212.252.116.251 - - [05/Jun/2026 18:16:08] "POST /api/chat HTTP/1.1" 200 -
+2026-06-05 18:16:09,784 [WARNING] Groq fallback succeeded key_index=1 original_model=llama-3.3-70b-versatile active_model=qwen/qwen3-32b
+2026-06-05 18:16:10,303 [INFO] Found existing user id=34 for fingerprint
+2026-06-05 18:16:10,760 [INFO] 212.252.116.251 - - [05/Jun/2026 18:16:10] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-05 18:16:37,386 [INFO] 212.252.116.251 - - [05/Jun/2026 18:16:37] "GET /api/health HTTP/1.1" 200 -
+2026-06-05 18:17:07,388 [INFO] 212.252.116.251 - - [05/Jun/2026 18:17:07] "GET /api/health HTTP/1.1" 200 -
+2026-06-05 18:17:37,391 [INFO] 212.252.116.251 - - [05/Jun/2026 18:17:37] "GET /api/health HTTP/1.1" 200 -
+2026-06-05 18:18:07,384 [INFO] 212.252.116.251 - - [05/Jun/2026 18:18:07] "GET /api/health HTTP/1.1" 200 -
+2026-06-05 18:18:37,696 [INFO] 212.252.116.251 - - [05/Jun/2026 18:18:37] "GET /api/health HTTP/1.1" 200 -
+2026-06-05 18:19:07,719 [INFO] 212.252.116.251 - - [05/Jun/2026 18:19:07] "GET /api/health HTTP/1.1" 200 -
+2026-06-05 18:19:37,695 [INFO] 212.252.116.251 - - [05/Jun/2026 18:19:37] "GET /api/health HTTP/1.1" 200 -
+2026-06-05 18:20:07,701 [INFO] 212.252.116.251 - - [05/Jun/2026 18:20:07] "GET /api/health HTTP/1.1" 200 -
+2026-06-05 18:20:37,936 [INFO] 212.252.116.251 - - [05/Jun/2026 18:20:37] "GET /api/health HTTP/1.1" 200 -
+2026-06-05 18:21:08,773 [INFO] 212.252.116.251 - - [05/Jun/2026 18:21:08] "GET /api/health HTTP/1.1" 200 -
+2026-06-05 18:21:39,087 [INFO] 212.252.116.251 - - [05/Jun/2026 18:21:39] "GET /api/health HTTP/1.1" 200 -
+2026-06-05 18:22:09,836 [INFO] 212.252.116.251 - - [05/Jun/2026 18:22:09] "GET /api/health HTTP/1.1" 200 -
+2026-06-05 18:22:40,153 [INFO] 212.252.116.251 - - [05/Jun/2026 18:22:40] "GET /api/health HTTP/1.1" 200 -
+2026-06-05 18:23:10,321 [INFO] 212.252.116.251 - - [05/Jun/2026 18:23:10] "GET /api/health HTTP/1.1" 200 -
+2026-06-05 18:23:40,461 [INFO] 212.252.116.251 - - [05/Jun/2026 18:23:40] "GET /api/health HTTP/1.1" 200 -
+2026-06-05 18:24:10,719 [INFO] 212.252.116.251 - - [05/Jun/2026 18:24:10] "GET /api/health HTTP/1.1" 200 -
+2026-06-05 18:24:41,044 [INFO] 212.252.116.251 - - [05/Jun/2026 18:24:41] "GET /api/health HTTP/1.1" 200 -
+2026-06-05 18:25:11,837 [INFO] 212.252.116.251 - - [05/Jun/2026 18:25:11] "GET /api/health HTTP/1.1" 200 -
