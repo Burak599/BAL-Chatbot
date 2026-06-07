@@ -339,13 +339,16 @@
       bottom: 0;
       padding: 12px 0 max(16px, env(safe-area-inset-bottom));
       background: linear-gradient(180deg, rgba(247, 248, 251, 0), var(--page) 28%);
+      z-index: 50;
     }
 
     #notice-layer {
+      position: absolute;
+      left: 0;
+      bottom: calc(100% + 8px);
       width: 100%;
       min-height: 0;
-      padding: 0 0 10px;
-      pointer-events: auto;
+      pointer-events: none;
     }
 
     .notice-pill {
@@ -353,7 +356,7 @@
       width: fit-content;
       max-width: 100%;
       margin-left: 0;
-      padding: 9px 36px 9px 13px;
+      padding: 9px 34px 9px 13px;
       border: 1px solid #fed7aa;
       background: #fff7ed;
       color: #9a3412;
@@ -363,6 +366,7 @@
       font-weight: 600;
       line-height: 1.4;
       animation: noticeIn .18s ease both;
+      pointer-events: auto;
     }
 
     .notice-close {
@@ -494,11 +498,333 @@
 
     #char-count { font-weight: 700; }
 
-    .project-note {
-      flex: 1;
-      min-width: 0;
-      text-align: center;
-    }
+	    .project-note {
+	      flex: 1;
+	      min-width: 0;
+	      text-align: center;
+	    }
+
+	    body.gate-active header,
+	    body.gate-active #chat-container {
+	      display: none;
+	    }
+
+	    #entry-gate {
+	      min-height: 100vh;
+	      min-height: 100dvh;
+	      height: 100vh;
+	      height: 100dvh;
+	      width: 100%;
+	      display: none;
+	      overflow: hidden;
+	      background:
+	        radial-gradient(circle at 18% 12%, rgba(17, 101, 216, .12), transparent 34%),
+	        linear-gradient(135deg, #f8fafc 0%, #ffffff 45%, #eef6ff 100%);
+	      padding: 28px 18px;
+	    }
+
+	    body.gate-active #entry-gate {
+	      display: flex;
+	      align-items: center;
+	      justify-content: center;
+	    }
+
+	    .gate-shell {
+	      width: min(920px, 100%);
+	      height: min(720px, calc(100dvh - 56px));
+	      display: grid;
+	      grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+	      background: rgba(255, 255, 255, .88);
+	      border: 1px solid rgba(207, 214, 223, .82);
+	      border-radius: 28px;
+	      overflow: hidden;
+	      box-shadow: 0 28px 76px rgba(16, 24, 40, .16);
+	      backdrop-filter: blur(22px);
+	    }
+
+	    .gate-brand {
+	      position: relative;
+	      padding: 36px;
+	      background:
+	        linear-gradient(155deg, rgba(17, 101, 216, .96), rgba(15, 118, 110, .92)),
+	        #1165d8;
+	      color: #ffffff;
+	      display: flex;
+	      flex-direction: column;
+	      justify-content: space-between;
+	      gap: 34px;
+	    }
+
+	    .gate-brand::after {
+	      content: "";
+	      position: absolute;
+	      inset: auto 28px 28px auto;
+	      width: 190px;
+	      height: 190px;
+	      border-radius: 50%;
+	      background: rgba(255, 255, 255, .11);
+	    }
+
+	    .gate-logo {
+	      width: 64px;
+	      height: 64px;
+	      border-radius: 18px;
+	      background: rgba(255, 255, 255, .96);
+	      display: flex;
+	      align-items: center;
+	      justify-content: center;
+	      overflow: hidden;
+	      box-shadow: 0 18px 38px rgba(0, 0, 0, .18);
+	    }
+
+	    .gate-logo img {
+	      width: 100%;
+	      height: 100%;
+	      object-fit: contain;
+	    }
+
+	    .gate-title {
+	      position: relative;
+	      z-index: 1;
+	    }
+
+	    .gate-title h1 {
+	      margin-top: 22px;
+	      font-size: clamp(2.35rem, 6vw, 4rem);
+	      line-height: 1;
+	      font-weight: 780;
+	      letter-spacing: 0;
+	    }
+
+	    .gate-title p {
+	      max-width: 330px;
+	      margin-top: 16px;
+	      color: rgba(255, 255, 255, .84);
+	      font-size: .98rem;
+	      line-height: 1.65;
+	      font-weight: 500;
+	    }
+
+	    .gate-meta {
+	      position: relative;
+	      z-index: 1;
+	      display: grid;
+	      gap: 12px;
+	      color: rgba(255, 255, 255, .78);
+	      font-size: .78rem;
+	      line-height: 1.45;
+	      font-weight: 650;
+	    }
+
+	    .gate-panel {
+	      padding: 34px;
+	      display: flex;
+	      flex-direction: column;
+	      min-width: 0;
+	      min-height: 0;
+	    }
+
+	    .gate-kicker {
+	      color: var(--accent);
+	      font-size: .78rem;
+	      font-weight: 800;
+	      letter-spacing: 0;
+	      margin-bottom: 10px;
+	    }
+
+	    .gate-panel h2 {
+	      color: var(--text);
+	      font-size: clamp(1.5rem, 4vw, 2rem);
+	      line-height: 1.15;
+	      letter-spacing: 0;
+	      font-weight: 780;
+	      margin-bottom: 10px;
+	    }
+
+	    .gate-intro {
+	      color: var(--text-muted);
+	      font-size: .94rem;
+	      line-height: 1.62;
+	      margin-bottom: 22px;
+	    }
+
+	    .gate-tabs {
+	      display: grid;
+	      grid-template-columns: repeat(2, minmax(0, 1fr));
+	      gap: 8px;
+	      padding: 5px;
+	      border: 1px solid var(--border);
+	      border-radius: 14px;
+	      background: var(--surface-subtle);
+	      margin-bottom: 14px;
+	    }
+
+	    .gate-tab {
+	      position: relative;
+	      min-height: 44px;
+	      border: 0;
+	      border-radius: 10px;
+	      background: transparent;
+	      color: var(--text-muted);
+	      cursor: pointer;
+	      font-size: .88rem;
+	      font-weight: 760;
+	      transition: background .15s ease, color .15s ease, box-shadow .15s ease;
+	    }
+
+	    .gate-tab.active {
+	      background: #ffffff;
+	      color: var(--text);
+	      box-shadow: var(--shadow-sm);
+	    }
+
+	    .gate-tab.visited::after {
+	      content: "";
+	      position: absolute;
+	      top: 9px;
+	      right: 10px;
+	      width: 7px;
+	      height: 7px;
+	      border-radius: 50%;
+	      background: var(--success);
+	    }
+
+	    .gate-content {
+	      flex: 1;
+	      min-height: 0;
+	      border: 1px solid var(--border);
+	      border-radius: 18px;
+	      background: #ffffff;
+	      padding: 22px;
+	      box-shadow: var(--shadow-sm);
+	      overflow-y: auto;
+	      scrollbar-width: thin;
+	      scrollbar-color: #cbd5e1 #f8fafc;
+	    }
+
+	    .gate-content::-webkit-scrollbar {
+	      width: 10px;
+	    }
+
+	    .gate-content::-webkit-scrollbar-track {
+	      background: #f8fafc;
+	      border-radius: 999px;
+	    }
+
+	    .gate-content::-webkit-scrollbar-thumb {
+	      background: #cbd5e1;
+	      border: 2px solid #f8fafc;
+	      border-radius: 999px;
+	    }
+
+	    .gate-section {
+	      display: none;
+	      animation: fadeUp .2s ease both;
+	    }
+
+	    .gate-section.active {
+	      display: block;
+	    }
+
+	    .gate-section h3 {
+	      color: var(--text);
+	      font-size: 1.06rem;
+	      line-height: 1.3;
+	      letter-spacing: 0;
+	      margin-bottom: 12px;
+	    }
+
+	    .gate-section p,
+	    .gate-section li {
+	      color: var(--text-muted);
+	      font-size: .92rem;
+	      line-height: 1.68;
+	    }
+
+	    .gate-section ul {
+	      display: grid;
+	      gap: 9px;
+	      padding-left: 1.1rem;
+	    }
+
+	    .gate-author {
+	      width: fit-content;
+	      max-width: 100%;
+	      margin: 0 0 14px;
+	      padding: 7px 10px;
+	      border-radius: 10px;
+	      background: var(--brand-soft);
+	      border: 1px solid rgba(17, 101, 216, .14);
+	      color: var(--text);
+	      font-size: .78rem;
+	      font-weight: 750;
+	      line-height: 1.35;
+	    }
+
+	    .gate-actions {
+	      margin-top: 18px;
+	      display: grid;
+	      gap: 13px;
+	    }
+
+	    .gate-check {
+	      display: flex;
+	      align-items: flex-start;
+	      gap: 11px;
+	      padding: 13px;
+	      border: 1px solid var(--border);
+	      border-radius: 14px;
+	      background: rgba(244, 246, 248, .72);
+	      cursor: pointer;
+	    }
+
+	    .gate-check input {
+	      width: 18px;
+	      height: 18px;
+	      margin-top: 2px;
+	      accent-color: var(--brand);
+	      flex-shrink: 0;
+	    }
+
+	    .gate-check span {
+	      color: var(--text);
+	      font-size: .88rem;
+	      line-height: 1.5;
+	      font-weight: 650;
+	    }
+
+	    .gate-status {
+	      min-height: 20px;
+	      color: var(--warning);
+	      font-size: .78rem;
+	      font-weight: 700;
+	      line-height: 1.45;
+	    }
+
+	    #gate-continue {
+	      min-height: 48px;
+	      border: 0;
+	      border-radius: 14px;
+	      background: var(--brand);
+	      color: #ffffff;
+	      cursor: pointer;
+	      font-size: .95rem;
+	      font-weight: 800;
+	      box-shadow: 0 14px 30px rgba(17, 101, 216, .25);
+	      transition: background .15s ease, transform .15s ease, box-shadow .15s ease, opacity .15s ease;
+	    }
+
+	    #gate-continue:hover:not(:disabled) {
+	      background: var(--brand-hover);
+	      transform: translateY(-1px);
+	      box-shadow: 0 18px 38px rgba(17, 101, 216, .3);
+	    }
+
+	    #gate-continue:disabled {
+	      opacity: .46;
+	      cursor: not-allowed;
+	      box-shadow: none;
+	    }
 
     /* ── ANIMATIONS ────────────────────────────────────────────────────────── */
     @keyframes fadeUp {
@@ -542,70 +868,126 @@
     }
 
     /* ── RESPONSIVE ────────────────────────────────────────────────────────── */
-    @media (max-width: 768px) {
-      body { overflow: hidden; }
-      .header-inner, #chat-container {
-        padding-left: 14px;
-        padding-right: 14px;
+	    @media (max-width: 768px) {
+	      body { overflow: hidden; }
+	      .header-inner, #chat-container {
+	        padding-left: 12px;
+	        padding-right: 12px;
+	      }
+	      #entry-gate {
+	        align-items: flex-start;
+	        padding: 12px;
+	      }
+	      .gate-shell {
+	        grid-template-columns: 1fr;
+	        grid-template-rows: auto minmax(0, 1fr);
+	        height: calc(100dvh - 24px);
+	        border-radius: 22px;
+	      }
+	      .gate-brand {
+	        padding: 18px;
+	        gap: 14px;
+	      }
+	      .gate-brand::after {
+	        width: 120px;
+	        height: 120px;
+	        right: 18px;
+	        bottom: 18px;
+	      }
+	      .gate-logo {
+	        width: 52px;
+	        height: 52px;
+	        border-radius: 14px;
+	      }
+	      .gate-title h1 {
+	        margin-top: 12px;
+	        font-size: 1.9rem;
+	      }
+	      .gate-title p {
+	        max-width: 100%;
+	        font-size: .84rem;
+	        line-height: 1.48;
+	      }
+	      .gate-meta {
+	        display: none;
+	      }
+	      .gate-panel {
+	        padding: 18px;
+	        min-height: 0;
+	      }
+	      .gate-content {
+	        min-height: 0;
+	        padding: 17px;
+	      }
+	      .gate-tab {
+	        min-height: 42px;
+	        font-size: .82rem;
+	      }
+	      .header-inner {
+	        min-height: 56px;
+	        justify-content: center;
+	        gap: 10px;
       }
-      .header-inner {
-        min-height: 58px;
-        justify-content: flex-start;
-        gap: 10px;
-      }
-      .logo { width: 38px; height: 38px; border-radius: 9px; }
+      .logo { width: 36px; height: 36px; border-radius: 9px; }
       .header-text h1 { font-size: 0.95rem; }
-      .header-text p { font-size: 0.72rem; }
+      .header-text p { display: none; }
       #messages {
-        gap: 18px;
-        padding: 18px 0 10px;
+        gap: 16px;
+        padding: 14px 0 8px;
       }
-      .welcome { padding: 20px 0 18px; }
+      .welcome { padding: 12px 0 14px; }
       .welcome .icon {
-        width: 64px;
-        height: 64px;
-        border-radius: 15px;
-        margin-bottom: 16px;
+        width: 58px;
+        height: 58px;
+        border-radius: 14px;
+        margin-bottom: 12px;
       }
       .welcome h2 {
-        font-size: 1.45rem;
+        font-size: 1.34rem;
         line-height: 1.16;
-        margin-bottom: 9px;
+        margin-bottom: 8px;
       }
       .welcome p {
-        font-size: 0.86rem;
-        line-height: 1.5;
-        margin-bottom: 18px;
+        font-size: 0.82rem;
+        line-height: 1.46;
+        margin-bottom: 14px;
       }
-      .suggestion-chips { grid-template-columns: 1fr; }
+      .suggestion-chips {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+      }
       .chip {
-        min-height: 42px;
-        padding: 10px 12px;
+        min-height: 46px;
+        padding: 9px 10px;
         border-radius: 10px;
-        font-size: 0.86rem;
+        font-size: 0.78rem;
+        line-height: 1.25;
       }
       .bubble { max-width: 96%; }
       .msg-wrap.user .bubble {
-        max-width: 92%;
-        padding: 10px 14px;
+        max-width: 90%;
+        padding: 9px 13px;
         border-radius: 17px 17px 5px 17px;
+        font-size: 0.92rem;
       }
       .msg-wrap.bot .bubble {
-        font-size: 0.94rem;
-        line-height: 1.62;
+        font-size: 0.91rem;
+        line-height: 1.58;
       }
       #input-area {
-        padding-top: 9px;
+        padding-top: 8px;
+        padding-bottom: max(10px, env(safe-area-inset-bottom));
       }
       .input-wrap {
         gap: 8px;
-        padding: 9px;
-        border-radius: 15px;
+        padding: 8px;
+        border-radius: 14px;
       }
       #user-input {
-        font-size: 0.94rem;
-        min-height: 28px;
-        max-height: 118px;
+        font-size: 0.92rem;
+        min-height: 30px;
+        max-height: 112px;
+        line-height: 1.5;
       }
       #clear-btn {
         width: 36px;
@@ -625,29 +1007,106 @@
         font-size: 1.1rem;
       }
       .input-footer {
-        flex-wrap: wrap;
-        row-gap: 6px;
+        justify-content: flex-end;
         font-size: 0.66rem;
-        margin-top: 7px;
+        margin-top: 6px;
       }
-      .input-footer span:first-child { display: none; }
-      .project-note {
-        order: 3;
-        flex-basis: 100%;
-        text-align: left;
+      .input-footer span:first-child,
+      .project-note { display: none; }
+      .sources { max-width: 96%; gap: 6px; }
+      .source-chip {
+        max-width: 160px;
+        font-size: 0.68rem;
+        padding: 4px 8px;
       }
       .notice-pill {
-        max-width: 100%;
-        border-radius: 12px;
-        font-size: 0.74rem;
+        max-width: min(100%, 320px);
+        border-radius: 999px;
+        font-size: 0.73rem;
+        box-shadow: 0 8px 20px rgba(154, 52, 18, .12);
       }
+    }
+
+    @media (max-width: 380px) {
+      .suggestion-chips { grid-template-columns: 1fr; }
+      .chip { min-height: 40px; }
+      .welcome p { display: none; }
+      .header-text h1 { font-size: 0.9rem; }
     }
   </style>
 </head>
 
-<body>
-  <!-- HEADER -->
-  <header>
+	<body class="gate-active">
+	  <main id="entry-gate" aria-labelledby="gate-heading">
+	    <section class="gate-shell">
+	      <aside class="gate-brand">
+	        <div class="gate-title">
+	          <div class="gate-logo">
+	            <img src="BAL_Logo.png" alt="BAL Logo" />
+	          </div>
+	          <h1 id="gate-heading">BAL Asistan</h1>
+	          <p>Bornova Anadolu Lisesi hakkında hızlı, sade ve kaynaklı bilgi almak için geliştirilen yapay zeka destekli öğrenci projesi.</p>
+	        </div>
+	        <div class="gate-meta">
+	          <span>Bilgilendirme amaçlıdır.</span>
+	          <span>Resmi işlemlerde okul idaresi ve MEB kaynakları esas alınır.</span>
+	        </div>
+	      </aside>
+
+	      <section class="gate-panel" aria-label="Başlangıç bilgilendirmesi">
+	        <div class="gate-kicker">Başlamadan Önce</div>
+	        <h2>Kısa bilgilendirmeyi incele</h2>
+	        <p class="gate-intro">Devam etmek için iki sekmeyi de açman ve kullanım koşullarını kabul etmen gerekir.</p>
+
+	        <div class="gate-tabs" role="tablist" aria-label="Bilgilendirme sekmeleri">
+	          <button class="gate-tab active" id="tab-terms" type="button" role="tab" aria-selected="true" aria-controls="panel-terms" data-tab="terms">
+	            Kullanım Şartları
+	          </button>
+	          <button class="gate-tab" id="tab-about" type="button" role="tab" aria-selected="false" aria-controls="panel-about" data-tab="about">
+	            Proje Hakkında
+	          </button>
+	        </div>
+
+	        <div class="gate-content">
+		          <article class="gate-section active" id="panel-terms" role="tabpanel" aria-labelledby="tab-terms">
+		            <h3>Kullanım Şartları</h3>
+		            <ul>
+		              <li>BAL Asistan, Bornova Anadolu Lisesi hakkında genel bilgi sunmak amacıyla hazırlanmış bağımsız bir öğrenci projesidir; okul idaresi veya Milli Eğitim Bakanlığı adına resmi işlem yapmaz.</li>
+		              <li>Yanıtlar yalnızca bilgilendirme amaçlıdır. Kayıt, nakil, sınav, kontenjan, devamsızlık, burs, belge, dilekçe, disiplin, pansiyon ve benzeri resmi/idari konularda okul yönetimi, e-Okul, MEB ve okulun resmi duyuruları esas alınmalıdır.</li>
+		              <li>Yapay zeka yanıtları eksik, hatalı, yanlış anlaşılmış veya güncel olmayan bilgiler içerebilir. Önemli kararlar almadan önce bilgileri resmi kaynaklardan doğrulamak kullanıcının sorumluluğundadır.</li>
+		              <li>TC kimlik numarası, öğrenci numarası, telefon, adres, e-posta, şifre, sağlık bilgisi, aile bilgisi, not bilgisi veya başka kişisel/hassas bilgiler paylaşılmamalıdır.</li>
+		              <li>Başka öğrenciler, öğretmenler, personel veya okul topluluğu hakkında özel, küçük düşürücü, suçlayıcı, söylenti niteliğinde ya da kişisel veri içeren sorular sorulmamalıdır.</li>
+		              <li>Sisteme gönderilen sorular ve üretilen cevaplar; kaliteyi iyileştirmek, kötüye kullanımı önlemek, güvenliği sağlamak ve kullanım limitlerini uygulamak amacıyla kaydedilebilir.</li>
+		              <li>Bu asistan hukuki, tıbbi, psikolojik, mali veya resmi danışmanlık vermez. Acil, ciddi veya kişisel durumlarda ilgili uzmanlara, okul rehberlik servisine, okul idaresine ya da resmi kurumlara başvurulmalıdır.</li>
+		              <li>Devam ederek bu bilgilendirmeyi okuduğunu, BAL Asistanı yalnızca bilgilendirme amacıyla kullanacağını ve resmi konularda yetkili kaynakları esas alacağını kabul etmiş olursun.</li>
+		            </ul>
+		          </article>
+
+		          <article class="gate-section" id="panel-about" role="tabpanel" aria-labelledby="tab-about">
+		            <h3>Proje Hakkında</h3>
+		            <div class="gate-author">
+		              Hazırlayan: Burak Güldilek 9/K
+		            </div>
+		            <p>BAL Asistan, Bornova Anadolu Lisesi ile ilgili bilgilere daha hızlı ve düzenli ulaşılabilmesi için geliştirilen yapay zeka destekli bir sohbet asistanıdır. Proje; okulun akademik yapısı, kampüsü, gelenekleri, ulaşım bilgileri, sosyal etkinlikleri ve sık sorulan konular hakkında kısa, anlaşılır ve kaynak odaklı yanıtlar vermeyi amaçlar.</p>
+		            <p>Asistan, hazırlanmış bilgi setinden ilgili parçaları bulur ve kullanıcının sorusuna göre yanıt üretir. Bu nedenle resmi bir okul sistemi değildir; bilgilendirme ve teknoloji geliştirme amacıyla hazırlanmış bir öğrenci çalışmasıdır.</p>
+		            <p>Proje şu anda test aşamasındadır. Yanıt kalitesi, kaynak kapsamı ve kullanıcı deneyimi zamanla geliştirilebilir.</p>
+		          </article>
+	        </div>
+
+	        <div class="gate-actions">
+	          <label class="gate-check" for="gate-agree">
+	            <input id="gate-agree" type="checkbox" />
+	            <span>Kullanım şartlarını ve proje bilgilendirmesini okudum, anladım ve kabul ediyorum.</span>
+	          </label>
+	          <div class="gate-status" id="gate-status">Devam etmek için iki sekmeyi de aç ve onay kutusunu işaretle.</div>
+	          <button id="gate-continue" type="button" disabled>Devam Et</button>
+	        </div>
+	      </section>
+	    </section>
+	  </main>
+
+	  <!-- HEADER -->
+	  <header>
     <div class="header-inner">
       <div class="logo">
         <img src="BAL_Logo.png" alt="BAL Logo" />
@@ -656,15 +1115,8 @@
         <h1>BAL Asistan</h1>
         <p>Bornova Anadolu Lisesi</p>
       </div>
-      <div id="status-bar">
-        <div class="status-dot loading" id="status-dot"></div>
-        <span id="status-text">Bağlanıyor...</span>
-      </div>
     </div>
   </header>
-
-  <!-- QUOTA DISPLAY -->
-  <div id="quota-display-fixed">+0/40 +0/5</div>
 
   <!-- CHAT CONTAINER -->
   <div id="chat-container">
@@ -679,7 +1131,7 @@
         <div class="suggestion-chips">
           <button class="chip" onclick="sendSuggestion(this)">LGS taban puanı nedir?</button>
           <button class="chip" onclick="sendSuggestion(this)">Ayran Günü nedir?</button>
-          <button class="chip" onclick="sendSuggestion(this)">Pansiyona kayıt nasıl yapılır?</button>
+          <button class="chip" onclick="sendSuggestion(this)">Okula nasıl kayıt yapılır?</button>
           <button class="chip" onclick="sendSuggestion(this)">BALEV bursu hakkında bilgi ver</button>
           <button class="chip" onclick="sendSuggestion(this)">Okula nasıl giderim?</button>
           <button class="chip" onclick="sendSuggestion(this)">YKS başarıları nasıl?</button>
@@ -719,28 +1171,90 @@
     const messagesEl = document.getElementById('messages');
     const inputEl = document.getElementById('user-input');
     const sendBtn = document.getElementById('send-btn');
-    const statusDot = document.getElementById('status-dot');
-    const statusText = document.getElementById('status-text');
-    const charCount = document.getElementById('char-count');
-    const welcomeMsg = document.getElementById('welcome-msg');
-    const noticeLayer = document.getElementById('notice-layer');
-    const quotaEl = document.getElementById('quota-display-fixed');
+	    const charCount = document.getElementById('char-count');
+	    const welcomeMsg = document.getElementById('welcome-msg');
+	    const noticeLayer = document.getElementById('notice-layer');
+	    const ENTRY_ACCEPTED_KEY = 'bal_asistan_entry_accepted_v1';
+	    const gateTabs = document.querySelectorAll('.gate-tab');
+	    const gateSections = document.querySelectorAll('.gate-section');
+	    const gateAgree = document.getElementById('gate-agree');
+	    const gateContinue = document.getElementById('gate-continue');
+	    const gateStatus = document.getElementById('gate-status');
+	    const visitedGateTabs = {
+	      terms: false,
+	      about: false,
+	    };
 
     let isStreaming = false;
     let cachedFingerprint = '';
     const notifiedFallbackModels = new Set();
+    let limitNoticeVisible = false;
 
-    let quotaInfo = {
-      daily_used: 0,
-      minute_used: 0,
-      daily_limit: 40,
-      minute_limit: 5,
-    };
+	    let quotaInfo = {
+	      daily_used: 0,
+	      minute_used: 0,
+	      daily_limit: 40,
+	      minute_limit: 5,
+	    };
 
-    function updateQuotaDisplay() {
+	    function openGateTab(tabName) {
+	      visitedGateTabs[tabName] = true;
+
+	      gateTabs.forEach(tab => {
+	        const isActive = tab.dataset.tab === tabName;
+	        tab.classList.toggle('active', isActive);
+	        tab.classList.toggle('visited', visitedGateTabs[tab.dataset.tab]);
+	        tab.setAttribute('aria-selected', isActive ? 'true' : 'false');
+	      });
+
+	      gateSections.forEach(section => {
+	        section.classList.toggle('active', section.id === `panel-${tabName}`);
+	      });
+
+	      updateGateContinueState();
+	    }
+
+	    function updateGateContinueState() {
+	      if (!gateAgree || !gateContinue || !gateStatus) return;
+	      const openedAllTabs = visitedGateTabs.terms && visitedGateTabs.about;
+	      const canContinue = openedAllTabs && gateAgree.checked;
+	      gateContinue.disabled = !canContinue;
+
+	      if (canContinue) {
+	        gateStatus.textContent = 'Hazır. Devam ederek BAL Asistanı açabilirsin.';
+	      } else if (!openedAllTabs && !gateAgree.checked) {
+	        gateStatus.textContent = 'Devam etmek için iki sekmeyi de aç ve onay kutusunu işaretle.';
+	      } else if (!openedAllTabs) {
+	        gateStatus.textContent = 'Devam etmek için Kullanım Şartları ve Proje Hakkında sekmelerinin ikisini de aç.';
+	      } else {
+	        gateStatus.textContent = 'Devam etmek için onay kutusunu işaretle.';
+	      }
+	    }
+
+	    function enterChat() {
+	      document.body.classList.remove('gate-active');
+	      inputEl.focus();
+	    }
+
+	    function initEntryGate() {
+	      localStorage.removeItem(ENTRY_ACCEPTED_KEY);
+
+	      gateTabs.forEach(tab => {
+	        tab.addEventListener('click', () => openGateTab(tab.dataset.tab));
+	      });
+	      gateAgree?.addEventListener('change', updateGateContinueState);
+	      gateContinue?.addEventListener('click', () => {
+	        if (!gateContinue.disabled) enterChat();
+	      });
+	      updateGateContinueState();
+	    }
+
+	    function updateQuotaDisplay() {
       const dailyRemaining = Math.max(quotaInfo.daily_limit - quotaInfo.daily_used, 0);
       const minuteRemaining = Math.max(quotaInfo.minute_limit - quotaInfo.minute_used, 0);
-      quotaEl.textContent = `Günlük ${dailyRemaining}/${quotaInfo.daily_limit} · Dakika ${minuteRemaining}/${quotaInfo.minute_limit}`;
+      if (dailyRemaining <= 10 || minuteRemaining <= 1) {
+        showLimitNotice(dailyRemaining);
+      }
     }
 
     function setQuotaFromStatus(data) {
@@ -788,15 +1302,22 @@
       return data;
     }
 
-    function showLimitNotice() {
+    function showLimitNotice(remaining = null) {
       if (!noticeLayer) return;
+      if (limitNoticeVisible) return;
+      limitNoticeVisible = true;
       noticeLayer.innerHTML = '';
       const pill = document.createElement('div');
       pill.className = 'notice-pill';
+      const countText = Number.isFinite(remaining) ? ` ${remaining} günlük hakkın kaldı.` : '';
       pill.innerHTML = `
-        <span>Günlük soru hakkın azalıyor.</span>
-        <button class="notice-close" type="button" onclick="this.parentElement.remove()">×</button>
+        <span>Hakkın az kaldı.${countText}</span>
+        <button class="notice-close" type="button" aria-label="Kapat">×</button>
       `;
+      pill.querySelector('.notice-close')?.addEventListener('click', () => {
+        limitNoticeVisible = false;
+        pill.remove();
+      });
       noticeLayer.appendChild(pill);
     }
 
@@ -818,7 +1339,6 @@
     async function loadAuthStatus() {
       try {
         const data = await apiFetch('/auth/status', { method: 'GET', headers: {} });
-        if (data.near_limit) showLimitNotice();
         setQuotaFromStatus(data);
       } catch {
         // devam et
@@ -829,22 +1349,8 @@
       try {
         const res = await fetch(`${API_BASE}/health`);
         const data = await res.json();
-        if (data.status === 'ok') {
-          setStatus('online', `Hazır · ${data.chunks} kaynak`);
-        } else {
-          const issues = [];
-          if (!data.groq) issues.push('API key yok');
-          if (!data.database) issues.push('Veritabanı bağlantısı yok');
-          setStatus('error', issues.join(', ') || 'Bağlantı hatası');
-        }
-      } catch {
-        setStatus('error', 'API\'ye bağlanılamadı');
-      }
-    }
-
-    function setStatus(state, text) {
-      statusDot.className = `status-dot ${state}`;
-      statusText.textContent = text;
+        return data.status === 'ok';
+      } catch { return false; }
     }
 
     function appendMessage(role, text) {
@@ -972,7 +1478,6 @@
 
             if (data.done) {
               sources = data.sources || [];
-              if (data.near_limit) showLimitNotice();
             }
           } catch { /* */ }
         };
@@ -1033,7 +1538,7 @@
         <div class="suggestion-chips">
           <button class="chip" onclick="sendSuggestion(this)">LGS taban puanı nedir?</button>
           <button class="chip" onclick="sendSuggestion(this)">Ayran Günü nedir?</button>
-          <button class="chip" onclick="sendSuggestion(this)">Pansiyona kayıt nasıl yapılır?</button>
+          <button class="chip" onclick="sendSuggestion(this)">Okula nasıl kayıt yapılır?</button>
           <button class="chip" onclick="sendSuggestion(this)">BALEV bursu hakkında bilgi ver</button>
           <button class="chip" onclick="sendSuggestion(this)">Okula nasıl giderim?</button>
           <button class="chip" onclick="sendSuggestion(this)">YKS başarıları nasıl?</button>
@@ -1083,7 +1588,8 @@
       messagesEl.scrollTop = messagesEl.scrollHeight;
     }
 
-    checkHealth();
+	    initEntryGate();
+	    checkHealth();
     loadAuthStatus();
     setInterval(checkHealth, 30000);
   </script>
