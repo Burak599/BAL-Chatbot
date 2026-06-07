@@ -2690,3 +2690,265 @@ requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://api.
 2026-06-05 18:24:10,719 [INFO] 212.252.116.251 - - [05/Jun/2026 18:24:10] "GET /api/health HTTP/1.1" 200 -
 2026-06-05 18:24:41,044 [INFO] 212.252.116.251 - - [05/Jun/2026 18:24:41] "GET /api/health HTTP/1.1" 200 -
 2026-06-05 18:25:11,837 [INFO] 212.252.116.251 - - [05/Jun/2026 18:25:11] "GET /api/health HTTP/1.1" 200 -
+2026-06-07 11:34:09,597 [INFO] BAL Chatbot Web API starting...
+2026-06-07 11:34:09,680 [INFO] Runtime pid=50296 cwd=/home/burak/Masaüstü/ChatbotBAL/web log_file=/home/burak/Masaüstü/ChatbotBAL/logs/web.log
+2026-06-07 11:34:09,680 [INFO] Provider: groq
+2026-06-07 11:34:09,680 [INFO] HTTPS enforcement: False
+2026-06-07 11:34:09,680 [INFO] Loading FAISS index...
+2026-06-07 11:34:09,708 [INFO] FAISS index loaded: 134 vectors
+2026-06-07 11:34:09,708 [INFO] Loading chunk metadata...
+2026-06-07 11:34:09,711 [INFO] Chunk metadata loaded: 134 chunks
+2026-06-07 11:34:09,711 [INFO] Testing embedding API with 5 key(s)...
+2026-06-07 11:34:10,331 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-07 11:34:10,361 [INFO] ✓ Embedding API test successful (dim=(1, 3072))
+2026-06-07 11:34:10,363 [INFO] Vector store ready — 134 chunks
+2026-06-07 11:34:10,363 [INFO] Groq configured — key_count=2 primary_model=llama-3.3-70b-versatile
+2026-06-07 11:34:10,364 [INFO] LLM gateway ready — active provider: groq
+2026-06-07 11:34:10,364 [INFO] Server starting on http://0.0.0.0:5000
+2026-06-07 11:34:10,385 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.2:5000
+2026-06-07 11:34:10,385 [INFO] [33mPress CTRL+C to quit[0m
+2026-06-07 11:35:37,641 [INFO] 212.252.116.251 - - [07/Jun/2026 11:35:37] "[36mGET / HTTP/1.1[0m" 304 -
+2026-06-07 11:35:37,868 [INFO] 212.252.116.251 - - [07/Jun/2026 11:35:37] "[36mGET /BAL_Logo.png HTTP/1.1[0m" 304 -
+2026-06-07 11:35:38,004 [INFO] 212.252.116.251 - - [07/Jun/2026 11:35:38] "[36mGET /vendor/fingerprintjs/fp.esm.js HTTP/1.1[0m" 304 -
+2026-06-07 11:35:38,239 [INFO] 212.252.116.251 - - [07/Jun/2026 11:35:38] "GET /api/health HTTP/1.1" 200 -
+2026-06-07 11:35:38,541 [INFO] Found existing user id=34 for fingerprint
+2026-06-07 11:35:39,052 [INFO] 212.252.116.251 - - [07/Jun/2026 11:35:39] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-07 11:35:49,799 [INFO] Found existing user id=34 for fingerprint
+2026-06-07 11:35:51,627 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-07 11:35:52,035 [INFO] 212.252.116.251 - - [07/Jun/2026 11:35:52] "POST /api/chat HTTP/1.1" 200 -
+2026-06-07 11:35:52,844 [INFO] Found existing user id=34 for fingerprint
+2026-06-07 11:35:53,342 [INFO] 212.252.116.251 - - [07/Jun/2026 11:35:53] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-07 11:36:08,195 [INFO] 212.252.116.251 - - [07/Jun/2026 11:36:08] "GET /api/health HTTP/1.1" 200 -
+2026-06-07 11:36:16,373 [INFO] Found existing user id=34 for fingerprint
+2026-06-07 11:36:18,242 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-07 11:36:18,619 [INFO] 212.252.116.251 - - [07/Jun/2026 11:36:18] "POST /api/chat HTTP/1.1" 200 -
+2026-06-07 11:36:19,460 [INFO] Found existing user id=34 for fingerprint
+2026-06-07 11:36:19,957 [INFO] 212.252.116.251 - - [07/Jun/2026 11:36:19] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-07 11:36:38,206 [INFO] 212.252.116.251 - - [07/Jun/2026 11:36:38] "GET /api/health HTTP/1.1" 200 -
+2026-06-07 11:37:08,207 [INFO] 212.252.116.251 - - [07/Jun/2026 11:37:08] "GET /api/health HTTP/1.1" 200 -
+2026-06-07 11:37:38,486 [INFO] 212.252.116.251 - - [07/Jun/2026 11:37:38] "GET /api/health HTTP/1.1" 200 -
+2026-06-07 11:38:08,486 [INFO] 212.252.116.251 - - [07/Jun/2026 11:38:08] "GET /api/health HTTP/1.1" 200 -
+2026-06-07 11:38:38,486 [INFO] 212.252.116.251 - - [07/Jun/2026 11:38:38] "GET /api/health HTTP/1.1" 200 -
+2026-06-07 11:38:53,854 [INFO] Found existing user id=34 for fingerprint
+2026-06-07 11:38:55,657 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-07 11:38:56,016 [INFO] 212.252.116.251 - - [07/Jun/2026 11:38:56] "POST /api/chat HTTP/1.1" 200 -
+2026-06-07 11:38:56,928 [INFO] Found existing user id=34 for fingerprint
+2026-06-07 11:38:57,427 [INFO] 212.252.116.251 - - [07/Jun/2026 11:38:57] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-07 11:39:08,487 [INFO] 212.252.116.251 - - [07/Jun/2026 11:39:08] "GET /api/health HTTP/1.1" 200 -
+2026-06-07 11:39:15,864 [INFO] Found existing user id=34 for fingerprint
+2026-06-07 11:39:17,653 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-07 11:39:18,076 [INFO] 212.252.116.251 - - [07/Jun/2026 11:39:18] "POST /api/chat HTTP/1.1" 200 -
+2026-06-07 11:39:19,747 [INFO] Found existing user id=34 for fingerprint
+2026-06-07 11:39:20,244 [INFO] 212.252.116.251 - - [07/Jun/2026 11:39:20] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-07 11:39:38,549 [INFO] 212.252.116.251 - - [07/Jun/2026 11:39:38] "GET /api/health HTTP/1.1" 200 -
+2026-06-07 11:40:08,550 [INFO] 212.252.116.251 - - [07/Jun/2026 11:40:08] "GET /api/health HTTP/1.1" 200 -
+2026-06-07 11:40:38,556 [INFO] 212.252.116.251 - - [07/Jun/2026 11:40:38] "GET /api/health HTTP/1.1" 200 -
+2026-06-07 11:41:08,554 [INFO] 212.252.116.251 - - [07/Jun/2026 11:41:08] "GET /api/health HTTP/1.1" 200 -
+2026-06-07 11:41:29,171 [INFO] Found existing user id=34 for fingerprint
+2026-06-07 11:41:31,079 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-07 11:41:31,593 [INFO] 212.252.116.251 - - [07/Jun/2026 11:41:31] "POST /api/chat HTTP/1.1" 200 -
+2026-06-07 11:41:32,271 [INFO] Found existing user id=34 for fingerprint
+2026-06-07 11:41:32,769 [INFO] 212.252.116.251 - - [07/Jun/2026 11:41:32] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-07 11:41:38,553 [INFO] 212.252.116.251 - - [07/Jun/2026 11:41:38] "GET /api/health HTTP/1.1" 200 -
+2026-06-07 11:41:40,125 [INFO] Found existing user id=34 for fingerprint
+2026-06-07 11:41:41,995 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-07 11:41:42,335 [INFO] 212.252.116.251 - - [07/Jun/2026 11:41:42] "POST /api/chat HTTP/1.1" 200 -
+2026-06-07 11:41:43,549 [INFO] Found existing user id=34 for fingerprint
+2026-06-07 11:41:44,047 [INFO] 212.252.116.251 - - [07/Jun/2026 11:41:44] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-07 11:42:04,418 [INFO] Found existing user id=34 for fingerprint
+2026-06-07 11:42:06,416 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-07 11:42:06,871 [INFO] 212.252.116.251 - - [07/Jun/2026 11:42:06] "POST /api/chat HTTP/1.1" 200 -
+2026-06-07 11:42:07,523 [INFO] Found existing user id=34 for fingerprint
+2026-06-07 11:42:08,020 [INFO] 212.252.116.251 - - [07/Jun/2026 11:42:08] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-07 11:42:08,552 [INFO] 212.252.116.251 - - [07/Jun/2026 11:42:08] "GET /api/health HTTP/1.1" 200 -
+2026-06-07 11:42:20,419 [INFO] Found existing user id=34 for fingerprint
+2026-06-07 11:42:22,331 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-07 11:42:22,884 [INFO] 212.252.116.251 - - [07/Jun/2026 11:42:22] "POST /api/chat HTTP/1.1" 200 -
+2026-06-07 11:42:24,127 [INFO] Found existing user id=34 for fingerprint
+2026-06-07 11:42:24,624 [INFO] 212.252.116.251 - - [07/Jun/2026 11:42:24] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-07 11:42:34,575 [INFO] Found existing user id=34 for fingerprint
+2026-06-07 11:42:36,467 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-07 11:42:36,887 [INFO] 212.252.116.251 - - [07/Jun/2026 11:42:36] "POST /api/chat HTTP/1.1" 200 -
+2026-06-07 11:42:38,068 [INFO] Found existing user id=34 for fingerprint
+2026-06-07 11:42:38,563 [INFO] 212.252.116.251 - - [07/Jun/2026 11:42:38] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-07 11:42:39,240 [INFO] 212.252.116.251 - - [07/Jun/2026 11:42:39] "GET /api/health HTTP/1.1" 200 -
+2026-06-07 11:42:45,715 [INFO] Found existing user id=34 for fingerprint
+2026-06-07 11:42:47,451 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-07 11:42:47,862 [INFO] 212.252.116.251 - - [07/Jun/2026 11:42:47] "POST /api/chat HTTP/1.1" 200 -
+2026-06-07 11:42:48,717 [INFO] Found existing user id=34 for fingerprint
+2026-06-07 11:42:49,187 [INFO] 212.252.116.251 - - [07/Jun/2026 11:42:49] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-07 11:42:58,627 [INFO] Found existing user id=34 for fingerprint
+2026-06-07 11:43:00,365 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-07 11:43:00,824 [INFO] 212.252.116.251 - - [07/Jun/2026 11:43:00] "POST /api/chat HTTP/1.1" 200 -
+2026-06-07 11:43:01,535 [INFO] Found existing user id=34 for fingerprint
+2026-06-07 11:43:02,009 [INFO] 212.252.116.251 - - [07/Jun/2026 11:43:02] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-07 11:43:08,668 [INFO] 212.252.116.251 - - [07/Jun/2026 11:43:08] "GET /api/health HTTP/1.1" 200 -
+2026-06-07 11:43:38,648 [INFO] 212.252.116.251 - - [07/Jun/2026 11:43:38] "GET /api/health HTTP/1.1" 200 -
+2026-06-07 11:44:08,672 [INFO] 212.252.116.251 - - [07/Jun/2026 11:44:08] "GET /api/health HTTP/1.1" 200 -
+2026-06-07 11:44:38,650 [INFO] 212.252.116.251 - - [07/Jun/2026 11:44:38] "GET /api/health HTTP/1.1" 200 -
+2026-06-07 11:45:08,672 [INFO] 212.252.116.251 - - [07/Jun/2026 11:45:08] "GET /api/health HTTP/1.1" 200 -
+2026-06-07 11:45:38,650 [INFO] 212.252.116.251 - - [07/Jun/2026 11:45:38] "GET /api/health HTTP/1.1" 200 -
+2026-06-07 11:46:08,673 [INFO] 212.252.116.251 - - [07/Jun/2026 11:46:08] "GET /api/health HTTP/1.1" 200 -
+2026-06-07 11:46:34,039 [INFO] Found existing user id=34 for fingerprint
+2026-06-07 11:46:35,821 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-07 11:46:36,378 [INFO] 212.252.116.251 - - [07/Jun/2026 11:46:36] "POST /api/chat HTTP/1.1" 200 -
+2026-06-07 11:46:36,979 [INFO] Found existing user id=34 for fingerprint
+2026-06-07 11:46:37,456 [INFO] 212.252.116.251 - - [07/Jun/2026 11:46:37] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-07 11:46:38,885 [INFO] 212.252.116.251 - - [07/Jun/2026 11:46:38] "GET /api/health HTTP/1.1" 200 -
+2026-06-07 11:46:48,256 [INFO] Found existing user id=34 for fingerprint
+2026-06-07 11:46:49,970 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-07 11:46:50,397 [INFO] 212.252.116.251 - - [07/Jun/2026 11:46:50] "POST /api/chat HTTP/1.1" 200 -
+2026-06-07 11:46:50,950 [INFO] Found existing user id=34 for fingerprint
+2026-06-07 11:46:51,418 [INFO] 212.252.116.251 - - [07/Jun/2026 11:46:51] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-07 11:47:08,915 [INFO] 212.252.116.251 - - [07/Jun/2026 11:47:08] "GET /api/health HTTP/1.1" 200 -
+2026-06-07 11:47:38,886 [INFO] 212.252.116.251 - - [07/Jun/2026 11:47:38] "GET /api/health HTTP/1.1" 200 -
+2026-06-07 11:47:50,179 [INFO] Found existing user id=34 for fingerprint
+2026-06-07 11:47:51,926 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-07 11:47:52,610 [INFO] 212.252.116.251 - - [07/Jun/2026 11:47:52] "POST /api/chat HTTP/1.1" 200 -
+2026-06-07 11:47:53,181 [INFO] Found existing user id=34 for fingerprint
+2026-06-07 11:47:53,653 [INFO] 212.252.116.251 - - [07/Jun/2026 11:47:53] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-07 11:48:15,257 [INFO] BAL Chatbot Web API starting...
+2026-06-07 11:48:15,257 [INFO] Runtime pid=58371 cwd=/home/burak/Masaüstü/ChatbotBAL/web log_file=/home/burak/Masaüstü/ChatbotBAL/logs/web.log
+2026-06-07 11:48:15,258 [INFO] Provider: groq
+2026-06-07 11:48:15,258 [INFO] HTTPS enforcement: False
+2026-06-07 11:48:15,258 [INFO] Loading FAISS index...
+2026-06-07 11:48:15,261 [INFO] FAISS index loaded: 134 vectors
+2026-06-07 11:48:15,261 [INFO] Loading chunk metadata...
+2026-06-07 11:48:15,264 [INFO] Chunk metadata loaded: 134 chunks
+2026-06-07 11:48:15,264 [INFO] Testing embedding API with 5 key(s)...
+2026-06-07 11:48:15,763 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-07 11:48:15,797 [INFO] ✓ Embedding API test successful (dim=(1, 3072))
+2026-06-07 11:48:15,797 [INFO] Vector store ready — 134 chunks
+2026-06-07 11:48:15,797 [INFO] Groq configured — key_count=2 primary_model=llama-3.3-70b-versatile
+2026-06-07 11:48:15,797 [INFO] LLM gateway ready — active provider: groq
+2026-06-07 11:48:15,797 [INFO] Server starting on http://0.0.0.0:5000
+2026-06-07 11:48:15,803 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.2:5000
+2026-06-07 11:48:15,803 [INFO] [33mPress CTRL+C to quit[0m
+2026-06-07 11:48:29,906 [INFO] 212.252.116.251 - - [07/Jun/2026 11:48:29] "[36mGET / HTTP/1.1[0m" 304 -
+2026-06-07 11:48:30,060 [INFO] 212.252.116.251 - - [07/Jun/2026 11:48:30] "[36mGET /BAL_Logo.png HTTP/1.1[0m" 304 -
+2026-06-07 11:48:30,090 [INFO] 212.252.116.251 - - [07/Jun/2026 11:48:30] "[36mGET /vendor/fingerprintjs/fp.esm.js HTTP/1.1[0m" 304 -
+2026-06-07 11:48:30,313 [INFO] 212.252.116.251 - - [07/Jun/2026 11:48:30] "GET /api/health HTTP/1.1" 200 -
+2026-06-07 11:48:30,540 [INFO] Found existing user id=34 for fingerprint
+2026-06-07 11:48:31,016 [INFO] 212.252.116.251 - - [07/Jun/2026 11:48:31] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-07 11:48:38,975 [INFO] Found existing user id=34 for fingerprint
+2026-06-07 11:48:40,726 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-07 11:48:41,104 [INFO] 212.252.116.251 - - [07/Jun/2026 11:48:41] "POST /api/chat HTTP/1.1" 200 -
+2026-06-07 11:48:41,693 [INFO] Found existing user id=34 for fingerprint
+2026-06-07 11:48:42,162 [INFO] 212.252.116.251 - - [07/Jun/2026 11:48:42] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-07 11:48:58,064 [INFO] Found existing user id=34 for fingerprint
+2026-06-07 11:48:59,903 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-07 11:49:00,294 [INFO] 212.252.116.251 - - [07/Jun/2026 11:49:00] "POST /api/chat HTTP/1.1" 200 -
+2026-06-07 11:49:00,298 [INFO] 212.252.116.251 - - [07/Jun/2026 11:49:00] "GET /api/health HTTP/1.1" 200 -
+2026-06-07 11:49:00,851 [INFO] Found existing user id=34 for fingerprint
+2026-06-07 11:49:01,321 [INFO] 212.252.116.251 - - [07/Jun/2026 11:49:01] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-07 11:49:05,636 [INFO] Found existing user id=34 for fingerprint
+2026-06-07 11:49:07,386 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-07 11:49:07,721 [INFO] 212.252.116.251 - - [07/Jun/2026 11:49:07] "POST /api/chat HTTP/1.1" 200 -
+2026-06-07 11:49:08,525 [INFO] Found existing user id=34 for fingerprint
+2026-06-07 11:49:08,996 [INFO] 212.252.116.251 - - [07/Jun/2026 11:49:08] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-07 11:50:13,937 [INFO] BAL Chatbot Web API starting...
+2026-06-07 11:50:13,937 [INFO] Runtime pid=59426 cwd=/home/burak/Masaüstü/ChatbotBAL/web log_file=/home/burak/Masaüstü/ChatbotBAL/logs/web.log
+2026-06-07 11:50:13,938 [INFO] Provider: groq
+2026-06-07 11:50:13,938 [INFO] HTTPS enforcement: False
+2026-06-07 11:50:13,938 [INFO] Loading FAISS index...
+2026-06-07 11:50:13,941 [INFO] FAISS index loaded: 134 vectors
+2026-06-07 11:50:13,941 [INFO] Loading chunk metadata...
+2026-06-07 11:50:13,943 [INFO] Chunk metadata loaded: 134 chunks
+2026-06-07 11:50:13,944 [INFO] Testing embedding API with 5 key(s)...
+2026-06-07 11:50:14,591 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-07 11:50:14,626 [INFO] ✓ Embedding API test successful (dim=(1, 3072))
+2026-06-07 11:50:14,626 [INFO] Vector store ready — 134 chunks
+2026-06-07 11:50:14,627 [INFO] Groq configured — key_count=2 primary_model=llama-3.3-70b-versatile
+2026-06-07 11:50:14,627 [INFO] LLM gateway ready — active provider: groq
+2026-06-07 11:50:14,627 [INFO] Server starting on http://0.0.0.0:5000
+2026-06-07 11:50:14,633 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.2:5000
+2026-06-07 11:50:14,633 [INFO] [33mPress CTRL+C to quit[0m
+2026-06-07 11:50:27,168 [INFO] 212.252.116.251 - - [07/Jun/2026 11:50:27] "[36mGET / HTTP/1.1[0m" 304 -
+2026-06-07 11:50:27,304 [INFO] 212.252.116.251 - - [07/Jun/2026 11:50:27] "[36mGET /BAL_Logo.png HTTP/1.1[0m" 304 -
+2026-06-07 11:50:27,310 [INFO] 212.252.116.251 - - [07/Jun/2026 11:50:27] "[36mGET /vendor/fingerprintjs/fp.esm.js HTTP/1.1[0m" 304 -
+2026-06-07 11:50:27,511 [INFO] 212.252.116.251 - - [07/Jun/2026 11:50:27] "GET /api/health HTTP/1.1" 200 -
+2026-06-07 11:50:27,782 [INFO] Found existing user id=34 for fingerprint
+2026-06-07 11:50:28,250 [INFO] 212.252.116.251 - - [07/Jun/2026 11:50:28] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-07 11:50:40,704 [INFO] Found existing user id=34 for fingerprint
+2026-06-07 11:50:42,439 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-07 11:50:42,774 [INFO] 212.252.116.251 - - [07/Jun/2026 11:50:42] "POST /api/chat HTTP/1.1" 200 -
+2026-06-07 11:50:43,325 [INFO] Found existing user id=34 for fingerprint
+2026-06-07 11:50:43,786 [INFO] 212.252.116.251 - - [07/Jun/2026 11:50:43] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-07 11:50:49,678 [INFO] Found existing user id=34 for fingerprint
+2026-06-07 11:50:51,424 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-07 11:50:51,740 [INFO] 212.252.116.251 - - [07/Jun/2026 11:50:51] "POST /api/chat HTTP/1.1" 200 -
+2026-06-07 11:50:52,270 [INFO] Found existing user id=34 for fingerprint
+2026-06-07 11:50:52,730 [INFO] 212.252.116.251 - - [07/Jun/2026 11:50:52] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-07 11:50:57,672 [INFO] 212.252.116.251 - - [07/Jun/2026 11:50:57] "GET /api/health HTTP/1.1" 200 -
+2026-06-07 11:51:05,775 [INFO] Found existing user id=34 for fingerprint
+2026-06-07 11:51:07,511 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-07 11:51:08,110 [INFO] 212.252.116.251 - - [07/Jun/2026 11:51:08] "POST /api/chat HTTP/1.1" 200 -
+2026-06-07 11:51:08,676 [INFO] Found existing user id=34 for fingerprint
+2026-06-07 11:51:09,139 [INFO] 212.252.116.251 - - [07/Jun/2026 11:51:09] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-07 11:51:20,254 [INFO] Found existing user id=34 for fingerprint
+2026-06-07 11:51:22,031 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-07 11:51:22,594 [INFO] 212.252.116.251 - - [07/Jun/2026 11:51:22] "POST /api/chat HTTP/1.1" 200 -
+2026-06-07 11:51:24,512 [INFO] Found existing user id=34 for fingerprint
+2026-06-07 11:51:24,972 [INFO] 212.252.116.251 - - [07/Jun/2026 11:51:24] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-07 11:51:27,730 [INFO] 212.252.116.251 - - [07/Jun/2026 11:51:27] "GET /api/health HTTP/1.1" 200 -
+2026-06-07 11:51:56,444 [INFO] Found existing user id=34 for fingerprint
+2026-06-07 11:51:58,083 [INFO] 212.252.116.251 - - [07/Jun/2026 11:51:58] "GET /api/health HTTP/1.1" 200 -
+2026-06-07 11:51:58,183 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-07 11:51:58,652 [INFO] 212.252.116.251 - - [07/Jun/2026 11:51:58] "POST /api/chat HTTP/1.1" 200 -
+2026-06-07 11:51:59,182 [INFO] Found existing user id=34 for fingerprint
+2026-06-07 11:51:59,643 [INFO] 212.252.116.251 - - [07/Jun/2026 11:51:59] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-07 11:52:03,579 [INFO] Found existing user id=34 for fingerprint
+2026-06-07 11:52:05,353 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-07 11:52:05,674 [INFO] 212.252.116.251 - - [07/Jun/2026 11:52:05] "POST /api/chat HTTP/1.1" 200 -
+2026-06-07 11:52:06,225 [INFO] Found existing user id=34 for fingerprint
+2026-06-07 11:52:06,684 [INFO] 212.252.116.251 - - [07/Jun/2026 11:52:06] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-07 12:10:15,689 [INFO] 212.252.116.251 - - [07/Jun/2026 12:10:15] "[36mGET / HTTP/1.1[0m" 304 -
+2026-06-07 12:10:15,843 [INFO] 212.252.116.251 - - [07/Jun/2026 12:10:15] "[36mGET /BAL_Logo.png HTTP/1.1[0m" 304 -
+2026-06-07 12:10:15,892 [INFO] 212.252.116.251 - - [07/Jun/2026 12:10:15] "[36mGET /vendor/fingerprintjs/fp.esm.js HTTP/1.1[0m" 304 -
+2026-06-07 12:10:17,279 [INFO] 212.252.116.251 - - [07/Jun/2026 12:10:17] "GET /api/health HTTP/1.1" 200 -
+2026-06-07 12:10:17,281 [INFO] Found existing user id=34 for fingerprint
+2026-06-07 12:10:17,751 [INFO] 212.252.116.251 - - [07/Jun/2026 12:10:17] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-07 12:10:46,152 [INFO] 212.252.116.251 - - [07/Jun/2026 12:10:46] "GET /api/health HTTP/1.1" 200 -
+2026-06-07 12:16:32,563 [INFO] BAL Chatbot Web API starting...
+2026-06-07 12:16:32,564 [INFO] Runtime pid=72368 cwd=/home/burak/Masaüstü/ChatbotBAL/web log_file=/home/burak/Masaüstü/ChatbotBAL/logs/web.log
+2026-06-07 12:16:32,564 [INFO] Provider: groq
+2026-06-07 12:16:32,564 [INFO] HTTPS enforcement: False
+2026-06-07 12:16:32,564 [INFO] Loading FAISS index...
+2026-06-07 12:16:32,567 [INFO] FAISS index loaded: 134 vectors
+2026-06-07 12:16:32,567 [INFO] Loading chunk metadata...
+2026-06-07 12:16:32,569 [INFO] Chunk metadata loaded: 134 chunks
+2026-06-07 12:16:32,569 [INFO] Testing embedding API with 5 key(s)...
+2026-06-07 12:16:33,081 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+2026-06-07 12:16:33,108 [INFO] ✓ Embedding API test successful (dim=(1, 3072))
+2026-06-07 12:16:33,110 [INFO] Vector store ready — 134 chunks
+2026-06-07 12:16:33,110 [INFO] Groq configured — key_count=2 primary_model=llama-3.3-70b-versatile
+2026-06-07 12:16:33,110 [INFO] LLM gateway ready — active provider: groq
+2026-06-07 12:16:33,111 [INFO] Server starting on http://0.0.0.0:5000
+2026-06-07 12:16:33,117 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.2:5000
+2026-06-07 12:16:33,117 [INFO] [33mPress CTRL+C to quit[0m
+2026-06-07 12:16:41,254 [INFO] 212.252.116.251 - - [07/Jun/2026 12:16:41] "GET / HTTP/1.1" 200 -
+2026-06-07 12:16:41,467 [INFO] 212.252.116.251 - - [07/Jun/2026 12:16:41] "[36mGET /BAL_Logo.png HTTP/1.1[0m" 304 -
+2026-06-07 12:16:41,475 [INFO] 212.252.116.251 - - [07/Jun/2026 12:16:41] "[36mGET /vendor/fingerprintjs/fp.esm.js HTTP/1.1[0m" 304 -
+2026-06-07 12:16:41,694 [INFO] 212.252.116.251 - - [07/Jun/2026 12:16:41] "GET /api/health HTTP/1.1" 200 -
+2026-06-07 12:16:41,998 [INFO] Found existing user id=34 for fingerprint
+2026-06-07 12:16:42,518 [INFO] 212.252.116.251 - - [07/Jun/2026 12:16:42] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-07 12:17:11,855 [INFO] 212.252.116.251 - - [07/Jun/2026 12:17:11] "GET /api/health HTTP/1.1" 200 -
+2026-06-07 12:17:30,081 [INFO] 212.252.116.251 - - [07/Jun/2026 12:17:30] "GET / HTTP/1.1" 200 -
+2026-06-07 12:17:30,336 [INFO] 212.252.116.251 - - [07/Jun/2026 12:17:30] "GET /BAL_Logo.png HTTP/1.1" 200 -
+2026-06-07 12:17:30,552 [INFO] 212.252.116.251 - - [07/Jun/2026 12:17:30] "GET /vendor/fingerprintjs/fp.esm.js HTTP/1.1" 200 -
+2026-06-07 12:17:30,774 [INFO] 212.252.116.251 - - [07/Jun/2026 12:17:30] "GET /api/health HTTP/1.1" 200 -
+2026-06-07 12:17:31,551 [INFO] Found existing user id=35 for fingerprint
+2026-06-07 12:17:32,047 [INFO] 212.252.116.251 - - [07/Jun/2026 12:17:32] "GET /api/auth/status HTTP/1.1" 200 -
+2026-06-07 12:17:41,858 [INFO] 212.252.116.251 - - [07/Jun/2026 12:17:41] "GET /api/health HTTP/1.1" 200 -
