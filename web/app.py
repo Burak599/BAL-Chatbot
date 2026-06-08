@@ -739,6 +739,9 @@ def stream_groq_model(messages: List[Dict], model: str, api_key: str, key_index:
     headers = {
         "Authorization": f"Bearer {api_key}",
         "Content-Type": "application/json",
+        # Cloudflare'in bot sanmasını engellemek için güçlü bir User-Agent ekliyoruz
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        "Accept": "text/event-stream"
     }
     payload = {
         "model": model,
@@ -756,6 +759,7 @@ def stream_groq_model(messages: List[Dict], model: str, api_key: str, key_index:
             json=payload,
             stream=True,
             timeout=CONFIG["groq_timeout"],
+            proxies={"http": None, "https": None} 
         ) as resp:
             resp.raise_for_status()
 
