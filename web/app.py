@@ -735,6 +735,7 @@ def stream_groq_model(messages: List[Dict], model: str, api_key: str, key_index:
     Streams one Groq model attempt using curl_cffi to bypass Cloudflare 403 blocks on Render.
     Returns (full_response, failure_info).
     """
+    log.warning("ENTERED stream_groq_model")
     full_response = ""
     headers = {
         "Authorization": f"Bearer {api_key}",
@@ -751,6 +752,12 @@ def stream_groq_model(messages: List[Dict], model: str, api_key: str, key_index:
     }
 
     try:
+        log.warning(
+            "GROQ REQUEST -> model=%s key_index=%s url=%s",
+            model,
+            key_index,
+            CONFIG["groq_url"]
+        )
         # impersonate="chrome" bayrağı, Render sunucusunun TLS imzasını tamamen gizleyip
         # Cloudflare'e gerçek bir Windows Chrome tarayıcısı gibi el sıkışma (TLS Handshake) yaptırır.
         resp = curl_requests.post(
@@ -760,6 +767,12 @@ def stream_groq_model(messages: List[Dict], model: str, api_key: str, key_index:
             stream=True,
             timeout=CONFIG["groq_timeout"],
             impersonate="chrome"
+        )
+
+        log.warning(
+            "GROQ RESPONSE <- status=%s headers=%s",
+            resp.status_code,
+            dict(resp.headers)
         )
         
         # HTTP hata kontrolü (403 veya diğer hatalar burada yakalanacak)
@@ -816,7 +829,11 @@ def stream_groq_model(messages: List[Dict], model: str, api_key: str, key_index:
         
         if hasattr(e, "response") and e.response is not None:
             status_code = e.response.status_code
-            response_text = e.response.text[:2000]
+            response_text = e.response.text
+            log.error(
+                "FULL GROQ BODY:\n%s",
+                response_text
+            )
             # Rate limit başlıklarını filtreleme lojiğini koruyoruz
             rate_headers = {
                 key: value
@@ -1100,6 +1117,12 @@ def chat():
         return jsonify({"error": "message alanı gerekli"}), 400
 
     user_message = body["message"].strip()
+    log.warning(
+        "CHAT REQUEST user=%s session=%s msg=%s",
+        identity["subject_id"] if identity else "unknown",
+        session_id,
+        user_message[:200]
+    )
     session_id = body.get("session_id", "default")
 
     if not user_message:
