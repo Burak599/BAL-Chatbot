@@ -42,6 +42,7 @@ from dotenv import load_dotenv
 from werkzeug.middleware.proxy_fix import ProxyFix
 from werkzeug.security import generate_password_hash, check_password_hash
 from google import genai
+from curl_cffi import requests as curl_requests
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 WEB_DIR = Path(__file__).resolve().parent
@@ -731,16 +732,13 @@ def strip_reasoning_blocks(text: str) -> str:
 
 def stream_groq_model(messages: List[Dict], model: str, api_key: str, key_index: int) -> Tuple[str, Optional[Dict]]:
     """
-    Streams one Groq model attempt.
-    Returns (full_response, failure_info). failure_info is set for retryable
-    provider throttling/server errors after any already-yielded error event.
+    Streams one Groq model attempt using curl_cffi to bypass Cloudflare 403 blocks on Render.
+    Returns (full_response, failure_info).
     """
     full_response = ""
     headers = {
         "Authorization": f"Bearer {api_key}",
         "Content-Type": "application/json",
-        # Cloudflare'in bot sanmasını engellemek için güçlü bir User-Agent ekliyoruz
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
         "Accept": "text/event-stream"
     }
     payload = {
@@ -753,64 +751,80 @@ def stream_groq_model(messages: List[Dict], model: str, api_key: str, key_index:
     }
 
     try:
-        with requests.post(
+        # impersonate="chrome" bayrağı, Render sunucusunun TLS imzasını tamamen gizleyip
+        # Cloudflare'e gerçek bir Windows Chrome tarayıcısı gibi el sıkışma (TLS Handshake) yaptırır.
+        resp = curl_requests.post(
             CONFIG["groq_url"],
             headers=headers,
             json=payload,
             stream=True,
             timeout=CONFIG["groq_timeout"],
-            proxies={"http": None, "https": None} 
-        ) as resp:
-            resp.raise_for_status()
+            impersonate="chrome"
+        )
+        
+        # HTTP hata kontrolü (403 veya diğer hatalar burada yakalanacak)
+        resp.raise_for_status()
 
-            for raw_line in resp.iter_lines():
-                if not raw_line:
-                    continue
+        for line in resp.iter_lines():
+            if not line:
+                continue
 
-                line = raw_line.decode("utf-8")
-                if not line.startswith("data: "):
-                    continue
+            # curl_cffi line'ları genellikle string veya bytes dönebilir, güvenli decode yapıyoruz
+            if isinstance(line, bytes):
+                line_str = line.decode("utf-8")
+            else:
+                line_str = str(line)
 
-                data_text = line[6:].strip()
-                if data_text == "[DONE]":
-                    break
+            if not line_str.startswith("data: "):
+                continue
 
-                try:
-                    data = json.loads(data_text)
-                except json.JSONDecodeError:
-                    continue
+            data_text = line_str[6:].strip()
+            if data_text == "[DONE]":
+                break
 
-                delta = data.get("choices", [{}])[0].get("delta", {})
-                token = delta.get("content", "")
-                if token:
-                    full_response += token
-                    yield f"data: {json.dumps({'token': token})}\n\n"
+            try:
+                data = json.loads(data_text)
+            except json.JSONDecodeError:
+                continue
 
-    except requests.exceptions.ConnectionError:
-        return "Groq API bağlantısı kurulamadı. Lütfen daha sonra tekrar deneyin.", {
-            "retryable": True,
-            "model": model,
-            "key_index": key_index,
-            "reason": "connection",
-        }
-    except requests.exceptions.Timeout:
-        return "Groq API zaman aşımına uğradı. Lütfen tekrar deneyin.", {
-            "retryable": True,
-            "model": model,
-            "key_index": key_index,
-            "reason": "timeout",
-        }
-    except requests.exceptions.HTTPError as e:
-        status_code = e.response.status_code if e.response is not None else 0
+            delta = data.get("choices", [{}])[0].get("delta", {})
+            token = delta.get("content", "")
+            if token:
+                full_response += token
+                yield f"data: {json.dumps({'token': token})}\n\n"
+
+    except curl_requests.errors.RequestsError as e:
+        # curl_cffi kütüphanesinin kendi network/bağlantı hatalarını yakalıyoruz
+        error_msg = str(e).lower()
+        reason = "exception"
+        
+        if "timeout" in error_msg:
+            reason = "timeout"
+            return "Groq API zaman aşımına uğradı. Lütfen tekrar deneyin.", {
+                "retryable": True, "model": model, "key_index": key_index, "reason": reason
+            }
+        elif "connect" in error_msg or "resolve" in error_msg:
+            reason = "connection"
+            return "Groq API bağlantısı kurulamadı. Lütfen daha sonra tekrar deneyin.", {
+                "retryable": True, "model": model, "key_index": key_index, "reason": reason
+            }
+            
+        # Eğer HTTP durum kodu varsa (örneğin hala bir sebeple HTTP hatası geldiyse)
+        status_code = 0
         response_text = ""
         rate_headers = {}
-        if e.response is not None:
+        
+        if hasattr(e, "response") and e.response is not None:
+            status_code = e.response.status_code
             response_text = e.response.text[:2000]
+            # Rate limit başlıklarını filtreleme lojiğini koruyoruz
             rate_headers = {
                 key: value
                 for key, value in e.response.headers.items()
                 if key.lower().startswith(("x-ratelimit", "retry-after", "x-request-id"))
             }
+            reason = f"http_{status_code}"
+            
         log.error(
             "Groq API HTTP error status=%s model=%s rate_headers=%s body=%s",
             status_code,
@@ -819,17 +833,22 @@ def stream_groq_model(messages: List[Dict], model: str, api_key: str, key_index:
             response_text,
             exc_info=True,
         )
-        # 404 can happen when a Groq model is unavailable, deprecated, or not
-        # enabled for the project. Keep walking the fallback chain.
-        retryable = status_code in {404, 429} or 500 <= status_code <= 599
-        return f"Groq API hatası: HTTP {status_code}", {
-            "retryable": retryable,
-            "model": model,
-            "key_index": key_index,
-            "reason": f"http_{status_code}",
-            "status_code": status_code,
-            "rate_headers": rate_headers,
-        }
+        
+        if status_code > 0:
+            retryable = status_code in {404, 429} or 500 <= status_code <= 599
+            return f"Groq API hatası: HTTP {status_code}", {
+                "retryable": retryable,
+                "model": model,
+                "key_index": key_index,
+                "reason": reason,
+                "status_code": status_code,
+                "rate_headers": rate_headers,
+            }
+        else:
+            return f"Groq API hatası: {str(e)}", {
+                "retryable": True, "model": model, "key_index": key_index, "reason": reason
+            }
+
     except Exception as e:
         log.exception("Groq streaming error model=%s", model)
         return f"Groq API hatası: {str(e)}", {
