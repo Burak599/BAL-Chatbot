@@ -1117,12 +1117,6 @@ def chat():
         return jsonify({"error": "message alanı gerekli"}), 400
 
     user_message = body["message"].strip()
-    log.warning(
-        "CHAT REQUEST user=%s session=%s msg=%s",
-        identity["subject_id"] if identity else "unknown",
-        session_id,
-        user_message[:200]
-    )
     session_id = body.get("session_id", "default")
 
     if not user_message:
@@ -1142,6 +1136,14 @@ def chat():
         except Exception:
             log.exception("Failed to log missing identity details")
         return jsonify({"error": "Ziyaretçi kimliği alınamadı; lütfen sayfayı yenileyin."}), 401
+
+    # 🔥 LOGLAMA BURADA: Değişkenler (identity ve session_id) tanımlandıktan sonra güvenle basılıyor.
+    log.warning(
+        "CHAT REQUEST user=%s session=%s msg=%s",
+        identity["subject_id"] if identity else "unknown",
+        session_id,
+        user_message[:200]
+    )
 
     quota_ok, quota, quota_error = check_quota(identity)
     if not quota_ok:
@@ -1203,7 +1205,7 @@ def chat():
             # Persist question-answer pair in chat_logs
             try:
                 with SessionLocal() as db:
-                    last_index = db.query(func.max(ChatLog.question_index)).filter(ChatLog.user_id == int(identity["subject_id"])) .scalar()
+                    last_index = db.query(func.max(ChatLog.question_index)).filter(ChatLog.user_id == int(identity["subject_id"])).scalar()
                     next_index = (last_index or 0) + 1
                     log_entry = ChatLog(
                         user_id=int(identity["subject_id"]),
@@ -1229,17 +1231,6 @@ def chat():
             "X-Accel-Buffering": "no",
         },
     )
-
-
-@app.route("/api/clear", methods=["POST"])
-def clear_session():
-    """Clears the conversation history for the given session."""
-    body = request.get_json() or {}
-    session_id = body.get("session_id", "default")
-    if session_id in conversation_sessions:
-        conversation_sessions[session_id] = []
-        log.info(f"Session cleared: {session_id}")
-    return jsonify({"status": "cleared"})
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
