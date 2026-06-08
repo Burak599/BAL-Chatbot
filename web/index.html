@@ -880,48 +880,118 @@
 	      }
 	      .gate-shell {
 	        grid-template-columns: 1fr;
-	        grid-template-rows: auto minmax(0, 1fr);
+	        grid-template-rows: 72px minmax(0, 1fr);
 	        height: calc(100dvh - 24px);
 	        border-radius: 22px;
 	      }
 	      .gate-brand {
-	        padding: 18px;
-	        gap: 14px;
+	        padding: 10px 14px;
+	        gap: 10px;
+	        flex-direction: row;
+	        align-items: center;
+	        justify-content: flex-start;
 	      }
 	      .gate-brand::after {
-	        width: 120px;
-	        height: 120px;
-	        right: 18px;
-	        bottom: 18px;
+	        display: none;
 	      }
 	      .gate-logo {
-	        width: 52px;
-	        height: 52px;
-	        border-radius: 14px;
+	        width: 42px;
+	        height: 42px;
+	        border-radius: 11px;
+	        flex-shrink: 0;
+	      }
+	      .gate-title {
+	        display: flex;
+	        align-items: center;
+	        gap: 10px;
 	      }
 	      .gate-title h1 {
-	        margin-top: 12px;
-	        font-size: 1.9rem;
+	        margin-top: 0;
+	        font-size: 1.28rem;
+	        line-height: 1.05;
 	      }
 	      .gate-title p {
-	        max-width: 100%;
-	        font-size: .84rem;
-	        line-height: 1.48;
+	        display: none;
 	      }
 	      .gate-meta {
 	        display: none;
 	      }
 	      .gate-panel {
-	        padding: 18px;
+	        padding: 12px;
 	        min-height: 0;
+	      }
+	      .gate-kicker {
+	        display: none;
+	      }
+	      .gate-panel h2 {
+	        font-size: 1.08rem;
+	        line-height: 1.18;
+	        margin-bottom: 4px;
+	      }
+	      .gate-intro {
+	        font-size: .76rem;
+	        line-height: 1.38;
+	        margin-bottom: 8px;
+	      }
+	      .gate-tabs {
+	        gap: 6px;
+	        padding: 4px;
+	        border-radius: 12px;
+	        margin-bottom: 8px;
 	      }
 	      .gate-content {
 	        min-height: 0;
-	        padding: 17px;
+	        padding: 14px;
+	        border-radius: 14px;
 	      }
 	      .gate-tab {
-	        min-height: 42px;
-	        font-size: .82rem;
+	        min-height: 36px;
+	        border-radius: 9px;
+	        font-size: .78rem;
+	      }
+	      .gate-section h3 {
+	        font-size: .98rem;
+	        margin-bottom: 9px;
+	      }
+	      .gate-section p,
+	      .gate-section li {
+	        font-size: .84rem;
+	        line-height: 1.55;
+	      }
+	      .gate-section ul {
+	        gap: 7px;
+	      }
+	      .gate-author {
+	        margin-bottom: 10px;
+	        padding: 6px 9px;
+	        font-size: .72rem;
+	      }
+	      .gate-actions {
+	        margin-top: 9px;
+	        gap: 7px;
+	      }
+	      .gate-check {
+	        padding: 9px;
+	        border-radius: 12px;
+	        gap: 8px;
+	      }
+	      .gate-check input {
+	        width: 16px;
+	        height: 16px;
+	      }
+	      .gate-check span {
+	        font-size: .76rem;
+	        line-height: 1.35;
+	      }
+	      .gate-status {
+	        min-height: 16px;
+	        font-size: .68rem;
+	        line-height: 1.25;
+	      }
+	      #gate-continue {
+	        min-height: 40px;
+	        border-radius: 12px;
+	        font-size: .86rem;
 	      }
 	      .header-inner {
 	        min-height: 56px;
