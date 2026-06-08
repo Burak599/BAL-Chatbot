@@ -1276,14 +1276,14 @@ def run_startup_safely():
     llm_gateway = LLMGateway(CONFIG)
 
 # GUNICORN'UN UYGULAMAYI BAŞLATMASI İÇİN BURADA ÇAĞIRIYORUZ
-#run_startup_safely()
+run_startup_safely()
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # Entry Point
 # ═══════════════════════════════════════════════════════════════════════════════
 
 if __name__ == "__main__":
-    startup()
+    #startup()
     port = int(os.getenv("PORT", "5000"))
     ssl_context = "adhoc" if CONFIG["local_https"] and not os.getenv("PORT") else None
     app.run(
