@@ -659,6 +659,29 @@
 	      margin-bottom: 14px;
 	    }
 
+	    .gate-dev-warning {
+	      display: flex;
+	      align-items: flex-start;
+	      gap: 10px;
+	      padding: 12px 14px;
+	      margin-bottom: 14px;
+	      border: 1px solid #fed7aa;
+	      border-radius: 14px;
+	      background: #fff7ed;
+	      color: #9a3412;
+	      font-size: 0.88rem;
+	      line-height: 1.55;
+	      font-weight: 650;
+	      box-shadow: var(--shadow-sm);
+	    }
+
+	    .gate-dev-warning::before {
+	      content: "⚠️";
+	      font-size: 1.2rem;
+	      flex-shrink: 0;
+	      line-height: 1.4;
+	    }
+
 	    .gate-tab {
 	      position: relative;
 	      min-height: 44px;
@@ -1123,7 +1146,7 @@
 	        </div>
 	      </aside>
 
-	      <section class="gate-panel" aria-label="Başlangıç bilgilendirmesi">
+	    <section class="gate-panel" aria-label="Başlangıç bilgilendirmesi">
 	        <div class="gate-kicker">Başlamadan Önce</div>
 	        <h2>Kısa bilgilendirmeyi incele</h2>
 	        <p class="gate-intro">Devam etmek için iki sekmeyi de açman ve kullanım koşullarını kabul etmen gerekir.</p>
@@ -1136,6 +1159,8 @@
 	            Proje Hakkında
 	          </button>
 	        </div>
+
+	        <div class="gate-dev-warning">Bu asistan geliştirme aşamasındadır; vereceği yanıtlar eksik veya hatalı olabilir. Kullanıcı geri bildirimleriyle sürekli iyileştirilmektedir.</div>
 
 	        <div class="gate-content">
 		          <article class="gate-section active" id="panel-terms" role="tabpanel" aria-labelledby="tab-terms">
@@ -1251,7 +1276,7 @@
 	    const gateContinue = document.getElementById('gate-continue');
 	    const gateStatus = document.getElementById('gate-status');
 	    const visitedGateTabs = {
-	      terms: false,
+	      terms: true,
 	      about: false,
 	    };
 
@@ -1266,6 +1291,8 @@
 	      daily_limit: 40,
 	      minute_limit: 5,
 	    };
+
+	    let congestionNoticeVisible = false;
 
 	    function openGateTab(tabName) {
 	      visitedGateTabs[tabName] = true;
@@ -1285,21 +1312,11 @@
 	    }
 
 	    function updateGateContinueState() {
-	      if (!gateAgree || !gateContinue || !gateStatus) return;
-	      const openedAllTabs = visitedGateTabs.terms && visitedGateTabs.about;
-	      const canContinue = openedAllTabs && gateAgree.checked;
-	      gateContinue.disabled = !canContinue;
-
-	      if (canContinue) {
-	        gateStatus.textContent = 'Hazır. Devam ederek BAL Asistanı açabilirsin.';
-	      } else if (!openedAllTabs && !gateAgree.checked) {
-	        gateStatus.textContent = 'Devam etmek için iki sekmeyi de aç ve onay kutusunu işaretle.';
-	      } else if (!openedAllTabs) {
-	        gateStatus.textContent = 'Devam etmek için Kullanım Şartları ve Proje Hakkında sekmelerinin ikisini de aç.';
-	      } else {
-	        gateStatus.textContent = 'Devam etmek için onay kutusunu işaretle.';
-	      }
-	    }
+        if (!gateAgree || !gateContinue || !gateStatus) return;
+        const canContinue = gateAgree.checked;
+        gateContinue.disabled = !canContinue;
+        gateStatus.textContent = canContinue ? 'Hazır. Devam ederek BAL Asistanı açabilirsin.' : 'Devam etmek için onay kutusunu işaretle.';
+      }
 
 	    function enterChat() {
 	      document.body.classList.remove('gate-active');
@@ -1389,6 +1406,32 @@
         pill.remove();
       });
       noticeLayer.appendChild(pill);
+    }
+
+    function showCongestionNotice() {
+      if (!noticeLayer) return;
+      if (congestionNoticeVisible) return;
+      congestionNoticeVisible = true;
+      const pill = document.createElement('div');
+      pill.className = 'notice-pill';
+      pill.innerHTML = `
+        <span>⚠️ Şu anda yoğunluk var, yanıtlar normalden geç gelebilir.</span>
+        <button class="notice-close" type="button" aria-label="Kapat">×</button>
+      `;
+      pill.querySelector('.notice-close')?.addEventListener('click', () => {
+        congestionNoticeVisible = false;
+        pill.remove();
+      });
+      noticeLayer.appendChild(pill);
+    }
+
+    function hideCongestionNotice() {
+      if (!noticeLayer || !congestionNoticeVisible) return;
+      congestionNoticeVisible = false;
+      const pills = noticeLayer.querySelectorAll('.notice-pill');
+      pills.forEach(p => {
+        if (p.textContent.includes('yoğunluk')) p.remove();
+      });
     }
 
     function showModelFallbackNotice(notice) {
@@ -1522,7 +1565,6 @@
         const reader = response.body.getReader();
         const decoder = new TextDecoder();
         let rawText = '';
-        let sources = [];
         let sseBuffer = '';
         let sseHadError = false;
 
@@ -1542,12 +1584,16 @@
               sseHadError = true;
             }
 
+            if (data.congestion) {
+              showCongestionNotice();
+            }
+
             if (data.model_fallback) {
               showModelFallbackNotice(data.model_fallback);
             }
 
             if (data.done) {
-              sources = data.sources || [];
+              // done event — no sources displayed
             }
           } catch { /* */ }
         };
@@ -1568,20 +1614,6 @@
           }
         }
         if (sseBuffer.trim()) processSseLine(sseBuffer.trim());
-
-        if (sources.length > 0) {
-          const sourcesEl = document.createElement('div');
-          sourcesEl.className = 'sources';
-          sources.forEach(s => {
-            const chip = document.createElement('div');
-            chip.className = 'source-chip';
-            const parts = s.breadcrumb.split(' > ');
-            chip.textContent = parts[parts.length - 1] || s.breadcrumb;
-            chip.title = `${s.breadcrumb}`;
-            sourcesEl.appendChild(chip);
-          });
-          wrap.appendChild(sourcesEl);
-        }
 
         if (!sseHadError) {
           await loadAuthStatus();

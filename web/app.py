@@ -272,6 +272,12 @@ llm_gateway = None         # LLMGateway instance; owns provider routing
 # Only plain user text is stored (no RAG context), keeping history compact.
 conversation_sessions: Dict[str, List[Dict]] = {}
 
+# ── Active request counter for congestion detection ──────────────────────────
+import threading
+active_requests = 0
+active_requests_lock = threading.Lock()
+CONGESTION_THRESHOLD = 1
+
 engine = create_engine(
     CONFIG["database_url"],
     pool_pre_ping=True,
@@ -1171,28 +1177,48 @@ def chat():
         Intercepts the __full_response__ marker to persist history,
         then emits the final 'done' event with source metadata.
         """
+        global active_requests
         full_response = ""
         had_error = False
 
-        # ── Send the turn through our backend gateway ────────────────────────
-        token_stream = llm_gateway.stream_chat(recent_history, augmented_message)
+        # ── Increment active request counter ─────────────────────────────────
+        with active_requests_lock:
+            active_requests += 1
+            current_active = active_requests
+            log.warning("CONGESTION active_requests=%s threshold=%s", current_active, CONGESTION_THRESHOLD)
 
-        # ── Forward tokens to the client, capture the full response ───────────
-        for event in token_stream:
-            # Parse every event to check for internal markers
-            if "__full_response__" in event:
-                try:
-                    payload = json.loads(event.replace("data: ", "").strip())
-                    full_response = payload.get("__full_response__", "")
-                except Exception:
-                    pass
-                # Do NOT forward this internal marker to the client
-                continue
+        try:
+            # ── Send congestion warning if threshold met or exceeded ────────
+            if current_active >= CONGESTION_THRESHOLD:
+                yield f"data: {json.dumps({'congestion': True, 'active_requests': current_active})}\n\n"
 
-            if '"error"' in event:
-                had_error = True
+            # ── Send the turn through our backend gateway ────────────────────
+            token_stream = llm_gateway.stream_chat(recent_history, augmented_message)
 
-            yield event   # Forward token or error events straight to the client
+            # ── Forward tokens to the client, capture the full response ──────
+            for event in token_stream:
+                # Parse every event to check for internal markers
+                if "__full_response__" in event:
+                    try:
+                        payload = json.loads(event.replace("data: ", "").strip())
+                        full_response = payload.get("__full_response__", "")
+                    except Exception:
+                        pass
+                    # Do NOT forward this internal marker to the client
+                    continue
+
+                if '"error"' in event:
+                    had_error = True
+
+                yield event   # Forward token or error events straight to the client
+
+        except Exception:
+            log.exception("Unexpected error during stream generation")
+        finally:
+            # ── Decrement active request counter ─────────────────────────────
+            with active_requests_lock:
+                active_requests -= 1
+                log.warning("CONGESTION active_requests decremented to %s", active_requests)
 
         # ── Persist history (only on success) ────────────────────────────────
         if full_response and not had_error:

@@ -14,7 +14,7 @@
   "faiss_index_file": "/home/burak/Masaüstü/ChatbotBAL/data/bal_faiss.index",
   "chunks_meta_file": "/home/burak/Masaüstü/ChatbotBAL/data/bal_chunks.json",
   "vectorstore_config_file": "/home/burak/Masaüstü/ChatbotBAL/data/vectorstore_config.json",
-  "total_chunks": 134,
+  "total_chunks": 135,
   "embedding_dim": 3072,
-  "build_timestamp": "2026-06-04 22:08:42"
+  "build_timestamp": "2026-06-10 19:45:27"
 }
