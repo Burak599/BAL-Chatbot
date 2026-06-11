@@ -498,356 +498,431 @@
 
     #char-count { font-weight: 700; }
 
-	    .project-note {
-	      flex: 1;
-	      min-width: 0;
-	      text-align: center;
-	    }
+    .project-note {
+      flex: 1;
+      min-width: 0;
+      text-align: center;
+    }
 
-	    body.gate-active header,
-	    body.gate-active #chat-container {
-	      display: none;
-	    }
+    body.gate-active header,
+    body.gate-active #chat-container {
+      display: none;
+    }
 
-	    #entry-gate {
-	      min-height: 100vh;
-	      min-height: 100dvh;
-	      height: 100vh;
-	      height: 100dvh;
-	      width: 100%;
-	      display: none;
-	      overflow: hidden;
-	      background:
-	        radial-gradient(circle at 18% 12%, rgba(17, 101, 216, .12), transparent 34%),
-	        linear-gradient(135deg, #f8fafc 0%, #ffffff 45%, #eef6ff 100%);
-	      padding: 28px 18px;
-	    }
+    #entry-gate {
+      min-height: 100vh;
+      min-height: 100dvh;
+      height: 100vh;
+      height: 100dvh;
+      width: 100%;
+      display: none;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 18% 12%, rgba(17, 101, 216, .12), transparent 34%),
+        linear-gradient(135deg, #f8fafc 0%, #ffffff 45%, #eef6ff 100%);
+      padding: 28px 18px;
+    }
 
-	    body.gate-active #entry-gate {
-	      display: flex;
-	      align-items: center;
-	      justify-content: center;
-	    }
+    body.gate-active #entry-gate {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
-	    .gate-shell {
-	      width: min(920px, 100%);
-	      height: min(720px, calc(100dvh - 56px));
-	      display: grid;
-	      grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
-	      background: rgba(255, 255, 255, .88);
-	      border: 1px solid rgba(207, 214, 223, .82);
-	      border-radius: 28px;
-	      overflow: hidden;
-	      box-shadow: 0 28px 76px rgba(16, 24, 40, .16);
-	      backdrop-filter: blur(22px);
-	    }
+    .gate-shell {
+      width: min(920px, 100%);
+      height: min(720px, calc(100dvh - 56px));
+      display: grid;
+      grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+      background: rgba(255, 255, 255, .88);
+      border: 1px solid rgba(207, 214, 223, .82);
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow: 0 28px 76px rgba(16, 24, 40, .16);
+      backdrop-filter: blur(22px);
+    }
 
-	    .gate-brand {
-	      position: relative;
-	      padding: 36px;
-	      background:
-	        linear-gradient(155deg, rgba(17, 101, 216, .96), rgba(15, 118, 110, .92)),
-	        #1165d8;
-	      color: #ffffff;
-	      display: flex;
-	      flex-direction: column;
-	      justify-content: space-between;
-	      gap: 34px;
-	    }
+    .gate-brand {
+      position: relative;
+      padding: 36px;
+      background:
+        linear-gradient(155deg, rgba(17, 101, 216, .96), rgba(15, 118, 110, .92)),
+        #1165d8;
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 34px;
+    }
 
-	    .gate-brand::after {
-	      content: "";
-	      position: absolute;
-	      inset: auto 28px 28px auto;
-	      width: 190px;
-	      height: 190px;
-	      border-radius: 50%;
-	      background: rgba(255, 255, 255, .11);
-	    }
+    .gate-brand::after {
+      content: "";
+      position: absolute;
+      inset: auto 28px 28px auto;
+      width: 190px;
+      height: 190px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, .11);
+    }
 
-	    .gate-logo {
-	      width: 64px;
-	      height: 64px;
-	      border-radius: 18px;
-	      background: rgba(255, 255, 255, .96);
-	      display: flex;
-	      align-items: center;
-	      justify-content: center;
-	      overflow: hidden;
-	      box-shadow: 0 18px 38px rgba(0, 0, 0, .18);
-	    }
+    .gate-logo {
+      width: 64px;
+      height: 64px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, .96);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      box-shadow: 0 18px 38px rgba(0, 0, 0, .18);
+    }
 
-	    .gate-logo img {
-	      width: 100%;
-	      height: 100%;
-	      object-fit: contain;
-	    }
+    .gate-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
 
-	    .gate-title {
-	      position: relative;
-	      z-index: 1;
-	    }
+    .gate-title {
+      position: relative;
+      z-index: 1;
+    }
 
-	    .gate-title h1 {
-	      margin-top: 22px;
-	      font-size: clamp(2.35rem, 6vw, 4rem);
-	      line-height: 1;
-	      font-weight: 780;
-	      letter-spacing: 0;
-	    }
+    .gate-title h1 {
+      margin-top: 22px;
+      font-size: clamp(2.35rem, 6vw, 4rem);
+      line-height: 1;
+      font-weight: 780;
+      letter-spacing: 0;
+    }
 
-	    .gate-title p {
-	      max-width: 330px;
-	      margin-top: 16px;
-	      color: rgba(255, 255, 255, .84);
-	      font-size: .98rem;
-	      line-height: 1.65;
-	      font-weight: 500;
-	    }
+    .gate-title p {
+      max-width: 330px;
+      margin-top: 16px;
+      color: rgba(255, 255, 255, .84);
+      font-size: .98rem;
+      line-height: 1.65;
+      font-weight: 500;
+    }
 
-	    .gate-meta {
-	      position: relative;
-	      z-index: 1;
-	      display: grid;
-	      gap: 12px;
-	      color: rgba(255, 255, 255, .78);
-	      font-size: .78rem;
-	      line-height: 1.45;
-	      font-weight: 650;
-	    }
+    .gate-meta {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      gap: 12px;
+      color: rgba(255, 255, 255, .78);
+      font-size: .78rem;
+      line-height: 1.45;
+      font-weight: 650;
+    }
 
-	    .gate-panel {
-	      padding: 34px;
-	      display: flex;
-	      flex-direction: column;
-	      min-width: 0;
-	      min-height: 0;
-	    }
+    .gate-panel {
+      padding: 34px;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      min-height: 0;
+    }
 
-	    .gate-kicker {
-	      color: var(--accent);
-	      font-size: .78rem;
-	      font-weight: 800;
-	      letter-spacing: 0;
-	      margin-bottom: 10px;
-	    }
+    .gate-kicker {
+      color: var(--accent);
+      font-size: .78rem;
+      font-weight: 800;
+      letter-spacing: 0;
+      margin-bottom: 10px;
+    }
 
-	    .gate-panel h2 {
-	      color: var(--text);
-	      font-size: clamp(1.5rem, 4vw, 2rem);
-	      line-height: 1.15;
-	      letter-spacing: 0;
-	      font-weight: 780;
-	      margin-bottom: 10px;
-	    }
+    .gate-panel h2 {
+      color: var(--text);
+      font-size: clamp(1.5rem, 4vw, 2rem);
+      line-height: 1.15;
+      letter-spacing: 0;
+      font-weight: 780;
+      margin-bottom: 10px;
+    }
 
-	    .gate-intro {
-	      color: var(--text-muted);
-	      font-size: .94rem;
-	      line-height: 1.62;
-	      margin-bottom: 22px;
-	    }
+    .gate-intro {
+      color: var(--text-muted);
+      font-size: .94rem;
+      line-height: 1.62;
+      margin-bottom: 22px;
+    }
 
-	    .gate-tabs {
-	      display: grid;
-	      grid-template-columns: repeat(2, minmax(0, 1fr));
-	      gap: 8px;
-	      padding: 5px;
-	      border: 1px solid var(--border);
-	      border-radius: 14px;
-	      background: var(--surface-subtle);
-	      margin-bottom: 14px;
-	    }
+    .gate-tabs {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      padding: 5px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--surface-subtle);
+      margin-bottom: 14px;
+    }
 
-	    .gate-dev-warning {
-	      display: flex;
-	      align-items: flex-start;
-	      gap: 10px;
-	      padding: 12px 14px;
-	      margin-bottom: 14px;
-	      border: 1px solid #fed7aa;
-	      border-radius: 14px;
-	      background: #fff7ed;
-	      color: #9a3412;
-	      font-size: 0.88rem;
-	      line-height: 1.55;
-	      font-weight: 650;
-	      box-shadow: var(--shadow-sm);
-	    }
+    .gate-dev-warning {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 12px 14px;
+      margin-bottom: 14px;
+      border: 1px solid #fed7aa;
+      border-radius: 14px;
+      background: #fff7ed;
+      color: #9a3412;
+      font-size: 0.88rem;
+      line-height: 1.55;
+      font-weight: 650;
+      box-shadow: var(--shadow-sm);
+    }
 
-	    .gate-dev-warning::before {
-	      content: "⚠️";
-	      font-size: 1.2rem;
-	      flex-shrink: 0;
-	      line-height: 1.4;
-	    }
+    .gate-dev-warning::before {
+      content: "⚠️";
+      font-size: 1.2rem;
+      flex-shrink: 0;
+      line-height: 1.4;
+    }
 
-	    .gate-tab {
-	      position: relative;
-	      min-height: 44px;
-	      border: 0;
-	      border-radius: 10px;
-	      background: transparent;
-	      color: var(--text-muted);
-	      cursor: pointer;
-	      font-size: .88rem;
-	      font-weight: 760;
-	      transition: background .15s ease, color .15s ease, box-shadow .15s ease;
-	    }
+    .gate-tab {
+      position: relative;
+      min-height: 44px;
+      border: 0;
+      border-radius: 10px;
+      background: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: .88rem;
+      font-weight: 760;
+      transition: background .15s ease, color .15s ease, box-shadow .15s ease;
+    }
 
-	    .gate-tab.active {
-	      background: #ffffff;
-	      color: var(--text);
-	      box-shadow: var(--shadow-sm);
-	    }
+    .gate-tab.active {
+      background: #ffffff;
+      color: var(--text);
+      box-shadow: var(--shadow-sm);
+    }
 
-	    .gate-tab.visited::after {
-	      content: "";
-	      position: absolute;
-	      top: 9px;
-	      right: 10px;
-	      width: 7px;
-	      height: 7px;
-	      border-radius: 50%;
-	      background: var(--success);
-	    }
+    .gate-tab.visited::after {
+      content: "";
+      position: absolute;
+      top: 9px;
+      right: 10px;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--success);
+    }
 
-	    .gate-content {
-	      flex: 1;
-	      min-height: 0;
-	      border: 1px solid var(--border);
-	      border-radius: 18px;
-	      background: #ffffff;
-	      padding: 22px;
-	      box-shadow: var(--shadow-sm);
-	      overflow-y: auto;
-	      scrollbar-width: thin;
-	      scrollbar-color: #cbd5e1 #f8fafc;
-	    }
+    .gate-content {
+      flex: 1;
+      min-height: 0;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      background: #ffffff;
+      padding: 22px;
+      box-shadow: var(--shadow-sm);
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: #cbd5e1 #f8fafc;
+    }
 
-	    .gate-content::-webkit-scrollbar {
-	      width: 10px;
-	    }
+    .gate-content::-webkit-scrollbar {
+      width: 10px;
+    }
 
-	    .gate-content::-webkit-scrollbar-track {
-	      background: #f8fafc;
-	      border-radius: 999px;
-	    }
+    .gate-content::-webkit-scrollbar-track {
+      background: #f8fafc;
+      border-radius: 999px;
+    }
 
-	    .gate-content::-webkit-scrollbar-thumb {
-	      background: #cbd5e1;
-	      border: 2px solid #f8fafc;
-	      border-radius: 999px;
-	    }
+    .gate-content::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border: 2px solid #f8fafc;
+      border-radius: 999px;
+    }
 
-	    .gate-section {
-	      display: none;
-	      animation: fadeUp .2s ease both;
-	    }
+    .gate-section {
+      display: none;
+      animation: fadeUp .2s ease both;
+    }
 
-	    .gate-section.active {
-	      display: block;
-	    }
+    .gate-section.active {
+      display: block;
+    }
 
-	    .gate-section h3 {
-	      color: var(--text);
-	      font-size: 1.06rem;
-	      line-height: 1.3;
-	      letter-spacing: 0;
-	      margin-bottom: 12px;
-	    }
+    .gate-section h3 {
+      color: var(--text);
+      font-size: 1.06rem;
+      line-height: 1.3;
+      letter-spacing: 0;
+      margin-bottom: 12px;
+    }
 
-	    .gate-section p,
-	    .gate-section li {
-	      color: var(--text-muted);
-	      font-size: .92rem;
-	      line-height: 1.68;
-	    }
+    .gate-section p,
+    .gate-section li {
+      color: var(--text-muted);
+      font-size: .92rem;
+      line-height: 1.68;
+    }
 
-	    .gate-section ul {
-	      display: grid;
-	      gap: 9px;
-	      padding-left: 1.1rem;
-	    }
+    .gate-section ul {
+      display: grid;
+      gap: 9px;
+      padding-left: 1.1rem;
+    }
 
-	    .gate-author {
-	      width: fit-content;
-	      max-width: 100%;
-	      margin: 0 0 14px;
-	      padding: 7px 10px;
-	      border-radius: 10px;
-	      background: var(--brand-soft);
-	      border: 1px solid rgba(17, 101, 216, .14);
-	      color: var(--text);
-	      font-size: .78rem;
-	      font-weight: 750;
-	      line-height: 1.35;
-	    }
+    .gate-author {
+      width: fit-content;
+      max-width: 100%;
+      margin: 0 0 14px;
+      padding: 7px 10px;
+      border-radius: 10px;
+      background: var(--brand-soft);
+      border: 1px solid rgba(17, 101, 216, .14);
+      color: var(--text);
+      font-size: .78rem;
+      font-weight: 750;
+      line-height: 1.35;
+    }
 
-	    .gate-actions {
-	      margin-top: 18px;
-	      display: grid;
-	      gap: 13px;
-	    }
+    .gate-actions {
+      margin-top: 18px;
+      display: grid;
+      gap: 13px;
+    }
 
-	    .gate-check {
-	      display: flex;
-	      align-items: flex-start;
-	      gap: 11px;
-	      padding: 13px;
-	      border: 1px solid var(--border);
-	      border-radius: 14px;
-	      background: rgba(244, 246, 248, .72);
-	      cursor: pointer;
-	    }
+    .gate-check {
+      display: flex;
+      align-items: flex-start;
+      gap: 11px;
+      padding: 13px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: rgba(244, 246, 248, .72);
+      cursor: pointer;
+    }
 
-	    .gate-check input {
-	      width: 18px;
-	      height: 18px;
-	      margin-top: 2px;
-	      accent-color: var(--brand);
-	      flex-shrink: 0;
-	    }
+    .gate-check input {
+      width: 18px;
+      height: 18px;
+      margin-top: 2px;
+      accent-color: var(--brand);
+      flex-shrink: 0;
+    }
 
-	    .gate-check span {
-	      color: var(--text);
-	      font-size: .88rem;
-	      line-height: 1.5;
-	      font-weight: 650;
-	    }
+    .gate-check span {
+      color: var(--text);
+      font-size: .88rem;
+      line-height: 1.5;
+      font-weight: 650;
+    }
 
-	    .gate-status {
-	      min-height: 20px;
-	      color: var(--warning);
-	      font-size: .78rem;
-	      font-weight: 700;
-	      line-height: 1.45;
-	    }
+    .gate-status {
+      min-height: 20px;
+      color: var(--warning);
+      font-size: .78rem;
+      font-weight: 700;
+      line-height: 1.45;
+    }
 
-	    #gate-continue {
-	      min-height: 48px;
-	      border: 0;
-	      border-radius: 14px;
-	      background: var(--brand);
-	      color: #ffffff;
-	      cursor: pointer;
-	      font-size: .95rem;
-	      font-weight: 800;
-	      box-shadow: 0 14px 30px rgba(17, 101, 216, .25);
-	      transition: background .15s ease, transform .15s ease, box-shadow .15s ease, opacity .15s ease;
-	    }
+    #gate-continue {
+      min-height: 48px;
+      border: 0;
+      border-radius: 14px;
+      background: var(--brand);
+      color: #ffffff;
+      cursor: pointer;
+      font-size: .95rem;
+      font-weight: 800;
+      box-shadow: 0 14px 30px rgba(17, 101, 216, .25);
+      transition: background .15s ease, transform .15s ease, box-shadow .15s ease, opacity .15s ease;
+    }
 
-	    #gate-continue:hover:not(:disabled) {
-	      background: var(--brand-hover);
-	      transform: translateY(-1px);
-	      box-shadow: 0 18px 38px rgba(17, 101, 216, .3);
-	    }
+    #gate-continue:hover:not(:disabled) {
+      background: var(--brand-hover);
+      transform: translateY(-1px);
+      box-shadow: 0 18px 38px rgba(17, 101, 216, .3);
+    }
 
-	    #gate-continue:disabled {
-	      opacity: .46;
-	      cursor: not-allowed;
-	      box-shadow: none;
-	    }
+    #gate-continue:disabled {
+      opacity: .46;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    /* ── FEEDBACK ──────────────────────────────────────────────────────────── */
+    .fb-bar {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      margin-top: 6px;
+      max-width: min(710px, 92%);
+      opacity: 0.6;
+      transition: opacity .15s ease;
+    }
+    .fb-bar:hover { opacity: 1; }
+    .fb-btn {
+      width: 30px;
+      height: 30px;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background .15s ease, color .15s ease;
+    }
+    .fb-btn:hover { background: var(--surface-hover); color: var(--text); }
+    .fb-btn.fb-active { color: var(--brand); background: var(--brand-soft); }
+    .fb-btn.fb-active[data-fb-type="dislike"] { color: var(--error); background: #fef2f2; }
+    .fb-text-box {
+      width: 100%;
+      margin-top: 4px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      animation: fadeUp .15s ease both;
+    }
+    .fb-textarea {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 8px 10px;
+      font-size: 0.85rem;
+      line-height: 1.5;
+      resize: none;
+      background: #ffffff;
+      color: var(--text);
+      outline: none;
+      font-family: inherit;
+    }
+    .fb-textarea:focus { border-color: var(--brand); }
+    .fb-text-actions {
+      display: flex;
+      gap: 8px;
+      justify-content: flex-end;
+    }
+    .fb-text-cancel, .fb-text-send {
+      border: none;
+      border-radius: 8px;
+      padding: 6px 14px;
+      font-size: 0.8rem;
+      font-weight: 650;
+      cursor: pointer;
+      transition: background .15s ease;
+    }
+    .fb-text-cancel { background: var(--surface-subtle); color: var(--text-muted); }
+    .fb-text-cancel:hover { background: var(--surface-hover); }
+    .fb-text-send { background: var(--brand); color: #ffffff; }
+    .fb-text-send:hover { background: var(--brand-hover); }
+    .fb-thanks {
+      font-size: 0.78rem;
+      color: var(--success);
+      font-weight: 650;
+      padding: 4px 0;
+      animation: fadeUp .2s ease both;
+    }
 
     /* ── ANIMATIONS ────────────────────────────────────────────────────────── */
     @keyframes fadeUp {
@@ -891,135 +966,135 @@
     }
 
     /* ── RESPONSIVE ────────────────────────────────────────────────────────── */
-	    @media (max-width: 768px) {
-	      body { overflow: hidden; }
-	      .header-inner, #chat-container {
-	        padding-left: 12px;
-	        padding-right: 12px;
-	      }
-	      #entry-gate {
-	        align-items: flex-start;
-	        padding: 12px;
-	      }
-	      .gate-shell {
-	        grid-template-columns: 1fr;
-	        grid-template-rows: 72px minmax(0, 1fr);
-	        height: calc(100dvh - 24px);
-	        border-radius: 22px;
-	      }
-	      .gate-brand {
-	        padding: 10px 14px;
-	        gap: 10px;
-	        flex-direction: row;
-	        align-items: center;
-	        justify-content: flex-start;
-	      }
-	      .gate-brand::after {
-	        display: none;
-	      }
-	      .gate-logo {
-	        width: 42px;
-	        height: 42px;
-	        border-radius: 11px;
-	        flex-shrink: 0;
-	      }
-	      .gate-title {
-	        display: flex;
-	        align-items: center;
-	        gap: 10px;
-	      }
-	      .gate-title h1 {
-	        margin-top: 0;
-	        font-size: 1.28rem;
-	        line-height: 1.05;
-	      }
-	      .gate-title p {
-	        display: none;
-	      }
-	      .gate-meta {
-	        display: none;
-	      }
-	      .gate-panel {
-	        padding: 12px;
-	        min-height: 0;
-	      }
-	      .gate-kicker {
-	        display: none;
-	      }
-	      .gate-panel h2 {
-	        font-size: 1.08rem;
-	        line-height: 1.18;
-	        margin-bottom: 4px;
-	      }
-	      .gate-intro {
-	        font-size: .76rem;
-	        line-height: 1.38;
-	        margin-bottom: 8px;
-	      }
-	      .gate-tabs {
-	        gap: 6px;
-	        padding: 4px;
-	        border-radius: 12px;
-	        margin-bottom: 8px;
-	      }
-	      .gate-content {
-	        min-height: 0;
-	        padding: 14px;
-	        border-radius: 14px;
-	      }
-	      .gate-tab {
-	        min-height: 36px;
-	        border-radius: 9px;
-	        font-size: .78rem;
-	      }
-	      .gate-section h3 {
-	        font-size: .98rem;
-	        margin-bottom: 9px;
-	      }
-	      .gate-section p,
-	      .gate-section li {
-	        font-size: .84rem;
-	        line-height: 1.55;
-	      }
-	      .gate-section ul {
-	        gap: 7px;
-	      }
-	      .gate-author {
-	        margin-bottom: 10px;
-	        padding: 6px 9px;
-	        font-size: .72rem;
-	      }
-	      .gate-actions {
-	        margin-top: 9px;
-	        gap: 7px;
-	      }
-	      .gate-check {
-	        padding: 9px;
-	        border-radius: 12px;
-	        gap: 8px;
-	      }
-	      .gate-check input {
-	        width: 16px;
-	        height: 16px;
-	      }
-	      .gate-check span {
-	        font-size: .76rem;
-	        line-height: 1.35;
-	      }
-	      .gate-status {
-	        min-height: 16px;
-	        font-size: .68rem;
-	        line-height: 1.25;
-	      }
-	      #gate-continue {
-	        min-height: 40px;
-	        border-radius: 12px;
-	        font-size: .86rem;
-	      }
-	      .header-inner {
-	        min-height: 56px;
-	        justify-content: center;
-	        gap: 10px;
+    @media (max-width: 768px) {
+      body { overflow: hidden; }
+      .header-inner, #chat-container {
+        padding-left: 12px;
+        padding-right: 12px;
+      }
+      #entry-gate {
+        align-items: flex-start;
+        padding: 12px;
+      }
+      .gate-shell {
+        grid-template-columns: 1fr;
+        grid-template-rows: 72px minmax(0, 1fr);
+        height: calc(100dvh - 24px);
+        border-radius: 22px;
+      }
+      .gate-brand {
+        padding: 10px 14px;
+        gap: 10px;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+      }
+      .gate-brand::after {
+        display: none;
+      }
+      .gate-logo {
+        width: 42px;
+        height: 42px;
+        border-radius: 11px;
+        flex-shrink: 0;
+      }
+      .gate-title {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .gate-title h1 {
+        margin-top: 0;
+        font-size: 1.28rem;
+        line-height: 1.05;
+      }
+      .gate-title p {
+        display: none;
+      }
+      .gate-meta {
+        display: none;
+      }
+      .gate-panel {
+        padding: 12px;
+        min-height: 0;
+      }
+      .gate-kicker {
+        display: none;
+      }
+      .gate-panel h2 {
+        font-size: 1.08rem;
+        line-height: 1.18;
+        margin-bottom: 4px;
+      }
+      .gate-intro {
+        font-size: .76rem;
+        line-height: 1.38;
+        margin-bottom: 8px;
+      }
+      .gate-tabs {
+        gap: 6px;
+        padding: 4px;
+        border-radius: 12px;
+        margin-bottom: 8px;
+      }
+      .gate-content {
+        min-height: 0;
+        padding: 14px;
+        border-radius: 14px;
+      }
+      .gate-tab {
+        min-height: 36px;
+        border-radius: 9px;
+        font-size: .78rem;
+      }
+      .gate-section h3 {
+        font-size: .98rem;
+        margin-bottom: 9px;
+      }
+      .gate-section p,
+      .gate-section li {
+        font-size: .84rem;
+        line-height: 1.55;
+      }
+      .gate-section ul {
+        gap: 7px;
+      }
+      .gate-author {
+        margin-bottom: 10px;
+        padding: 6px 9px;
+        font-size: .72rem;
+      }
+      .gate-actions {
+        margin-top: 9px;
+        gap: 7px;
+      }
+      .gate-check {
+        padding: 9px;
+        border-radius: 12px;
+        gap: 8px;
+      }
+      .gate-check input {
+        width: 16px;
+        height: 16px;
+      }
+      .gate-check span {
+        font-size: .76rem;
+        line-height: 1.35;
+      }
+      .gate-status {
+        min-height: 16px;
+        font-size: .68rem;
+        line-height: 1.25;
+      }
+      #gate-continue {
+        min-height: 40px;
+        border-radius: 12px;
+        font-size: .86rem;
+      }
+      .header-inner {
+        min-height: 56px;
+        justify-content: center;
+        gap: 10px;
       }
       .logo { width: 36px; height: 36px; border-radius: 9px; }
       .header-text h1 { font-size: 0.95rem; }
@@ -1076,8 +1151,9 @@
         padding: 8px;
         border-radius: 14px;
       }
-      #user-input {
-        font-size: 0.92rem;
+      #user-input,
+      .fb-textarea {
+        font-size: 16px;
         min-height: 30px;
         max-height: 112px;
         line-height: 1.5;
@@ -1129,79 +1205,79 @@
   </style>
 </head>
 
-	<body class="gate-active">
-	  <main id="entry-gate" aria-labelledby="gate-heading">
-	    <section class="gate-shell">
-	      <aside class="gate-brand">
-	        <div class="gate-title">
-	          <div class="gate-logo">
-	            <img src="BAL_Logo.png" alt="BAL Logo" />
-	          </div>
-	          <h1 id="gate-heading">BAL Asistan</h1>
-	          <p>Bornova Anadolu Lisesi hakkında hızlı, sade ve kaynaklı bilgi almak için geliştirilen yapay zeka destekli öğrenci projesi.</p>
-	        </div>
-	        <div class="gate-meta">
-	          <span>Bilgilendirme amaçlıdır.</span>
-	          <span>Resmi işlemlerde okul idaresi ve MEB kaynakları esas alınır.</span>
-	        </div>
-	      </aside>
+<body class="gate-active">
+  <main id="entry-gate" aria-labelledby="gate-heading">
+    <section class="gate-shell">
+      <aside class="gate-brand">
+        <div class="gate-title">
+          <div class="gate-logo">
+            <img src="BAL_Logo.png" alt="BAL Logo" />
+          </div>
+          <h1 id="gate-heading">BAL Asistan</h1>
+          <p>Bornova Anadolu Lisesi hakkında hızlı, sade ve kaynaklı bilgi almak için geliştirilen yapay zeka destekli öğrenci projesi.</p>
+        </div>
+        <div class="gate-meta">
+          <span>Bilgilendirme amaçlıdır.</span>
+          <span>Resmi işlemlerde okul idaresi ve MEB kaynakları esas alınır.</span>
+        </div>
+      </aside>
 
-	    <section class="gate-panel" aria-label="Başlangıç bilgilendirmesi">
-	        <div class="gate-kicker">Başlamadan Önce</div>
-	        <h2>Kısa bilgilendirmeyi incele</h2>
-	        <p class="gate-intro">Devam etmek için iki sekmeyi de açman ve kullanım koşullarını kabul etmen gerekir.</p>
+      <section class="gate-panel" aria-label="Başlangıç bilgilendirmesi">
+        <div class="gate-kicker">Başlamadan Önce</div>
+        <h2>Kısa bilgilendirmeyi incele</h2>
+        <p class="gate-intro">Devam etmek için iki sekmeyi de açman ve kullanım koşullarını kabul etmen gerekir.</p>
 
-	        <div class="gate-tabs" role="tablist" aria-label="Bilgilendirme sekmeleri">
-	          <button class="gate-tab active" id="tab-terms" type="button" role="tab" aria-selected="true" aria-controls="panel-terms" data-tab="terms">
-	            Kullanım Şartları
-	          </button>
-	          <button class="gate-tab" id="tab-about" type="button" role="tab" aria-selected="false" aria-controls="panel-about" data-tab="about">
-	            Proje Hakkında
-	          </button>
-	        </div>
+        <div class="gate-tabs" role="tablist" aria-label="Bilgilendirme sekmeleri">
+          <button class="gate-tab active" id="tab-terms" type="button" role="tab" aria-selected="true" aria-controls="panel-terms" data-tab="terms">
+            Kullanım Şartları
+          </button>
+          <button class="gate-tab" id="tab-about" type="button" role="tab" aria-selected="false" aria-controls="panel-about" data-tab="about">
+            Proje Hakkında
+          </button>
+        </div>
 
-	        <div class="gate-dev-warning">Bu asistan geliştirme aşamasındadır; vereceği yanıtlar eksik veya hatalı olabilir. Kullanıcı geri bildirimleriyle sürekli iyileştirilmektedir.</div>
+        <div class="gate-dev-warning">Bu asistan geliştirme aşamasındadır; vereceği yanıtlar eksik veya hatalı olabilir. Kullanıcı geri bildirimleriyle sürekli iyileştirilmektedir.</div>
 
-	        <div class="gate-content">
-		          <article class="gate-section active" id="panel-terms" role="tabpanel" aria-labelledby="tab-terms">
-		            <h3>Kullanım Şartları</h3>
-		            <ul>
-		              <li>BAL Asistan, Bornova Anadolu Lisesi hakkında genel bilgi sunmak amacıyla hazırlanmış bağımsız bir öğrenci projesidir; okul idaresi veya Milli Eğitim Bakanlığı adına resmi işlem yapmaz.</li>
-		              <li>Yanıtlar yalnızca bilgilendirme amaçlıdır. Kayıt, nakil, sınav, kontenjan, devamsızlık, burs, belge, dilekçe, disiplin, pansiyon ve benzeri resmi/idari konularda okul yönetimi, e-Okul, MEB ve okulun resmi duyuruları esas alınmalıdır.</li>
-		              <li>Yapay zeka yanıtları eksik, hatalı, yanlış anlaşılmış veya güncel olmayan bilgiler içerebilir. Önemli kararlar almadan önce bilgileri resmi kaynaklardan doğrulamak kullanıcının sorumluluğundadır.</li>
-		              <li>TC kimlik numarası, öğrenci numarası, telefon, adres, e-posta, şifre, sağlık bilgisi, aile bilgisi, not bilgisi veya başka kişisel/hassas bilgiler paylaşılmamalıdır.</li>
-		              <li>Başka öğrenciler, öğretmenler, personel veya okul topluluğu hakkında özel, küçük düşürücü, suçlayıcı, söylenti niteliğinde ya da kişisel veri içeren sorular sorulmamalıdır.</li>
-		              <li>Sisteme gönderilen sorular ve üretilen cevaplar; kaliteyi iyileştirmek, kötüye kullanımı önlemek, güvenliği sağlamak ve kullanım limitlerini uygulamak amacıyla kaydedilebilir.</li>
-		              <li>Bu asistan hukuki, tıbbi, psikolojik, mali veya resmi danışmanlık vermez. Acil, ciddi veya kişisel durumlarda ilgili uzmanlara, okul rehberlik servisine, okul idaresine ya da resmi kurumlara başvurulmalıdır.</li>
-		              <li>Devam ederek bu bilgilendirmeyi okuduğunu, BAL Asistanı yalnızca bilgilendirme amacıyla kullanacağını ve resmi konularda yetkili kaynakları esas alacağını kabul etmiş olursun.</li>
-		            </ul>
-		          </article>
+        <div class="gate-content">
+          <article class="gate-section active" id="panel-terms" role="tabpanel" aria-labelledby="tab-terms">
+            <h3>Kullanım Şartları</h3>
+            <ul>
+              <li>BAL Asistan, Bornova Anadolu Lisesi hakkında genel bilgi sunmak amacıyla hazırlanmış bağımsız bir öğrenci projesidir; okul idaresi veya Milli Eğitim Bakanlığı adına resmi işlem yapmaz.</li>
+              <li>Yanıtlar yalnızca bilgilendirme amaçlıdır. Kayıt, nakil, sınav, kontenjan, devamsızlık, burs, belge, dilekçe, disiplin, pansiyon ve benzeri resmi/idari konularda okul yönetimi, e-Okul, MEB ve okulun resmi duyuruları esas alınmalıdır.</li>
+              <li>Yapay zeka yanıtları eksik, hatalı, yanlış anlaşılmış veya güncel olmayan bilgiler içerebilir. Önemli kararlar almadan önce bilgileri resmi kaynaklardan doğrulamak kullanıcının sorumluluğundadır.</li>
+              <li>TC kimlik numarası, öğrenci numarası, telefon, adres, e-posta, şifre, sağlık bilgisi, aile bilgisi, not bilgisi veya başka kişisel/hassas bilgiler paylaşılmamalıdır.</li>
+              <li>Başka öğrenciler, öğretmenler, personel veya okul topluluğu hakkında özel, küçük düşürücü, suçlayıcı, söylenti niteliğinde ya da kişisel veri içeren sorular sorulmamalıdır.</li>
+              <li>Sisteme gönderilen sorular ve üretilen cevaplar; kaliteyi iyileştirmek, kötüye kullanımı önlemek, güvenliği sağlamak ve kullanım limitlerini uygulamak amacıyla kaydedilebilir.</li>
+              <li>Bu asistan hukuki, tıbbi, psikolojik, mali veya resmi danışmanlık vermez. Acil, ciddi veya kişisel durumlarda ilgili uzmanlara, okul rehberlik servisine, okul idaresine ya da resmi kurumlara başvurulmalıdır.</li>
+              <li>Devam ederek bu bilgilendirmeyi okuduğunu, BAL Asistanı yalnızca bilgilendirme amacıyla kullanacağını ve resmi konularda yetkili kaynakları esas alacağını kabul etmiş olursun.</li>
+            </ul>
+          </article>
 
-		          <article class="gate-section" id="panel-about" role="tabpanel" aria-labelledby="tab-about">
-		            <h3>Proje Hakkında</h3>
-		            <div class="gate-author">
-		              Hazırlayan: Burak Güldilek 9/K
-		            </div>
-		            <p>BAL Asistan, Bornova Anadolu Lisesi ile ilgili bilgilere daha hızlı ve düzenli ulaşılabilmesi için geliştirilen yapay zeka destekli bir sohbet asistanıdır. Proje; okulun akademik yapısı, kampüsü, gelenekleri, ulaşım bilgileri, sosyal etkinlikleri ve sık sorulan konular hakkında kısa, anlaşılır ve kaynak odaklı yanıtlar vermeyi amaçlar.</p>
-		            <p>Asistan, hazırlanmış bilgi setinden ilgili parçaları bulur ve kullanıcının sorusuna göre yanıt üretir. Bu nedenle resmi bir okul sistemi değildir; bilgilendirme ve teknoloji geliştirme amacıyla hazırlanmış bir öğrenci çalışmasıdır.</p>
-		            <p>Proje şu anda test aşamasındadır. Yanıt kalitesi, kaynak kapsamı ve kullanıcı deneyimi zamanla geliştirilebilir.</p>
-		          </article>
-	        </div>
+          <article class="gate-section" id="panel-about" role="tabpanel" aria-labelledby="tab-about">
+            <h3>Proje Hakkında</h3>
+            <div class="gate-author">
+              Hazırlayan: Burak Güldilek 9/K
+            </div>
+            <p>BAL Asistan, Bornova Anadolu Lisesi ile ilgili bilgilere daha hızlı ve düzenli ulaşılabilmesi için geliştirilen yapay zeka destekli bir sohbet asistanıdır. Proje; okulun akademik yapısı, kampüsü, gelenekleri, ulaşım bilgileri, sosyal etkinlikleri ve sık sorulan konular hakkında kısa, anlaşılır ve kaynak odaklı yanıtlar vermeyi amaçlar.</p>
+            <p>Asistan, hazırlanmış bilgi setinden ilgili parçaları bulur ve kullanıcının sorusuna göre yanıt üretir. Bu nedenle resmi bir okul sistemi değildir; bilgilendirme ve teknoloji geliştirme amacıyla hazırlanmış bir öğrenci çalışmasıdır.</p>
+            <p>Proje şu anda test aşamasındadır. Yanıt kalitesi, kaynak kapsamı ve kullanıcı deneyimi zamanla geliştirilebilir.</p>
+          </article>
+        </div>
 
-	        <div class="gate-actions">
-	          <label class="gate-check" for="gate-agree">
-	            <input id="gate-agree" type="checkbox" />
-	            <span>Kullanım şartlarını ve proje bilgilendirmesini okudum, anladım ve kabul ediyorum.</span>
-	          </label>
-	          <div class="gate-status" id="gate-status">Devam etmek için iki sekmeyi de aç ve onay kutusunu işaretle.</div>
-	          <button id="gate-continue" type="button" disabled>Devam Et</button>
-	        </div>
-	      </section>
-	    </section>
-	  </main>
+        <div class="gate-actions">
+          <label class="gate-check" for="gate-agree">
+            <input id="gate-agree" type="checkbox" />
+            <span>Kullanım şartlarını ve proje bilgilendirmesini okudum, anladım ve kabul ediyorum.</span>
+          </label>
+          <div class="gate-status" id="gate-status">Devam etmek için iki sekmeyi de aç ve onay kutusunu işaretle.</div>
+          <button id="gate-continue" type="button" disabled>Devam Et</button>
+        </div>
+      </section>
+    </section>
+  </main>
 
-	  <!-- HEADER -->
-	  <header>
+  <!-- HEADER -->
+  <header>
     <div class="header-inner">
       <div class="logo">
         <img src="BAL_Logo.png" alt="BAL Logo" />
@@ -1266,77 +1342,77 @@
     const messagesEl = document.getElementById('messages');
     const inputEl = document.getElementById('user-input');
     const sendBtn = document.getElementById('send-btn');
-	    const charCount = document.getElementById('char-count');
-	    const welcomeMsg = document.getElementById('welcome-msg');
-	    const noticeLayer = document.getElementById('notice-layer');
-	    const ENTRY_ACCEPTED_KEY = 'bal_asistan_entry_accepted_v1';
-	    const gateTabs = document.querySelectorAll('.gate-tab');
-	    const gateSections = document.querySelectorAll('.gate-section');
-	    const gateAgree = document.getElementById('gate-agree');
-	    const gateContinue = document.getElementById('gate-continue');
-	    const gateStatus = document.getElementById('gate-status');
-	    const visitedGateTabs = {
-	      terms: true,
-	      about: false,
-	    };
+    const charCount = document.getElementById('char-count');
+    const welcomeMsg = document.getElementById('welcome-msg');
+    const noticeLayer = document.getElementById('notice-layer');
+    const ENTRY_ACCEPTED_KEY = 'bal_asistan_entry_accepted_v1';
+    const gateTabs = document.querySelectorAll('.gate-tab');
+    const gateSections = document.querySelectorAll('.gate-section');
+    const gateAgree = document.getElementById('gate-agree');
+    const gateContinue = document.getElementById('gate-continue');
+    const gateStatus = document.getElementById('gate-status');
+    const visitedGateTabs = {
+      terms: true,
+      about: false,
+    };
 
     let isStreaming = false;
     let cachedFingerprint = '';
     const notifiedFallbackModels = new Set();
     let limitNoticeVisible = false;
 
-	    let quotaInfo = {
-	      daily_used: 0,
-	      minute_used: 0,
-	      daily_limit: 40,
-	      minute_limit: 5,
-	    };
+    let quotaInfo = {
+      daily_used: 0,
+      minute_used: 0,
+      daily_limit: 40,
+      minute_limit: 5,
+    };
 
-	    let congestionNoticeVisible = false;
+    let congestionNoticeVisible = false;
 
-	    function openGateTab(tabName) {
-	      visitedGateTabs[tabName] = true;
+    function openGateTab(tabName) {
+      visitedGateTabs[tabName] = true;
 
-	      gateTabs.forEach(tab => {
-	        const isActive = tab.dataset.tab === tabName;
-	        tab.classList.toggle('active', isActive);
-	        tab.classList.toggle('visited', visitedGateTabs[tab.dataset.tab]);
-	        tab.setAttribute('aria-selected', isActive ? 'true' : 'false');
-	      });
+      gateTabs.forEach(tab => {
+        const isActive = tab.dataset.tab === tabName;
+        tab.classList.toggle('active', isActive);
+        tab.classList.toggle('visited', visitedGateTabs[tab.dataset.tab]);
+        tab.setAttribute('aria-selected', isActive ? 'true' : 'false');
+      });
 
-	      gateSections.forEach(section => {
-	        section.classList.toggle('active', section.id === `panel-${tabName}`);
-	      });
+      gateSections.forEach(section => {
+        section.classList.toggle('active', section.id === `panel-${tabName}`);
+      });
 
-	      updateGateContinueState();
-	    }
+      updateGateContinueState();
+    }
 
-	    function updateGateContinueState() {
-        if (!gateAgree || !gateContinue || !gateStatus) return;
-        const canContinue = gateAgree.checked;
-        gateContinue.disabled = !canContinue;
-        gateStatus.textContent = canContinue ? 'Hazır. Devam ederek BAL Asistanı açabilirsin.' : 'Devam etmek için onay kutusunu işaretle.';
-      }
+    function updateGateContinueState() {
+      if (!gateAgree || !gateContinue || !gateStatus) return;
+      const canContinue = gateAgree.checked;
+      gateContinue.disabled = !canContinue;
+      gateStatus.textContent = canContinue ? 'Hazır. Devam ederek BAL Asistanı açabilirsin.' : 'Devam etmek için onay kutusunu işaretle.';
+    }
 
-	    function enterChat() {
-	      document.body.classList.remove('gate-active');
-	      inputEl.focus();
-	    }
+    function enterChat() {
+      document.body.classList.remove('gate-active');
+      inputEl.focus();
+    }
 
-	    function initEntryGate() {
-	      localStorage.removeItem(ENTRY_ACCEPTED_KEY);
+    function initEntryGate() {
+      localStorage.removeItem(ENTRY_ACCEPTED_KEY);
 
-	      gateTabs.forEach(tab => {
-	        tab.addEventListener('click', () => openGateTab(tab.dataset.tab));
-	      });
-	      gateAgree?.addEventListener('change', updateGateContinueState);
-	      gateContinue?.addEventListener('click', () => {
-	        if (!gateContinue.disabled) enterChat();
-	      });
-	      updateGateContinueState();
-	    }
+      gateTabs.forEach(tab => {
+        tab.addEventListener('click', () => openGateTab(tab.dataset.tab));
+      });
+      gateAgree?.addEventListener('change', updateGateContinueState);
+      gateContinue?.addEventListener('click', () => {
+        if (!gateContinue.disabled) enterChat();
+      });
+      updateGateContinueState();
+    }
 
-	    function updateQuotaDisplay() {
+    function updateQuotaDisplay() {
       const dailyRemaining = Math.max(quotaInfo.daily_limit - quotaInfo.daily_used, 0);
       const minuteRemaining = Math.max(quotaInfo.minute_limit - quotaInfo.minute_used, 0);
       if (dailyRemaining <= 10 || minuteRemaining <= 1) {
@@ -1501,7 +1577,7 @@
 
     function formatText(text) {
       return text
-        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+        .replace(/&/g, '&').replace(/</g, '<').replace(/>/g, '>')
         .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
         .replace(/\*(.+?)\*/g, '<em>$1</em>')
         .replace(/`(.+?)`/g, '<code>$1</code>')
@@ -1520,6 +1596,110 @@
         .replace(/<think\b[^>]*>[\s\S]*$/gi, '')
         .replace(/<thinking\b[^>]*>[\s\S]*$/gi, '')
         .trim();
+    }
+
+    let lastQuestionIndex = null;
+
+    function sendFeedback(questionIndex, type) {
+      // Optimistic update — UI'ı beklemeden güncelle
+      const btns = document.querySelectorAll(`[data-qidx="${questionIndex}"] .fb-btn`);
+      btns.forEach(b => {
+        const t = b.dataset.fbType;
+        b.classList.toggle('fb-active', t === type);
+      });
+
+      fetch(`${API_BASE}/chat/feedback`, {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ question_index: questionIndex, feedback: type }),
+      }).catch(() => {});
+    }
+
+    function toggleFeedbackBox(questionIndex) {
+      const box = document.querySelector(`[data-qidx="${questionIndex}"] .fb-text-box`);
+      if (!box) return;
+      const isVisible = box.style.display === 'flex';
+      box.style.display = isVisible ? 'none' : 'flex';
+      if (!isVisible) {
+        const ta = box.querySelector('textarea');
+        if (ta) { ta.value = ''; ta.focus(); }
+      }
+    }
+
+    function submitFeedbackText(questionIndex) {
+      const box = document.querySelector(`[data-qidx="${questionIndex}"] .fb-text-box`);
+      if (!box) return;
+      const ta = box.querySelector('textarea');
+      const text = ta ? ta.value.trim() : '';
+      if (!text) { toggleFeedbackBox(questionIndex); return; }
+      fetch(`${API_BASE}/chat/feedback`, {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ question_index: questionIndex, feedback_text: text }),
+      }).catch(() => {});
+      box.style.display = 'none';
+      // Teşekkür toast'ı göster
+      const bar = box.closest('.fb-bar');
+      if (bar) {
+        const existing = bar.querySelector('.fb-thanks');
+        if (existing) existing.remove();
+        const thanks = document.createElement('div');
+        thanks.className = 'fb-thanks';
+        thanks.textContent = 'Geri bildiriminiz için teşekkür ederiz.';
+        bar.appendChild(thanks);
+        setTimeout(() => { thanks.remove(); }, 2500);
+      }
+    }
+
+    function createFeedbackBar(questionIndex) {
+      const bar = document.createElement('div');
+      bar.className = 'fb-bar';
+      bar.dataset.qidx = questionIndex;
+
+      const likeBtn = document.createElement('button');
+      likeBtn.className = 'fb-btn';
+      likeBtn.dataset.fbType = 'like';
+      likeBtn.title = 'Yararlı';
+      likeBtn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3H14zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg>`;
+      likeBtn.addEventListener('click', () => sendFeedback(questionIndex, 'like'));
+
+      const dislikeBtn = document.createElement('button');
+      dislikeBtn.className = 'fb-btn';
+      dislikeBtn.dataset.fbType = 'dislike';
+      dislikeBtn.title = 'Yanlış veya yetersiz';
+      dislikeBtn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V7H7.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3H10zM17 2h3a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-3"/></svg>`;
+      dislikeBtn.addEventListener('click', () => sendFeedback(questionIndex, 'dislike'));
+
+      const chatBtn = document.createElement('button');
+      chatBtn.className = 'fb-btn';
+      chatBtn.title = 'Geri bildirim yaz';
+      chatBtn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>`;
+      chatBtn.addEventListener('click', () => toggleFeedbackBox(questionIndex));
+
+      bar.appendChild(likeBtn);
+      bar.appendChild(dislikeBtn);
+      bar.appendChild(chatBtn);
+
+      const textBox = document.createElement('div');
+      textBox.className = 'fb-text-box';
+      textBox.style.display = 'none';
+      textBox.innerHTML = `
+        <textarea class="fb-textarea" placeholder="Geri bildiriminizi yazın..." rows="2" maxlength="500"></textarea>
+        <div class="fb-text-actions">
+          <button class="fb-text-cancel" type="button">İptal</button>
+          <button class="fb-text-send" type="button">Gönder</button>
+        </div>
+      `;
+      textBox.querySelector('.fb-text-send').addEventListener('click', () => submitFeedbackText(questionIndex));
+      textBox.querySelector('.fb-text-cancel').addEventListener('click', () => { textBox.style.display = 'none'; });
+      textBox.querySelector('textarea').addEventListener('keydown', e => {
+        if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); submitFeedbackText(questionIndex); }
+      });
+
+      bar.appendChild(textBox);
+      return bar;
     }
 
     async function sendMessage() {
@@ -1593,7 +1773,11 @@
             }
 
             if (data.done) {
-              // done event — no sources displayed
+              if (data.question_index) {
+                lastQuestionIndex = data.question_index;
+                const fbBar = createFeedbackBar(lastQuestionIndex);
+                wrap.appendChild(fbBar);
+              }
             }
           } catch { /* */ }
         };
@@ -1690,8 +1874,8 @@
       messagesEl.scrollTop = messagesEl.scrollHeight;
     }
 
-	    initEntryGate();
-	    checkHealth();
+    initEntryGate();
+    checkHealth();
     loadAuthStatus();
     setInterval(checkHealth, 30000);
   </script>

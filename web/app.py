@@ -276,7 +276,7 @@ conversation_sessions: Dict[str, List[Dict]] = {}
 import threading
 active_requests = 0
 active_requests_lock = threading.Lock()
-CONGESTION_THRESHOLD = 1
+CONGESTION_THRESHOLD = 5
 
 engine = create_engine(
     CONFIG["database_url"],
@@ -338,6 +338,8 @@ class ChatLog(Base):
     question = Column(Text, nullable=False)
     answer = Column(Text, nullable=False)
     created_at = Column(String(64), nullable=False)
+    feedback = Column(String(16), nullable=True)       # "like", "dislike" or NULL
+    feedback_text = Column(Text, nullable=True)        # optional written feedback
 
 
 def init_db() -> None:
@@ -1101,6 +1103,54 @@ def health():
     return jsonify(status)
 
 
+@app.route("/api/chat/feedback", methods=["POST"])
+def chat_feedback():
+    """
+    Receives user feedback on a chat response.
+    Request body (JSON):
+        {
+            "question_index": int,      # which question this feedback is for
+            "feedback": "like" | "dislike" | None,  # vote
+            "feedback_text": str | None  # optional written feedback
+        }
+    """
+    body = request.get_json()
+    if not body or "question_index" not in body:
+        return jsonify({"error": "question_index gerekli"}), 400
+
+    identity = get_current_identity()
+    if not identity:
+        return jsonify({"error": "Kimlik alınamadı"}), 401
+
+    question_index = body["question_index"]
+    feedback = body.get("feedback")
+    feedback_text = body.get("feedback_text", "").strip()
+
+    if feedback is not None and feedback not in ("like", "dislike"):
+        return jsonify({"error": "feedback sadece 'like' veya 'dislike' olabilir"}), 400
+
+    user_id = int(identity["subject_id"])
+    try:
+        with SessionLocal() as db:
+            log_entry = db.query(ChatLog).filter(
+                ChatLog.user_id == user_id,
+                ChatLog.question_index == question_index,
+            ).first()
+            if not log_entry:
+                return jsonify({"error": "Soru bulunamadı"}), 404
+
+            if feedback is not None:
+                log_entry.feedback = feedback
+            if feedback_text:
+                log_entry.feedback = "feedback"
+                log_entry.feedback_text = feedback_text
+            db.commit()
+        return jsonify({"ok": True})
+    except Exception as e:
+        log.exception("Feedback save failed for user_id=%s question_index=%s", user_id, question_index)
+        return jsonify({"error": "Geri bildirim kaydedilemedi"}), 500
+
+
 @app.route("/api/chat", methods=["POST"])
 def chat():
     """
@@ -1229,13 +1279,14 @@ def chat():
                 conversation_sessions[session_id] = history[-(CONFIG["max_history_turns"] * 2):]
 
             # Persist question-answer pair in chat_logs
+            saved_question_index = None
             try:
                 with SessionLocal() as db:
                     last_index = db.query(func.max(ChatLog.question_index)).filter(ChatLog.user_id == int(identity["subject_id"])).scalar()
-                    next_index = (last_index or 0) + 1
+                    saved_question_index = (last_index or 0) + 1
                     log_entry = ChatLog(
                         user_id=int(identity["subject_id"]),
-                        question_index=next_index,
+                        question_index=saved_question_index,
                         question=user_message,
                         answer=full_response,
                         created_at=utc_now().isoformat(),
@@ -1247,7 +1298,14 @@ def chat():
 
         # ── Final event: sources ──────────────────────────────────────────────
         sources = build_sources_payload(retrieved, CONFIG["retrieval_score_threshold"])
-        yield f"data: {json.dumps({'done': True, 'sources': sources, 'near_limit': quota['daily_used'] >= 30})}\n\n"
+        done_payload = {
+            'done': True,
+            'sources': sources,
+            'near_limit': quota['daily_used'] >= 30,
+        }
+        if saved_question_index:
+            done_payload['question_index'] = saved_question_index
+        yield f"data: {json.dumps(done_payload)}\n\n"
 
     return Response(
         stream_with_context(generate()),
