@@ -1726,7 +1726,9 @@
         if (!response.ok) {
           const data = await response.json().catch(() => ({}));
           if (data.near_limit) showLimitNotice();
-          throw new Error(data.error || `HTTP ${response.status}`);
+          const errorType = data.error_type || 'technical';
+          const userMsg = errorType === 'quota' ? (data.error || 'Limit aşıldı.') : 'Teknik bir sorun oluştu. Lütfen daha sonra tekrar deneyin.';
+          throw new Error(userMsg);
         }
 
         typingWrap.remove();
@@ -1760,7 +1762,12 @@
             }
 
             if (data.error) {
-              bubble.innerHTML = `<p style="color:#ef4444">Hata: ${data.error}</p>`;
+              const errorType = data.error_type || 'technical';
+              if (errorType === 'quota') {
+                bubble.innerHTML = `<p style="color:#d97706">${data.error}</p>`;
+              } else {
+                bubble.innerHTML = '<p style="color:#667085">Teknik bir sorun oluştu. Lütfen daha sonra tekrar deneyin.</p>';
+              }
               sseHadError = true;
             }
 
@@ -1805,7 +1812,8 @@
 
       } catch (err) {
         typingWrap?.remove();
-        appendMessage('bot', `Hata: ${err.message}`);
+        const errorText = err.message || 'Teknik bir sorun oluştu. Lütfen daha sonra tekrar deneyin.';
+        appendMessage('bot', errorText);
       }
 
       isStreaming = false;

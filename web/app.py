@@ -1170,13 +1170,13 @@ def chat():
     """
     body = request.get_json()
     if not body or not body.get("message"):
-        return jsonify({"error": "message alanı gerekli"}), 400
+        return jsonify({"error": "message alanı gerekli", "error_type": "technical"}), 400
 
     user_message = body["message"].strip()
     session_id = body.get("session_id", "default")
 
     if not user_message:
-        return jsonify({"error": "Boş mesaj"}), 400
+        return jsonify({"error": "Boş mesaj", "error_type": "technical"}), 400
 
     identity = get_current_identity()
     if not identity:
@@ -1191,7 +1191,7 @@ def chat():
                         dict(request.cookies), headers_snapshot, request.remote_addr)
         except Exception:
             log.exception("Failed to log missing identity details")
-        return jsonify({"error": "Ziyaretçi kimliği alınamadı; lütfen sayfayı yenileyin."}), 401
+        return jsonify({"error": "Ziyaretçi kimliği alınamadı; lütfen sayfayı yenileyin.", "error_type": "technical"}), 401
 
     # 🔥 LOGLAMA BURADA: Değişkenler (identity ve session_id) tanımlandıktan sonra güvenle basılıyor.
     log.warning(
@@ -1203,7 +1203,7 @@ def chat():
 
     quota_ok, quota, quota_error = check_quota(identity)
     if not quota_ok:
-        return jsonify({"error": quota_error}), 429
+        return jsonify({"error": quota_error, "error_type": "quota"}), 429
 
     quota = increment_usage(identity)
 

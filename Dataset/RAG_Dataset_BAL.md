@@ -232,11 +232,13 @@ BAL'ın müzik kültürü onlarca yıla dayanan köklü bir tarihe sahiptir:
 
 Tiyatro çalışmaları her yıl **Ekim ayında** başlar, haftada bir gün profesyonel yönetmen ve sorumlu öğretmen gözetiminde yıl boyunca devam eder. Her yıl bir oyun hazırlanır ve **Mayıs ayında** sahneye konur.
 
-### 2.6 Spor: BALspor Kulübü
+### 2.6 Spor: BALspor Kulübü ve Spor Başarıları
 
 **BAL Spor Kulübü (BALspor)**, 2004 yılında okulun mezunları tarafından kurulmuş olup profesyonel dalış dahil **12 spor branşında** faaliyet yürütmektedir.
 
 BAL, Türkiye'de **Ultimate Frizbi** takımına sahip **tek lise** olma özelliğini taşımaktadır. Ülkede bu sporu yapan lise takımı bulunmadığından BAL öğrencileri Ultimate Frizbi turnuvalarında üniversite takımlarıyla mücadele etmektedir.
+
+**Tarihsel Spor Başarıları:** Okulun geçmiş başarıları arasında voleybolda Türkiye şampiyonlukları ve çeşitli dereceler yer almaktadır. Daha güncel başarılar arasında **2020 yılında erkek masa tenisinde İzmir il birinciliği** ve **2024 yılında erkek futsalda İzmir liselerarası şampiyonluğu** bulunmaktadır. Bu başarılar, okulun sportif alandaki gücünün yalnızca akademik alanla sınırlı olmadığını göstermektedir.
 
 ### 2.7 Uluslararası Bağlantılar
 
@@ -426,8 +428,30 @@ BAL, MEB tarafından düzenlenen LGS (Liselere Geçiş Sınavı) sonuçlarına g
 **S4: BAL her yıl kaç öğrenci alıyor?**
 Her yıl 8 şube açılır: 6 İngilizce, 1 Almanca, 1 Fransızca. Her sınıf 30 kişilik olup toplam kontenjan **240 öğrencidir.**
 
-**S5: BAL'a nakil mümkün mü?**
-Evet. Nakil başvuruları yılsonu sınıf atlatma işlemleri tamamlandıktan sonraki ilk iş gününden Ekim sonuna kadar ve ikinci dönem başlangıcından Şubat sonuna kadar yapılabilir. Başvurular e-Devlet, e-Okul veya okul müdürlüğüne dilekçeyle gerçekleştirilir.
+**S5: BAL'a nakil mümkün mü? Nakil süreci nasıl işler?**
+Evet. LGS sonrası nakil, öğrencinin yerleştiği okuldan daha uygun bir liseye geçmek için yaptığı resmi başvuru sürecidir.
+
+**Süreç nasıl işler:**
+1. Öğrenci ve veli **e-Okul / e-Devlet** üzerinden nakil başvurusu yapar.
+2. Başvuru sırasında öğrencinin yerleşmek istediği okulun boş kontenjanı ve varsa taban puanı kontrol edilir.
+3. Tercihler yapıldıktan sonra mevcut okul tarafından onaylanır ve sonuçlar MEB'in ilan ettiği tarihte açıklanır.
+4. Yerleşme gerçekleşirse öğrenci yeni okuluna kayıt işlemlerini tamamlar.
+
+**Kaç tercih yapılabilir?**
+- Merkezi sınav puanıyla alan okullar için her dönemde en fazla **3 tercih** yapılabilir.
+- Yerel yerleştirme ve pansiyonlu okul tercihleri için de sistemde yine en fazla 3'er tercih hakkı bulunur.
+- Dönem sayısı ve takvim her yıl MEB tarafından ayrıca duyurulur.
+
+**Takvim (2025 örneği):**
+- 1. nakil başvuruları: 4-6 Ağustos, sonuçlar: 8 Ağustos
+- 2. nakil başvuruları: 8-12 Ağustos, sonuçlar: 14 Ağustos
+- Yerleşemeyen öğrenciler için il/ilçe yerleştirme komisyonları devreye girer.
+
+**Dikkat edilmesi gerekenler:**
+- Nakil başvurusu yapmadan önce okulun kontenjanını ve puan durumunu kontrol etmek önemlidir.
+- Başvuru e-Okul'da tamamlanır ancak onay aşaması okul müdürlüğünde yapılır.
+- Nakil sonuçları açıklandıktan sonra yerleşilen okula zamanında kayıt yaptırmak gerekir.
+- Nakil dönemleri her yıl MEB tarafından belirlenir ve değişiklik gösterebilir.
 
 **S6: Kayıt için hangi belgeler gerekir?**
 [GÜNCEL VERİ GEREKLİ: Kesin kayıt belge listesi için MEB'in ortaöğretim kayıt kılavuzunu veya okul idaresini kontrol ediniz.]
@@ -450,6 +474,10 @@ Evet. BAL, **2016–2017** öğretim yılından itibaren **Proje Okulu** statüs
 
 **S11: BAL'da AP programı var mı?**
 Evet. BAL, **2024–2025** öğretim yılı itibarıyla AP (Advanced Placement) programını uygulamaya başlamıştır. Sunulan AP dersleri: Hesaplama AB, Hesaplama BC, Bilgisayar Bilimi A, İngilizce Dil ve Kompozisyon, Fizik 1.
+
+**S11b: Seçmeli dersler nasıl seçiliyor?**
+Öğrencilere eğitim-öğretim yılının ortasında bir seçmeli ders formu gelir. Öğrenciler bu form üzerinden ilgi ve hedefledikleri alana göre seçmeli derslerini belirler. 9. ve 10. sınıfta seçmeli ders saati sınırlıyken (7 ve 6 saat), 11. ve 12. sınıfta seçmeli ders ağırlığı belirgin şekilde artar (20 ve 24 saat). 11. sınıftan itibaren öğrenciler YKS hedeflerine göre alan derslerini (matematik, fizik, kimya, biyoloji vb.) seçmeli olarak alarak yoğunlaştırabilir.
+[GÜNCEL VERİ GEREKLİ: O yılın seçmeli ders listesi ve form teslim tarihi okul duyurularından takip edilmelidir.]
 
 **S12: Almanca bölümü öğrencileri DSD diploması alabilir mi?**
 Evet. **2008'den** itibaren hak kazanan Almanca bölümü öğrencileri resmi Almanca Dil Diploması (DSD) alabilmektedir. Bu diploma Almanya'daki üniversitelere başvuruda avantaj sağlar.
@@ -794,9 +822,15 @@ Uygulama programı: haftada iki gün, her seans 1 saat antrenman. Ocak 2025'te o
 
 ### B.3 Akademik ve Bilimsel Kulüpler / Etkinlikler
 
-#### B.3.1 Bilim Olimpiyatları
+#### B.3.1 Bilim Olimpiyatları ve Yarışmalar
 
-BAL öğrencileri İzmir Bilim Olimpiyatları'na düzenli olarak katılmaktadır. 2025 yılına ait verilere göre öğrenciler bronz madalya kazanmıştır. İzmir Bilim Olimpiyatları'nın ikinci aşama yazılı sınavı 2025 yılında BAL'ın kendi bünyesinde gerçekleştirilmiştir; bu da okulun il çapındaki konumunu göstermektedir.
+BAL öğrencileri bilim olimpiyatlarına düzenli olarak katılmakta ve başarılı sonuçlar almaktadır.
+
+**İzmir Bilim Olimpiyatları:** BAL öğrencileri İzmir Bilim Olimpiyatları'nda matematik, bilişim ve fen bilimleri alanlarında yarışmakta ve başarılı olmaktadır. 2025 yılına ait verilere göre öğrenciler bronz madalya kazanmıştır. İzmir Bilim Olimpiyatları'nın ikinci aşama yazılı sınavı 2025 yılında BAL'ın kendi bünyesinde gerçekleştirilmiştir; bu da okulun il çapındaki konumunu göstermektedir.
+
+**URFODU Bilim Olimpiyatları:** 2026 yılında okul öğrencileri URFODU Bilim Olimpiyatları'nda gurur verici sonuçlar almıştır.
+
+**Uluslararası Bilim Temelleri Bilgi Yarışması:** 2025 yılında okulun bir öğrencisi Uluslararası Bilim Temelleri Bilgi Yarışması'nda biyoloji ve Almanca alanlarında öne çıkmıştır. Bu başarı, okulun uluslararası ve çok dilli başarı çizgisini desteklemektedir.
 
 Olimpiyat branşları: fen bilimleri, fizik, kimya, biyoloji, matematik, bilgisayar/BT.
 
@@ -804,7 +838,9 @@ Olimpiyat branşları: fen bilimleri, fizik, kimya, biyoloji, matematik, bilgisa
 
 BAL, Türkiye'deki çeşitli liselerin katıldığı "Disiplinler Arası Öğrenci Çalıştayı"na katılmaktadır. 2024–2025 yılında 3. Çalıştay'a iştirak edilmiştir.
 
-#### B.3.3 TÜBİTAK Projeleri
+#### B.3.3 TÜBİTAK 4006 Bilim Fuarları
+
+BAL, TÜBİTAK 4006 Bilim Fuarı'nı düzenli olarak gerçekleştirmektedir. **2026 yılında 12. TÜBİTAK 4006 Bilim Fuarı** düzenlenmiş olup bu organizasyonda **23 danışman öğretmen ve 60 öğrenci** yer almıştır. Bu katılım, okulun bilim fuarını sembolik değil, geniş katılımlı ve kurumsal bir çalışma olarak yürüttüğünü göstermektedir. Okulun geçmiş yıllarda da bilim fuarı açılışlarıyla görünür olduğu çeşitli kaynaklarda yer almaktadır.
 
 Okul bünyesindeki akademik kültür, TÜBİTAK liselerarası bilimsel proje yarışmalarına katılımı teşvik etmektedir. Okulun resmi MEB sayfasında "Bilimsel Etkinlikler" ve "Proje Çalışmaları" başlıkları altında bu çalışmalar yayımlanmaktadır.
 
@@ -838,9 +874,11 @@ Yıl boyunca düzenlenen kültür-sanat etkinliklerinde öğrenciler çeşitli a
 
 ### B.5 Uluslararası Projeler ve Programlar
 
-#### B.5.1 eTwinning
+#### B.5.1 eTwinning ve Erasmus+
 
-BAL, Avrupa Birliği destekli eTwinning platformunda aktif projeler yürütmektedir. Platform, farklı ülkelerdeki okulların çevrimiçi işbirliği yapmasına olanak tanır. BAL öğrencileri bu projeler aracılığıyla Avrupalı akranlarıyla ortak eğitim deneyimleri yaşamaktadır. Okul, e-Güvenlik (e-Safety) Bronze Ödülü almıştır (2021).
+**eTwinning:** BAL, Avrupa Birliği destekli eTwinning platformunda aktif projeler yürütmektedir. Platform, farklı ülkelerdeki okulların çevrimiçi işbirliği yapmasına olanak tanır. BAL öğrencileri bu projeler aracılığıyla Avrupalı akranlarıyla ortak eğitim deneyimleri yaşamaktadır. Okul, e-Güvenlik (e-Safety) Bronze Ödülü almıştır (2021). 2025 tarihli bir okul profili kaynağı, BAL'ın eTwinning ve Erasmus+ açısından aktif olduğunu belirtmektedir.
+
+**Erasmus+ Projeleri:** Okulun Erasmus+ ile ilişkili etkinlikleri yenilik değildir. **2021 yılında Erasmus Günleri** kapsamında okul içinde kutlama yapıldığı görülmektedir. **2024 yılında BALPOD** podcast bölümünde doğrudan Erasmus+ temalı içerik üretilmiş olması, okulun projeyi yalnızca katılım düzeyinde değil, içerik üretimi ve görünürlük boyutunda da taşıdığını göstermektedir.
 
 #### B.5.2 PASCH Ağı Etkinlikleri
 

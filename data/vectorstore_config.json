@@ -6,7 +6,7 @@
     "AQ.Ab8RN6JpzYreh-O0XnxNu1gG2x93f4A_GIO9D0r1fA21gMcYmA",
     "AQ.Ab8RN6Jyo7njrcK4e9yJSqg_WjIgtur-T1gTn7pLpwODi0LIxw",
     "AQ.Ab8RN6KtOgNSh-5VByGL_iH0Osn5wnp3QFF1V5p0sSJKDosCew",
-    "AQ.Ab8RN6Jo6S6uxbBT3Zykl08bTK6zT__TvVqf2ArrWpxbSFnHAA"
+    "AQ.Ab8RN6LS9RgndnAvbBXzq8U-u0LKEXNoPGcaZRzQkPA2totI4A"
   ],
   "chunk_size": 400,
   "chunk_overlap": 80,
@@ -16,5 +16,5 @@
   "vectorstore_config_file": "/home/burak/Masaüstü/ChatbotBAL/data/vectorstore_config.json",
   "total_chunks": 135,
   "embedding_dim": 3072,
-  "build_timestamp": "2026-06-10 19:45:27"
+  "build_timestamp": "2026-06-12 11:38:32"
 }
