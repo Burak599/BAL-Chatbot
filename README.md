@@ -4,7 +4,6 @@ emoji: 🏫
 colorFrom: blue
 colorTo: teal
 sdk: docker
-app_file: web/app.py
 pinned: false
 ---
 
