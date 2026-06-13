@@ -22,17 +22,17 @@ jobs:
           git config --global user.email "actions@github.com"
           git config --global user.name "GitHub Actions"
           
-          # Hugging Face'in reddettiği binary dosyaları git indexinden geçici olarak temizle
-          git rm --cached BAL_Logo.png || true
-          git rm --cached web/BAL_Logo.png || true
-          git rm --cached data/bal_faiss.index || true
-          git rm --cached scripts/data/bal_faiss.index || true
+          # Git LFS kurulumunu sanal makinede yap ve sorunlu uzantıları LFS'e kaydet
+          git lfs install
+          git lfs track "*.png"
+          git lfs track "*.index"
           
-          # Değişiklikleri kaydet (Commit etmezsek push eski haliyle gider)
-          git commit -m "Remove binary files for HF sync" || true
+          # Değişiklikleri işle
+          git add .gitattributes
+          git commit -m "Track binary files with Git LFS for HF" || true
           
           # Hugging Face reposunu remote olarak ekle
           git remote add hf https://brk9999:$HF_TOKEN@huggingface.co/spaces/brk9999/bal-chatbot
           
-          # Kodu Hugging Face üzerine zorlayarak pushla
+          # Kodu LFS verileriyle birlikte Hugging Face'e zorlayarak pushla
           git push --force hf main
