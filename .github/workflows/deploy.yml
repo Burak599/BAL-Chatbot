@@ -18,23 +18,23 @@ jobs:
           python-version: '3.10'
 
       - name: Install Hugging Face Hub CLI
-        run: pip install huggingface_hub
+        run: pip install 'huggingface_hub==0.26.0'
 
       - name: Direct Upload to Hugging Face Space
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: |
-          # Git kancalarını (hooks) tamamen baypas eden resmî Hugging Face API yöntemi
+          # Official Hugging Face API method — bypasses Git hooks entirely
           python -c "
+          import os
           from huggingface_hub import HfApi
-          api = HfApi(token='${{ secrets.HF_TOKEN }}')
+          api = HfApi(token=os.environ['HF_TOKEN'])
           
-          print('Hugging Face API bağlantısı kuruldu. Yükleme başlıyor...')
+          print('Hugging Face API connected. Starting upload...')
           api.upload_folder(
               folder_path='.',
               repo_id='brk9999/bal-chatbot',
               repo_type='space',
-              delete_with_prefix=True
           )
-          print('Yükleme başarıyla tamamlandı!')
+          print('Upload completed successfully!')
           "

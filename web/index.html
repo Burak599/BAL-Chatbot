@@ -1530,7 +1530,7 @@
         const data = await apiFetch('/auth/status', { method: 'GET', headers: {} });
         setQuotaFromStatus(data);
       } catch {
-        // devam et
+        // continue silently
       }
     }
 
@@ -1601,7 +1601,7 @@
     let lastQuestionIndex = null;
 
     function sendFeedback(questionIndex, type) {
-      // Optimistic update — UI'ı beklemeden güncelle
+      // Optimistic update — update UI without waiting for the server
       const btns = document.querySelectorAll(`[data-qidx="${questionIndex}"] .fb-btn`);
       btns.forEach(b => {
         const t = b.dataset.fbType;
@@ -1640,7 +1640,7 @@
         body: JSON.stringify({ question_index: questionIndex, feedback_text: text }),
       }).catch(() => {});
       box.style.display = 'none';
-      // Teşekkür toast'ı göster
+      // Show thank-you toast
       const bar = box.closest('.fb-bar');
       if (bar) {
         const existing = bar.querySelector('.fb-thanks');

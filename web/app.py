@@ -766,8 +766,8 @@ def stream_groq_model(messages: List[Dict], model: str, api_key: str, key_index:
             key_index,
             CONFIG["groq_url"]
         )
-        # impersonate="chrome" bayrağı, Render sunucusunun TLS imzasını tamamen gizleyip
-        # Cloudflare'e gerçek bir Windows Chrome tarayıcısı gibi el sıkışma (TLS Handshake) yaptırır.
+        # The impersonate="chrome" flag fully masks the TLS signature of the Render server,
+        # making the handshake appear as a real Windows Chrome browser to Cloudflare.
         resp = curl_requests.post(
             CONFIG["groq_url"],
             headers=headers,
@@ -783,14 +783,14 @@ def stream_groq_model(messages: List[Dict], model: str, api_key: str, key_index:
             dict(resp.headers)
         )
         
-        # HTTP hata kontrolü (403 veya diğer hatalar burada yakalanacak)
+        # HTTP error handling (catches 403 or other HTTP errors here)
         resp.raise_for_status()
 
         for line in resp.iter_lines():
             if not line:
                 continue
 
-            # curl_cffi line'ları genellikle string veya bytes dönebilir, güvenli decode yapıyoruz
+            # curl_cffi lines may return as string or bytes; safely decode them
             if isinstance(line, bytes):
                 line_str = line.decode("utf-8")
             else:
@@ -815,7 +815,7 @@ def stream_groq_model(messages: List[Dict], model: str, api_key: str, key_index:
                 yield f"data: {json.dumps({'token': token})}\n\n"
 
     except curl_requests.errors.RequestsError as e:
-        # curl_cffi kütüphanesinin kendi network/bağlantı hatalarını yakalıyoruz
+        # Catch network/connection errors from the curl_cffi library
         error_msg = str(e).lower()
         reason = "exception"
         
@@ -830,7 +830,7 @@ def stream_groq_model(messages: List[Dict], model: str, api_key: str, key_index:
                 "retryable": True, "model": model, "key_index": key_index, "reason": reason
             }
             
-        # Eğer HTTP durum kodu varsa (örneğin hala bir sebeple HTTP hatası geldiyse)
+        # If an HTTP status code is present (e.g., an HTTP error still came through)
         status_code = 0
         response_text = ""
         rate_headers = {}
@@ -842,7 +842,7 @@ def stream_groq_model(messages: List[Dict], model: str, api_key: str, key_index:
                 "FULL GROQ BODY:\n%s",
                 response_text
             )
-            # Rate limit başlıklarını filtreleme lojiğini koruyoruz
+            # Preserve the rate-limit header filtering logic
             rate_headers = {
                 key: value
                 for key, value in e.response.headers.items()
@@ -1193,7 +1193,7 @@ def chat():
             log.exception("Failed to log missing identity details")
         return jsonify({"error": "Ziyaretçi kimliği alınamadı; lütfen sayfayı yenileyin.", "error_type": "technical"}), 401
 
-    # 🔥 LOGLAMA BURADA: Değişkenler (identity ve session_id) tanımlandıktan sonra güvenle basılıyor.
+    # 🔥 LOGGING: Variables (identity and session_id) are now defined, safe to log.
     log.warning(
         "CHAT REQUEST user=%s session=%s msg=%s",
         identity["subject_id"] if identity else "unknown",
@@ -1377,7 +1377,7 @@ def run_startup_safely():
     
     LOG_DIR.mkdir(parents=True, exist_ok=True)
     
-    # Artık init_db yukarıda tanımlandığı için Python bunu tanıyacak ve NameError vermeyecek!
+    # init_db is now defined above, so Python will recognize it and won't raise NameError!
     init_db()
     
     try:
@@ -1396,7 +1396,7 @@ def run_startup_safely():
 
     llm_gateway = LLMGateway(CONFIG)
 
-# GUNICORN'UN UYGULAMAYI BAŞLATMASI İÇİN BURADA ÇAĞIRIYORUZ
+# CALLED HERE SO GUNICORN CAN START THE APPLICATION
 #run_startup_safely()
 
 # ═══════════════════════════════════════════════════════════════════════════════
