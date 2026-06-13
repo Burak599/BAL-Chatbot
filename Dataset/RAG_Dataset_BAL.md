@@ -1623,9 +1623,9 @@ Bu belge aşağıdaki konularda yapılandırılmış veri içermektedir:
 - **Kimlik:** Resmi ad, adres, telefon, faks, web sitesi, bağlı kurum, öğretim şekli, isınma, internet altyapısı
 - **Tarihçe:** 1953'ten 2025'e 17 kronolojik milat noktası
 - **Vizyon / Misyon:** Resmi tam metin (4 başlık altında)
-- **Eğitim Yapısı:** 5 yıllık sistem, 3 bölüm, kontenjan (390), şube dağılımı tablosu
+- **Eğitim Yapısı:** 5 yıllık sistem, 3 bölüm, kontenjan (240), şube dağılımı tablosu
 - **Kayıt ve Hazırlık:** Kesin kayıt için okula gelme, kimlik ve ikametgâh belgesi, Okul Aile Birliği süreci, ikinci yabancı dil seçimi, hazırlık seviye belirleme sınavı
-- **Ders Programı:** Giriş (08:30), öğle arası (12:30–13:10), çıkış (15:30)
+- **Ders Programı:** Giriş (08:30), çıkış (15:35), hazırlık sınıfı öğle arası (11:40–12:25), 9-12. sınıflar öğle arası (12:30–13:15)
 - **Sınav Sistemi:** Her ders için yılda 4 yazılı sınav, bazı derslerde ortak sınav uygulaması
 - **Fiziksel Altyapı:** MEB resmi tablosu (50 derslik, 3 fen lab, 1 BT sınıfı, 4 spor salonu, 5 çok amaçlı salon, 2 konferans salonu, 2 toplantı salonu, 2 yemekhane, 1 kütüphane / 20.563 kitap, 2 revir, 1 halısaha, pansiyon 240 kişi)
 - **Günlük Okul Yaşamı:** Telefon kullanım yasağı, telefonların sınıf dolaplarında kilitlenmesi, okul kartı, öğle arasında dışarı çıkış yasağı, ücretli öğrenci dolapları
