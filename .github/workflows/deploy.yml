@@ -35,7 +35,6 @@ jobs:
               folder_path='.',
               repo_id='brk9999/bal-chatbot',
               repo_type='space',
-              ignore_patterns=['README.md'],
           )
           print('Upload completed successfully!')
           "
