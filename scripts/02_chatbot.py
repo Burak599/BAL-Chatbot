@@ -371,7 +371,7 @@ class Conversation:
         """Clears the conversation history."""
         self.history.clear()
         self.last_retrieved.clear()
-        print("\n\033[93m[Konuşma geçmişi temizlendi]\033[0m\n")
+        print("\n\033[93m[Conversation history cleared]\033[0m\n")
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -380,28 +380,28 @@ class Conversation:
 
 CHAT_BANNER = """
 ╔══════════════════════════════════════════════════════════════╗
-║                     RAG Tabanlı Chatbot                      ║
+║                   RAG-Powered Chatbot                        ║
 ╠══════════════════════════════════════════════════════════════╣
-║  Komutlar:                                                   ║
-║    /temizle  → Konuşma geçmişini sıfırla                    ║
-║    /kaynak   → Son sorgunun kaynaklarını göster              ║
-║    /çıkış   → Programı kapat                                ║
+║  Commands:                                                    ║
+║    /temizle  → Clear conversation history                    ║
+║    /kaynak   → Show sources from the last query              ║
+║    /çıkış   → Exit the program                               ║
 ╚══════════════════════════════════════════════════════════════╝
 """
 
 
 def print_sources(retrieved: List[Dict]):
     """Prints the source breadcrumbs of the last retrieved chunks."""
-    print("\n\033[93m── Kullanılan Kaynaklar ──────────────────────────────\033[0m")
+    print("\n\033[93m── Sources Used ────────────────────────────────────\033[0m")
     if not retrieved:
-        print("  (Henüz bir soru sormadınız)")
+        print("  (No question has been asked yet)")
     else:
         for i, chunk in enumerate(retrieved, 1):
             score = chunk.get("relevance_score", 0)
             breadcrumb = chunk.get("breadcrumb", "")
             words = chunk.get("word_count", 0)
-            print(f"  {i}. [{score:.3f}] {breadcrumb} ({words} kelime)")
-    print("\033[93m──────────────────────────────────────────────────────\033[0m\n")
+            print(f"  {i}. [{score:.3f}] {breadcrumb} ({words} words)")
+    print("\033[93m────────────────────────────────────────────────────\033[0m\n")
 
 
 def run_cli():
@@ -409,14 +409,14 @@ def run_cli():
 
     if not CONFIG["groq_api_key"]:
         print(
-            "\n\033[91mGROQ_API_KEY ayarlı değil.\033[0m\n"
-            "Terminalde API key'i ayarlayıp tekrar çalıştırın:\n"
+            "\n\033[91mGROQ_API_KEY is not set.\033[0m\n"
+            "Set the API key in the terminal and run again:\n"
             "  \033[1mexport GROQ_API_KEY='...'\033[0m\n"
         )
         sys.exit(1)
 
     # ── Load vector store ─────────────────────────────────────────────────────
-    print("\n\033[96mVektör veritabanı yükleniyor...\033[0m")
+    print("\n\033[96mLoading vector database...\033[0m")
     try:
         vs = VectorStore(
             CONFIG["faiss_index_file"],
@@ -431,13 +431,13 @@ def run_cli():
     conv = Conversation(vs, CONFIG)
 
     print(CHAT_BANNER)
-    print(f"\033[92m✅ Sistem hazır!  Aktif model: Groq / {CONFIG['groq_model']}\033[0m\n")
+    print(f"\033[92m✅ System ready!  Active model: Groq / {CONFIG['groq_model']}\033[0m\n")
 
     while True:
         try:
-            user_input = input("\033[1mSiz:\033[0m ").strip()
+            user_input = input("\033[1mYou:\033[0m ").strip()
         except (KeyboardInterrupt, EOFError):
-            print("\n\nGörüşmek üzere! 👋")
+            print("\n\nSee you later! 👋")
             break
 
         if not user_input:
@@ -445,7 +445,7 @@ def run_cli():
 
         # ── Commands ──────────────────────────────────────────────────────────
         if user_input.lower() in ("/çıkış", "/cikis", "çıkış", "exit", "quit"):
-            print("\nGörüşmek üzere! 👋")
+            print("\nSee you later! 👋")
             break
 
         if user_input.lower() in ("/temizle", "/temizle"):

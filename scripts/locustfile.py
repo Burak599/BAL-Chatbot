@@ -1,16 +1,16 @@
 """
 ═══════════════════════════════════════════════════════════════════════════════
- BAL Chatbot — 20 Eşzamanlı Kullanıcı Yük Testi (Gecikme Debug)
+ BAL Chatbot — 20 Concurrent User Load Test (Latency Debug)
 
- Amaç:
-   20 bot aynı anda 1'er soru gönderir.
-   Her bot için cevap süresi ve TTFT ölçülür.
-   Tüm botlar tamamlandığında özet tablo basılır.
+ Purpose:
+   20 bots each send 1 question simultaneously.
+   Response time and TTFT (Time to First Token) are measured per bot.
+   A summary table is printed when all bots finish.
 
- Kullanım:
+ Usage:
    locust -f locustfile.py --host https://chatbot-bal.onrender.com --users 20 --spawn-rate 20 --headless --run-time 120s
 
-   Lokal test (localhost:5000):
+   Local test (localhost:5000):
    locust -f locustfile.py --host http://localhost:5000 --users 20 --spawn-rate 20 --headless --run-time 120s
 ═══════════════════════════════════════════════════════════════════════════════
 """
@@ -30,7 +30,7 @@ from gevent.event import Event
 from locust import HttpUser, task, constant
 from locust.exception import StopUser
 
-# ── Loglama (hem dosyaya hem ekrana) ────────────────────────────────────────
+# ── Logging (file + console) ──────────────────────────────────────────────────
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(message)s",
@@ -41,20 +41,20 @@ logging.basicConfig(
 )
 log = logging.getLogger("bal_load_test")
 
-# ── Konfigürasyon ────────────────────────────────────────────────────────────
-NUM_CLIENTS = 20               # Toplam bot sayısı
-REQUEST_TIMEOUT = 180          # Saniye cinsinden maksimum bekleme
+# ── Configuration ─────────────────────────────────────────────────────────────
+NUM_CLIENTS = 20               # Total number of simulated bots
+REQUEST_TIMEOUT = 180          # Max wait time in seconds
 
-# ── Senkronizasyon: Tüm botlar spawn olana kadar bekleme ─────────────────────
+# ── Synchronisation: wait until all bots have spawned ────────────────────────
 _ready_event = Event()
-_ready_counter = [0]           # Mutable list (closure için)
+_ready_counter = [0]           # Mutable list (for closure compatibility)
 
-# ── Sonuç toplama (thread-safe) ──────────────────────────────────────────────
+# ── Result collection (thread-safe) ───────────────────────────────────────────
 results = []
 results_lock = threading.Lock()
 
 
-# ── Soru havuzu ──────────────────────────────────────────────────────────────
+# ── Question pool ─────────────────────────────────────────────────────────────
 QUESTIONS = [
     "LGS taban puanı nedir?",
     "Okula nasıl kayıt yapılır?",
@@ -80,16 +80,16 @@ QUESTIONS = [
 
 
 def print_summary_table():
-    """Tüm botlar tamamlandıktan sonra özet tabloyu basar."""
+    """Prints a summary table after all bots have completed."""
     if not results:
-        log.info("\n❌ Hiçbir sonuç kaydedilmedi.")
+        log.info("\n❌ No results recorded.")
         return
 
-    # ── Log dosyasına detaylı tablo ──────────────────────────────────────────
+    # ── Detailed table to log file ────────────────────────────────────────────
     log.info("\n" + "═" * 90)
-    log.info("📊 20 EŞZAMANLI KULLANICI — DETAYLI SONUÇ TABLOSU")
+    log.info("📊 20 CONCURRENT USERS — DETAILED RESULTS TABLE")
     log.info("═" * 90)
-    log.info(f"{'Bot #':<6} {'TTFT (ms)':<12} {'Toplam (ms)':<14} {'Token':<7} {'Soru':<50}")
+    log.info(f"{'Bot #':<6} {'TTFT (ms)':<12} {'Total (ms)':<14} {'Tokens':<7} {'Question':<50}")
     log.info("─" * 90)
 
     total_ttft = []
@@ -112,7 +112,7 @@ def print_summary_table():
 
     log.info("─" * 90)
 
-    # ── İstatistikler ────────────────────────────────────────────────────────
+    # ── Statistics ────────────────────────────────────────────────────────────
     if total_ttft:
         avg_ttft = sum(total_ttft) / len(total_ttft)
         min_ttft = min(total_ttft)
@@ -128,56 +128,56 @@ def print_summary_table():
     fail_count = sum(1 for r in results if r["error"])
 
     log.info("─" * 90)
-    log.info("📈 ÖZET İSTATİSTİKLER:")
-    log.info(f"   Başarılı / Toplam   : {success_count} / {len(results)}")
-    log.info(f"   Başarısız            : {fail_count}")
+    log.info("📈 SUMMARY STATISTICS:")
+    log.info(f"   Success / Total   : {success_count} / {len(results)}")
+    log.info(f"   Failed            : {fail_count}")
     log.info(f"")
-    log.info(f"   📌 TTFT (İlk Token Süresi):")
-    log.info(f"      Ortalama  : {avg_ttft*1000:.0f} ms")
-    log.info(f"      Minimum   : {min_ttft*1000:.0f} ms")
-    log.info(f"      Maksimum  : {max_ttft*1000:.0f} ms")
+    log.info(f"   📌 TTFT (Time to First Token):")
+    log.info(f"      Average  : {avg_ttft*1000:.0f} ms")
+    log.info(f"      Minimum  : {min_ttft*1000:.0f} ms")
+    log.info(f"      Maximum  : {max_ttft*1000:.0f} ms")
     log.info(f"")
-    log.info(f"   📌 Toplam Yanıt Süresi:")
-    log.info(f"      Ortalama  : {avg_dur*1000:.0f} ms")
-    log.info(f"      Minimum   : {min_dur*1000:.0f} ms")
-    log.info(f"      Maksimum  : {max_dur*1000:.0f} ms")
+    log.info(f"   📌 Total Response Time:")
+    log.info(f"      Average  : {avg_dur*1000:.0f} ms")
+    log.info(f"      Minimum  : {min_dur*1000:.0f} ms")
+    log.info(f"      Maximum  : {max_dur*1000:.0f} ms")
     log.info(f"")
-    log.info(f"   📌 Token Sayısı:")
-    log.info(f"      Ortalama  : {avg_tok:.1f}")
+    log.info(f"   📌 Token Count:")
+    log.info(f"      Average  : {avg_tok:.1f}")
     avg_tps = avg_tok / avg_dur if avg_dur > 0 else 0
-    log.info(f"   📌 Ortalama Token/s : {avg_tps:.1f}")
+    log.info(f"   📌 Average Tokens/s : {avg_tps:.1f}")
     log.info("═" * 90)
 
 
 class BALChatUser(HttpUser):
-    """Her bir bot (sanal kullanıcı)."""
+    """Each simulated bot (virtual user)."""
 
-    # Botlar arasında bekleme YOK — senkronizasyon on_start ile sağlanır
+    # No wait between bots — synchronisation is handled via on_start
     wait_time = constant(0)
 
     def on_start(self):
         """
-        Tüm botlar spawn olana kadar bekler, sonra hepsi aynı anda serbest kalır.
-        20. bot spawn olduğunda _ready_event set edilir.
+        Waits until all bots have spawned, then they all start simultaneously.
+        The 20th bot sets _ready_event to release all others.
         """
-        # Benzersiz fingerprint (her bot için ayrı kimlik)
+        # Unique fingerprint (separate identity per bot)
         self.fingerprint = "".join(random.choices(string.ascii_lowercase + string.digits, k=32))
         self.client.headers.update({"X-Client-Fingerprint": self.fingerprint})
 
-        # Global sayaç (gevent-safe: mutable list)
+        # Global counter (gevent-safe via mutable list)
         _ready_counter[0] += 1
         current_count = _ready_counter[0]
 
-        self.bot_id = current_count  # Bot numarası (1-20)
+        self.bot_id = current_count  # Bot number (1-20)
 
-        log.info(f"🔄 Bot #{self.bot_id} spawn oldu ({current_count}/{NUM_CLIENTS})")
+        log.info(f"🔄 Bot #{self.bot_id} spawned ({current_count}/{NUM_CLIENTS})")
 
-        # Tüm botlar hazır mı?
+        # Are all bots ready?
         if current_count >= NUM_CLIENTS:
-            log.info(f"🚦 Tüm {NUM_CLIENTS} bot hazır! Aynı anda fırlatılıyor...")
+            log.info(f"🚦 All {NUM_CLIENTS} bots ready! Launching simultaneously...")
             _ready_event.set()
         else:
-            # Diğer botları bekle
+            # Wait for other bots
             _ready_event.wait(timeout=60)
 
         self.done = False
@@ -190,7 +190,7 @@ class BALChatUser(HttpUser):
         self.done = True
         question = random.choice(QUESTIONS)
 
-        # ⏱ 1. AN: Sorunun gönderildiği tam an
+        # ⏱ Mark exact send time
         start_time = time.time()
 
         first_token_at = None
@@ -251,11 +251,11 @@ class BALChatUser(HttpUser):
         if end_time is None:
             end_time = time.time()
 
-        # ── Süre hesaplamaları ───────────────────────────────────────────────
+        # ── Duration calculations ─────────────────────────────────────────────
         duration = end_time - start_time
         ttft = first_token_at - start_time if first_token_at else None
 
-        # ── Sonucu kaydet ────────────────────────────────────────────────────
+        # ── Save result ───────────────────────────────────────────────────────
         with results_lock:
             results.append({
                 "bot_id": self.bot_id,
@@ -266,21 +266,21 @@ class BALChatUser(HttpUser):
                 "error": error,
             })
 
-        # ── Anlık log ────────────────────────────────────────────────────────
+        # ── Live log ──────────────────────────────────────────────────────────
         status_icon = "✅" if not error else "❌"
         ttft_str = f"{ttft*1000:.0f}ms" if ttft is not None else "N/A"
         log.info(
             f"{status_icon} Bot #{self.bot_id:>2} | "
             f"TTFT={ttft_str:>7} | "
-            f"Toplam={duration*1000:.0f}ms | "
-            f"Token={tokens:>3} | "
-            f"Soru='{question[:30]}'"
+            f"Total={duration*1000:.0f}ms | "
+            f"Tokens={tokens:>3} | "
+            f"Question='{question[:30]}'"
         )
 
-        # ── En son biten bot özet tabloyu bassın ────────────────────────────
+        # ── The last bot to finish prints the summary table ──────────────────
         with results_lock:
             if len(results) >= NUM_CLIENTS:
-                log.info("\n" + "🔥" * 20 + " TÜM BOTLAR TAMAMLANDI " + "🔥" * 20)
+                log.info("\n" + "🔥" * 20 + " ALL BOTS COMPLETE " + "🔥" * 20)
                 if len(results) == NUM_CLIENTS:
                     print_summary_table()
 

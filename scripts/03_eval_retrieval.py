@@ -1,12 +1,12 @@
 """
 =============================================================
- BAL Chatbot — Adım 3: Retrieval Kalite Testi
- Kullanım: python scripts/03_eval_retrieval.py
+ BAL Chatbot — Step 3: Retrieval Quality Evaluation
+ Usage: python scripts/03_eval_retrieval.py
 =============================================================
-Bu script RAG sisteminin retrieval kalitesini test eder:
-  - Önceden hazırlanmış test sorularını çalıştırır
-  - Her soru için retrieve edilen chunk'ları değerlendirir
-  - Raporu logs/eval_report.txt dosyasına yazar
+This script evaluates the RAG system's retrieval quality:
+  - Runs a set of pre-defined test questions
+  - Evaluates retrieved chunks for each question
+  - Writes a report to logs/eval_report.txt
 =============================================================
 """
 
@@ -18,8 +18,8 @@ import numpy as np
 import faiss
 from sentence_transformers import SentenceTransformer
 
-# ── Test Soruları ─────────────────────────────────────────────────────────────
-# Her soru için beklenen anahtar kelimeler (değerlendirme için)
+# ── Test Questions ─────────────────────────────────────────────────────────────
+# Each question includes expected keywords for evaluation
 TEST_QUESTIONS = [
     {
         "question": "BAL'ın kuruluş tarihi nedir?",
@@ -65,6 +65,7 @@ TEST_QUESTIONS = [
 
 
 def load_artifacts(index_path: str, chunks_path: str, model_name: str):
+    """Loads the FAISS index, chunk metadata, and embedding model."""
     index = faiss.read_index(index_path)
     with open(chunks_path, "r", encoding="utf-8") as f:
         chunks = json.load(f)
@@ -73,6 +74,7 @@ def load_artifacts(index_path: str, chunks_path: str, model_name: str):
 
 
 def retrieve(query: str, index, chunks, model, top_k: int = 5):
+    """Retrieves the top-k most relevant chunks for a query."""
     query_text = f"query: {query}"
     embedding = model.encode([query_text], normalize_embeddings=True, convert_to_numpy=True).astype("float32")
     scores, indices = index.search(embedding, top_k)
@@ -87,7 +89,7 @@ def retrieve(query: str, index, chunks, model, top_k: int = 5):
 
 
 def evaluate_retrieval(results, expected_keywords: list) -> dict:
-    """Retrieve edilen chunk'larda beklenen kelimelerin bulunup bulunmadığını kontrol eder."""
+    """Checks whether expected keywords are found in the retrieved chunks."""
     combined_text = " ".join(r.get("text", "").lower() for r in results)
     found = [kw for kw in expected_keywords if kw.lower() in combined_text]
     recall = len(found) / len(expected_keywords) if expected_keywords else 1.0
@@ -101,8 +103,9 @@ def evaluate_retrieval(results, expected_keywords: list) -> dict:
 
 
 def run_evaluation():
-    # Yükle
-    print("Artifact'lar yükleniyor...")
+    """Runs the full retrieval evaluation pipeline."""
+    # Load artifacts
+    print("Loading artifacts...")
     try:
         index, chunks, model = load_artifacts(
             "data/bal_faiss.index",
@@ -110,78 +113,78 @@ def run_evaluation():
             "intfloat/multilingual-e5-large",
         )
     except FileNotFoundError:
-        print("❌ Vektör veritabanı bulunamadı. Önce 01_build_vectorstore.py çalıştırın.")
+        print("❌ Vector database not found. Run 01_build_vectorstore.py first.")
         return
-    
-    print(f"  ✓ {index.ntotal} chunk yüklendi\n")
-    
+
+    print(f"  ✓ {index.ntotal} chunks loaded\n")
+
     report_lines = [
-        "BAL Chatbot — Retrieval Kalite Raporu",
+        "BAL Chatbot — Retrieval Quality Report",
         "=" * 60,
-        f"Tarih: {time.strftime('%Y-%m-%d %H:%M:%S')}",
-        f"Toplam test sorusu: {len(TEST_QUESTIONS)}",
+        f"Date: {time.strftime('%Y-%m-%d %H:%M:%S')}",
+        f"Total test questions: {len(TEST_QUESTIONS)}",
         "",
     ]
-    
+
     recalls = []
     top_scores = []
-    
+
     for i, test in enumerate(TEST_QUESTIONS, 1):
         question = test["question"]
         expected = test["expected_keywords"]
-        
+
         results = retrieve(question, index, chunks, model, top_k=5)
         eval_result = evaluate_retrieval(results, expected)
-        
+
         recalls.append(eval_result["recall"])
         top_scores.append(eval_result["top_score"])
-        
-        # Terminal çıktı
-        status = "✅" if eval_result["recall"] >= 0.7 else "⚠" if eval_result["recall"] >= 0.4 else "❌"
+
+        # Terminal output
+        status = "✅" if eval_result["recall"] >= 0.7 else "⚠️" if eval_result["recall"] >= 0.4 else "❌"
         print(f"{status} [{i:02d}] {question}")
         print(f"       Recall: {eval_result['recall']:.0%} | Top Score: {eval_result['top_score']:.3f}")
         if eval_result["missing_keywords"]:
-            print(f"       Eksik: {eval_result['missing_keywords']}")
+            print(f"       Missing: {eval_result['missing_keywords']}")
         print()
-        
-        # Rapor
+
+        # Report content
         report_lines += [
-            f"── Soru {i}: {question}",
+            f"── Question {i}: {question}",
             f"   Recall      : {eval_result['recall']:.0%}",
             f"   Top Score   : {eval_result['top_score']:.3f}",
             f"   Avg Score   : {eval_result['avg_score']:.3f}",
-            f"   Bulunan kw  : {eval_result['found_keywords']}",
-            f"   Eksik kw    : {eval_result['missing_keywords']}",
+            f"   Found kw    : {eval_result['found_keywords']}",
+            f"   Missing kw  : {eval_result['missing_keywords']}",
             "",
-            "   Chunk başlıkları:",
+            "   Chunk titles:",
         ]
         for r in results[:3]:
             report_lines.append(
                 f"     [{r['score']:.3f}] {r.get('breadcrumb', '')} — {r.get('text', '')[:80]}..."
             )
         report_lines.append("")
-    
-    # Özet
+
+    # Summary
     avg_recall = sum(recalls) / len(recalls)
     avg_top = sum(top_scores) / len(top_scores)
-    
+
     summary = [
         "=" * 60,
-        "ÖZET",
-        f"  Ortalama Recall  : {avg_recall:.0%}",
-        f"  Ortalama Top Skor: {avg_top:.3f}",
-        f"  Başarılı (≥70%)  : {sum(1 for r in recalls if r >= 0.7)}/{len(recalls)}",
+        "SUMMARY",
+        f"  Average Recall  : {avg_recall:.0%}",
+        f"  Average Top Score: {avg_top:.3f}",
+        f"  Successful (≥70%): {sum(1 for r in recalls if r >= 0.7)}/{len(recalls)}",
     ]
-    
+
     print("\n".join(summary))
     report_lines += [""] + summary
-    
-    # Kaydet
+
+    # Save
     Path("logs").mkdir(exist_ok=True)
     report_path = "logs/eval_report.txt"
     with open(report_path, "w", encoding="utf-8") as f:
         f.write("\n".join(report_lines))
-    print(f"\n📄 Rapor kaydedildi: {report_path}")
+    print(f"\n📄 Report saved: {report_path}")
 
 
 if __name__ == "__main__":
