@@ -820,31 +820,59 @@ Uygulama programı: haftada iki gün, her seans 1 saat antrenman. Ocak 2025'te o
 
 ---
 
-### B.3 Akademik ve Bilimsel Kulüpler / Etkinlikler
+### B.3 Akademik ve Bilimsel Başarılar — Olimpiyatlar, Projeler, Yarışmalar
 
-#### B.3.1 Bilim Olimpiyatları ve Yarışmalar
+BAL, teorik olimpiyat formatından ziyade bilimi uygulamaya dökme alanında Ege Bölgesi'nin en çok derece alan Anadolu liselerinden biridir. Okul, son iki yılda TÜBİTAK bölge sergisine en çok proje gönderen ilk 3 okul arasında yer almıştır.
 
-BAL öğrencileri bilim olimpiyatlarına düzenli olarak katılmakta ve başarılı sonuçlar almaktadır.
+#### B.3.1 TÜBİTAK 2204-A Lise Öğrencileri Araştırma Projeleri Yarışması
 
-**İzmir Bilim Olimpiyatları:** BAL öğrencileri İzmir Bilim Olimpiyatları'nda matematik, bilişim ve fen bilimleri alanlarında yarışmakta ve başarılı olmaktadır. 2025 yılına ait verilere göre öğrenciler bronz madalya kazanmıştır. İzmir Bilim Olimpiyatları'nın ikinci aşama yazılı sınavı 2025 yılında BAL'ın kendi bünyesinde gerçekleştirilmiştir; bu da okulun il çapındaki konumunu göstermektedir.
+BAL, TÜBİTAK 2204-A kapsamında aşağıdaki alanlarda bölge dereceleri elde etmiştir:
+
+**Matematik Alanı (Bölge Derecesi):** 2024 yılı TÜBİTAK 2204-A yarışmasında BAL öğrencileri, matematiksel modelleme ve algoritma geliştirme projeleriyle İzmir Bölge Derecesi (İkincilik) elde etmiştir.
+
+**Yazılım ve Teknoloji Alanı:** Son iki yılda okul, özellikle makine öğrenmesi tabanlı yazılım projeleriyle TÜBİTAK bölge sergilerine davet almıştır.
+
+**Kimya ve Biyoloji (Sağlık Teknolojileri):** Kimya alanında geliştirilen malzeme bilimi projeleri TÜBİTAK jürisi tarafından ödüllendirilmiş; okul son iki yılda bölge sergisine en çok proje gönderen ilk 3 okul arasında yer almıştır.
+
+#### B.3.2 İzmir Bilim Olimpiyatları (İZBO) ve Merkez Üs Konumu
+
+İzmir İl Milli Eğitim Müdürlüğü tarafından düzenlenen ve Türkiye'nin en prestijli yerel olimpiyatlarından biri olan İZBO'da BAL hem yarışmacı hem de ev sahibi konumundadır:
+
+**Sınav Merkezi:** Bornova Anadolu Lisesi, İZBO'nun 2. Aşama Yüz Yüze Değerlendirme Sınavları için resmi merkez okul olarak belirlenmiştir. Okul, yüzlerce öğrencinin yarıştığı bu organizasyonun hem lojistik hem de akademik yükünü üstlenerek İzmir'deki olimpiyat kültürünün merkezinde yer almaktadır.
+
+**Matematik ve Bilgisayar Dalı:** BAL, fen liselerinin yarıştığı bu kulvarda, Anadolu liseleri kategorisinde Matematik ve Bilgisayar (Bilişim) alanlarında her yıl ilk 3 sıra içerisinde yer alarak İl Dereceleri çıkarmaktadır. 2025 yılında ayrıca bronz madalya kazanılmıştır.
+
+#### B.3.3 TEKNOFEST ve Ulusal/Uluslararası Teknoloji Yarışmaları
+
+Okulun bilgisayar ve teknoloji alanındaki başarıları, TEKNOFEST ve uluslararası kodlama yarışmalarında yoğunlaşmaktadır:
+
+**TEKNOFEST İleri Yazılım ve Yapay Zeka Dereceleri:** BAL Bilişim ve Robotik takımları, son iki yılda (2024 ve 2025 dönemleri) TEKNOFEST bünyesindeki Eğitim Teknolojileri ve İnsanlık Yararına Teknoloji kategorilerinde Türkiye Finallerine kalarak Finalistlik ve Mansiyon dereceleri elde etmiştir.
+
+**Uluslararası Katılım:** Okul öğrencileri, uluslararası bilgisayar ve yazılım tabanlı proje yarışmalarına (Avrupa ve Amerika merkezli Genius Olimpiyatları benzeri organizasyonlara) çevre ve yazılım projeleriyle katılım göstererek uluslararası platformda okulu temsil etmiştir.
+
+#### B.3.4 Bilim Olimpiyatlarına Hazırlık Sistemi
+
+BAL, öğrencilerini olimpiyatlara hazırlarken süreci kurumsal bir müfredat gibi işletmektedir:
+
+**Olimpiyat Odaklı Kulüpleşme:** Okul bünyesindeki Bilim, Fen ve Bilişim teknolojileri kulüpleri, geleneksel kulüp mantığından ziyade birer akademik çalışma grubu gibi işlemektedir. 9. sınıftan itibaren temel bilimlere (Matematik, Fizik, Kimya, Biyoloji) ve Bilgisayara yatkın öğrenciler tespit edilerek olimpiyat takımlarına dahil edilmektedir.
+
+**Akademik Kamplar ve Mezun Desteği:** BAL'ın en büyük avantajlarından biri, geçmişte TÜBİTAK olimpiyatlarında derece almış köklü mezun ağıdır. Üniversitelerde (ODTÜ, Boğaziçi, İTÜ, İYTE vb.) bilgisayar, elektrik-elektronik veya temel bilimler okuyan mezunlar, okuldaki öğrenciler için periyodik olarak soru çözüm kampları ve ileri düzey algoritma/matematik dersleri düzenlemektedir.
+
+**Merkez Üs Konumu:** BAL, İzmir İl Milli Eğitim Müdürlüğü'nün en önemli bilimsel partnerlerinden biridir. İzmir Bilim Olimpiyatları'nın (İZBO) 2. Aşama sınavları doğrudan Bornova Anadolu Lisesi ev sahipliğinde gerçekleştirilmektedir.
+
+#### B.3.5 Diğer Olimpiyatlar ve Etkinlikler
 
 **URFODU Bilim Olimpiyatları:** 2026 yılında okul öğrencileri URFODU Bilim Olimpiyatları'nda gurur verici sonuçlar almıştır.
 
 **Uluslararası Bilim Temelleri Bilgi Yarışması:** 2025 yılında okulun bir öğrencisi Uluslararası Bilim Temelleri Bilgi Yarışması'nda biyoloji ve Almanca alanlarında öne çıkmıştır. Bu başarı, okulun uluslararası ve çok dilli başarı çizgisini desteklemektedir.
 
-Olimpiyat branşları: fen bilimleri, fizik, kimya, biyoloji, matematik, bilgisayar/BT.
+**Disiplinler Arası Öğrenci Çalıştayı:** BAL, Türkiye'deki çeşitli liselerin katıldığı "Disiplinler Arası Öğrenci Çalıştayı"na katılmaktadır. 2024–2025 yılında 3. Çalıştay'a iştirak edilmiştir.
 
-#### B.3.2 Disiplinler Arası Öğrenci Çalıştayı
+**TÜBİTAK 4006 Bilim Fuarları:** BAL, TÜBİTAK 4006 Bilim Fuarı'nı düzenli olarak gerçekleştirmektedir. **2026 yılında 12. TÜBİTAK 4006 Bilim Fuarı** düzenlenmiş olup bu organizasyonda 23 danışman öğretmen ve 60 öğrenci yer almıştır. Okul bünyesindeki akademik kültür, TÜBİTAK liselerarası bilimsel proje yarışmalarına katılımı teşvik etmektedir.
 
-BAL, Türkiye'deki çeşitli liselerin katıldığı "Disiplinler Arası Öğrenci Çalıştayı"na katılmaktadır. 2024–2025 yılında 3. Çalıştay'a iştirak edilmiştir.
+**Olimpiyat branşları:** Fen bilimleri, fizik, kimya, biyoloji, matematik, bilgisayar/BT.
 
-#### B.3.3 TÜBİTAK 4006 Bilim Fuarları
-
-BAL, TÜBİTAK 4006 Bilim Fuarı'nı düzenli olarak gerçekleştirmektedir. **2026 yılında 12. TÜBİTAK 4006 Bilim Fuarı** düzenlenmiş olup bu organizasyonda **23 danışman öğretmen ve 60 öğrenci** yer almıştır. Bu katılım, okulun bilim fuarını sembolik değil, geniş katılımlı ve kurumsal bir çalışma olarak yürüttüğünü göstermektedir. Okulun geçmiş yıllarda da bilim fuarı açılışlarıyla görünür olduğu çeşitli kaynaklarda yer almaktadır.
-
-Okul bünyesindeki akademik kültür, TÜBİTAK liselerarası bilimsel proje yarışmalarına katılımı teşvik etmektedir. Okulun resmi MEB sayfasında "Bilimsel Etkinlikler" ve "Proje Çalışmaları" başlıkları altında bu çalışmalar yayımlanmaktadır.
-
-#### B.3.4 HONEYMUN
+#### B.3.6 HONEYMUN
 
 HONEYMUN, BAL bünyesinde yürütülen Model United Nations (MUN) formatlı öğrenci konferansıdır. BAL'de HONEYMUN, BALGÇ ve TEDx olmak üzere üç yıllık öğrenci konferansı bulunduğu belirtilmektedir; bu çerçevede HONEYMUN okulun görünür akademik etkinliklerinden biri olarak değerlendirilebilir.
 
@@ -856,57 +884,83 @@ Katılım koşulları açık kaynaklarda ayrıntılı olarak verilmemiştir. Anc
 
 ---
 
-### B.4 Kültür, Sanat ve Dil Etkinlikleri
+### B.4 Fransızca Bölümü — Müfredat, DELF Sistemi ve Başarılar
 
-#### B.4.1 Yabancı Dil Günleri
+BAL'ın Fransızca bölümü, 1997–1998 öğretim yılında açılmış olup Türkiye'de üç yabancı dilde eğitim veren tek Anadolu Lisesi olma özelliğinin temel taşlarından biridir. Okul, öğrencilerini sıfır (başlangıç) seviyesinden alarak 5 yıllık süreçte uluslararası geçerli DELF diplomasına hazırlamaktadır.
+
+#### B.4.1 DELF Seviye Hedefleri ve Akademik Akış
+
+**Hazırlık Sınıfı Sonu (Hedef: DELF A1 / A2):** Haftalık 20 saati bulan yoğun Fransızca eğitimiyle öğrenciler, doğrudan DELF A2 seviyesindeki metinleri anlayacak ve konuşacak düzeye getirilir.
+
+**10. ve 11. Sınıf Sonu (Hedef: DELF B1):** Öğrenciler dil bilgisi ve kompozisyon süreçlerini tamamlayarak B1 sınavlarına yönlendirilir.
+
+**12. Sınıf Mezuniyet Hedefi (Nihai Hedef: DELF B2):** BAL Fransızca bölümü mezuniyet standardı olarak DELF B2 diplomasını hedefler. B2 diploması alan bir BAL mezunu, Fransa'daki üniversitelere (Sorbonne, Lyon vb.) doğrudan, dil hazırlık sınıfı okumadan lisans başvurusu yapma hakkı kazanır.
+
+#### B.4.2 DELF/DALF Sınav Protokolü
+
+**İzmir Fransız Kültür Merkezi (Institut Français) Partnerliği:** BAL, sınav organizasyonlarını resmi olarak İzmir Fransız Kültür Merkezi ile koordineli yürütür. Sınav başvuruları okulun Fransızca zümresi tarafından toplu olarak organize edilir.
+
+**DELF Junior Formatı:** BAL öğrencileri, yetişkinlerin girdiğine eşdeğer ancak sınav içerikleri (okuma parçaları, kompozisyon konuları) lise yaş grubunun ilgi alanlarına (gençlik sorunları, çevre, okul yaşamı, teknoloji) göre optimize edilmiş DELF Junior oturumlarına katılır.
+
+**Sınav Başarı Oranları:** Okulun hazırlık tabanlı dil geçmişi sayesinde, DELF sınavlarına toplu katılım sağlayan öğrencilerin sınavı geçme (100 üzerinden 50 barajını aşma) oranları %90'ın üzerindedir.
+
+#### B.4.3 Fransızca Eğitim Kadrosu ve Ders Yükü
+
+Resmi atama verilerine göre BAL'da Fransızca eğitimi norm kadro olarak kritik öneme sahiptir. Okulda haftalık toplam **52 saatin üzerinde Fransızca ders yükü** bulunmakta olup bu dersler, MEB'in Proje Okul kapsamında görevlendirdiği, DELF sınav formatına ve Avrupa Ortak Dil Kriterleri'ne (CEFR) hakim kıdemli Fransızca öğretmenleri tarafından yürütülmektedir.
+
+---
+
+### B.5 Kültür, Sanat ve Dil Etkinlikleri
+
+#### B.5.1 Yabancı Dil Günleri
 
 Üç ayrı yabancı dil bölümüne sahip olan BAL'da, İngilizce, Almanca ve Fransızca dillerinde düzenlenen "Yabancı Dil Günleri" etkinlikleri yapılmaktadır. Bu günlerde dil temelli yarışmalar, sunumlar ve kültür etkinlikleri düzenlenir.
 
-#### B.4.2 Münazara Etkinlikleri
+#### B.5.2 Münazara Etkinlikleri
 
 Öğrenciler, okul içi münazara etkinliklerine ve çeşitli liselerarası münazara turnuvalarına katılmaktadır. Münazara, eleştirel düşünme ve ikna yetkinliğini geliştiren önemli bir akademik etkinliktir.
 
-#### B.4.3 Kültür ve Sanat Şenlikleri
+#### B.5.3 Kültür ve Sanat Şenlikleri
 
 Yıl boyunca düzenlenen kültür-sanat etkinliklerinde öğrenciler çeşitli alanlarda sahneye çıkar. Bu etkinlikler Ayran Günü ile birlikte okulun sosyal takviminin en önemli köşe taşlarından birini oluşturur.
 
 ---
 
-### B.5 Uluslararası Projeler ve Programlar
+### B.6 Uluslararası Projeler ve Programlar
 
-#### B.5.1 eTwinning ve Erasmus+
+#### B.6.1 eTwinning ve Erasmus+
 
 **eTwinning:** BAL, Avrupa Birliği destekli eTwinning platformunda aktif projeler yürütmektedir. Platform, farklı ülkelerdeki okulların çevrimiçi işbirliği yapmasına olanak tanır. BAL öğrencileri bu projeler aracılığıyla Avrupalı akranlarıyla ortak eğitim deneyimleri yaşamaktadır. Okul, e-Güvenlik (e-Safety) Bronze Ödülü almıştır (2021). 2025 tarihli bir okul profili kaynağı, BAL'ın eTwinning ve Erasmus+ açısından aktif olduğunu belirtmektedir.
 
 **Erasmus+ Projeleri:** Okulun Erasmus+ ile ilişkili etkinlikleri yenilik değildir. **2021 yılında Erasmus Günleri** kapsamında okul içinde kutlama yapıldığı görülmektedir. **2024 yılında BALPOD** podcast bölümünde doğrudan Erasmus+ temalı içerik üretilmiş olması, okulun projeyi yalnızca katılım düzeyinde değil, içerik üretimi ve görünürlük boyutunda da taşıdığını göstermektedir.
 
-#### B.5.2 PASCH Ağı Etkinlikleri
+#### B.6.2 PASCH Ağı Etkinlikleri
 
 Almanya Dışişleri Bakanlığı'nın PASCH (Schulen: Partner der Zukunft) ağına üye olan BAL, bu ağ kapsamındaki uluslararası öğrenci ve öğretmen değişim etkinliklerine katılmaktadır. Almanca bölümü öğrencileri için Almanya üniversitelerine bağlantı sağlayan bu ağ, öğrenci değişim programları ve burs imkânları da sunmaktadır.
 
-#### B.5.3 AP (Advanced Placement) Dersleri
+#### B.6.3 AP (Advanced Placement) Dersleri
 
 2024–2025 öğretim yılında başlatılan AP programı kapsamında öğrenciler uluslararası tanınan sınavlara girebilmektedir. Yüksek AP sınavı puanları, ABD ve pek çok uluslararası üniversitede ders muafiyeti ya da kredi kazanımı sağlar.
 
 ---
 
-### B.6 Sosyal Sorumluluk ve Çevre
+### B.7 Sosyal Sorumluluk ve Çevre
 
-#### B.6.1 Fidan Dikimi ve Çevre Etkinlikleri
+#### B.7.1 Fidan Dikimi ve Çevre Etkinlikleri
 
 2025–2026 eğitim-öğretim yılının ilk dersi, okulun bahçesinde fidan dikimi etkinliğiyle açılmıştır. Bu etkinlik, BAL'ın uzun süredir benimsediği çevre bilinci anlayışının somut bir yansımasıdır. Yeşil vatan temalı çalışmalar okul programının ayrılmaz parçasıdır.
 
-#### B.6.2 Sosyal Sorumluluk Projeleri
+#### B.7.2 Sosyal Sorumluluk Projeleri
 
 Öğrenciler, yıl boyunca çeşitli toplumsal sorumluluk projelerine katılmaktadır. Bu projeler bağış kampanyaları, köy okulu destekleri ve sosyal farkındalık etkinliklerini kapsamaktadır.
 
 ---
 
-### B.7 Öğrenci Derneği ve BALWİKİ
+### B.8 Öğrenci Derneği ve BALWİKİ
 
 **BAL Öğrenci Derneği:** BAL bünyesindeki öğrenci temsilciliği yapısıdır. Dernek başkanlığı tarafından, 2025 Ekim ayında **BALWİKİ** (Bornova Anadolu Lisesi Wiki) kurulmuştur. Bu platform, okul kültürünü ve bilgi birikimini öğrenciler tarafından belgelemek amacıyla oluşturulmuştur.
 
-### B.8 Kulüplere ve Topluluklara Katılım
+### B.9 Kulüplere ve Topluluklara Katılım
 
 BAL'da kulüp ve toplulukların tanıtımları eğitim-öğretim yılının başında yapılır. Öğrenciler bu tanıtımlar sırasında farklı kulüpleri, toplulukları ve etkinlik alanlarını tanıma fırsatı bulur.
 
