@@ -1235,7 +1235,16 @@ def chat():
     history = conversation_sessions[session_id]
 
     # ── RAG: retrieve ONCE — result is reused for both prompt and sources ──────
-    retrieved = vector_store.retrieve(user_message, top_k=CONFIG["retrieval_top_k"])
+    try:
+        retrieved = vector_store.retrieve(user_message, top_k=CONFIG["retrieval_top_k"])
+    except RuntimeError as e:
+        error_msg = str(e)
+        log.error("Embedding/retrieval failed: %s", error_msg)
+        return jsonify({"error": "Şu anda çok yoğunuz. Lütfen biraz sonra tekrar dene.", "error_type": "retry"}), 503
+    except Exception as e:
+        log.exception("Unexpected retrieval error")
+        return jsonify({"error": "Şu anda çok yoğunuz. Lütfen biraz sonra tekrar dene.", "error_type": "retry"}), 503
+
     context = format_context(retrieved, CONFIG["retrieval_score_threshold"])
     augmented_message = build_augmented_user_message(user_message, context)
 
@@ -1346,11 +1355,43 @@ def startup():
     """
     Runs once before the Flask server accepts requests.
     Loads the vector store and validates Groq configuration.
+    Falls back to SQLite if PostgreSQL is unreachable (e.g. Neon quota exceeded).
     """
-    global vector_store, llm_gateway
+    global vector_store, llm_gateway, engine, SessionLocal
 
     LOG_DIR.mkdir(parents=True, exist_ok=True)
-    init_db()
+    
+    # ── Try database connection; fall back to SQLite on failure ──────────────
+    db_ok = False
+    try:
+        init_db()
+        db_ok = True
+        log.info("Database connection established: %s", CONFIG["database_url"][:50])
+    except Exception as e:
+        log.warning("Database connection failed (%s). Falling back to SQLite.", str(e)[:80])
+    
+    if not db_ok:
+        sqlite_path = str(PROJECT_ROOT / "data" / "app.db")
+        CONFIG["database_url"] = f"sqlite:///{sqlite_path}"
+        log.info("Switching to SQLite: %s", CONFIG["database_url"])
+        
+        # Recreate engine and session with SQLite
+        engine = create_engine(
+            CONFIG["database_url"],
+            pool_pre_ping=True,
+            future=True,
+            connect_args={"check_same_thread": False},
+        )
+        SessionLocal = sessionmaker(bind=engine, autoflush=False, expire_on_commit=False, future=True)
+        
+        # Retry DB init with SQLite
+        try:
+            init_db()
+            log.info("SQLite fallback successful.")
+        except Exception as e2:
+            log.error("SQLite fallback also failed: %s", e2)
+            sys.exit(1)
+
     log.info("BAL Chatbot Web API starting...")
     log.info(f"Runtime pid={os.getpid()} cwd={Path.cwd()} log_file={LOG_DIR / 'web.log'}")
     log.info(f"Provider: {CONFIG['provider']}")
