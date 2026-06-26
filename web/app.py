@@ -842,12 +842,12 @@ def stream_groq_model(messages: List[Dict], model: str, api_key: str, key_index:
         
         if "timeout" in error_msg:
             reason = "timeout"
-            return "Groq API zaman aşımına uğradı. Lütfen tekrar deneyin.", {
+            return "Şu anda çok yoğunuz. Lütfen biraz sonra tekrar dene.", {
                 "retryable": True, "model": model, "key_index": key_index, "reason": reason
             }
         elif "connect" in error_msg or "resolve" in error_msg:
             reason = "connection"
-            return "Groq API bağlantısı kurulamadı. Lütfen daha sonra tekrar deneyin.", {
+            return "Şu anda çok yoğunuz. Lütfen biraz sonra tekrar dene.", {
                 "retryable": True, "model": model, "key_index": key_index, "reason": reason
             }
             
@@ -882,7 +882,7 @@ def stream_groq_model(messages: List[Dict], model: str, api_key: str, key_index:
         
         if status_code > 0:
             retryable = status_code in {404, 429} or 500 <= status_code <= 599
-            return f"Groq API hatası: HTTP {status_code}", {
+            return "Şu anda çok yoğunuz. Lütfen biraz sonra tekrar dene.", {
                 "retryable": retryable,
                 "model": model,
                 "key_index": key_index,
@@ -891,13 +891,13 @@ def stream_groq_model(messages: List[Dict], model: str, api_key: str, key_index:
                 "rate_headers": rate_headers,
             }
         else:
-            return f"Groq API hatası: {str(e)}", {
+            return "Şu anda çok yoğunuz. Lütfen biraz sonra tekrar dene.", {
                 "retryable": True, "model": model, "key_index": key_index, "reason": reason
             }
 
     except Exception as e:
         log.exception("Groq streaming error model=%s", model)
-        return f"Groq API hatası: {str(e)}", {
+        return "Şu anda çok yoğunuz. Lütfen biraz sonra tekrar dene.", {
             "retryable": True,
             "model": model,
             "key_index": key_index,
@@ -1235,7 +1235,16 @@ def chat():
     history = conversation_sessions[session_id]
 
     # ── RAG: retrieve ONCE — result is reused for both prompt and sources ──────
-    retrieved = vector_store.retrieve(user_message, top_k=CONFIG["retrieval_top_k"])
+    try:
+        retrieved = vector_store.retrieve(user_message, top_k=CONFIG["retrieval_top_k"])
+    except RuntimeError as e:
+        error_msg = str(e)
+        log.error("Embedding/retrieval failed: %s", error_msg)
+        return jsonify({"error": "Şu anda çok yoğunuz. Lütfen biraz sonra tekrar dene.", "error_type": "retry"}), 503
+    except Exception as e:
+        log.exception("Unexpected retrieval error")
+        return jsonify({"error": "Şu anda çok yoğunuz. Lütfen biraz sonra tekrar dene.", "error_type": "retry"}), 503
+
     context = format_context(retrieved, CONFIG["retrieval_score_threshold"])
     augmented_message = build_augmented_user_message(user_message, context)
 
