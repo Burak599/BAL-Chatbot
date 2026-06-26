@@ -1727,12 +1727,7 @@
           const data = await response.json().catch(() => ({}));
           if (data.near_limit) showLimitNotice();
           const errorType = data.error_type || 'technical';
-
-          const userMsg =
-            errorType === 'quota'
-              ? (data.error || 'Limit aşıldı.')
-              : 'Şu anda çok yoğunuz. Lütfen biraz sonra tekrar dene.';
-
+          const userMsg = errorType === 'quota' ? (data.error || 'Limit aşıldı.') : 'Teknik bir sorun oluştu. Lütfen daha sonra tekrar deneyin.';
           throw new Error(userMsg);
         }
 
@@ -1771,7 +1766,7 @@
               if (errorType === 'quota') {
                 bubble.innerHTML = `<p style="color:#d97706">${data.error}</p>`;
               } else {
-                bubble.innerHTML = '<p style="color:#667085">Şu anda çok yoğunuz. Lütfen biraz sonra tekrar dene.</p>';
+                bubble.innerHTML = '<p style="color:#667085">Teknik bir sorun oluştu. Lütfen daha sonra tekrar deneyin.</p>';
               }
               sseHadError = true;
             }
@@ -1817,12 +1812,7 @@
 
       } catch (err) {
         typingWrap?.remove();
-
-        const errorText =
-          err.message === 'Limit aşıldı.'
-            ? err.message
-            : 'Şu anda çok yoğunuz. Lütfen biraz sonra tekrar dene.';
-
+        const errorText = err.message || 'Teknik bir sorun oluştu. Lütfen daha sonra tekrar deneyin.';
         appendMessage('bot', errorText);
       }
 
