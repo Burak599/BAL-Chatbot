@@ -1200,19 +1200,38 @@ def chat():
         return jsonify({"error": "Boş mesaj", "error_type": "technical"}), 400
 
     identity = get_current_identity()
+    
+    # ── Fallback: if DB-based identity fails, use fingerprint from header directly ──
     if not identity:
-        try:
-            headers_snapshot = {
-                "X-Client-Fingerprint": request.headers.get("X-Client-Fingerprint"),
-                "User-Agent": request.headers.get("User-Agent"),
-                "Accept-Language": request.headers.get("Accept-Language"),
-                "X-Forwarded-For": request.headers.get("X-Forwarded-For"),
+        # Try to get fingerprint from request header as last resort
+        fallback_fingerprint = (request.headers.get("X-Client-Fingerprint") or "").strip()
+        if fallback_fingerprint and re.fullmatch(r"[A-Za-z0-9_-]{8,255}", fallback_fingerprint):
+            # Use fingerprint as identity directly, no DB needed — rate limiting will be best-effort
+            identity = {
+                "subject_type": "fingerprint_fallback",
+                "subject_id": fallback_fingerprint,
+                "role": "visitor",
+                "public": {
+                    "id": 0,
+                    "email": None,
+                    "role": "visitor",
+                    "mode": "visitor_fallback",
+                },
             }
-            log.warning("Visitor identity missing for /api/chat. Request cookies: %s, headers: %s, remote_addr: %s",
-                        dict(request.cookies), headers_snapshot, request.remote_addr)
-        except Exception:
-            log.exception("Failed to log missing identity details")
-        return jsonify({"error": "Ziyaretçi kimliği alınamadı; lütfen sayfayı yenileyin.", "error_type": "technical"}), 401
+            log.warning("Using fallback identity for fingerprint: %s", fallback_fingerprint[:20])
+        else:
+            try:
+                headers_snapshot = {
+                    "X-Client-Fingerprint": request.headers.get("X-Client-Fingerprint"),
+                    "User-Agent": request.headers.get("User-Agent"),
+                    "Accept-Language": request.headers.get("Accept-Language"),
+                    "X-Forwarded-For": request.headers.get("X-Forwarded-For"),
+                }
+                log.warning("Visitor identity missing for /api/chat. Request cookies: %s, headers: %s, remote_addr: %s",
+                            dict(request.cookies), headers_snapshot, request.remote_addr)
+            except Exception:
+                log.exception("Failed to log missing identity details")
+            return jsonify({"error": "Ziyaretçi kimliği alınamadı; lütfen sayfayı yenileyin.", "error_type": "technical"}), 401
 
     # 🔥 LOGGING: Variables (identity and session_id) are now defined, safe to log.
     log.warning(
