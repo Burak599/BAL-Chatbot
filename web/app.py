@@ -648,7 +648,7 @@ class VectorStore:
             try:
                 log.debug(f"Embedding with key {key_index}/{len(self.gemini_keys)}")
                 payload = {
-                    "model": f"models/{self.embedding_model_name}",
+                    "model": self.embedding_model_name,
                     "content": {
                         "parts": [{"text": text}]
                     }
