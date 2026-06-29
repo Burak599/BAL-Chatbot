@@ -41,7 +41,6 @@ from flask_cors import CORS
 from dotenv import load_dotenv
 from werkzeug.middleware.proxy_fix import ProxyFix
 from werkzeug.security import generate_password_hash, check_password_hash
-from google import genai
 from curl_cffi import requests as curl_requests
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -636,9 +635,11 @@ class VectorStore:
 
     def _embed_text(self, text: str) -> Optional[np.ndarray]:
         """
-        Helper: embed a single text string.
-        Returns normalized embedding array or None on failure.
+        Helper: embed a single text string via Gemini REST API.
+        Uses direct HTTP call instead of SDK to avoid key format issues.
         """
+        url = f"https://generativelanguage.googleapis.com/v1beta/models/{self.embedding_model_name}:embedContent"
+        
         for key_index, api_key in enumerate(self.gemini_keys, 1):
             if not api_key or not api_key.strip():
                 log.debug(f"Gemini key {key_index} is empty, skipping")
@@ -646,21 +647,30 @@ class VectorStore:
             
             try:
                 log.debug(f"Embedding with key {key_index}/{len(self.gemini_keys)}")
-                client = genai.Client(api_key=api_key)
-                response = client.models.embed_content(
-                    model=self.embedding_model_name,
-                    contents=text,
-                    config={"task_type": "RETRIEVAL_QUERY"},
+                payload = {
+                    "model": f"models/{self.embedding_model_name}",
+                    "content": {
+                        "parts": [{"text": text}]
+                    }
+                }
+                response = requests.post(
+                    url,
+                    params={"key": api_key},
+                    json=payload,
+                    timeout=30
                 )
                 
-                if not response.embeddings or not response.embeddings[0].values:
+                if response.status_code != 200:
+                    log.warning(f"Embedding failed with key {key_index}: HTTP {response.status_code} {response.text[:200]}")
+                    continue
+                
+                data = response.json()
+                values = data.get("embedding", {}).get("values")
+                if not values:
                     log.warning(f"Empty embedding response from key {key_index}")
                     continue
                 
-                embedding = np.array(
-                    [response.embeddings[0].values],
-                    dtype="float32"
-                )
+                embedding = np.array([values], dtype="float32")
                 faiss.normalize_L2(embedding)
                 log.debug(f"Embedding successful with key {key_index}")
                 return embedding

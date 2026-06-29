@@ -8,10 +8,8 @@
 numpy>=1.26.0
 faiss-cpu>=1.8.0
 
-# Gemini SDK (01_build_vectorstore.py)
-google-genai>=1.20.0
-
-# Gemini SDK (web/app.py — embed_content kullanımı)
+# Gemini SDK only needed for 01_build_vectorstore.py (not web/app.py)
+# google-genai>=1.20.0
 
 # ── HTTP / API Requests ───────────────────────────────────────
 
