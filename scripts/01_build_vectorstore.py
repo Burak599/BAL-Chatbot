@@ -6,7 +6,7 @@
 This script:
   1. Reads the RAG_Dataset_BAL.md markdown file
   2. Splits markdown into semantically meaningful chunks
-  3. Generates embeddings for each chunk via Gemini API
+  3. Generates embeddings for each chunk via local SentenceTransformer (e5-small-v2)
   4. Stores vectors in a FAISS index for similarity search
   5. Writes chunk metadata to JSON for fast retrieval
 =============================================================
@@ -18,11 +18,11 @@ import json
 import time
 import logging
 from pathlib import Path
-from typing import List, Dict, Tuple
-from google import genai
+from typing import List, Dict
 
 import numpy as np
 import faiss
+from sentence_transformers import SentenceTransformer
 from dotenv import load_dotenv
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -41,26 +41,13 @@ logging.basicConfig(
 log = logging.getLogger(__name__)
 
 
-def get_gemini_api_keys():
-    """Reads Gemini API keys from environment variables GEMINI_API_KEY_1..5."""
-    keys = []
-    for i in range(1, 6):
-        k = os.getenv(f"GEMINI_API_KEY_{i}", "").strip()
-        if k:
-            keys.append(k)
-    return keys
-
-
 # ── Configuration ─────────────────────────────────────────────────────────────
 CONFIG = {
     # Path to the raw markdown dataset file
     "dataset_path": str(PROJECT_ROOT / "Dataset" / "RAG_Dataset_BAL.md"),
-    # Embedding model — multilingual, strong Turkish support
-    "embedding_model": "models/gemini-embedding-001",
-    "gemini_api_keys": get_gemini_api_keys(),
-    # Alternatives (faster but slightly lower quality):
-    #   "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
-    #   "emrecan/bert-base-turkish-cased-mean-nli-stsb-tr"
+    # Local embedding model — lightweight, strong Turkish support
+    # intfloat/multilingual-e5-small: 384-dim, ~500MB RAM, fast CPU inference
+    "embedding_model": "intfloat/multilingual-e5-small",
     "chunk_size": 400,           # Maximum chunk size in words
     "chunk_overlap": 80,         # Word overlap between consecutive chunks
     "output_dir": str(PROJECT_ROOT / "data"),
@@ -232,71 +219,34 @@ def build_chunks(sections: List[Dict], config: Dict) -> List[Dict]:
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# 3. Embedding Generation
+# 3. Embedding Generation (LOCAL — no API calls)
 # ═══════════════════════════════════════════════════════════════════════════════
 
 def generate_embeddings(chunks: List[Dict], model_name: str) -> np.ndarray:
     """
-    Generates embedding vectors for every chunk using the Gemini API.
-    Uses batch processing for large datasets and falls back across multiple API keys.
+    Generates embedding vectors for every chunk using a local SentenceTransformer model.
+    Uses batch processing with CPU-friendly batch size.
+    No API keys needed — fully local inference.
     """
     log.info(f"Loading embedding model: {model_name}")
-
-    api_keys = CONFIG["gemini_api_keys"]
-
-    if not api_keys:
-        raise RuntimeError("No Gemini API keys configured.")
+    model = SentenceTransformer(model_name)
 
     texts = [c["embed_text"] for c in chunks]
     total = len(texts)
 
-    log.info(f"Generating embeddings for {total} chunks...")
+    log.info(f"Generating embeddings for {total} chunks with batch_size=32...")
 
-    batch_size = 32
-    all_embeddings = []
+    # Use a moderate batch size for CPU efficiency on HF Space (2 vCPU)
+    all_embeddings = model.encode(
+        texts,
+        batch_size=32,
+        normalize_embeddings=True,
+        convert_to_numpy=True,
+        show_progress_bar=True,
+    ).astype("float32")
 
-    for i in range(0, total, batch_size):
-
-        batch = texts[i: i + batch_size]
-        success = False
-
-        for key in api_keys:
-            try:
-                client = genai.Client(api_key=key)
-                batch_embeddings = []
-
-                for text in batch:
-                    response = client.models.embed_content(
-                        model=model_name,
-                        contents=text,
-                        config={"task_type": "RETRIEVAL_DOCUMENT"}
-                    )
-                    batch_embeddings.append(response.embeddings[0].values)
-
-                embeddings = np.array(batch_embeddings, dtype="float32")
-
-                # Normalize vectors for cosine similarity
-                embeddings = embeddings / np.linalg.norm(
-                    embeddings, axis=1, keepdims=True
-                )
-
-                success = True
-                break
-
-            except Exception as e:
-                log.warning(f"API key failed: {str(e)}")
-                continue
-
-        if not success:
-            raise RuntimeError("All Gemini API keys exhausted.")
-
-        all_embeddings.append(embeddings)
-
-        log.info(f"[{i + len(batch)}/{total}] chunks processed")
-
-    result = np.vstack(all_embeddings).astype("float32")
-    log.info(f"  Embedding shape: {result.shape}")
-    return result
+    log.info(f"  Embedding shape: {all_embeddings.shape}")
+    return all_embeddings
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -379,7 +329,7 @@ def main():
         f"avg: {sum(word_counts) / len(word_counts):.0f} words"
     )
 
-    # 4. Generate embeddings
+    # 4. Generate embeddings (local — no API)
     embeddings = generate_embeddings(chunks, CONFIG["embedding_model"])
 
     # 5. Build FAISS index

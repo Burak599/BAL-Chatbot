@@ -54,7 +54,7 @@ CONFIG = {
     "chunks_meta_file": str(PROJECT_ROOT / "data" / "bal_chunks.json"),
 
     # Embedding model (MUST match 01_build_vectorstore.py)
-    "embedding_model": "intfloat/multilingual-e5-large",
+    "embedding_model": "intfloat/multilingual-e5-small",
 
     # How many chunks to retrieve per query (top-k)
     "retrieval_top_k": 5,

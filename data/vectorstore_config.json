@@ -1,13 +1,6 @@
 {
   "dataset_path": "/home/burak/Masaüstü/ChatbotBAL/Dataset/RAG_Dataset_BAL.md",
-  "embedding_model": "models/gemini-embedding-001",
-  "gemini_api_keys": [
-    "AQ.Ab8RN6J6UtGlhFlnaIc6tGitSzi37KDQZehgxgIwc7BcFaArwQ",
-    "AQ.Ab8RN6JpzYreh-O0XnxNu1gG2x93f4A_GIO9D0r1fA21gMcYmA",
-    "AQ.Ab8RN6Jyo7njrcK4e9yJSqg_WjIgtur-T1gTn7pLpwODi0LIxw",
-    "AQ.Ab8RN6KtOgNSh-5VByGL_iH0Osn5wnp3QFF1V5p0sSJKDosCew",
-    "AQ.Ab8RN6LS9RgndnAvbBXzq8U-u0LKEXNoPGcaZRzQkPA2totI4A"
-  ],
+  "embedding_model": "intfloat/multilingual-e5-small",
   "chunk_size": 400,
   "chunk_overlap": 80,
   "output_dir": "/home/burak/Masaüstü/ChatbotBAL/data",
@@ -15,6 +8,6 @@
   "chunks_meta_file": "/home/burak/Masaüstü/ChatbotBAL/data/bal_chunks.json",
   "vectorstore_config_file": "/home/burak/Masaüstü/ChatbotBAL/data/vectorstore_config.json",
   "total_chunks": 142,
-  "embedding_dim": 3072,
-  "build_timestamp": "2026-06-14 22:37:15"
+  "embedding_dim": 384,
+  "build_timestamp": "2026-06-29 18:20:19"
 }

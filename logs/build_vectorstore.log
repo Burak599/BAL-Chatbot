@@ -213,3 +213,30 @@ Sonraki adım: python scripts/02_chatbot.py
 2026-05-06 14:47:38,038 [INFO]    Chunk metadata: data/bal_chunks.json
 2026-05-06 14:47:38,038 [INFO] 
 Sonraki adım: python scripts/02_chatbot.py
+2026-06-29 18:18:56,190 [INFO] ============================================================
+2026-06-29 18:18:56,200 [INFO] BAL Chatbot — Vector Database Build Started
+2026-06-29 18:18:56,201 [INFO] ============================================================
+2026-06-29 18:18:56,224 [INFO] File loaded: /home/burak/Masaüstü/ChatbotBAL/Dataset/RAG_Dataset_BAL.md (93,172 chars)
+2026-06-29 18:18:56,225 [INFO] Splitting document into sections...
+2026-06-29 18:18:56,226 [INFO]   141 sections extracted
+2026-06-29 18:18:56,226 [INFO] Creating chunks...
+2026-06-29 18:18:56,233 [INFO]   Total 142 chunks created
+2026-06-29 18:18:56,234 [INFO]   Chunk statistics — min: 7, max: 384, avg: 77 words
+2026-06-29 18:18:56,234 [INFO] Loading embedding model: intfloat/multilingual-e5-small
+2026-06-29 18:18:56,235 [INFO] Use pytorch device_name: cuda:0
+2026-06-29 18:18:56,235 [INFO] Load pretrained SentenceTransformer: intfloat/multilingual-e5-small
+2026-06-29 18:20:14,989 [INFO] Generating embeddings for 142 chunks with batch_size=32...
+2026-06-29 18:20:19,168 [INFO]   Embedding shape: (142, 384)
+2026-06-29 18:20:19,168 [INFO] Building FAISS index...
+2026-06-29 18:20:19,169 [INFO]   FAISS index created: 142 vectors, dim=384
+2026-06-29 18:20:19,169 [INFO] Saving artifacts...
+2026-06-29 18:20:19,170 [INFO]   FAISS index saved: /home/burak/Masaüstü/ChatbotBAL/data/bal_faiss.index
+2026-06-29 18:20:19,191 [INFO]   Chunk metadata saved: /home/burak/Masaüstü/ChatbotBAL/data/bal_chunks.json
+2026-06-29 18:20:19,191 [INFO]   Config snapshot saved: /home/burak/Masaüstü/ChatbotBAL/data/vectorstore_config.json
+2026-06-29 18:20:19,191 [INFO] 
+✅ Complete! Elapsed: 83.0s
+2026-06-29 18:20:19,191 [INFO]    Total chunks: 142
+2026-06-29 18:20:19,191 [INFO]    FAISS index: /home/burak/Masaüstü/ChatbotBAL/data/bal_faiss.index
+2026-06-29 18:20:19,191 [INFO]    Chunk metadata: /home/burak/Masaüstü/ChatbotBAL/data/bal_chunks.json
+2026-06-29 18:20:19,191 [INFO] 
+Next step: python scripts/02_chatbot.py

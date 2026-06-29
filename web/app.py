@@ -8,7 +8,7 @@ This script:
   2. Loads FAISS index and chunk metadata
   3. For each /api/chat request:
        a. Retrieves the most relevant chunks (ONCE per query)
-       b. Builds an augmented prompt (context + question)a
+       b. Builds an augmented prompt (context + question)
        c. Sends the request through the LLM gateway
        d. Streams the response from Groq
   4. Exposes /api/health, /api/chat, /api/clear endpoints
@@ -26,6 +26,7 @@ import time
 import logging
 import secrets
 import re
+import threading
 from pathlib import Path
 from datetime import datetime, timezone
 from typing import List, Dict, Generator, Optional, Tuple
@@ -33,6 +34,7 @@ from typing import List, Dict, Generator, Optional, Tuple
 import numpy as np
 import faiss
 import requests
+from sentence_transformers import SentenceTransformer
 from sqlalchemy import Column, Integer, String, Text, create_engine, inspect, text, func
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import declarative_base, sessionmaker
@@ -71,27 +73,6 @@ def get_groq_api_keys() -> List[str]:
     return keys
 
 
-def get_gemini_api_keys() -> List[str]:
-    candidates = []
-
-    candidates.extend(split_env_csv("GEMINI_API_KEYS", []))
-
-    for i in range(1,6):
-        candidates.append(os.getenv(f"GEMINI_API_KEY_{i}", ""))
-
-    keys=[]
-    seen=set()
-
-    for key in candidates:
-        key=key.strip()
-
-        if key and key not in seen:
-            keys.append(key)
-            seen.add(key)
-
-    return keys
-
-
 def env_bool(name: str, default: bool = False) -> bool:
     value = os.getenv(name)
     if value is None:
@@ -116,6 +97,7 @@ def get_database_url() -> str:
         return configured
     return f"sqlite:///{PROJECT_ROOT / 'data' / 'app.db'}"
 
+
 # ── Logging ───────────────────────────────────────────────────────────────────
 logging.basicConfig(
     level=logging.INFO,
@@ -136,8 +118,8 @@ CONFIG = {
     "faiss_index_file": str(PROJECT_ROOT / "data" / "bal_faiss.index"),
     "chunks_meta_file": str(PROJECT_ROOT / "data" / "bal_chunks.json"),
 
-    # Embedding model (MUST match 01_build_vectorstore.py)
-    "embedding_model":"gemini-embedding-001",
+    # Embedding model — LOCAL, no API needed (MUST match 01_build_vectorstore.py)
+    "embedding_model": "intfloat/multilingual-e5-small",
 
     # How many chunks to retrieve per query (top-k)
     "retrieval_top_k": 5,
@@ -154,7 +136,6 @@ CONFIG = {
         "meta-llama/llama-4-scout-17b-16e-instruct",
     ]),
     "groq_api_keys": get_groq_api_keys(),
-    "gemini_api_keys": get_gemini_api_keys(),
     "groq_timeout": 120,             # seconds
 
     # ── LLM generation parameters ────────────────────────────────────────────
@@ -177,6 +158,12 @@ CONFIG = {
         "user": {"daily": 50, "minute": 8},
         "admin": {"daily": 500, "minute": 20},
     },
+
+    # ── HF Space performance tuning (2 vCPU, 16GB RAM) ─────────────────────
+    # Max concurrent embedding requests — keep low to avoid CPU thrashing
+    "embedding_max_workers": 2,
+    # Congestion threshold — warn when this many requests are in-flight
+    "congestion_threshold": 4,
 }
 
 # ── System Prompt ─────────────────────────────────────────────────────────────
@@ -271,8 +258,6 @@ Only provide these when asked or when directly relevant:
 """
 
 
-
-
 # ── Flask app ─────────────────────────────────────────────────────────────────
 app = Flask(__name__)
 CORS(app, supports_credentials=True)   # Allow requests from the frontend
@@ -286,17 +271,17 @@ app.config.update(
 
 # ── Global state — initialised once at startup ────────────────────────────────
 vector_store = None        # VectorStore instance
+embedding_model = None     # Shared SentenceTransformer instance
 llm_gateway = None         # LLMGateway instance; owns provider routing
 
 # session_id → list of {"role": "user"/"assistant", "content": str}
-# Only plain user text is stored (no RAG context), keeping history compact.
 conversation_sessions: Dict[str, List[Dict]] = {}
 
 # ── Active request counter for congestion detection ──────────────────────────
-import threading
 active_requests = 0
 active_requests_lock = threading.Lock()
-CONGESTION_THRESHOLD = 5
+# Embedding thread pool — limited to 2 workers on HF Space 2 vCPU
+embedding_executor = None
 
 engine = create_engine(
     CONFIG["database_url"],
@@ -328,9 +313,7 @@ class User(Base):
     __tablename__ = "users"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    # email kept for backwards compatibility but optional now
     email = Column(String(255), nullable=True, unique=True, index=True)
-    # browser/device fingerprint used to identify users without accounts
     fingerprint = Column(String(255), nullable=True, unique=True, index=True)
     password_hash = Column(Text, nullable=True)
     provider = Column(String(32), nullable=False, default="password")
@@ -358,8 +341,8 @@ class ChatLog(Base):
     question = Column(Text, nullable=False)
     answer = Column(Text, nullable=False)
     created_at = Column(String(64), nullable=False)
-    feedback = Column(String(16), nullable=True)       # "like", "dislike" or NULL
-    feedback_text = Column(Text, nullable=True)        # optional written feedback
+    feedback = Column(String(16), nullable=True)
+    feedback_text = Column(Text, nullable=True)
 
 
 def init_db() -> None:
@@ -371,15 +354,12 @@ def init_db() -> None:
 
 
 def _ensure_user_fingerprint_column() -> None:
-    """Ensure an existing users table has the fingerprint column required by the anonymous flow."""
     inspector = inspect(engine)
     if not inspector.has_table("users"):
         return
-
     existing_columns = {col["name"] for col in inspector.get_columns("users")}
     if "fingerprint" in existing_columns:
         return
-
     log.warning("Adding missing users.fingerprint column to existing database schema.")
     with engine.begin() as conn:
         if engine.dialect.name == "sqlite":
@@ -393,17 +373,14 @@ def _ensure_user_fingerprint_column() -> None:
 
 
 def _ensure_user_email_nullable() -> None:
-    """Ensure the users.email column allows NULL so anonymous visitors can be created."""
     inspector = inspect(engine)
     if not inspector.has_table("users"):
         return
-    # Only attempt on Postgres; SQLite ALTER COLUMN is limited.
     if engine.dialect.name == "sqlite":
         return
     cols = {c["name"]: c for c in inspector.get_columns("users")}
     if "email" not in cols:
         return
-    # If the column is already nullable, nothing to do
     if cols["email"].get("nullable", True):
         return
     log.warning("Making users.email column nullable to support anonymous fingerprint users.")
@@ -434,7 +411,6 @@ def role_for_email(email: str) -> str:
 
 def user_to_public(user: User) -> Dict:
     role = user.role
-    # treat fingerprint-identified users as visitors for display
     is_visitor = role == "visitor" or user.provider == "fingerprint"
     return {
         "id": user.id,
@@ -445,7 +421,6 @@ def user_to_public(user: User) -> Dict:
 
 
 def get_client_fingerprint() -> Optional[str]:
-    """Read and validate the FingerprintJS visitorId sent by the browser."""
     fingerprint = (request.headers.get("X-Client-Fingerprint") or "").strip()
     if not fingerprint:
         return None
@@ -456,7 +431,6 @@ def get_client_fingerprint() -> Optional[str]:
 
 
 def get_current_identity() -> Optional[Dict]:
-    # 1) If a server-side session user_id exists, prefer it (backwards compat)
     user_id = session.get("user_id")
     if user_id:
         with SessionLocal() as db:
@@ -470,9 +444,6 @@ def get_current_identity() -> Optional[Dict]:
                 }
         session.pop("user_id", None)
 
-    # 2) FingerprintJS-based identity (preferred for anonymous flow).
-    # Prefer the current browser-generated visitorId over any older session
-    # value so weak legacy fingerprints migrate naturally.
     fingerprint = get_client_fingerprint() or session.get("fingerprint")
 
     if fingerprint:
@@ -593,11 +564,11 @@ def enforce_https():
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# 1. Vector Store
+# 1. Vector Store (LOCAL EMBEDDING — no API calls)
 # ═══════════════════════════════════════════════════════════════════════════════
 
 class VectorStore:
-    """Manages the FAISS vector database and chunk metadata."""
+    """Manages the FAISS vector database and local embedding model."""
 
     def __init__(self, index_path: str, chunks_path: str, model_name: str):
         if not Path(index_path).exists():
@@ -616,70 +587,38 @@ class VectorStore:
         log.info(f"Chunk metadata loaded: {len(self.chunks)} chunks")
 
         self.embedding_model_name = model_name
-        self.gemini_keys = CONFIG["gemini_api_keys"]
+        self._local_model = None  # Lazy-load: shared instance from global scope
 
-        # Test embedding on startup
-        log.info(f"Testing embedding API with {len(self.gemini_keys)} key(s)...")
+        log.info(f"✓ Vector store ready — {self.index.ntotal} chunks, model={model_name}")
+
+    def _get_model(self) -> SentenceTransformer:
+        """Returns the shared SentenceTransformer instance (lazy-loaded at startup)."""
+        global embedding_model
+        if embedding_model is None:
+            log.info(f"Loading local embedding model: {self.embedding_model_name}")
+            t0 = time.time()
+            # Use the global shared instance to avoid reloading per request
+            embedding_model = SentenceTransformer(self.embedding_model_name)
+            log.info(f"✓ Model loaded in {time.time() - t0:.1f}s — dim={embedding_model.get_sentence_embedding_dimension()}")
+        return embedding_model
+
+    def _embed_text_sync(self, text: str) -> Optional[np.ndarray]:
+        """
+        Synchronously embeds a single text string using local SentenceTransformer.
+        Returns a (1, dim) float32 numpy array normalized for cosine similarity,
+        or None on failure.
+        """
         try:
-            test_query = "test"
-            embedding = self._embed_text(test_query)
-            if embedding is not None:
-                log.info(f"✓ Embedding API test successful (dim={embedding.shape})")
-            else:
-                log.error("✗ Embedding API test failed: returned None")
+            model = self._get_model()
+            embedding = model.encode(
+                [text],
+                normalize_embeddings=True,
+                convert_to_numpy=True,
+            ).astype("float32")
+            return embedding
         except Exception as e:
-            log.error(f"✗ Embedding API test failed: {e}")
-            raise RuntimeError(f"Embedding service unavailable at startup: {e}")
-
-        log.info(f"Vector store ready — {self.index.ntotal} chunks")
-
-    def _embed_text(self, text: str) -> Optional[np.ndarray]:
-        """
-        Helper: embed a single text string via Gemini REST API.
-        Uses direct HTTP call instead of SDK to avoid key format issues.
-        """
-        url = f"https://generativelanguage.googleapis.com/v1beta/models/{self.embedding_model_name}:embedContent"
-        
-        for key_index, api_key in enumerate(self.gemini_keys, 1):
-            if not api_key or not api_key.strip():
-                log.debug(f"Gemini key {key_index} is empty, skipping")
-                continue
-            
-            try:
-                log.debug(f"Embedding with key {key_index}/{len(self.gemini_keys)}")
-                payload = {
-                    "model": f"models/{self.embedding_model_name}",
-                    "content": {
-                        "parts": [{"text": text}]
-                    }
-                }
-                response = requests.post(
-                    url,
-                    params={"key": api_key},
-                    json=payload,
-                    timeout=30
-                )
-                
-                if response.status_code != 200:
-                    log.warning(f"Embedding failed with key {key_index}: HTTP {response.status_code} {response.text[:200]}")
-                    continue
-                
-                data = response.json()
-                values = data.get("embedding", {}).get("values")
-                if not values:
-                    log.warning(f"Empty embedding response from key {key_index}")
-                    continue
-                
-                embedding = np.array([values], dtype="float32")
-                faiss.normalize_L2(embedding)
-                log.debug(f"Embedding successful with key {key_index}")
-                return embedding
-                
-            except Exception as e:
-                log.warning(f"Embedding failed with key {key_index}: {e}")
-                continue
-        
-        return None
+            log.error(f"Local embedding failed: {e}")
+            return None
 
     def retrieve(self, query: str, top_k: int = 5) -> List[Dict]:
         """
@@ -688,9 +627,10 @@ class VectorStore:
         """
         query_text = f"query: {query}"
 
-        embedding = self._embed_text(query_text)
+        # Embed using local model — fast, no API latency
+        embedding = self._embed_text_sync(query_text)
         if embedding is None:
-            log.error(f"Could not embed query (all Gemini keys failed): {query[:100]}")
+            log.error(f"Could not embed query: {query[:100]}")
             raise RuntimeError(
                 "Sorgu embedding'i başarısız. Lütfen daha sonra tekrar deneyin."
             )
@@ -774,7 +714,6 @@ def stream_groq_model(messages: List[Dict], model: str, api_key: str, key_index:
     Streams one Groq model attempt using curl_cffi to bypass Cloudflare 403 blocks on Render.
     Returns (full_response, failure_info).
     """
-    log.warning("ENTERED stream_groq_model")
     full_response = ""
     headers = {
         "Authorization": f"Bearer {api_key}",
@@ -791,14 +730,12 @@ def stream_groq_model(messages: List[Dict], model: str, api_key: str, key_index:
     }
 
     try:
-        log.warning(
+        log.info(
             "GROQ REQUEST -> model=%s key_index=%s url=%s",
             model,
             key_index,
             CONFIG["groq_url"]
         )
-        # The impersonate="chrome" flag fully masks the TLS signature of the Render server,
-        # making the handshake appear as a real Windows Chrome browser to Cloudflare.
         resp = curl_requests.post(
             CONFIG["groq_url"],
             headers=headers,
@@ -808,20 +745,12 @@ def stream_groq_model(messages: List[Dict], model: str, api_key: str, key_index:
             impersonate="chrome"
         )
 
-        log.warning(
-            "GROQ RESPONSE <- status=%s headers=%s",
-            resp.status_code,
-            dict(resp.headers)
-        )
-        
-        # HTTP error handling (catches 403 or other HTTP errors here)
         resp.raise_for_status()
 
         for line in resp.iter_lines():
             if not line:
                 continue
 
-            # curl_cffi lines may return as string or bytes; safely decode them
             if isinstance(line, bytes):
                 line_str = line.decode("utf-8")
             else:
@@ -846,10 +775,9 @@ def stream_groq_model(messages: List[Dict], model: str, api_key: str, key_index:
                 yield f"data: {json.dumps({'token': token})}\n\n"
 
     except curl_requests.errors.RequestsError as e:
-        # Catch network/connection errors from the curl_cffi library
         error_msg = str(e).lower()
         reason = "exception"
-        
+
         if "timeout" in error_msg:
             reason = "timeout"
             return "Groq API zaman aşımına uğradı. Lütfen tekrar deneyin.", {
@@ -860,27 +788,22 @@ def stream_groq_model(messages: List[Dict], model: str, api_key: str, key_index:
             return "Groq API bağlantısı kurulamadı. Lütfen daha sonra tekrar deneyin.", {
                 "retryable": True, "model": model, "key_index": key_index, "reason": reason
             }
-            
-        # If an HTTP status code is present (e.g., an HTTP error still came through)
+
         status_code = 0
         response_text = ""
         rate_headers = {}
-        
+
         if hasattr(e, "response") and e.response is not None:
             status_code = e.response.status_code
             response_text = e.response.text
-            log.error(
-                "FULL GROQ BODY:\n%s",
-                response_text
-            )
-            # Preserve the rate-limit header filtering logic
+            log.error("FULL GROQ BODY:\n%s", response_text)
             rate_headers = {
                 key: value
                 for key, value in e.response.headers.items()
                 if key.lower().startswith(("x-ratelimit", "retry-after", "x-request-id"))
             }
             reason = f"http_{status_code}"
-            
+
         log.error(
             "Groq API HTTP error status=%s model=%s rate_headers=%s body=%s",
             status_code,
@@ -889,7 +812,7 @@ def stream_groq_model(messages: List[Dict], model: str, api_key: str, key_index:
             response_text,
             exc_info=True,
         )
-        
+
         if status_code > 0:
             retryable = status_code in {404, 429} or 500 <= status_code <= 599
             return f"Groq API hatası: HTTP {status_code}", {
@@ -999,7 +922,6 @@ def stream_groq(messages: List[Dict]) -> Generator[str, None, None]:
 class LLMGateway:
     """
     Single backend-facing entry point for all model calls.
-    Later this is where quotas, model routing and retries belong.
     """
 
     def __init__(self, config: Dict):
@@ -1027,7 +949,6 @@ class LLMGateway:
     ) -> Generator[str, None, None]:
         """
         Routes one chat turn to Groq.
-        The Flask route does not call any external API directly.
         """
         messages = (
             [{"role": "system", "content": SYSTEM_PROMPT}]
@@ -1045,6 +966,7 @@ class LLMGateway:
 def index():
     """Serves the frontend HTML file."""
     return send_from_directory(WEB_DIR, "index.html")
+
 
 @app.route("/<path:filename>")
 def serve_files(filename):
@@ -1112,11 +1034,11 @@ def auth_logout():
 def health():
     """
     Returns a JSON status object.
-    The LLM gateway reports provider readiness fields.
     """
     status = {
         "provider": CONFIG["provider"],
         "vectorstore": vector_store is not None,
+        "embedding_model": CONFIG["embedding_model"],
         "database": database_ready(),
         "chunks": vector_store.index.ntotal if vector_store else 0,
     }
@@ -1136,15 +1058,6 @@ def health():
 
 @app.route("/api/chat/feedback", methods=["POST"])
 def chat_feedback():
-    """
-    Receives user feedback on a chat response.
-    Request body (JSON):
-        {
-            "question_index": int,      # which question this feedback is for
-            "feedback": "like" | "dislike" | None,  # vote
-            "feedback_text": str | None  # optional written feedback
-        }
-    """
     body = request.get_json()
     if not body or "question_index" not in body:
         return jsonify({"error": "question_index gerekli"}), 400
@@ -1186,18 +1099,6 @@ def chat_feedback():
 def chat():
     """
     Main chat endpoint — Server-Sent Events (SSE) streaming.
-
-    Request body (JSON):
-        {
-            "message":    str,   # user's question
-            "session_id": str    # optional, defaults to "default"
-        }
-
-    SSE event types streamed back:
-        data: {"token": "..."}              — partial response token
-        data: {"error": "..."}              — error message
-        data: {"__full_response__": "..."}  — internal marker (consumed here)
-        data: {"done": true, "sources": [...]} — final event with RAG sources
     """
     body = request.get_json()
     if not body or not body.get("message"):
@@ -1210,13 +1111,10 @@ def chat():
         return jsonify({"error": "Boş mesaj", "error_type": "technical"}), 400
 
     identity = get_current_identity()
-    
-    # ── Fallback: if DB-based identity fails, use fingerprint from header directly ──
+
     if not identity:
-        # Try to get fingerprint from request header as last resort
         fallback_fingerprint = (request.headers.get("X-Client-Fingerprint") or "").strip()
         if fallback_fingerprint and re.fullmatch(r"[A-Za-z0-9_-]{8,255}", fallback_fingerprint):
-            # Use fingerprint as identity directly, no DB needed — rate limiting will be best-effort
             identity = {
                 "subject_type": "fingerprint_fallback",
                 "subject_id": fallback_fingerprint,
@@ -1243,8 +1141,7 @@ def chat():
                 log.exception("Failed to log missing identity details")
             return jsonify({"error": "Ziyaretçi kimliği alınamadı; lütfen sayfayı yenileyin.", "error_type": "technical"}), 401
 
-    # 🔥 LOGGING: Variables (identity and session_id) are now defined, safe to log.
-    log.warning(
+    log.info(
         "CHAT REQUEST user=%s session=%s msg=%s",
         identity["subject_id"] if identity else "unknown",
         session_id,
@@ -1257,13 +1154,12 @@ def chat():
 
     quota = increment_usage(identity)
 
-    # Initialise session if new
     if session_id not in conversation_sessions:
         conversation_sessions[session_id] = []
 
     history = conversation_sessions[session_id]
 
-    # ── RAG: retrieve ONCE — result is reused for both prompt and sources ──────
+    # ── RAG: retrieve ONCE with local embedding ──────────────────────────────
     try:
         retrieved = vector_store.retrieve(user_message, top_k=CONFIG["retrieval_top_k"])
     except RuntimeError as e:
@@ -1277,8 +1173,9 @@ def chat():
     context = format_context(retrieved, CONFIG["retrieval_score_threshold"])
     augmented_message = build_augmented_user_message(user_message, context)
 
-    # Trim history to max_history_turns before building the prompt
     recent_history = history[-(CONFIG["max_history_turns"] * 2):]
+
+    CONGESTION_THRESHOLD = CONFIG["congestion_threshold"]
 
     def generate():
         """
@@ -1290,58 +1187,52 @@ def chat():
         full_response = ""
         had_error = False
 
-        # ── Increment active request counter ─────────────────────────────────
         with active_requests_lock:
             active_requests += 1
             current_active = active_requests
-            log.warning("CONGESTION active_requests=%s threshold=%s", current_active, CONGESTION_THRESHOLD)
+            log.info("CONGESTION active_requests=%s threshold=%s", current_active, CONGESTION_THRESHOLD)
 
         try:
-            # ── Send congestion warning if threshold met or exceeded ────────
+            # Send congestion warning if threshold met or exceeded
             if current_active >= CONGESTION_THRESHOLD:
                 yield f"data: {json.dumps({'congestion': True, 'active_requests': current_active})}\n\n"
 
-            # ── Send the turn through our backend gateway ────────────────────
             token_stream = llm_gateway.stream_chat(recent_history, augmented_message)
 
-            # ── Forward tokens to the client, capture the full response ──────
             for event in token_stream:
-                # Parse every event to check for internal markers
                 if "__full_response__" in event:
                     try:
                         payload = json.loads(event.replace("data: ", "").strip())
                         full_response = payload.get("__full_response__", "")
                     except Exception:
                         pass
-                    # Do NOT forward this internal marker to the client
                     continue
 
                 if '"error"' in event:
                     had_error = True
 
-                yield event   # Forward token or error events straight to the client
+                yield event
 
         except Exception:
             log.exception("Unexpected error during stream generation")
         finally:
-            # ── Decrement active request counter ─────────────────────────────
             with active_requests_lock:
                 active_requests -= 1
-                log.warning("CONGESTION active_requests decremented to %s", active_requests)
+                log.info("CONGESTION active_requests decremented to %s", active_requests)
 
         # ── Persist history (only on success) ────────────────────────────────
         if full_response and not had_error:
             history.append({"role": "user", "content": user_message})
             history.append({"role": "assistant", "content": full_response})
-            # Cap history length
             if len(history) > CONFIG["max_history_turns"] * 2:
                 conversation_sessions[session_id] = history[-(CONFIG["max_history_turns"] * 2):]
 
-            # Persist question-answer pair in chat_logs
             saved_question_index = None
             try:
                 with SessionLocal() as db:
-                    last_index = db.query(func.max(ChatLog.question_index)).filter(ChatLog.user_id == int(identity["subject_id"])).scalar()
+                    last_index = db.query(func.max(ChatLog.question_index)).filter(
+                        ChatLog.user_id == int(identity["subject_id"])
+                    ).scalar()
                     saved_question_index = (last_index or 0) + 1
                     log_entry = ChatLog(
                         user_id=int(identity["subject_id"]),
@@ -1384,12 +1275,12 @@ def startup():
     """
     Runs once before the Flask server accepts requests.
     Loads the vector store and validates Groq configuration.
-    Falls back to SQLite if PostgreSQL is unreachable (e.g. Neon quota exceeded).
+    Falls back to SQLite if PostgreSQL is unreachable.
     """
-    global vector_store, llm_gateway, engine, SessionLocal
+    global vector_store, llm_gateway, engine, SessionLocal, embedding_model
 
     LOG_DIR.mkdir(parents=True, exist_ok=True)
-    
+
     # ── Try database connection; fall back to SQLite on failure ──────────────
     db_ok = False
     try:
@@ -1398,13 +1289,12 @@ def startup():
         log.info("Database connection established: %s", CONFIG["database_url"][:50])
     except Exception as e:
         log.warning("Database connection failed (%s). Falling back to SQLite.", str(e)[:80])
-    
+
     if not db_ok:
         sqlite_path = str(PROJECT_ROOT / "data" / "app.db")
         CONFIG["database_url"] = f"sqlite:///{sqlite_path}"
         log.info("Switching to SQLite: %s", CONFIG["database_url"])
-        
-        # Recreate engine and session with SQLite
+
         engine = create_engine(
             CONFIG["database_url"],
             pool_pre_ping=True,
@@ -1412,8 +1302,7 @@ def startup():
             connect_args={"check_same_thread": False},
         )
         SessionLocal = sessionmaker(bind=engine, autoflush=False, expire_on_commit=False, future=True)
-        
-        # Retry DB init with SQLite
+
         try:
             init_db()
             log.info("SQLite fallback successful.")
@@ -1424,11 +1313,12 @@ def startup():
     log.info("BAL Chatbot Web API starting...")
     log.info(f"Runtime pid={os.getpid()} cwd={Path.cwd()} log_file={LOG_DIR / 'web.log'}")
     log.info(f"Provider: {CONFIG['provider']}")
+    log.info(f"Embedding model: {CONFIG['embedding_model']} (local, no API)")
     log.info(f"HTTPS enforcement: {CONFIG['force_https']}")
     if not CONFIG["secret_key"]:
         log.warning("FLASK_SECRET_KEY is not set. Sessions will reset after server restart.")
 
-    # ── Load vector store ─────────────────────────────────────────────────────
+    # ── Load vector store (embedding model loads lazily on first request) ─────
     try:
         vector_store = VectorStore(
             CONFIG["faiss_index_file"],
@@ -1437,6 +1327,18 @@ def startup():
         )
     except FileNotFoundError as e:
         log.error(str(e))
+        sys.exit(1)
+
+    # ── Pre-load embedding model at startup on HF Space (2 vCPU) ──────────────
+    # Loading ~500MB model takes ~5-10s on CPU; do it here so first request is fast
+    log.info("Pre-loading local embedding model (this may take a moment)...")
+    try:
+        t0 = time.time()
+        embedding_model = SentenceTransformer(CONFIG["embedding_model"])
+        log.info(f"✓ Embedding model loaded in {time.time() - t0:.1f}s — "
+                 f"dim={embedding_model.get_sentence_embedding_dimension()}")
+    except Exception as e:
+        log.error(f"Failed to load embedding model: {e}")
         sys.exit(1)
 
     # ── Groq configuration check ─────────────────────────────────────────────
@@ -1451,44 +1353,15 @@ def startup():
         len(CONFIG["groq_api_keys"]),
         CONFIG["groq_model_chain"][0],
     )
-    if not CONFIG["gemini_api_keys"]:
-        log.error(
-            "No Gemini API key configured."
-        )
-        sys.exit(1)
 
     llm_gateway = LLMGateway(CONFIG)
     log.info(f"LLM gateway ready — active provider: {llm_gateway.active_provider}")
+    log.info(f"HF Space tuning — congestion_threshold={CONFIG['congestion_threshold']}, "
+             f"max_workers={CONFIG['embedding_max_workers']}")
     port = int(os.getenv("PORT", "5000"))
     scheme = "https" if CONFIG["local_https"] and not os.getenv("PORT") else "http"
     log.info(f"Server starting on {scheme}://0.0.0.0:{port}")
 
-def run_startup_safely():
-    global vector_store, llm_gateway
-    
-    LOG_DIR.mkdir(parents=True, exist_ok=True)
-    
-    # init_db is now defined above, so Python will recognize it and won't raise NameError!
-    init_db()
-    
-    try:
-        vector_store = VectorStore(
-            CONFIG["faiss_index_file"],
-            CONFIG["chunks_meta_file"],
-            CONFIG["embedding_model"],
-        )
-    except Exception as e:
-        print(f"CRITICAL: Vector store yuklenemedi: {e}")
-        sys.exit(1)
-
-    if not CONFIG["groq_api_keys"] or not CONFIG["gemini_api_keys"]:
-        print("CRITICAL: API anahtarlari eksik!!!")
-        sys.exit(1)
-
-    llm_gateway = LLMGateway(CONFIG)
-
-# CALLED HERE SO GUNICORN CAN START THE APPLICATION
-#run_startup_safely()
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # Entry Point

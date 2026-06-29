@@ -110,7 +110,7 @@ def run_evaluation():
         index, chunks, model = load_artifacts(
             "data/bal_faiss.index",
             "data/bal_chunks.json",
-            "intfloat/multilingual-e5-large",
+            "intfloat/multilingual-e5-small",
         )
     except FileNotFoundError:
         print("❌ Vector database not found. Run 01_build_vectorstore.py first.")
