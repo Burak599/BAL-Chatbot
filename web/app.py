@@ -137,7 +137,7 @@ CONFIG = {
     "chunks_meta_file": str(PROJECT_ROOT / "data" / "bal_chunks.json"),
 
     # Embedding model (MUST match 01_build_vectorstore.py)
-    "embedding_model":"models/gemini-embedding-001",
+    "embedding_model":"gemini-embedding-001",
 
     # How many chunks to retrieve per query (top-k)
     "retrieval_top_k": 5,
@@ -648,7 +648,7 @@ class VectorStore:
             try:
                 log.debug(f"Embedding with key {key_index}/{len(self.gemini_keys)}")
                 payload = {
-                    "model": self.embedding_model_name,
+                    "model": f"models/{self.embedding_model_name}",
                     "content": {
                         "parts": [{"text": text}]
                     }
