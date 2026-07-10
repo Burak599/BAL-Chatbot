@@ -3624,3 +3624,30 @@ requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://api.
 2026-06-08 16:08:47,262 [INFO] Found existing user id=35 for fingerprint
 2026-06-08 16:08:47,711 [INFO] 5.24.176.5 - - [08/Jun/2026 16:08:47] "GET /api/auth/status HTTP/1.1" 200 -
 2026-06-08 16:08:51,674 [INFO] 5.24.176.5 - - [08/Jun/2026 16:08:51] "GET /api/health HTTP/1.1" 200 -
+2026-06-29 18:45:20,695 [WARNING] Database connection failed ((psycopg.OperationalError) connection is bad: connection to server at "2a05:d014). Falling back to SQLite.
+2026-06-29 18:45:20,730 [INFO] Switching to SQLite: sqlite:////home/burak/Masaüstü/ChatbotBAL/data/app.db
+2026-06-29 18:45:21,544 [WARNING] Adding missing users.fingerprint column to existing database schema.
+2026-06-29 18:45:21,981 [INFO] SQLite fallback successful.
+2026-06-29 18:45:21,981 [INFO] BAL Chatbot Web API starting...
+2026-06-29 18:45:21,982 [INFO] Runtime pid=174904 cwd=/home/burak/Masaüstü/ChatbotBAL log_file=/home/burak/Masaüstü/ChatbotBAL/logs/web.log
+2026-06-29 18:45:21,982 [INFO] Provider: groq
+2026-06-29 18:45:21,982 [INFO] Embedding model: intfloat/multilingual-e5-small (local, no API)
+2026-06-29 18:45:21,982 [INFO] HTTPS enforcement: False
+2026-06-29 18:45:21,982 [INFO] Loading FAISS index...
+2026-06-29 18:45:21,983 [INFO] FAISS index loaded: 142 vectors
+2026-06-29 18:45:21,983 [INFO] Loading chunk metadata...
+2026-06-29 18:45:21,986 [INFO] Chunk metadata loaded: 142 chunks
+2026-06-29 18:45:21,986 [INFO] ✓ Vector store ready — 142 chunks, model=intfloat/multilingual-e5-small
+2026-06-29 18:45:21,986 [INFO] Pre-loading local embedding model (this may take a moment)...
+2026-06-29 18:45:21,992 [INFO] Use pytorch device_name: cuda:0
+2026-06-29 18:45:21,992 [INFO] Load pretrained SentenceTransformer: intfloat/multilingual-e5-small
+2026-06-29 18:45:30,972 [INFO] ✓ Embedding model loaded in 9.0s — dim=384
+2026-06-29 18:45:30,972 [INFO] Groq configured — key_count=6 primary_model=llama-3.3-70b-versatile
+2026-06-29 18:45:30,972 [INFO] LLM gateway ready — active provider: groq
+2026-06-29 18:45:30,972 [INFO] HF Space tuning — congestion_threshold=4, max_workers=2
+2026-06-29 18:45:30,972 [INFO] Server starting on http://0.0.0.0:5000
+2026-06-29 18:45:31,060 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:7860
+ * Running on http://192.168.1.2:7860
+2026-06-29 18:45:31,060 [INFO] [33mPress CTRL+C to quit[0m
