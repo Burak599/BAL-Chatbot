@@ -3651,3 +3651,15 @@ requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://api.
  * Running on http://127.0.0.1:7860
  * Running on http://192.168.1.2:7860
 2026-06-29 18:45:31,060 [INFO] [33mPress CTRL+C to quit[0m
+2026-07-10 15:38:27,741 [INFO] Database connection established: postgresql+psycopg://postgres.povwroewbtkvxyjuqavb
+2026-07-10 15:38:27,741 [INFO] BAL Chatbot Web API starting...
+2026-07-10 15:38:27,741 [INFO] Runtime pid=28385 cwd=/home/burak/Masaüstü/ChatbotBAL log_file=/home/burak/Masaüstü/ChatbotBAL/logs/web.log
+2026-07-10 15:38:27,741 [INFO] Provider: groq
+2026-07-10 15:38:27,741 [INFO] Embedding model: intfloat/multilingual-e5-small (local, no API)
+2026-07-10 15:38:27,741 [INFO] HTTPS enforcement: False
+2026-07-10 15:38:27,742 [INFO] Pre-loading local embedding model (this may take a moment)...
+2026-07-10 15:38:27,742 [INFO] ✓ Embedding model loaded in 0.0s — dim=384
+2026-07-10 15:38:27,742 [INFO] Groq configured — key_count=6 primary_model=llama-3.3-70b-versatile
+2026-07-10 15:38:27,742 [INFO] LLM gateway ready — active provider: <MagicMock name='mock().active_provider' id='133879811491216'>
+2026-07-10 15:38:27,742 [INFO] HF Space tuning — congestion_threshold=4, max_workers=2
+2026-07-10 15:38:27,742 [INFO] Server starting on http://0.0.0.0:5000

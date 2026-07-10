@@ -24,30 +24,32 @@ import sys
 import json
 import time
 import logging
-import secrets
 import re
-import threading
 from pathlib import Path
 from datetime import datetime, timezone
 from typing import List, Dict, Generator, Optional, Tuple
 
 import numpy as np
 import faiss
-import requests
 from sentence_transformers import SentenceTransformer
-from sqlalchemy import Column, Integer, String, Text, create_engine, inspect, text, func
+from sqlalchemy import func
 from sqlalchemy.exc import IntegrityError
-from sqlalchemy.orm import declarative_base, sessionmaker
-from flask import Flask, request, jsonify, Response, stream_with_context, send_from_directory, session
-from flask_cors import CORS
-from werkzeug.middleware.proxy_fix import ProxyFix
-from werkzeug.security import generate_password_hash, check_password_hash
+from flask import request, jsonify, Response, stream_with_context, send_from_directory, session
 from curl_cffi import requests as curl_requests
 
 try:
     from config import CONFIG, SYSTEM_PROMPT, PROJECT_ROOT, WEB_DIR, LOG_DIR
 except ImportError:
     from web.config import CONFIG, SYSTEM_PROMPT, PROJECT_ROOT, WEB_DIR, LOG_DIR
+
+try:
+    import extensions
+    from extensions import app
+    from models import User, UsageCounter, ChatLog, init_db, database_ready
+except ImportError:
+    import web.extensions as extensions
+    from web.extensions import app
+    from web.models import User, UsageCounter, ChatLog, init_db, database_ready
 
 
 # ── Logging ───────────────────────────────────────────────────────────────────
@@ -60,41 +62,6 @@ logging.basicConfig(
     ],
 )
 log = logging.getLogger(__name__)
-
-
-# ── Flask app ─────────────────────────────────────────────────────────────────
-app = Flask(__name__)
-CORS(app, supports_credentials=True)   # Allow requests from the frontend
-app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_port=1)
-app.config.update(
-    SECRET_KEY=CONFIG["secret_key"] or secrets.token_hex(32),
-    SESSION_COOKIE_HTTPONLY=True,
-    SESSION_COOKIE_SAMESITE="Lax",
-    SESSION_COOKIE_SECURE=CONFIG["force_https"],
-)
-
-# ── Global state — initialised once at startup ────────────────────────────────
-vector_store = None        # VectorStore instance
-embedding_model = None     # Shared SentenceTransformer instance
-llm_gateway = None         # LLMGateway instance; owns provider routing
-
-# session_id → list of {"role": "user"/"assistant", "content": str}
-conversation_sessions: Dict[str, List[Dict]] = {}
-
-# ── Active request counter for congestion detection ──────────────────────────
-active_requests = 0
-active_requests_lock = threading.Lock()
-# Embedding thread pool — limited to 2 workers on HF Space 2 vCPU
-embedding_executor = None
-
-engine = create_engine(
-    CONFIG["database_url"],
-    pool_pre_ping=True,
-    future=True,
-    connect_args={"check_same_thread": False} if CONFIG["database_url"].startswith("sqlite") else {},
-)
-SessionLocal = sessionmaker(bind=engine, autoflush=False, expire_on_commit=False, future=True)
-Base = declarative_base()
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -111,98 +78,6 @@ def today_key() -> str:
 
 def minute_key() -> str:
     return utc_now().strftime("%Y-%m-%dT%H:%M")
-
-
-class User(Base):
-    __tablename__ = "users"
-
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    email = Column(String(255), nullable=True, unique=True, index=True)
-    fingerprint = Column(String(255), nullable=True, unique=True, index=True)
-    password_hash = Column(Text, nullable=True)
-    provider = Column(String(32), nullable=False, default="password")
-    role = Column(String(32), nullable=False, default="user", index=True)
-    created_at = Column(String(64), nullable=False)
-
-
-class UsageCounter(Base):
-    __tablename__ = "usage_counters"
-
-    subject_type = Column(String(32), primary_key=True)
-    subject_id = Column(String(255), primary_key=True)
-    period_type = Column(String(32), primary_key=True)
-    period_key = Column(String(64), primary_key=True)
-    count = Column(Integer, nullable=False, default=0)
-    updated_at = Column(String(64), nullable=False)
-
-
-class ChatLog(Base):
-    __tablename__ = "chat_logs"
-
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    user_id = Column(Integer, nullable=False, index=True)
-    question_index = Column(Integer, nullable=False, default=0, index=True)
-    question = Column(Text, nullable=False)
-    answer = Column(Text, nullable=False)
-    created_at = Column(String(64), nullable=False)
-    feedback = Column(String(16), nullable=True)
-    feedback_text = Column(Text, nullable=True)
-
-
-def init_db() -> None:
-    if CONFIG["database_url"].startswith("sqlite"):
-        Path(PROJECT_ROOT / "data").mkdir(parents=True, exist_ok=True)
-    Base.metadata.create_all(bind=engine)
-    _ensure_user_fingerprint_column()
-    _ensure_user_email_nullable()
-
-
-def _ensure_user_fingerprint_column() -> None:
-    inspector = inspect(engine)
-    if not inspector.has_table("users"):
-        return
-    existing_columns = {col["name"] for col in inspector.get_columns("users")}
-    if "fingerprint" in existing_columns:
-        return
-    log.warning("Adding missing users.fingerprint column to existing database schema.")
-    with engine.begin() as conn:
-        if engine.dialect.name == "sqlite":
-            conn.execute(text("ALTER TABLE users ADD COLUMN fingerprint VARCHAR(255)"))
-        else:
-            conn.execute(text("ALTER TABLE users ADD COLUMN fingerprint VARCHAR(255)"))
-        try:
-            conn.execute(text("CREATE UNIQUE INDEX IF NOT EXISTS ix_users_fingerprint ON users (fingerprint)"))
-        except Exception:
-            log.exception("Could not create index for users.fingerprint. This is non-fatal.")
-
-
-def _ensure_user_email_nullable() -> None:
-    inspector = inspect(engine)
-    if not inspector.has_table("users"):
-        return
-    if engine.dialect.name == "sqlite":
-        return
-    cols = {c["name"]: c for c in inspector.get_columns("users")}
-    if "email" not in cols:
-        return
-    if cols["email"].get("nullable", True):
-        return
-    log.warning("Making users.email column nullable to support anonymous fingerprint users.")
-    try:
-        with engine.begin() as conn:
-            conn.execute(text("ALTER TABLE users ALTER COLUMN email DROP NOT NULL"))
-    except Exception:
-        log.exception("Failed to alter users.email to nullable; anonymous user creation may fail.")
-
-
-def database_ready() -> bool:
-    try:
-        with engine.connect() as conn:
-            conn.execute(text("SELECT 1"))
-        return True
-    except Exception:
-        log.exception("Database health check failed")
-        return False
 
 
 def normalize_email(email: str) -> str:
@@ -237,7 +112,7 @@ def get_client_fingerprint() -> Optional[str]:
 def get_current_identity() -> Optional[Dict]:
     user_id = session.get("user_id")
     if user_id:
-        with SessionLocal() as db:
+        with extensions.SessionLocal() as db:
             user = db.get(User, int(user_id))
             if user:
                 return {
@@ -252,7 +127,7 @@ def get_current_identity() -> Optional[Dict]:
 
     if fingerprint:
         try:
-            with SessionLocal() as db:
+            with extensions.SessionLocal() as db:
                 user = db.query(User).filter(User.fingerprint == fingerprint).first()
                 if user is None:
                     log.info("No existing user with fingerprint found: %s", fingerprint)
@@ -298,7 +173,7 @@ def get_current_identity() -> Optional[Dict]:
 
 
 def get_usage(subject_type: str, subject_id: str, period_type: str, period_key: str) -> int:
-    with SessionLocal() as db:
+    with extensions.SessionLocal() as db:
         row = db.get(UsageCounter, (subject_type, subject_id, period_type, period_key))
         return int(row.count) if row else 0
 
@@ -329,7 +204,7 @@ def check_quota(identity: Dict) -> Tuple[bool, Dict, str]:
 def increment_usage(identity: Dict) -> Dict:
     now = utc_now().isoformat()
     rows = [("day", today_key()), ("minute", minute_key())]
-    with SessionLocal() as db:
+    with extensions.SessionLocal() as db:
         for period_type, period_key in rows:
             key = (
                 identity["subject_type"],
@@ -397,14 +272,15 @@ class VectorStore:
 
     def _get_model(self) -> SentenceTransformer:
         """Returns the shared SentenceTransformer instance (lazy-loaded at startup)."""
-        global embedding_model
-        if embedding_model is None:
+        if extensions.embedding_model is None:
             log.info(f"Loading local embedding model: {self.embedding_model_name}")
             t0 = time.time()
-            # Use the global shared instance to avoid reloading per request
-            embedding_model = SentenceTransformer(self.embedding_model_name)
-            log.info(f"✓ Model loaded in {time.time() - t0:.1f}s — dim={embedding_model.get_sentence_embedding_dimension()}")
-        return embedding_model
+            extensions.embedding_model = SentenceTransformer(self.embedding_model_name)
+            log.info(
+                f"✓ Model loaded in {time.time() - t0:.1f}s — "
+                f"dim={extensions.embedding_model.get_sentence_embedding_dimension()}"
+            )
+        return extensions.embedding_model
 
     def _embed_text_sync(self, text: str) -> Optional[np.ndarray]:
         """
@@ -841,20 +717,20 @@ def health():
     """
     status = {
         "provider": CONFIG["provider"],
-        "vectorstore": vector_store is not None,
+        "vectorstore": extensions.vector_store is not None,
         "embedding_model": CONFIG["embedding_model"],
         "database": database_ready(),
-        "chunks": vector_store.index.ntotal if vector_store else 0,
+        "chunks": extensions.vector_store.index.ntotal if extensions.vector_store else 0,
     }
 
-    if llm_gateway is None:
+    if extensions.llm_gateway is None:
         status.update({"status": "degraded", "provider": None})
         return jsonify(status)
 
-    provider_status = llm_gateway.status()
+    provider_status = extensions.llm_gateway.status()
     status.update(provider_status)
 
-    if not vector_store or not status["database"]:
+    if not extensions.vector_store or not status["database"]:
         status["status"] = "degraded"
 
     return jsonify(status)
@@ -879,7 +755,7 @@ def chat_feedback():
 
     user_id = int(identity["subject_id"])
     try:
-        with SessionLocal() as db:
+        with extensions.SessionLocal() as db:
             log_entry = db.query(ChatLog).filter(
                 ChatLog.user_id == user_id,
                 ChatLog.question_index == question_index,
@@ -958,14 +834,14 @@ def chat():
 
     quota = increment_usage(identity)
 
-    if session_id not in conversation_sessions:
-        conversation_sessions[session_id] = []
+    if session_id not in extensions.conversation_sessions:
+        extensions.conversation_sessions[session_id] = []
 
-    history = conversation_sessions[session_id]
+    history = extensions.conversation_sessions[session_id]
 
     # ── RAG: retrieve ONCE with local embedding ──────────────────────────────
     try:
-        retrieved = vector_store.retrieve(user_message, top_k=CONFIG["retrieval_top_k"])
+        retrieved = extensions.vector_store.retrieve(user_message, top_k=CONFIG["retrieval_top_k"])
     except RuntimeError as e:
         error_msg = str(e)
         log.error("Embedding/retrieval failed: %s", error_msg)
@@ -987,13 +863,12 @@ def chat():
         Intercepts the __full_response__ marker to persist history,
         then emits the final 'done' event with source metadata.
         """
-        global active_requests
         full_response = ""
         had_error = False
 
-        with active_requests_lock:
-            active_requests += 1
-            current_active = active_requests
+        with extensions.active_requests_lock:
+            extensions.active_requests += 1
+            current_active = extensions.active_requests
             log.info("CONGESTION active_requests=%s threshold=%s", current_active, CONGESTION_THRESHOLD)
 
         try:
@@ -1001,7 +876,7 @@ def chat():
             if current_active >= CONGESTION_THRESHOLD:
                 yield f"data: {json.dumps({'congestion': True, 'active_requests': current_active})}\n\n"
 
-            token_stream = llm_gateway.stream_chat(recent_history, augmented_message)
+            token_stream = extensions.llm_gateway.stream_chat(recent_history, augmented_message)
 
             for event in token_stream:
                 if "__full_response__" in event:
@@ -1020,20 +895,20 @@ def chat():
         except Exception:
             log.exception("Unexpected error during stream generation")
         finally:
-            with active_requests_lock:
-                active_requests -= 1
-                log.info("CONGESTION active_requests decremented to %s", active_requests)
+            with extensions.active_requests_lock:
+                extensions.active_requests -= 1
+                log.info("CONGESTION active_requests decremented to %s", extensions.active_requests)
 
         # ── Persist history (only on success) ────────────────────────────────
         if full_response and not had_error:
             history.append({"role": "user", "content": user_message})
             history.append({"role": "assistant", "content": full_response})
             if len(history) > CONFIG["max_history_turns"] * 2:
-                conversation_sessions[session_id] = history[-(CONFIG["max_history_turns"] * 2):]
+                extensions.conversation_sessions[session_id] = history[-(CONFIG["max_history_turns"] * 2):]
 
             saved_question_index = None
             try:
-                with SessionLocal() as db:
+                with extensions.SessionLocal() as db:
                     last_index = db.query(func.max(ChatLog.question_index)).filter(
                         ChatLog.user_id == int(identity["subject_id"])
                     ).scalar()
@@ -1081,8 +956,6 @@ def startup():
     Loads the vector store and validates Groq configuration.
     Falls back to SQLite if PostgreSQL is unreachable.
     """
-    global vector_store, llm_gateway, engine, SessionLocal, embedding_model
-
     LOG_DIR.mkdir(parents=True, exist_ok=True)
 
     # ── Try database connection; fall back to SQLite on failure ──────────────
@@ -1098,14 +971,7 @@ def startup():
         sqlite_path = str(PROJECT_ROOT / "data" / "app.db")
         CONFIG["database_url"] = f"sqlite:///{sqlite_path}"
         log.info("Switching to SQLite: %s", CONFIG["database_url"])
-
-        engine = create_engine(
-            CONFIG["database_url"],
-            pool_pre_ping=True,
-            future=True,
-            connect_args={"check_same_thread": False},
-        )
-        SessionLocal = sessionmaker(bind=engine, autoflush=False, expire_on_commit=False, future=True)
+        extensions.reinit_engine(CONFIG["database_url"])
 
         try:
             init_db()
@@ -1124,7 +990,7 @@ def startup():
 
     # ── Load vector store (embedding model loads lazily on first request) ─────
     try:
-        vector_store = VectorStore(
+        extensions.vector_store = VectorStore(
             CONFIG["faiss_index_file"],
             CONFIG["chunks_meta_file"],
             CONFIG["embedding_model"],
@@ -1138,9 +1004,11 @@ def startup():
     log.info("Pre-loading local embedding model (this may take a moment)...")
     try:
         t0 = time.time()
-        embedding_model = SentenceTransformer(CONFIG["embedding_model"])
-        log.info(f"✓ Embedding model loaded in {time.time() - t0:.1f}s — "
-                 f"dim={embedding_model.get_sentence_embedding_dimension()}")
+        extensions.embedding_model = SentenceTransformer(CONFIG["embedding_model"])
+        log.info(
+            f"✓ Embedding model loaded in {time.time() - t0:.1f}s — "
+            f"dim={extensions.embedding_model.get_sentence_embedding_dimension()}"
+        )
     except Exception as e:
         log.error(f"Failed to load embedding model: {e}")
         sys.exit(1)
@@ -1158,8 +1026,8 @@ def startup():
         CONFIG["groq_model_chain"][0],
     )
 
-    llm_gateway = LLMGateway(CONFIG)
-    log.info(f"LLM gateway ready — active provider: {llm_gateway.active_provider}")
+    extensions.llm_gateway = LLMGateway(CONFIG)
+    log.info(f"LLM gateway ready — active provider: {extensions.llm_gateway.active_provider}")
     log.info(f"HF Space tuning — congestion_threshold={CONFIG['congestion_threshold']}, "
              f"max_workers={CONFIG['embedding_max_workers']}")
     port = int(os.getenv("PORT", "5000"))
