@@ -33,23 +33,69 @@ from typing import List, Dict, Generator, Optional, Tuple
 
 import numpy as np
 import faiss
+import requests
 from sentence_transformers import SentenceTransformer
-from sqlalchemy import func
+from sqlalchemy import Column, Integer, String, Text, create_engine, inspect, text, func
 from sqlalchemy.exc import IntegrityError
+from sqlalchemy.orm import declarative_base, sessionmaker
 from flask import Flask, request, jsonify, Response, stream_with_context, send_from_directory, session
 from flask_cors import CORS
+from dotenv import load_dotenv
 from werkzeug.middleware.proxy_fix import ProxyFix
 from werkzeug.security import generate_password_hash, check_password_hash
 from curl_cffi import requests as curl_requests
 
-import web.db as db
-from web.config import CONFIG, PROJECT_ROOT
-from web.models import ChatLog, UsageCounter, User
-from web.prompts import SYSTEM_PROMPT
-
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
 WEB_DIR = Path(__file__).resolve().parent
 LOG_DIR = PROJECT_ROOT / "logs"
 LOG_DIR.mkdir(parents=True, exist_ok=True)
+load_dotenv(PROJECT_ROOT / ".env")
+
+
+def get_groq_api_keys() -> List[str]:
+    """Read Groq API keys from .env/environment, preserving priority order."""
+    candidates = []
+    candidates.extend(split_env_csv("GROQ_API_KEYS", []))
+    candidates.extend([
+        os.getenv("GROQ_API_KEY", ""),
+        os.getenv("GROQ_API_Key", ""),
+    ])
+    for i in range(1, 6):
+        candidates.append(os.getenv(f"GROQ_API_KEY_{i}", ""))
+
+    keys = []
+    seen = set()
+    for key in candidates:
+        key = key.strip()
+        if key and key not in seen:
+            keys.append(key)
+            seen.add(key)
+    return keys
+
+
+def env_bool(name: str, default: bool = False) -> bool:
+    value = os.getenv(name)
+    if value is None:
+        return default
+    return value.strip().lower() in {"1", "true", "yes", "on"}
+
+
+def split_env_list(name: str) -> List[str]:
+    return [item.strip().lower() for item in os.getenv(name, "").split(",") if item.strip()]
+
+
+def split_env_csv(name: str, default: List[str]) -> List[str]:
+    configured = [item.strip() for item in os.getenv(name, "").split(",") if item.strip()]
+    return configured or default
+
+
+def get_database_url() -> str:
+    configured = os.getenv("DATABASE_URL", "").strip()
+    if configured:
+        if configured.startswith("postgresql://"):
+            return configured.replace("postgresql://", "postgresql+psycopg://", 1)
+        return configured
+    return f"sqlite:///{PROJECT_ROOT / 'data' / 'app.db'}"
 
 
 # ── Logging ───────────────────────────────────────────────────────────────────
@@ -63,6 +109,153 @@ logging.basicConfig(
 )
 log = logging.getLogger(__name__)
 
+# ── Configuration ─────────────────────────────────────────────────────────────
+CONFIG = {
+    # ── LLM provider ────────────────────────────────────────────────────────
+    "provider": "groq",
+
+    # ── Vector database paths ────────────────────────────────────────────────
+    "faiss_index_file": str(PROJECT_ROOT / "data" / "bal_faiss.index"),
+    "chunks_meta_file": str(PROJECT_ROOT / "data" / "bal_chunks.json"),
+
+    # Embedding model — LOCAL, no API needed (MUST match 01_build_vectorstore.py)
+    "embedding_model": "intfloat/multilingual-e5-small",
+
+    # How many chunks to retrieve per query (top-k)
+    "retrieval_top_k": 5,
+
+    # Minimum relevance score threshold — chunks below this are discarded
+    "retrieval_score_threshold": 0.35,
+
+    # ── Groq backend settings ────────────────────────────────────────────────
+    "groq_url": "https://api.groq.com/openai/v1/chat/completions",
+    "groq_model_chain": split_env_csv("GROQ_MODEL_CHAIN", [
+        "llama-3.3-70b-versatile",
+        "meta-llama/llama-4-maverick-17b-128e-instruct",
+        "qwen/qwen3-32b",
+        "meta-llama/llama-4-scout-17b-16e-instruct",
+    ]),
+    "groq_api_keys": get_groq_api_keys(),
+    "groq_timeout": 120,             # seconds
+
+    # ── LLM generation parameters ────────────────────────────────────────────
+    "llm_temperature": 0.1,          # lower = more consistent
+    "llm_max_tokens": 1024,
+    "llm_top_p": 0.9,
+
+    # Conversation history — max turns kept per session
+    "max_history_turns": 6,          # = 12 messages (user + assistant pairs)
+
+    # ── Auth and quota ─────────────────────────────────────────────────────
+    "database_url": get_database_url(),
+    "secret_key": os.getenv("FLASK_SECRET_KEY", ""),
+    "force_https": env_bool("FORCE_HTTPS", False),
+    "local_https": env_bool("LOCAL_HTTPS", False),
+    "google_client_id": os.getenv("GOOGLE_CLIENT_ID", ""),
+    "admin_emails": split_env_list("ADMIN_EMAILS"),
+    "limits": {
+        "visitor": {"daily": 40, "minute": 5},
+        "user": {"daily": 50, "minute": 8},
+        "admin": {"daily": 500, "minute": 20},
+    },
+
+    # ── HF Space performance tuning (2 vCPU, 16GB RAM) ─────────────────────
+    # Max concurrent embedding requests — keep low to avoid CPU thrashing
+    "embedding_max_workers": 2,
+    # Congestion threshold — warn when this many requests are in-flight
+    "congestion_threshold": 4,
+}
+
+# ── System Prompt ─────────────────────────────────────────────────────────────
+SYSTEM_PROMPT = """You are BAL Asistan, the AI assistant of Bornova Anadolu Lisesi.
+
+## TASK
+Give accurate, short and friendly information about BAL to students, parents and people who are curious about the school.
+
+## LANGUAGE
+- Always answer in Turkish.
+- Do not mix English into the answer unless it is a proper name, program name, abbreviation, URL or quoted source term.
+
+## TONE AND STYLE
+- Be short and clear. Do not use filler phrases such as "Umarım yardımcı olur", "sormaktan çekinmeyin", or "tabii ki".
+- Be warm and natural, neither overly formal nor overly cheerful.
+- Do not make lists unless they are genuinely useful.
+- Do not waste time with greetings, thanks or farewells. Answer the question directly.
+- Never use profanity, swear words, slurs, insults or vulgar language, even if the user does.
+
+## FACTUAL RULES
+- Never change, invent or normalize concrete data such as phone numbers, URLs, dates, scores or names.
+- Use concrete data exactly as it appears in the provided context.
+- Do not add numbers, names or details that are not present in the context.
+- For general questions about clubs or communities, list all relevant categories and key examples.
+- If asked who created you, say that you were developed by Burak as a Bornova Anadolu Lisesi project.
+
+## SOURCE USE
+The provided RAG context is your primary source.
+
+- Always prefer answering from the provided context when it contains relevant information.
+- Never invent, assume or generate BAL-specific facts that are not supported by the context.
+- If a question is about BAL and the context does not contain enough reliable information to answer it, say exactly:
+  "Bu konuda bilgim yok."
+- Never say "okul idaresine sor", "okul idaresiyle teyit et", "okul yönetimine danış" or anything similar.
+- For questions that are not about BAL, you may answer naturally using your general knowledge. Do not refuse harmless questions.
+
+## SAFETY — HARMFUL, ILLEGAL, OR DANGEROUS CONTENT
+IMPORTANT RULE: For these topics, NEVER say "bilgim yok". ALWAYS pick the ONE category below that matches what the user actually asked about, and use ONLY that category's explanation. DO NOT combine multiple categories. DO NOT add extra information from other categories.
+
+If the user asks about ALCOHOL, CIGARETTES or TOBACCO only (NOT drugs):
+"Alkollü içkiler, sigara ve diğer tütün ürünleri, T.C. yasalarına göre 18 yaşın altındaki bireyler tarafından kullanılamaz, satın alınamaz ve bulundurulamaz (Tütün ve Alkol Piyasası Düzenleme Kurumu, 4207 sayılı Kanun). Ayrıca okul içinde ve çevresinde bu ürünlerin kullanımı MEB Ortaöğretim Kurumları Yönetmeliği'nce kesinlikle yasaktır."
+
+If the user asks about DRUGS or SUBSTANCE ABUSE (NOT alcohol/cigarettes):
+"Uyuşturucu ve uyarıcı maddelerin kullanımı, bulundurulması ve ticareti T.C. Ceza Kanunu'nun 188. ve 191. maddelerine göre suçtur ve hapis cezası gerektirir. Bu maddeler fiziksel ve ruhsal sağlığa ciddi ve kalıcı zararlar verir. Okul ortamında bu tür maddelerin bulundurulması ve kullanımı MEB disiplin yönetmeliğine aykırıdır."
+
+If the user asks about VIOLENCE, WEAPONS, SELF-HARM or SUICIDE:
+"Şiddet uygulamak, silah bulundurmak veya kullanmak, bir başkasını yaralamak T.C. Ceza Kanunu kapsamında suçtur ve hapis cezası ile cezalandırılır. Okul ortamında şiddet, kavga ve zorbalık MEB disiplin yönetmeliğine göre kesinlikle yasaktır ve öğrenciler hakkında disiplin soruşturması başlatılır. İntihar ve kendine zarar verme ciddi sağlık sorunlarıdır. Böyle bir durum yaşıyorsan lütfen bir yetişkine, rehber öğretmene veya 112 Acil Çağrı Merkezi'ne başvur."
+
+If the user asks about CHEATING, PLAGIARISM, THEFT, FRAUD, HACKING or FORGERY:
+"Kopya çekmek ve eser hırsızlığı (intihal) yapmak, MEB Ortaöğretim Kurumları Yönetmeliği'ne göre disiplin suçudur ve öğrenci hakkında disiplin cezası uygulanır. Hırsızlık, dolandırıcılık, sahtecilik ve bilişim sistemlerine izinsiz erişim (hack) T.C. Ceza Kanunu'nun ilgili maddelerine göre suçtur ve adli para cezası veya hapis cezası ile cezalandırılır. Okul dışında da olsa bu tür eylemler yasa dışıdır."
+
+If the user asks about HIDING THINGS from school or parents, BREAKING SCHOOL RULES, FORGING DOCUMENTS, or LYING TO OFFICIALS:
+"Okul kuralları öğrencilerin güvenliği ve eğitimi için konulmuştur. Okul yönetimine veya velilere yalan söylemek, resmi belgelerde sahtecilik yapmak veya bir şeyi gizlemek, MEB disiplin yönetmeliğine göre disiplin suçudur. Resmi belgelerde sahtecilik ayrıca T.C. Ceza Kanunu'nun 204. maddesi kapsamında suçtur. Her konuda ailenle ve öğretmenlerinle açık iletişim kurman en sağlıklısıdır."
+
+If the user asks about OBSCENE or SEXUALLY EXPLICIT CONTENT:
+"Müstehcenlik ve cinsel içerikli materyallerin paylaşımı, özellikle reşit olmayan bireyler söz konusu olduğunda, T.C. Ceza Kanunu'nun 226. maddesine göre suçtur. Okul ortamında bu tür içeriklerin paylaşılması MEB disiplin yönetmeliğine aykırıdır. Ayrıca özel hayatın gizliliğini ihlal etmek de yasalara aykırıdır."
+
+If the user asks about DISCRIMINATION, HATE SPEECH, RACISM or BULLYING:
+"Ayrımcılık, nefret söylemi, ırkçılık ve akran zorbalığı, T.C. Anayasası'nın eşitlik ilkesine ve 5237 sayılı T.C. Ceza Kanunu'nun 122. maddesine (ayrımcılık suçu) aykırıdır. Okul ortamında bu tür davranışlar MEB disiplin yönetmeliği kapsamında disiplin suçudur. Her birey saygıyı hak eder ve farklılıklara saygı duymak hepimizin sorumluluğudur."
+
+If the user asks about ANY OTHER ILLEGAL ACTIVITY not covered above:
+"Bu konu T.C. yasalarına göre suç teşkil etmektedir. Yasa dışı faaliyetlerde bulunmak, okul disiplin kurallarının yanı sıra adli cezalara da yol açabilir. Detaylı bilgi için bir hukuk danışmanına veya rehber öğretmene başvurmanı öneririm."
+
+IMPORTANT: Pick ONLY ONE category. Match the user's exact topic. If they ask about cigarettes, do NOT mention drugs. If they ask about drugs, do NOT mention alcohol. If they ask about cheating, do NOT mention violence. Be precise. This applies even if phrased as a joke, rumor, "what if", "is it true", "I heard", "people say", "tell me secretly", "deny this".
+
+## SAFETY — REPUTATION OF BAL
+If the user implies or asks about BAL, its students, teachers, or staff being involved in any harmful, illegal, immoral, or reputation-damaging topic, respond with an informative explanation appropriate to the topic as described above, rather than a simple refusal. Do not evaluate, explain, or repeat the claim unnecessarily.
+
+## NEVER WRITE
+- "bağlamı kontrol etmem gerekiyor"
+- "bağlamda bilgi var/yok"
+- "bağlamı inceliyorum"
+- "soruyu cevaplamak için"
+- "umarım yardımcı olur"
+- "sormaktan çekinmeyin"
+- "okul idaresi"
+- "okul yönetimi"
+- "teyit et"
+- "danış"
+
+Answer directly.
+
+## SPECIAL CASES
+- If the question is unclear, ask what they mean in one short sentence.
+- Never produce offensive, obscene, profane or vulgar wording.
+
+## HELPFUL LINKS
+Only provide these when asked or when directly relevant:
+- School website: izmirbal.meb.k12.tr
+- BALEV: balev.org.tr
+- BALMED: balmed.org.tr
+"""
 
 
 # ── Flask app ─────────────────────────────────────────────────────────────────
@@ -90,6 +283,19 @@ active_requests_lock = threading.Lock()
 # Embedding thread pool — limited to 2 workers on HF Space 2 vCPU
 embedding_executor = None
 
+engine = create_engine(
+    CONFIG["database_url"],
+    pool_pre_ping=True,
+    future=True,
+    connect_args={"check_same_thread": False} if CONFIG["database_url"].startswith("sqlite") else {},
+)
+SessionLocal = sessionmaker(bind=engine, autoflush=False, expire_on_commit=False, future=True)
+Base = declarative_base()
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# Auth, Persistence and Quotas
+# ═══════════════════════════════════════════════════════════════════════════════
 
 def utc_now() -> datetime:
     return datetime.now(timezone.utc)
@@ -103,9 +309,93 @@ def minute_key() -> str:
     return utc_now().strftime("%Y-%m-%dT%H:%M")
 
 
-def safe_database_ready() -> bool:
+class User(Base):
+    __tablename__ = "users"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    email = Column(String(255), nullable=True, unique=True, index=True)
+    fingerprint = Column(String(255), nullable=True, unique=True, index=True)
+    password_hash = Column(Text, nullable=True)
+    provider = Column(String(32), nullable=False, default="password")
+    role = Column(String(32), nullable=False, default="user", index=True)
+    created_at = Column(String(64), nullable=False)
+
+
+class UsageCounter(Base):
+    __tablename__ = "usage_counters"
+
+    subject_type = Column(String(32), primary_key=True)
+    subject_id = Column(String(255), primary_key=True)
+    period_type = Column(String(32), primary_key=True)
+    period_key = Column(String(64), primary_key=True)
+    count = Column(Integer, nullable=False, default=0)
+    updated_at = Column(String(64), nullable=False)
+
+
+class ChatLog(Base):
+    __tablename__ = "chat_logs"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    user_id = Column(Integer, nullable=False, index=True)
+    question_index = Column(Integer, nullable=False, default=0, index=True)
+    question = Column(Text, nullable=False)
+    answer = Column(Text, nullable=False)
+    created_at = Column(String(64), nullable=False)
+    feedback = Column(String(16), nullable=True)
+    feedback_text = Column(Text, nullable=True)
+
+
+def init_db() -> None:
+    if CONFIG["database_url"].startswith("sqlite"):
+        Path(PROJECT_ROOT / "data").mkdir(parents=True, exist_ok=True)
+    Base.metadata.create_all(bind=engine)
+    _ensure_user_fingerprint_column()
+    _ensure_user_email_nullable()
+
+
+def _ensure_user_fingerprint_column() -> None:
+    inspector = inspect(engine)
+    if not inspector.has_table("users"):
+        return
+    existing_columns = {col["name"] for col in inspector.get_columns("users")}
+    if "fingerprint" in existing_columns:
+        return
+    log.warning("Adding missing users.fingerprint column to existing database schema.")
+    with engine.begin() as conn:
+        if engine.dialect.name == "sqlite":
+            conn.execute(text("ALTER TABLE users ADD COLUMN fingerprint VARCHAR(255)"))
+        else:
+            conn.execute(text("ALTER TABLE users ADD COLUMN fingerprint VARCHAR(255)"))
+        try:
+            conn.execute(text("CREATE UNIQUE INDEX IF NOT EXISTS ix_users_fingerprint ON users (fingerprint)"))
+        except Exception:
+            log.exception("Could not create index for users.fingerprint. This is non-fatal.")
+
+
+def _ensure_user_email_nullable() -> None:
+    inspector = inspect(engine)
+    if not inspector.has_table("users"):
+        return
+    if engine.dialect.name == "sqlite":
+        return
+    cols = {c["name"]: c for c in inspector.get_columns("users")}
+    if "email" not in cols:
+        return
+    if cols["email"].get("nullable", True):
+        return
+    log.warning("Making users.email column nullable to support anonymous fingerprint users.")
     try:
-        return db.database_ready()
+        with engine.begin() as conn:
+            conn.execute(text("ALTER TABLE users ALTER COLUMN email DROP NOT NULL"))
+    except Exception:
+        log.exception("Failed to alter users.email to nullable; anonymous user creation may fail.")
+
+
+def database_ready() -> bool:
+    try:
+        with engine.connect() as conn:
+            conn.execute(text("SELECT 1"))
+        return True
     except Exception:
         log.exception("Database health check failed")
         return False
@@ -143,7 +433,7 @@ def get_client_fingerprint() -> Optional[str]:
 def get_current_identity() -> Optional[Dict]:
     user_id = session.get("user_id")
     if user_id:
-        with db.SessionLocal() as db:
+        with SessionLocal() as db:
             user = db.get(User, int(user_id))
             if user:
                 return {
@@ -158,7 +448,7 @@ def get_current_identity() -> Optional[Dict]:
 
     if fingerprint:
         try:
-            with db.SessionLocal() as db:
+            with SessionLocal() as db:
                 user = db.query(User).filter(User.fingerprint == fingerprint).first()
                 if user is None:
                     log.info("No existing user with fingerprint found: %s", fingerprint)
@@ -204,7 +494,7 @@ def get_current_identity() -> Optional[Dict]:
 
 
 def get_usage(subject_type: str, subject_id: str, period_type: str, period_key: str) -> int:
-    with db.SessionLocal() as db:
+    with SessionLocal() as db:
         row = db.get(UsageCounter, (subject_type, subject_id, period_type, period_key))
         return int(row.count) if row else 0
 
@@ -235,7 +525,7 @@ def check_quota(identity: Dict) -> Tuple[bool, Dict, str]:
 def increment_usage(identity: Dict) -> Dict:
     now = utc_now().isoformat()
     rows = [("day", today_key()), ("minute", minute_key())]
-    with db.SessionLocal() as db:
+    with SessionLocal() as db:
         for period_type, period_key in rows:
             key = (
                 identity["subject_type"],
@@ -749,7 +1039,7 @@ def health():
         "provider": CONFIG["provider"],
         "vectorstore": vector_store is not None,
         "embedding_model": CONFIG["embedding_model"],
-        "database": safe_database_ready(),
+        "database": database_ready(),
         "chunks": vector_store.index.ntotal if vector_store else 0,
     }
 
@@ -785,7 +1075,7 @@ def chat_feedback():
 
     user_id = int(identity["subject_id"])
     try:
-        with db.SessionLocal() as db:
+        with SessionLocal() as db:
             log_entry = db.query(ChatLog).filter(
                 ChatLog.user_id == user_id,
                 ChatLog.question_index == question_index,
@@ -939,7 +1229,7 @@ def chat():
 
             saved_question_index = None
             try:
-                with db.SessionLocal() as db:
+                with SessionLocal() as db:
                     last_index = db.query(func.max(ChatLog.question_index)).filter(
                         ChatLog.user_id == int(identity["subject_id"])
                     ).scalar()
@@ -987,14 +1277,14 @@ def startup():
     Loads the vector store and validates Groq configuration.
     Falls back to SQLite if PostgreSQL is unreachable.
     """
-    global vector_store, llm_gateway, embedding_model
+    global vector_store, llm_gateway, engine, SessionLocal, embedding_model
 
     LOG_DIR.mkdir(parents=True, exist_ok=True)
 
     # ── Try database connection; fall back to SQLite on failure ──────────────
     db_ok = False
     try:
-        db.init_db()
+        init_db()
         db_ok = True
         log.info("Database connection established: %s", CONFIG["database_url"][:50])
     except Exception as e:
@@ -1004,10 +1294,17 @@ def startup():
         sqlite_path = str(PROJECT_ROOT / "data" / "app.db")
         CONFIG["database_url"] = f"sqlite:///{sqlite_path}"
         log.info("Switching to SQLite: %s", CONFIG["database_url"])
-        db.reconfigure_database(CONFIG["database_url"])
+
+        engine = create_engine(
+            CONFIG["database_url"],
+            pool_pre_ping=True,
+            future=True,
+            connect_args={"check_same_thread": False},
+        )
+        SessionLocal = sessionmaker(bind=engine, autoflush=False, expire_on_commit=False, future=True)
 
         try:
-            db.init_db()
+            init_db()
             log.info("SQLite fallback successful.")
         except Exception as e2:
             log.error("SQLite fallback also failed: %s", e2)
