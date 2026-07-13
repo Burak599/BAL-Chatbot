@@ -23,9 +23,13 @@ import os
 import sys
 import json
 import time
+from pathlib import Path
+
+# Ensure the project root is in the path for Docker/HF Space deployment
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+
 import logging
 import re
-from pathlib import Path
 from datetime import datetime, timezone
 from typing import List, Dict, Generator, Optional, Tuple
 
@@ -50,7 +54,14 @@ except ImportError:
     from web.models import User, UsageCounter, ChatLog, init_db, database_ready
 
 # Import RAG components from the modular structure
-from rag import VectorStore, format_context, build_augmented_user_message, build_sources_payload, strip_reasoning_blocks
+# sys.path was already updated at the top of the file for Docker/HF Space compatibility
+from rag.vectorstore import VectorStore
+from rag.prompting import (
+    format_context,
+    build_augmented_user_message,
+    build_sources_payload,
+    strip_reasoning_blocks,
+)
 
 
 # ── Logging ───────────────────────────────────────────────────────────────────
