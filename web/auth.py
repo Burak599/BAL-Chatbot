@@ -74,6 +74,7 @@ def get_current_identity() -> Optional[Dict]:
     """
     Returns current user identity based on session or fingerprint.
     Creates a visitor user if fingerprint is provided but user doesn't exist.
+    Always returns an identity (never None) to ensure questions are logged.
     """
     user_id = session.get("user_id")
     if user_id:
@@ -133,6 +134,39 @@ def get_current_identity() -> Optional[Dict]:
                 "X-Client-Fingerprint": request.headers.get("X-Client-Fingerprint"),
                 "User-Agent": request.headers.get("User-Agent"),
             })
-            return None
 
-    return None
+    # ── Fallback: Use existing session fingerprint if available ───────────────
+    # This ensures questions are always logged to the database
+    fallback_fingerprint = session.get("fingerprint")
+    if not fallback_fingerprint:
+        import secrets
+        fallback_fingerprint = "anon-" + secrets.token_hex(8)
+
+    # Check if we already have this fingerprint user in DB
+    with SessionLocal() as db:
+        user = db.query(User).filter(User.fingerprint == fallback_fingerprint).first()
+        if user is None:
+            user = User(
+                email=None,
+                fingerprint=fallback_fingerprint,
+                password_hash=None,
+                provider="anonymous",
+                role="visitor",
+                created_at=utc_now().isoformat(),
+            )
+            db.add(user)
+            try:
+                db.commit()
+                db.refresh(user)
+                log.info("Created anonymous visitor user id=%s fingerprint=%s", user.id, fallback_fingerprint)
+            except IntegrityError:
+                db.rollback()
+                user = db.query(User).filter(User.fingerprint == fallback_fingerprint).first()
+        if user:
+            session["fingerprint"] = fallback_fingerprint
+            return {
+                "subject_type": "user",
+                "subject_id": str(user.id),
+                "role": user.role,
+                "public": user_to_public(user),
+            }
