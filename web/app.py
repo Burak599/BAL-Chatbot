@@ -581,6 +581,7 @@ def chat():
         """
         full_response = ""
         had_error = False
+        saved_question_index = None
 
         with extensions.active_requests_lock:
             extensions.active_requests += 1
@@ -621,8 +622,6 @@ def chat():
             history.append({"role": "assistant", "content": full_response})
             if len(history) > CONFIG["max_history_turns"] * 2:
                 extensions.conversation_sessions[session_id] = history[-(CONFIG["max_history_turns"] * 2):]
-
-            saved_question_index = None
             try:
                 with extensions.SessionLocal() as db:
                     last_index = db.query(func.max(ChatLog.question_index)).filter(
