@@ -54,6 +54,24 @@ except ImportError:
 # Import RAG components from the local rag module (now inside web/)
 from rag import VectorStore, format_context, build_augmented_user_message, build_sources_payload, strip_reasoning_blocks
 
+# Import auth and db utilities from modular structure
+from auth import (
+    normalize_email,
+    role_for_email,
+    user_to_public,
+    get_client_fingerprint,
+    get_current_identity,
+)
+from db import (
+    utc_now,
+    today_key,
+    minute_key,
+    get_usage,
+    quota_snapshot,
+    check_quota,
+    increment_usage,
+)
+
 
 # ── Logging ───────────────────────────────────────────────────────────────────
 logging.basicConfig(
@@ -68,170 +86,8 @@ log = logging.getLogger(__name__)
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# Auth, Persistence and Quotas
+# HTTPS Enforcement
 # ═══════════════════════════════════════════════════════════════════════════════
-
-def utc_now() -> datetime:
-    return datetime.now(timezone.utc)
-
-
-def today_key() -> str:
-    return utc_now().strftime("%Y-%m-%d")
-
-
-def minute_key() -> str:
-    return utc_now().strftime("%Y-%m-%dT%H:%M")
-
-
-def normalize_email(email: str) -> str:
-    return email.strip().lower()
-
-
-def role_for_email(email: str) -> str:
-    return "admin" if normalize_email(email) in CONFIG["admin_emails"] else "user"
-
-
-def user_to_public(user: User) -> Dict:
-    role = user.role
-    is_visitor = role == "visitor" or user.provider == "fingerprint"
-    return {
-        "id": user.id,
-        "email": None if is_visitor else user.email,
-        "role": "visitor" if is_visitor else role,
-        "mode": "visitor" if is_visitor else "account",
-    }
-
-
-def get_client_fingerprint() -> Optional[str]:
-    fingerprint = (request.headers.get("X-Client-Fingerprint") or "").strip()
-    if not fingerprint:
-        return None
-    if not re.fullmatch(r"[A-Za-z0-9_-]{8,255}", fingerprint):
-        log.warning("Rejected malformed client fingerprint: %r", fingerprint[:80])
-        return None
-    return fingerprint
-
-
-def get_current_identity() -> Optional[Dict]:
-    user_id = session.get("user_id")
-    if user_id:
-        with extensions.SessionLocal() as db:
-            user = db.get(User, int(user_id))
-            if user:
-                return {
-                    "subject_type": "user",
-                    "subject_id": str(user.id),
-                    "role": user.role,
-                    "public": user_to_public(user),
-                }
-        session.pop("user_id", None)
-
-    fingerprint = get_client_fingerprint() or session.get("fingerprint")
-
-    if fingerprint:
-        try:
-            with extensions.SessionLocal() as db:
-                user = db.query(User).filter(User.fingerprint == fingerprint).first()
-                if user is None:
-                    log.info("No existing user with fingerprint found: %s", fingerprint)
-                else:
-                    log.info("Found existing user id=%s for fingerprint", user.id)
-                if user is None:
-                    user = User(
-                        email=None,
-                        fingerprint=fingerprint,
-                        password_hash=None,
-                        provider="fingerprint",
-                        role="visitor",
-                        created_at=utc_now().isoformat(),
-                    )
-                    db.add(user)
-                    try:
-                        db.commit()
-                        db.refresh(user)
-                        log.info("Created visitor user id=%s fingerprint=%s", user.id, fingerprint)
-                    except IntegrityError:
-                        db.rollback()
-                        user = db.query(User).filter(User.fingerprint == fingerprint).first()
-                        if user:
-                            log.info("Detected concurrent creation; using existing user id=%s", user.id)
-
-                if user:
-                    session["fingerprint"] = fingerprint
-                    return {
-                        "subject_type": "user",
-                        "subject_id": str(user.id),
-                        "role": user.role,
-                        "public": user_to_public(user),
-                    }
-        except Exception as e:
-            log.exception("Failed to establish fingerprint identity (%s). Headers: %s", e, {
-                "X-Forwarded-For": request.headers.get("X-Forwarded-For"),
-                "X-Client-Fingerprint": request.headers.get("X-Client-Fingerprint"),
-                "User-Agent": request.headers.get("User-Agent"),
-            })
-            return None
-
-    return None
-
-
-def get_usage(subject_type: str, subject_id: str, period_type: str, period_key: str) -> int:
-    with extensions.SessionLocal() as db:
-        row = db.get(UsageCounter, (subject_type, subject_id, period_type, period_key))
-        return int(row.count) if row else 0
-
-
-def quota_snapshot(identity: Dict) -> Dict:
-    limits = CONFIG["limits"][identity["role"]]
-    daily_used = get_usage(identity["subject_type"], identity["subject_id"], "day", today_key())
-    minute_used = get_usage(identity["subject_type"], identity["subject_id"], "minute", minute_key())
-    return {
-        "daily_limit": limits["daily"],
-        "daily_used": daily_used,
-        "daily_remaining": max(limits["daily"] - daily_used, 0),
-        "minute_limit": limits["minute"],
-        "minute_used": minute_used,
-        "minute_remaining": max(limits["minute"] - minute_used, 0),
-    }
-
-
-def check_quota(identity: Dict) -> Tuple[bool, Dict, str]:
-    usage = quota_snapshot(identity)
-    if usage["daily_remaining"] <= 0:
-        return False, usage, "Günlük soru limitin doldu."
-    if usage["minute_remaining"] <= 0:
-        return False, usage, "Dakikalık soru limitine ulaştın. Biraz bekleyip tekrar dene."
-    return True, usage, ""
-
-
-def increment_usage(identity: Dict) -> Dict:
-    now = utc_now().isoformat()
-    rows = [("day", today_key()), ("minute", minute_key())]
-    with extensions.SessionLocal() as db:
-        for period_type, period_key in rows:
-            key = (
-                identity["subject_type"],
-                identity["subject_id"],
-                period_type,
-                period_key,
-            )
-            counter = db.get(UsageCounter, key)
-            if counter is None:
-                counter = UsageCounter(
-                    subject_type=identity["subject_type"],
-                    subject_id=identity["subject_id"],
-                    period_type=period_type,
-                    period_key=period_key,
-                    count=1,
-                    updated_at=now,
-                )
-                db.add(counter)
-            else:
-                counter.count += 1
-                counter.updated_at = now
-        db.commit()
-    return quota_snapshot(identity)
-
 
 @app.before_request
 def enforce_https():
