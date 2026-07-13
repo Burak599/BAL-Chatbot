@@ -25,9 +25,6 @@ import json
 import time
 from pathlib import Path
 
-# Ensure the project root is in the path for Docker/HF Space deployment
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-
 import logging
 import re
 from datetime import datetime, timezone
@@ -39,6 +36,7 @@ from sqlalchemy.exc import IntegrityError
 from flask import request, jsonify, Response, stream_with_context, send_from_directory, session
 from curl_cffi import requests as curl_requests
 
+# Import config first (needs to be before extensions)
 try:
     from config import CONFIG, SYSTEM_PROMPT, PROJECT_ROOT, WEB_DIR, LOG_DIR
 except ImportError:
@@ -53,15 +51,8 @@ except ImportError:
     from web.extensions import app
     from web.models import User, UsageCounter, ChatLog, init_db, database_ready
 
-# Import RAG components from the modular structure
-# sys.path was already updated at the top of the file for Docker/HF Space compatibility
-from rag.vectorstore import VectorStore
-from rag.prompting import (
-    format_context,
-    build_augmented_user_message,
-    build_sources_payload,
-    strip_reasoning_blocks,
-)
+# Import RAG components from the local rag module (now inside web/)
+from rag import VectorStore, format_context, build_augmented_user_message, build_sources_payload, strip_reasoning_blocks
 
 
 # ── Logging ───────────────────────────────────────────────────────────────────
