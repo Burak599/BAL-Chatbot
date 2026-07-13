@@ -30,8 +30,6 @@ from datetime import datetime, timezone
 from typing import List, Dict, Generator, Optional, Tuple
 
 import numpy as np
-import faiss
-from sentence_transformers import SentenceTransformer
 from sqlalchemy import func
 from sqlalchemy.exc import IntegrityError
 from flask import request, jsonify, Response, stream_with_context, send_from_directory, session
@@ -50,6 +48,9 @@ except ImportError:
     import web.extensions as extensions
     from web.extensions import app
     from web.models import User, UsageCounter, ChatLog, init_db, database_ready
+
+# Import RAG components from the modular structure
+from rag import VectorStore, format_context, build_augmented_user_message, build_sources_payload, strip_reasoning_blocks
 
 
 # ── Logging ───────────────────────────────────────────────────────────────────
@@ -240,149 +241,6 @@ def enforce_https():
         if not is_local:
             return "", 308, {"Location": request.url.replace("http://", "https://", 1)}
     return None
-
-
-# ═══════════════════════════════════════════════════════════════════════════════
-# 1. Vector Store (LOCAL EMBEDDING — no API calls)
-# ═══════════════════════════════════════════════════════════════════════════════
-
-class VectorStore:
-    """Manages the FAISS vector database and local embedding model."""
-
-    def __init__(self, index_path: str, chunks_path: str, model_name: str):
-        if not Path(index_path).exists():
-            raise FileNotFoundError(
-                f"FAISS index not found: {index_path}\n"
-                "Run '01_build_vectorstore.py' first."
-            )
-
-        log.info("Loading FAISS index...")
-        self.index = faiss.read_index(index_path)
-        log.info(f"FAISS index loaded: {self.index.ntotal} vectors")
-
-        log.info("Loading chunk metadata...")
-        with open(chunks_path, "r", encoding="utf-8") as f:
-            self.chunks: List[Dict] = json.load(f)
-        log.info(f"Chunk metadata loaded: {len(self.chunks)} chunks")
-
-        self.embedding_model_name = model_name
-        self._local_model = None  # Lazy-load: shared instance from global scope
-
-        log.info(f"✓ Vector store ready — {self.index.ntotal} chunks, model={model_name}")
-
-    def _get_model(self) -> SentenceTransformer:
-        """Returns the shared SentenceTransformer instance (lazy-loaded at startup)."""
-        if extensions.embedding_model is None:
-            log.info(f"Loading local embedding model: {self.embedding_model_name}")
-            t0 = time.time()
-            extensions.embedding_model = SentenceTransformer(self.embedding_model_name)
-            log.info(
-                f"✓ Model loaded in {time.time() - t0:.1f}s — "
-                f"dim={extensions.embedding_model.get_sentence_embedding_dimension()}"
-            )
-        return extensions.embedding_model
-
-    def _embed_text_sync(self, text: str) -> Optional[np.ndarray]:
-        """
-        Synchronously embeds a single text string using local SentenceTransformer.
-        Returns a (1, dim) float32 numpy array normalized for cosine similarity,
-        or None on failure.
-        """
-        try:
-            model = self._get_model()
-            embedding = model.encode(
-                [text],
-                normalize_embeddings=True,
-                convert_to_numpy=True,
-            ).astype("float32")
-            return embedding
-        except Exception as e:
-            log.error(f"Local embedding failed: {e}")
-            return None
-
-    def retrieve(self, query: str, top_k: int = 5) -> List[Dict]:
-        """
-        Returns the top-k most relevant chunks for the given query.
-        E5 model requires the 'query:' prefix for retrieval queries.
-        """
-        query_text = f"query: {query}"
-
-        # Embed using local model — fast, no API latency
-        embedding = self._embed_text_sync(query_text)
-        if embedding is None:
-            log.error(f"Could not embed query: {query[:100]}")
-            raise RuntimeError(
-                "Sorgu embedding'i başarısız. Lütfen daha sonra tekrar deneyin."
-            )
-
-        scores, indices = self.index.search(embedding, top_k)
-
-        results = []
-        for score, idx in zip(scores[0], indices[0]):
-            if idx == -1:    # FAISS returns -1 for empty slots
-                continue
-            chunk = self.chunks[idx].copy()
-            chunk["relevance_score"] = float(score)
-            results.append(chunk)
-
-        return results
-
-
-# ═══════════════════════════════════════════════════════════════════════════════
-# 2. Context Formatting
-# ═══════════════════════════════════════════════════════════════════════════════
-
-def format_context(retrieved_chunks: List[Dict], score_threshold: float = 0.35) -> str:
-    """
-    Builds the context string injected into the LLM prompt.
-    Chunks below score_threshold are discarded to reduce noise.
-    """
-    if not retrieved_chunks:
-        return "Bağlamda ilgili bilgi bulunamadı."
-
-    parts = []
-    for chunk in retrieved_chunks:
-        if chunk.get("relevance_score", 0) < score_threshold:
-            continue
-        breadcrumb = chunk.get("breadcrumb", "")
-        text = chunk.get("text", "")
-        parts.append(f"[Kaynak: {breadcrumb}]\n{text}")
-
-    return "\n\n---\n\n".join(parts) if parts else "Bağlamda yeterince ilgili bilgi bulunamadı."
-
-
-def build_augmented_user_message(user_input: str, context: str) -> str:
-    """Wraps the user question with the retrieved RAG context."""
-    return (
-        f"## İlgili Bağlam (Okul Bilgi Kaynağı)\n\n"
-        f"{context}\n\n"
-        f"---\n\n"
-        f"## Kullanıcı Sorusu\n\n{user_input}"
-    )
-
-
-def build_sources_payload(retrieved: List[Dict], score_threshold: float = 0.35) -> List[Dict]:
-    """Builds the sources list sent to the frontend after streaming ends."""
-    return [
-        {
-            "breadcrumb": r.get("breadcrumb", ""),
-            "score": round(r.get("relevance_score", 0), 3),
-        }
-        for r in retrieved[:3]
-        if r.get("relevance_score", 0) >= score_threshold
-    ]
-
-
-def strip_reasoning_blocks(text: str) -> str:
-    """Removes reasoning traces emitted by models that expose <think> blocks."""
-    if not text:
-        return text
-
-    cleaned = re.sub(r"<think\b[^>]*>.*?</think>", "", text, flags=re.IGNORECASE | re.DOTALL)
-    cleaned = re.sub(r"<thinking\b[^>]*>.*?</thinking>", "", cleaned, flags=re.IGNORECASE | re.DOTALL)
-    cleaned = re.sub(r"<think\b[^>]*>.*\Z", "", cleaned, flags=re.IGNORECASE | re.DOTALL)
-    cleaned = re.sub(r"<thinking\b[^>]*>.*\Z", "", cleaned, flags=re.IGNORECASE | re.DOTALL)
-    return cleaned.strip()
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -988,20 +846,10 @@ def startup():
     if not CONFIG["secret_key"]:
         log.warning("FLASK_SECRET_KEY is not set. Sessions will reset after server restart.")
 
-    # ── Load vector store (embedding model loads lazily on first request) ─────
-    try:
-        extensions.vector_store = VectorStore(
-            CONFIG["faiss_index_file"],
-            CONFIG["chunks_meta_file"],
-            CONFIG["embedding_model"],
-        )
-    except FileNotFoundError as e:
-        log.error(str(e))
-        sys.exit(1)
-
     # ── Pre-load embedding model at startup on HF Space (2 vCPU) ──────────────
     # Loading ~500MB model takes ~5-10s on CPU; do it here so first request is fast
     log.info("Pre-loading local embedding model (this may take a moment)...")
+    from sentence_transformers import SentenceTransformer
     try:
         t0 = time.time()
         extensions.embedding_model = SentenceTransformer(CONFIG["embedding_model"])
@@ -1011,6 +859,18 @@ def startup():
         )
     except Exception as e:
         log.error(f"Failed to load embedding model: {e}")
+        sys.exit(1)
+
+    # ── Load vector store (passing the pre-loaded embedding model) ────────────
+    try:
+        extensions.vector_store = VectorStore(
+            CONFIG["faiss_index_file"],
+            CONFIG["chunks_meta_file"],
+            CONFIG["embedding_model"],
+            embedding_model=extensions.embedding_model,
+        )
+    except FileNotFoundError as e:
+        log.error(str(e))
         sys.exit(1)
 
     # ── Groq configuration check ─────────────────────────────────────────────
