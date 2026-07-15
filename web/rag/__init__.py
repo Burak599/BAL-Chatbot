@@ -11,7 +11,6 @@ from .prompting import (
     format_context,
     build_augmented_user_message,
     build_sources_payload,
-    strip_reasoning_blocks,
 )
 
 __all__ = [
@@ -19,5 +18,4 @@ __all__ = [
     "format_context",
     "build_augmented_user_message",
     "build_sources_payload",
-    "strip_reasoning_blocks",
 ]
