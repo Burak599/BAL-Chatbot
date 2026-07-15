@@ -380,7 +380,7 @@ def chat():
                         question_index=saved_question_index,
                         question=user_message,
                         answer=full_response,
-                        created_at=utc_now().isoformat(),
+                        created_at=utc_now(),
                     )
                     db.add(log_entry)
                     db.commit()

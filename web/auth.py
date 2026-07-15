@@ -104,7 +104,7 @@ def get_current_identity() -> Optional[Dict]:
                         password_hash=None,
                         provider="fingerprint",
                         role="visitor",
-                        created_at=utc_now().isoformat(),
+                        created_at=utc_now(),
                     )
                     db.add(user)
                     try:
@@ -149,7 +149,7 @@ def get_current_identity() -> Optional[Dict]:
                 password_hash=None,
                 provider="anonymous",
                 role="visitor",
-                created_at=utc_now().isoformat(),
+                created_at=utc_now(),
             )
             db.add(user)
             try:
