@@ -8,12 +8,8 @@ This module provides:
 - strip_reasoning_blocks: Removes reasoning traces from model output
 """
 
-from .gateway import (
-    LLMGateway,
-    stream_groq,
-    stream_groq_model,
-    strip_reasoning_blocks,
-)
+from .gateway import LLMGateway, strip_reasoning_blocks
+from .groq_client import stream_groq, stream_groq_model
 
 __all__ = [
     "LLMGateway",
