@@ -11,10 +11,10 @@ import sys
 from pathlib import Path
 
 try:
-    from extensions import SessionLocal, reinit_engine, app
+    from extensions import SessionLocal, reinit_engine, app, Base, engine
     from models import User, UsageCounter, ChatLog, init_db, database_ready
 except ImportError:
-    from web.extensions import SessionLocal, reinit_engine, app
+    from web.extensions import SessionLocal, reinit_engine, app, Base, engine
     from web.models import User, UsageCounter, ChatLog, init_db, database_ready
 
 try:

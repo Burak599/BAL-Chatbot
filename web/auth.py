@@ -31,10 +31,7 @@ except ImportError:
     from web.config import CONFIG
 
 # Import utc_now from quota module
-try:
-    from quota import utc_now
-except ImportError:
-    from web.quota import utc_now
+from quota import utc_now
 
 
 def normalize_email(email: str) -> str:

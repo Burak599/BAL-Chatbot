@@ -1,7 +1,7 @@
 """
 Quota management for BAL Chatbot.
 
-This module handles usage counting and quota checking.
+This module handles usage counting and quota checking separately from database schema.
 """
 
 from datetime import datetime, timezone
