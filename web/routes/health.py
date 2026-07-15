@@ -24,7 +24,10 @@ def health():
     """
     Returns a JSON status object.
     """
-    import web.extensions as ext
+    try:
+        import extensions as ext
+    except ImportError:
+        from web import extensions as ext
     
     status = {
         "provider": ext.CONFIG.get("provider", "groq"),

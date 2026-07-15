@@ -70,7 +70,10 @@ def chat_feedback():
 
     user_id = int(identity["subject_id"])
     try:
-        import web.extensions as ext
+        try:
+            import extensions as ext
+        except ImportError:
+            from web import extensions as ext
         with ext.SessionLocal() as db:
             log_entry = db.query(ChatLog).filter(
                 ChatLog.user_id == user_id,
@@ -96,7 +99,10 @@ def chat():
     """
     Main chat endpoint — Server-Sent Events (SSE) streaming.
     """
-    import web.extensions as extensions
+    try:
+        import extensions as ext
+    except ImportError:
+        from web import extensions as ext
 
     body = request.get_json()
     if not body or not body.get("message"):
@@ -152,14 +158,14 @@ def chat():
 
     quota = increment_usage(identity)
 
-    if session_id not in extensions.conversation_sessions:
-        extensions.conversation_sessions[session_id] = []
+    if session_id not in ext.conversation_sessions:
+        ext.conversation_sessions[session_id] = []
 
-    history = extensions.conversation_sessions[session_id]
+    history = ext.conversation_sessions[session_id]
 
     # ── RAG: retrieve ONCE with local embedding ──────────────────────────────
     try:
-        retrieved = extensions.vector_store.retrieve(user_message, top_k=CONFIG["retrieval_top_k"])
+        retrieved = ext.vector_store.retrieve(user_message, top_k=CONFIG["retrieval_top_k"])
     except RuntimeError as e:
         error_msg = str(e)
         log.error("Embedding/retrieval failed: %s", error_msg)
@@ -185,9 +191,9 @@ def chat():
         had_error = False
         saved_question_index = None
 
-        with extensions.active_requests_lock:
-            extensions.active_requests += 1
-            current_active = extensions.active_requests
+        with ext.active_requests_lock:
+            ext.active_requests += 1
+            current_active = ext.active_requests
             log.info("CONGESTION active_requests=%s threshold=%s", current_active, CONGESTION_THRESHOLD)
 
         try:
@@ -195,7 +201,7 @@ def chat():
             if current_active >= CONGESTION_THRESHOLD:
                 yield f"data: {json.dumps({'congestion': True, 'active_requests': current_active})}\n\n"
 
-            token_stream = extensions.llm_gateway.stream_chat(recent_history, augmented_message)
+            token_stream = ext.llm_gateway.stream_chat(recent_history, augmented_message)
 
             for event in token_stream:
                 if "__full_response__" in event:
@@ -214,18 +220,18 @@ def chat():
         except Exception:
             log.exception("Unexpected error during stream generation")
         finally:
-            with extensions.active_requests_lock:
-                extensions.active_requests -= 1
-                log.info("CONGESTION active_requests decremented to %s", extensions.active_requests)
+            with ext.active_requests_lock:
+                ext.active_requests -= 1
+                log.info("CONGESTION active_requests decremented to %s", ext.active_requests)
 
         # ── Persist history (only on success) ────────────────────────────────
         if full_response and not had_error:
             history.append({"role": "user", "content": user_message})
             history.append({"role": "assistant", "content": full_response})
             if len(history) > CONFIG["max_history_turns"] * 2:
-                extensions.conversation_sessions[session_id] = history[-(CONFIG["max_history_turns"] * 2):]
+                ext.conversation_sessions[session_id] = history[-(CONFIG["max_history_turns"] * 2):]
             try:
-                with extensions.SessionLocal() as db:
+                with ext.SessionLocal() as db:
                     from sqlalchemy import func
                     last_index = db.query(func.max(ChatLog.question_index)).filter(
                         ChatLog.user_id == int(identity["subject_id"])
