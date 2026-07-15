@@ -6,16 +6,15 @@ This module handles:
 """
 
 try:
-    from extensions import app, database_ready
+    from extensions import app
 except ImportError:
     import web.extensions as extensions
     app = extensions.app
-    database_ready = extensions.database_ready
 
 try:
-    from models import ChatLog
+    from db import database_ready
 except ImportError:
-    from web.models import ChatLog
+    from web.db import database_ready
 
 from flask import jsonify
 
