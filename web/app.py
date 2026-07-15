@@ -23,6 +23,7 @@ Prerequisites:
 from routes import pages, auth, health, chat
 
 
+import logging
 # ── Logging ───────────────────────────────────────────────────────────────────
 try:
     from config import LOG_DIR
