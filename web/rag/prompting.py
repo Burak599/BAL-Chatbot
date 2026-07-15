@@ -5,7 +5,6 @@ Usage: Import functions directly, e.g.:
     from rag.prompting import format_context, build_augmented_user_message, build_sources_payload
 """
 
-import re
 from typing import List, Dict
 
 
@@ -48,15 +47,3 @@ def build_sources_payload(retrieved: List[Dict], score_threshold: float = 0.35) 
         for r in retrieved[:3]
         if r.get("relevance_score", 0) >= score_threshold
     ]
-
-
-def strip_reasoning_blocks(text: str) -> str:
-    """Removes reasoning traces emitted by models that expose <think> blocks."""
-    if not text:
-        return text
-
-    cleaned = re.sub(r"<think\b[^>]*>.*?<!</think>", "", text, flags=re.IGNORECASE | re.DOTALL)
-    cleaned = re.sub(r"<thinking\b[^>]*>.*?</thinking>", "", cleaned, flags=re.IGNORECASE | re.DOTALL)
-    cleaned = re.sub(r"<think\b[^>]*>.*\Z", "", cleaned, flags=re.IGNORECASE | re.DOTALL)
-    cleaned = re.sub(r"<thinking\b[^>]*>.*\Z", "", cleaned, flags=re.IGNORECASE | re.DOTALL)
-    return cleaned.strip()
