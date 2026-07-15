@@ -30,11 +30,11 @@ try:
 except ImportError:
     from web.config import CONFIG
 
-
-def utc_now():
-    """Returns current UTC time as datetime."""
-    from datetime import datetime, timezone
-    return datetime.now(timezone.utc)
+# Import utc_now from quota module
+try:
+    from quota import utc_now
+except ImportError:
+    from web.quota import utc_now
 
 
 def normalize_email(email: str) -> str:

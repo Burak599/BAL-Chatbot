@@ -1,10 +1,7 @@
 """
-Database utilities for BAL Chatbot.
+Quota management for BAL Chatbot.
 
-This module handles:
-- Usage counter management
-- Quota checking and increment
-- Database operations
+This module handles usage counting and quota checking.
 """
 
 from datetime import datetime, timezone
@@ -23,19 +20,19 @@ except ImportError:
     from web.config import CONFIG
 
 
-def utc_now():
-    """Returns current UTC time as datetime."""
-    return datetime.now(timezone.utc)
+def utc_now() -> str:
+    """Returns current UTC time as ISO format string."""
+    return datetime.now(timezone.utc).isoformat()
 
 
 def today_key() -> str:
     """Returns today's date key for daily quota."""
-    return utc_now().strftime("%Y-%m-%d")
+    return datetime.now(timezone.utc).strftime("%Y-%m-%d")
 
 
 def minute_key() -> str:
     """Returns current minute key for minute quota."""
-    return utc_now().strftime("%Y-%m-%dT%H:%M")
+    return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M")
 
 
 def get_usage(subject_type: str, subject_id: str, period_type: str, period_key: str) -> int:
@@ -75,7 +72,7 @@ def check_quota(identity: Dict) -> Tuple[bool, Dict, str]:
 
 def increment_usage(identity: Dict) -> Dict:
     """Increments usage counters for both daily and minute periods."""
-    now = utc_now().isoformat()
+    now = utc_now()
     rows = [("day", today_key()), ("minute", minute_key())]
     with SessionLocal() as db:
         for period_type, period_key in rows:
