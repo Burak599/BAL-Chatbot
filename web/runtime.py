@@ -11,16 +11,16 @@ import sys
 from pathlib import Path
 
 try:
-    from extensions import SessionLocal, reinit_engine, app, LOG_DIR
+    from extensions import SessionLocal, reinit_engine, app
     from models import User, UsageCounter, ChatLog, init_db, database_ready
 except ImportError:
-    from web.extensions import SessionLocal, reinit_engine, app, LOG_DIR
+    from web.extensions import SessionLocal, reinit_engine, app
     from web.models import User, UsageCounter, ChatLog, init_db, database_ready
 
 try:
-    from config import CONFIG, PROJECT_ROOT
+    from config import CONFIG, PROJECT_ROOT, LOG_DIR
 except ImportError:
-    from web.config import CONFIG, PROJECT_ROOT
+    from web.config import CONFIG, PROJECT_ROOT, LOG_DIR
 
 
 def enforce_https():
