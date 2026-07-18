@@ -1,16 +1,11 @@
+import { SESSION_ID, quotaInfo } from './state.js';
+
+export { SESSION_ID };
 export const API_BASE = window.location.origin + '/api';
-export const SESSION_ID = 'session_' + Math.random().toString(36).slice(2, 9);
 
 const fingerprintPromise = import('/vendor/fingerprintjs/fp.esm.js').then((FingerprintJS) =>
   FingerprintJS.load({ monitoring: false })
 );
-
-export const quotaInfo = {
-  daily_used: 0,
-  minute_used: 0,
-  daily_limit: 40,
-  minute_limit: 5,
-};
 
 let cachedFingerprint = '';
 
